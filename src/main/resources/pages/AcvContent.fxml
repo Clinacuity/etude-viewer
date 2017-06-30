@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import com.clinacuity.acv.controls.AnnotatedTextView?>
+<?import javafx.scene.control.Separator?>
+
+<GridPane xmlns="http://javafx.com/javafx/8.0.112"
+          xmlns:fx="http://javafx.com/fxml/1"
+          fx:controller="com.clinacuity.acv.controllers.AcvController"
+          fx:id="mainGrid">
+    <columnConstraints>
+        <ColumnConstraints hgrow="ALWAYS" percentWidth="59"/>
+        <ColumnConstraints hgrow="NEVER" prefWidth="10" maxWidth="10" minWidth="10"/>
+        <ColumnConstraints />
+    </columnConstraints>
+
+    <AnnotatedTextView fx:id="annotatedTextView" GridPane.columnIndex="0"/>
+    <Separator orientation="VERTICAL" GridPane.columnIndex="1"/>
+    <AnnotatedTextView GridPane.columnIndex="2"/>
+
+    <rowConstraints>
+        <RowConstraints percentHeight="100"/>
+    </rowConstraints>
+</GridPane>

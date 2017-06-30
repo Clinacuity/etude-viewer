@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import com.clinacuity.acv.controls.HighlightedTextArea?>
+
+<fx:root type="javafx.scene.layout.GridPane" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1">
+
+    <rowConstraints>
+        <RowConstraints maxHeight="40" minHeight="40" prefHeight="40" vgrow="NEVER" />
+        <RowConstraints vgrow="ALWAYS" />
+    </rowConstraints>
+
+    <columnConstraints>
+        <ColumnConstraints hgrow="ALWAYS" percentWidth="49" />
+        <ColumnConstraints hgrow="NEVER" maxWidth="10" minWidth="10" prefWidth="10" />
+        <ColumnConstraints hgrow="ALWAYS" />
+    </columnConstraints>
+
+    <Label text="Reference:" GridPane.columnIndex="2" GridPane.rowIndex="0" />
+    <Label text="System Output:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+
+    <HighlightedTextArea fx:id="referenceText" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+    <HighlightedTextArea fx:id="targetText" GridPane.rowIndex="1" GridPane.columnIndex="2"/>
+
+    <!--<ScrollPane fx:id="referenceScrollPane" fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER"-->
+                <!--GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">-->
+        <!--<StackPane maxWidth="Infinity" maxHeight="Infinity">-->
+            <!--<TextArea fx:id="referenceText" wrapText="true"/>-->
+            <!--<Button text="Click me" minHeight="1200" prefHeight="1200"/>-->
+        <!--</StackPane>-->
+    <!--</ScrollPane>-->
+    <!--<TextArea fx:id="targetText" maxHeight="Infinity" maxWidth="Infinity" wrapText="true" GridPane.columnIndex="2" GridPane.rowIndex="1" />-->
+</fx:root>
