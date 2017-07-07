@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import com.clinacuity.acv.controls.AnnotatedDocumentPane?>
+
+<fx:root type="javafx.scene.layout.GridPane" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1">
+    <rowConstraints>
+        <RowConstraints maxHeight="40" minHeight="40" prefHeight="40" vgrow="NEVER" />
+        <RowConstraints vgrow="ALWAYS" />
+    </rowConstraints>
+
+    <columnConstraints>
+        <ColumnConstraints hgrow="ALWAYS" percentWidth="49.5"/>
+        <ColumnConstraints hgrow="NEVER" percentWidth="1" />
+        <ColumnConstraints hgrow="ALWAYS" percentWidth="49.5"/>
+    </columnConstraints>
+
+    <Label text="System Output:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+    <Label text="Reference:" GridPane.columnIndex="2" GridPane.rowIndex="0" />
+
+    <AnnotatedDocumentPane documentType="REFERENCE" fx:id="targetPane" maxWidth="Infinity" maxHeight="Infinity" fitToHeight="true" fitToWidth="true"
+                           GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+    <AnnotatedDocumentPane documentType="TARGET" fx:id="referencePane" maxWidth="Infinity" maxHeight="Infinity" fitToHeight="true" fitToWidth="true"
+                           GridPane.columnIndex="2" GridPane.rowIndex="1"/>
+</fx:root>

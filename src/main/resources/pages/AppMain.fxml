@@ -4,19 +4,16 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<GridPane alignment="TOP_CENTER"
-          prefHeight="900.0"
-          prefWidth="1600.0"
-          xmlns="http://javafx.com/javafx/8.0.111"
-          xmlns:fx="http://javafx.com/fxml/1"
-          fx:id="masterGrid"
-          fx:controller="com.clinacuity.acv.controllers.AppMainController">
+<GridPane xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1"
+          fx:id="masterGrid" fx:controller="com.clinacuity.acv.controllers.AppMainController"
+          alignment="TOP_CENTER"
+          prefHeight="900.0" prefWidth="1600.0">
     <columnConstraints>
         <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" />
     </columnConstraints>
 
     <rowConstraints>
         <RowConstraints/>
-        <RowConstraints vgrow="ALWAYS" maxHeight="2120"/>
+        <RowConstraints vgrow="ALWAYS"/>
     </rowConstraints>
 </GridPane>

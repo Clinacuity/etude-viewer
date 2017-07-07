@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.geometry.Insets?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.control.Tooltip?>
+<?import com.jfoenix.controls.JFXCheckBox?>
+
+<?import com.jfoenix.controls.JFXToolbar?>
+<fx:root type="javafx.scene.layout.GridPane"
+         xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1">
+    <rowConstraints>
+        <RowConstraints fillHeight="false"/>
+        <RowConstraints fillHeight="false"/>
+        <RowConstraints />
+    </rowConstraints>
+
+    <columnConstraints>
+        <ColumnConstraints/>
+    </columnConstraints>
+
+    <JFXComboBox fx:id="annotationComboBox" GridPane.columnIndex="0" GridPane.rowIndex="0">
+        <GridPane.margin>
+            <Insets bottom="10"/>
+        </GridPane.margin>
+    </JFXComboBox>
+
+
+    <VBox GridPane.columnIndex="0" GridPane.rowIndex="2">
+        <HBox alignment="CENTER_LEFT" spacing="3" styleClass="h-box-checkbox">
+            <JFXToolbar>
+                <leftItems>
+                    <Label text="Left"/>
+                    <Label text="Yup"/>
+                </leftItems>
+                <rightItems>
+                    <Label text="Right"/>
+                </rightItems>
+            </JFXToolbar>
+            <JFXCheckBox fx:id="toggleExact" text="Is the sky blue?"/>
+            <Label>
+                <tooltip>
+                    <Tooltip text="Toggle display of exact matches, including their features"/>
+                </tooltip>
+                <graphic>
+                    <ImageView fitHeight="16" fitWidth="16" preserveRatio="true" pickOnBounds="true">
+                        <Image url="/img/ecommerce/16/info.png"/>
+                    </ImageView>
+                </graphic>
+            </Label>
+            <padding><Insets top="15" bottom="15"/></padding>
+        </HBox>
+        <HBox alignment="CENTER_LEFT" spacing="3" styleClass="h-box-checkbox">
+            <JFXCheckBox fx:id="toggleFeatureMismatch" text="Is the sky blue?"/>
+            <Label alignment="CENTER" textAlignment="CENTER">
+                <tooltip>
+                    <Tooltip text="Toggle display of annotations spanning the same text but with different features"/>
+                </tooltip>
+                <graphic>
+                    <ImageView fitHeight="16" fitWidth="16" preserveRatio="true" pickOnBounds="true">
+                        <Image url="/img/ecommerce/16/info.png"/>
+                    </ImageView>
+                </graphic>
+            </Label>
+        </HBox>
+        <HBox alignment="CENTER_LEFT" spacing="3" styleClass="h-box-checkbox">
+            <JFXCheckBox fx:id="toggleSubsumed" text="Does it even matter?"/>
+            <Label>
+                <tooltip>
+                    <Tooltip text="Toggle display of annotations subsumed in another."/>
+                </tooltip>
+                <graphic>
+                    <ImageView fitHeight="16" fitWidth="16" preserveRatio="true" pickOnBounds="true">
+                        <image>
+                            <Image url="/img/ecommerce/16/info.png"/>
+                        </image>
+                    </ImageView>
+                </graphic>
+            </Label>
+        </HBox>
+        <HBox alignment="CENTER_LEFT" spacing="3" styleClass="h-box-checkbox">
+            <JFXCheckBox fx:id="toggleOverlap" text="Are you thinking right?"/>
+            <Label>
+                <tooltip>
+                    <Tooltip text="Toggle display of annotations partially overlapped by others"/>
+                </tooltip>
+                <graphic>
+                    <ImageView fitHeight="16" fitWidth="16" preserveRatio="true" pickOnBounds="true">
+                        <image>
+                            <Image url="/img/ecommerce/16/info.png"/>
+                        </image>
+                    </ImageView>
+                </graphic>
+            </Label>
+        </HBox>
+        <HBox alignment="CENTER_LEFT" spacing="3" styleClass="h-box-checkbox">
+            <JFXCheckBox fx:id="toggleFree" text="Are you thinking right?"/>
+            <Label>
+                <tooltip>
+                    <Tooltip text="Toggle display of annotations which do not have any match."/>
+                </tooltip>
+                <graphic>
+                    <ImageView fitHeight="16" fitWidth="16" preserveRatio="true" pickOnBounds="true">
+                        <image>
+                            <Image url="/img/ecommerce/16/info.png"/>
+                        </image>
+                    </ImageView>
+                </graphic>
+            </Label>
+        </HBox>
+    </VBox>
+
+    <padding>
+        <Insets left="15.0" top="80.0"/>
+    </padding>
+</fx:root>

@@ -1,0 +1,139 @@
+@font-face {
+    src: url('/fonts/open/OpenSans-SemiBold.ttf');
+}
+
+@font-face {
+     src: url('/fonts/open/OpenSans-Bold.ttf');
+}
+
+@font-face {
+    src: url("/fonts/fira/FiraMono-Bold.ttf");
+}
+
+@font-face {
+    src: url("/fonts/open/OpenSans-BoldItalic.ttf");
+}
+
+/*    BUTTONS    */
+.button* {
+    -fx-font-family: "Open Sans SemiBold";
+    -fx-border-radius: 3px;
+    -fx-border-color: DarkGray;
+}
+
+.button-clickable {
+    -fx-focus-traversable: false;
+    -fx-font-size: 10;
+}
+
+.button-actionable {
+    -fx-font-size: 14;
+}
+
+.button*:hover {
+    -fx-border-radius: 3px;
+    -fx-border-color: DodgerBlue
+}
+/*    END BUTTONS   */
+
+
+/*    COMBO AND CHECKBOXES    */
+.jfx-combo-box {
+    -jfx-focus-color: DodgerBlue;
+    -jfx-unfocus-color: DarkGray;
+    -jfx-label-float: true;
+}
+
+.h-box-checkbox {
+    -fx-padding: 15 3 0 15;
+}
+
+.jfx-check-box {
+    -fx-font-weight: BOLD;
+    -fx-font-size: 14;
+    -jfx-checked-color: DodgerBlue;
+    -jfx-unchecked-color: DodgerBlue;
+}
+
+.jfx-combo-box {
+    -fx-background-color: rgba(50.0, 100.0, 200.0, .05);
+}
+
+.combo-box-popup .list-view .jfx-list-cell:odd {
+    -fx-background-color: rgba(50.0, 100.0, 200.0, 0.2);
+}
+
+.combo-box-popup .list-view .jfx-list-cell:even {
+    -fx-background-color: rgba(50.0, 100.0, 200.0, 0.3);
+}
+
+.jfx-list-cell:odd, .jfx-list-cell:even {
+    -fx-background-color: DodgerBlue;
+}
+
+/*    END CHECKBOXES    */
+
+
+/*    TEXT FIELDS   */
+.text-field, .label* {
+    -fx-font-family: "Open Sans SemiBold";
+}
+
+.tooltip {
+    -fx-font-family: "Open Sans Bold Italic";
+    -fx-font-size: 10;
+}
+
+.code-area {
+    -fx-font-family: "Fira Mono Bold";
+    -fx-font-size: 16;
+}
+
+.label-header-one {
+    -fx-font-size:36;
+}
+
+.label-normal {
+    -fx-font-size:14;
+}
+/*    END TEXT FIELDS   */
+
+
+/* The main scrollbar **track** CSS class  */
+.mylistview .scroll-bar:horizontal .track,
+.mylistview .scroll-bar:vertical .track {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-background-radius: 0em;
+    -fx-border-radius: 2em;
+}
+
+/* The increment and decrement button CSS class of scrollbar */
+.mylistview .scroll-bar:horizontal .increment-button,
+.mylistview .scroll-bar:horizontal .decrement-button {
+    -fx-background-color: transparent;
+    -fx-background-radius: 0em;
+    -fx-padding: 0 0 10 0;
+}
+
+/* The increment and decrement button CSS class of scrollbar */
+.mylistview .scroll-bar:vertical .increment-button,
+.mylistview .scroll-bar:vertical .decrement-button {
+    -fx-background-color: transparent;
+    -fx-background-radius: 0em;
+    -fx-padding: 0 10 0 0;
+}
+
+.mylistview .scroll-bar .increment-arrow,
+.mylistview .scroll-bar .decrement-arrow {
+    -fx-shape: " ";
+    -fx-padding: 0;
+}
+
+/* The main scrollbar **thumb** CSS class which we drag every time (movable) */
+.mylistview .scroll-bar:horizontal .thumb,
+.mylistview .scroll-bar:vertical .thumb {
+    -fx-background-color: derive(black, 90%);
+    -fx-background-insets: 2, 0, 0;
+    -fx-background-radius: 2em;
+}

@@ -1,26 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.clinacuity.acv.controls.AnnotationComparisonView?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
-<?import com.clinacuity.acv.controls.AnnotatedTextView?>
-<?import javafx.scene.control.Separator?>
+<?import com.clinacuity.acv.controls.ViewControls?>
 
-<GridPane xmlns="http://javafx.com/javafx/8.0.112"
+<GridPane fx:id="mainGrid"
+          xmlns="http://javafx.com/javafx/8.0.112"
           xmlns:fx="http://javafx.com/fxml/1"
-          fx:controller="com.clinacuity.acv.controllers.AcvController"
-          fx:id="mainGrid">
+          fx:controller="com.clinacuity.acv.controllers.AcvController">
     <columnConstraints>
-        <ColumnConstraints hgrow="ALWAYS" percentWidth="59"/>
-        <ColumnConstraints hgrow="NEVER" prefWidth="10" maxWidth="10" minWidth="10"/>
-        <ColumnConstraints />
+        <ColumnConstraints hgrow="ALWAYS" />
+        <ColumnConstraints halignment="RIGHT" hgrow="ALWAYS" maxWidth="10" minWidth="10" prefWidth="10" />
+        <ColumnConstraints hgrow="ALWAYS" maxWidth="500" minWidth="500" prefWidth="500" />
     </columnConstraints>
 
-    <AnnotatedTextView fx:id="annotatedTextView" GridPane.columnIndex="0"/>
-    <Separator orientation="VERTICAL" GridPane.columnIndex="1"/>
-    <AnnotatedTextView GridPane.columnIndex="2"/>
+    <AnnotationComparisonView GridPane.columnIndex="0"/>
+    <Separator halignment="RIGHT" maxWidth="10.0" minWidth="10.0" orientation="VERTICAL" GridPane.columnIndex="1"/>
+    <ViewControls GridPane.columnIndex="2"/>
 
     <rowConstraints>
-        <RowConstraints percentHeight="100"/>
+        <RowConstraints percentHeight="100" />
     </rowConstraints>
 </GridPane>
