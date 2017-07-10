@@ -37,41 +37,36 @@
 /*    END BUTTONS   */
 
 
-/*    COMBO AND CHECKBOXES    */
+/*    COMBO BOXES    */
 .jfx-combo-box {
     -jfx-focus-color: DodgerBlue;
     -jfx-unfocus-color: DarkGray;
-    -jfx-label-float: true;
-}
-
-.h-box-checkbox {
-    -fx-padding: 15 3 0 15;
-}
-
-.jfx-check-box {
-    -fx-font-weight: BOLD;
-    -fx-font-size: 14;
-    -jfx-checked-color: DodgerBlue;
-    -jfx-unchecked-color: DodgerBlue;
-}
-
-.jfx-combo-box {
-    -fx-background-color: rgba(50.0, 100.0, 200.0, .05);
 }
 
 .combo-box-popup .list-view .jfx-list-cell:odd {
-    -fx-background-color: rgba(50.0, 100.0, 200.0, 0.2);
+    -fx-background-color: rgb(225, 225, 225);
 }
 
 .combo-box-popup .list-view .jfx-list-cell:even {
-    -fx-background-color: rgba(50.0, 100.0, 200.0, 0.3);
+    -fx-background-color: rgba(240, 240, 240);
 }
 
-.jfx-list-cell:odd, .jfx-list-cell:even {
+.jfx-list-cell:selected > .jfx-rippler > StackPane {
     -fx-background-color: DodgerBlue;
 }
 
-/*    END CHECKBOXES    */
+.jfx-list-cell:hover > .jfx-rippler > StackPane {
+    -fx-background-color: DodgerBlue;
+}
+/*    END COMBO BOXES   */
+
+
+/*    CHECK BOXES   */
+.h-box-checkbox {
+    -fx-padding: 8 3 8 0;
+}
+
+/*    END CHECK BOXES    */
 
 
 /*    TEXT FIELDS   */
@@ -87,6 +82,14 @@
 .code-area {
     -fx-font-family: "Fira Mono Bold";
     -fx-font-size: 16;
+}
+
+.label-tooltip {
+    -fx-opacity: 0.2;
+}
+
+.label-tooltip:hover {
+    -fx-opacity: 1;
 }
 
 .label-header-one {

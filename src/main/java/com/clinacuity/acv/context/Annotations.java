@@ -18,7 +18,6 @@ public class Annotations {
 
     private Gson gson = new Gson();
     private JsonObject root;
-    private JsonObject metadata;
     private Map<String, List<JsonObject>> annotations = new HashMap<>();
 
     public Annotations(String filePath) {
@@ -28,8 +27,11 @@ public class Annotations {
             try {
                 JsonParser parser = new JsonParser();
                 root = parser.parse(FileUtils.readFileToString(new File(filePath), "UTF-8")).getAsJsonObject();
-                metadata = root.get("metadata").getAsJsonObject();
+
+                // TODO: do something we these
+                root.get("offset_mapping").getAsJsonObject();
                 loadAnnotations(root.get("annotations").getAsJsonObject());
+
                 notifyAnnotations();
             } catch (IOException e) {
                 logger.throwing(e);
@@ -54,7 +56,15 @@ public class Annotations {
     }
 
     public void notifyAnnotations() {
-        annotations.keySet().forEach(key -> AcvContext.getInstance().annotationList.add(key));
+        annotations.keySet().forEach(key -> {
+
+            if (!AcvContext.getInstance().annotationList.contains(key)) {
+                AcvContext.getInstance().annotationList.add(key);
+                logger.error("Annotation {} added", key);
+            } else {
+                logger.error("Annotation {} NOT ADDED", key);
+            }
+        });
     }
 
     public int getSelectedAnnotationCount() {
@@ -63,10 +73,6 @@ public class Annotations {
     }
 
     public String getRawText() {
-        if (metadata != null && metadata.keySet().contains("raw_text")) {
-            return  metadata.get("raw_text").getAsString();
-        } else {
-            return "";
-        }
+        return root.get("raw_content").getAsString();
     }
 }

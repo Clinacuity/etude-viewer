@@ -12,11 +12,3 @@
         <MenuItem text="More Items" />
     </Menu>
 </MenuBar>
-
-<!--
-orange      == 230, 159, 000
-blue        == 086, 180, 233
-purple      == 204, 121, 167
-yellow      == 240, 228, 066
-Vermilion   == 213, 094, 000
--->

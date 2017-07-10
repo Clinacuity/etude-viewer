@@ -50,6 +50,7 @@ public class AnnotatedDocumentPane extends ScrollPane {
 
         codeArea.clear();
         codeArea.appendText(annotations.getRawText());
+        resetCodeAreaWidth();
 
         AcvContext.getInstance().selectedAnnotationProperty.addListener((observable, oldValue, newValue) ->
                 selectedAnnotationListener(newValue)

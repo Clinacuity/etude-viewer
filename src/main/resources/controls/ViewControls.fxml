@@ -13,7 +13,6 @@
 <?import javafx.scene.control.Tooltip?>
 <?import com.jfoenix.controls.JFXCheckBox?>
 
-<?import com.jfoenix.controls.JFXToolbar?>
 <fx:root type="javafx.scene.layout.GridPane"
          xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1">
     <rowConstraints>
@@ -32,20 +31,11 @@
         </GridPane.margin>
     </JFXComboBox>
 
-
     <VBox GridPane.columnIndex="0" GridPane.rowIndex="2">
         <HBox alignment="CENTER_LEFT" spacing="3" styleClass="h-box-checkbox">
-            <JFXToolbar>
-                <leftItems>
-                    <Label text="Left"/>
-                    <Label text="Yup"/>
-                </leftItems>
-                <rightItems>
-                    <Label text="Right"/>
-                </rightItems>
-            </JFXToolbar>
-            <JFXCheckBox fx:id="toggleExact" text="Is the sky blue?"/>
-            <Label>
+            <JFXCheckBox fx:id="toggleExact" text="Exact Match"
+                         checkedColor="DodgerBlue" unCheckedColor="DodgerBlue"/>
+            <Label styleClass="label-tooltip">
                 <tooltip>
                     <Tooltip text="Toggle display of exact matches, including their features"/>
                 </tooltip>
@@ -58,8 +48,9 @@
             <padding><Insets top="15" bottom="15"/></padding>
         </HBox>
         <HBox alignment="CENTER_LEFT" spacing="3" styleClass="h-box-checkbox">
-            <JFXCheckBox fx:id="toggleFeatureMismatch" text="Is the sky blue?"/>
-            <Label alignment="CENTER" textAlignment="CENTER">
+            <JFXCheckBox fx:id="toggleFeatureMismatch" text="Exact Span - Mismatched Features"
+                         checkedColor="OrangeRed" unCheckedColor="OrangeRed"/>
+            <Label styleClass="label-tooltip">
                 <tooltip>
                     <Tooltip text="Toggle display of annotations spanning the same text but with different features"/>
                 </tooltip>
@@ -71,8 +62,9 @@
             </Label>
         </HBox>
         <HBox alignment="CENTER_LEFT" spacing="3" styleClass="h-box-checkbox">
-            <JFXCheckBox fx:id="toggleSubsumed" text="Does it even matter?"/>
-            <Label>
+            <JFXCheckBox fx:id="toggleSubsumed" text="Subsumed"
+                         checkedColor="DarkKhaki" unCheckedColor="DarkKhaki"/>
+            <Label styleClass="label-tooltip">
                 <tooltip>
                     <Tooltip text="Toggle display of annotations subsumed in another."/>
                 </tooltip>
@@ -86,8 +78,9 @@
             </Label>
         </HBox>
         <HBox alignment="CENTER_LEFT" spacing="3" styleClass="h-box-checkbox">
-            <JFXCheckBox fx:id="toggleOverlap" text="Are you thinking right?"/>
-            <Label>
+            <JFXCheckBox fx:id="toggleOverlap" text="Overlap"
+                         checkedColor="Purple" unCheckedColor="Purple"/>
+            <Label styleClass="label-tooltip">
                 <tooltip>
                     <Tooltip text="Toggle display of annotations partially overlapped by others"/>
                 </tooltip>
@@ -101,8 +94,9 @@
             </Label>
         </HBox>
         <HBox alignment="CENTER_LEFT" spacing="3" styleClass="h-box-checkbox">
-            <JFXCheckBox fx:id="toggleFree" text="Are you thinking right?"/>
-            <Label>
+            <JFXCheckBox fx:id="toggleFree" text="No Match"
+                         checkedColor="Maroon" unCheckedColor="Maroon"/>
+            <Label styleClass="label-tooltip">
                 <tooltip>
                     <Tooltip text="Toggle display of annotations which do not have any match."/>
                 </tooltip>
@@ -116,7 +110,6 @@
             </Label>
         </HBox>
     </VBox>
-
     <padding>
         <Insets left="15.0" top="80.0"/>
     </padding>
