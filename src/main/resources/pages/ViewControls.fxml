@@ -13,8 +13,9 @@
 <?import javafx.scene.control.Tooltip?>
 <?import com.jfoenix.controls.JFXCheckBox?>
 
-<fx:root type="javafx.scene.layout.GridPane"
-         xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1">
+<GridPane xmlns="http://javafx.com/javafx/8.0.112"
+          xmlns:fx="http://javafx.com/fxml/1"
+          fx:controller="com.clinacuity.acv.controllers.ViewControls">
     <rowConstraints>
         <RowConstraints fillHeight="false"/>
         <RowConstraints fillHeight="false"/>
@@ -113,4 +114,4 @@
     <padding>
         <Insets left="15.0" top="80.0"/>
     </padding>
-</fx:root>
+</GridPane>

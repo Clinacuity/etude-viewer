@@ -14,9 +14,22 @@
     src: url("/fonts/open/OpenSans-BoldItalic.ttf");
 }
 
+@font-face {
+    src: url("/fonts/fira/FiraMono-Medium.ttf");
+}
+
+@font-face {
+    src: url("/fonts/fira/FiraMono-Regular.ttf");
+}
+
+@font-face {
+    src: url("/fonts/roboto/RobotoMono-Regular.ttf");
+}
+
 /*    BUTTONS    */
 .button* {
-    -fx-font-family: "Open Sans SemiBold";
+    -fx-font-family: "Roboto Mono";
+    -fx-font-size: 1;
     -fx-border-radius: 3px;
     -fx-border-color: DarkGray;
 }
@@ -71,7 +84,7 @@
 
 /*    TEXT FIELDS   */
 .text-field, .label* {
-    -fx-font-family: "Open Sans SemiBold";
+    -fx-font-family: "Roboto Mono";
 }
 
 .tooltip {
@@ -81,7 +94,7 @@
 
 .code-area {
     -fx-font-family: "Fira Mono Bold";
-    -fx-font-size: 16;
+    -fx-font-size: 14;
 }
 
 .label-tooltip {
@@ -99,44 +112,9 @@
 .label-normal {
     -fx-font-size:14;
 }
+
+.label-mono {
+    -fx-font-family: "Fira Mono Bold";
+    -fx-font-size: 12;
+}
 /*    END TEXT FIELDS   */
-
-
-/* The main scrollbar **track** CSS class  */
-.mylistview .scroll-bar:horizontal .track,
-.mylistview .scroll-bar:vertical .track {
-    -fx-background-color: transparent;
-    -fx-border-color: transparent;
-    -fx-background-radius: 0em;
-    -fx-border-radius: 2em;
-}
-
-/* The increment and decrement button CSS class of scrollbar */
-.mylistview .scroll-bar:horizontal .increment-button,
-.mylistview .scroll-bar:horizontal .decrement-button {
-    -fx-background-color: transparent;
-    -fx-background-radius: 0em;
-    -fx-padding: 0 0 10 0;
-}
-
-/* The increment and decrement button CSS class of scrollbar */
-.mylistview .scroll-bar:vertical .increment-button,
-.mylistview .scroll-bar:vertical .decrement-button {
-    -fx-background-color: transparent;
-    -fx-background-radius: 0em;
-    -fx-padding: 0 10 0 0;
-}
-
-.mylistview .scroll-bar .increment-arrow,
-.mylistview .scroll-bar .decrement-arrow {
-    -fx-shape: " ";
-    -fx-padding: 0;
-}
-
-/* The main scrollbar **thumb** CSS class which we drag every time (movable) */
-.mylistview .scroll-bar:horizontal .thumb,
-.mylistview .scroll-bar:vertical .thumb {
-    -fx-background-color: derive(black, 90%);
-    -fx-background-insets: 2, 0, 0;
-    -fx-background-radius: 2em;
-}

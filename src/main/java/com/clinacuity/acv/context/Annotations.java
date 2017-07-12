@@ -8,21 +8,20 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Annotations {
     private static final Logger logger = LogManager.getLogger();
 
     private Gson gson = new Gson();
     private JsonObject root;
-    private Map<String, List<JsonObject>> annotations = new HashMap<>();
+    private Map<String, List<JsonObject>> annotationMap = new HashMap<>();
+    public Map<String, List<JsonObject>> getAnnotationMap() { return annotationMap; }
 
     public Annotations(String filePath) {
-        File f = new File(filePath);
+        logger.debug("Loading Annotations from: {}", filePath);
 
+        File f = new File(filePath);
         if (f.exists()) {
             try {
                 JsonParser parser = new JsonParser();
@@ -31,8 +30,6 @@ public class Annotations {
                 // TODO: do something we these
                 root.get("offset_mapping").getAsJsonObject();
                 loadAnnotations(root.get("annotations").getAsJsonObject());
-
-                notifyAnnotations();
             } catch (IOException e) {
                 logger.throwing(e);
             }
@@ -45,34 +42,25 @@ public class Annotations {
                 JsonObject childAnnotation = entry.getValue().getAsJsonArray().get(0).getAsJsonObject();
                 String type = childAnnotation.get("type").getAsString();
 
-                if (!annotations.keySet().contains(type)) {
-                    annotations.put(type, new ArrayList<>());
+                if (!annotationMap.keySet().contains(type)) {
+                    annotationMap.put(type, new ArrayList<>());
                 }
-                annotations.get(type).add(childAnnotation);
+                annotationMap.get(type).add(childAnnotation);
             } catch (IllegalStateException e) {
                 logger.warn("Entry is not a JsonObject", entry.getKey());
             }
         });
     }
 
-    public void notifyAnnotations() {
-        annotations.keySet().forEach(key -> {
+    public Set<String> getAnnotationKeySet() { return annotationMap.keySet(); }
 
-            if (!AcvContext.getInstance().annotationList.contains(key)) {
-                AcvContext.getInstance().annotationList.add(key);
-                logger.error("Annotation {} added", key);
-            } else {
-                logger.error("Annotation {} NOT ADDED", key);
-            }
-        });
-    }
-
-    public int getSelectedAnnotationCount() {
-        String key = AcvContext.getInstance().selectedAnnotationProperty.getValueSafe();
-        return annotations.keySet().contains(key) ? annotations.get(key).size() : -1;
+    public List<JsonObject> getAnnotationsByKey(String key) {
+        return getAnnotationMap().get(key);
     }
 
     public String getRawText() {
         return root.get("raw_content").getAsString();
     }
+
+
 }

@@ -6,8 +6,8 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
-
 <?import javafx.scene.control.Button?>
+
 <GridPane alignment="CENTER" minHeight="300" minWidth="400"
           xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="com.clinacuity.acv.controllers.LoadScreenController">

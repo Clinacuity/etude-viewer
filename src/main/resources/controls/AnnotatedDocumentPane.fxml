@@ -1,13 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.layout.AnchorPane?>
-<?import org.fxmisc.richtext.CodeArea?>
-
 <fx:root type="javafx.scene.control.ScrollPane"
          xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1">
-    <AnchorPane fx:id="anchor" maxWidth="Infinity" maxHeight="Infinity">
-        <CodeArea fx:id="codeArea" maxWidth="Infinity" maxHeight="Infinity"/>
-        <!--<JFXButton text="Click me"/>-->
-        <!--<ButtonAnnotation/>-->
-    </AnchorPane>
+        <AnchorPane fx:id="anchor"/>
 </fx:root>

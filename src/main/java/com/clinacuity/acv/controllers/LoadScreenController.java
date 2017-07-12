@@ -49,9 +49,7 @@ public class LoadScreenController implements Initializable {
 
     @FXML private void runAcv() {
         // TODO: Activate loading spinner
-
-        if (true) {
-//        if (checkDocumentPaths()) {
+        if (checkDocumentPaths()) {
             // TODO: load documents into context
             AcvContext context = AcvContext.getInstance();
             context.targetDocumentPathProperty.setValue(testInputTextField.getText());
@@ -67,18 +65,12 @@ public class LoadScreenController implements Initializable {
     }
 
     private boolean checkDocumentPaths() {
-        try {
-            if (testInputTextField.getText().equals("") || !FileUtils.isFile(new URL(testInputTextField.getText()))) {
-                // TODO: logger pop-up window saying this field is required
-                return false;
-            }
-            if (gsInputTextField.getText().equals("") || !FileUtils.isFile(new URL(gsInputTextField.getText()))) {
-                // TODO: logger pop-up window saying this field is required
-                return false;
-            }
-
-        } catch (MalformedURLException e) {
-            logger.throwing(e);
+        if (testInputTextField.getText().equals("") || !(new File(testInputTextField.getText()).exists())) {
+            // TODO: logger pop-up window saying this field is required
+            return false;
+        }
+        if (gsInputTextField.getText().equals("") || !(new File(gsInputTextField.getText()).exists())) {
+            // TODO: logger pop-up window saying this field is required
             return false;
         }
 

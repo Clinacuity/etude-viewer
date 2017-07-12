@@ -1,17 +1,20 @@
-package com.clinacuity.acv.controls;
+package com.clinacuity.acv.controllers;
 
 import com.clinacuity.acv.context.AcvContext;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXCheckBox;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.layout.GridPane;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class ViewControls extends GridPane {
+public class ViewControls implements Initializable {
     private static final Logger logger = LogManager.getLogger();
 
     @FXML private JFXComboBox<String> annotationComboBox;
@@ -19,21 +22,8 @@ public class ViewControls extends GridPane {
     @FXML private JFXCheckBox toggleOverlap;
     @FXML private JFXCheckBox toggleSubsumed;
 
-    public ViewControls() {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/controls/ViewControls.fxml"));
-        fxmlLoader.setRoot(this);
-        fxmlLoader.setController(this);
-
-        try {
-            fxmlLoader.load();
-        } catch (IOException e) {
-            logger.throwing(e);
-        }
-
-        initialize();
-    }
-
-    private void initialize() {
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
         AcvContext context = AcvContext.getInstance();
 
         // TODO: assign listener events to toggles

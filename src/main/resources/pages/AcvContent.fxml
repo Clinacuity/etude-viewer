@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.clinacuity.acv.controls.AnnotationComparisonView?>
+<?import com.clinacuity.acv.controllers.AnnotationComparisonViewController?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
-<?import com.clinacuity.acv.controls.ViewControls?>
+<?import com.clinacuity.acv.controllers.ViewControls?>
 
 <GridPane fx:id="mainGrid"
           xmlns="http://javafx.com/javafx/8.0.112"
@@ -17,9 +17,7 @@
         <ColumnConstraints hgrow="ALWAYS" maxWidth="500" minWidth="500" prefWidth="500" />
     </columnConstraints>
 
-    <AnnotationComparisonView GridPane.columnIndex="0"/>
     <Separator halignment="RIGHT" maxWidth="10.0" minWidth="10.0" orientation="VERTICAL" GridPane.columnIndex="1"/>
-    <ViewControls GridPane.columnIndex="2"/>
 
     <rowConstraints>
         <RowConstraints percentHeight="100" />
