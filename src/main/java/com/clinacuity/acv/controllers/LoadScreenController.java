@@ -50,12 +50,12 @@ public class LoadScreenController implements Initializable {
     @FXML private void runAcv() {
         // TODO: Activate loading spinner
         if (checkDocumentPaths()) {
-            // TODO: load documents into context
+            // load documents' file paths into context [triggers creating Annotations objects]
             AcvContext context = AcvContext.getInstance();
             context.targetDocumentPathProperty.setValue(testInputTextField.getText());
             context.referenceDocumentPathProperty.setValue(gsInputTextField.getText());
 
-            // TODO: parse documents into Annotations objects
+            // load the Acv main view
             context.mainController.reloadContent("/pages/AcvContent.fxml");
         } else {
             // TODO: deactivate the loading spinner

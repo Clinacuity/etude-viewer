@@ -65,7 +65,6 @@ public class CreateButtonsTask extends Task<List<AnnotationButton>> {
             AnchorPane.setTopAnchor(button, characterHeight * beginLabel.getKey() * 2.0d);
             AnchorPane.setLeftAnchor(button, (characterWidth * beginLabel.getValue()));
 
-            // TODO: FIX THIS!!! it no longer works...
             button.setOnMouseClicked(event -> AcvContext.getInstance().selectedTargetJsonObject.setValue(annotation));
 
             taskButtons.add(button);

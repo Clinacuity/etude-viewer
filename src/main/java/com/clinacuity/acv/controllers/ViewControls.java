@@ -49,12 +49,12 @@ public class ViewControls extends VBox {
         context.subsumedMatchesProperty.bindBidirectional(toggleSubsumed.selectedProperty());
         context.noMatchesProperty.bindBidirectional(toggleNoMatch.selectedProperty());
 
-        // TODO: fill in the combo box
+        // fill in the combo box
         annotationComboBox.itemsProperty().bind(context.annotationList);
         annotationComboBox.getSelectionModel().selectFirst();
         context.selectedAnnotationTypeProperty.bind(annotationComboBox.valueProperty());
 
-        // TODO: populate the Feature Lists
+        // populate the Feature Lists
         context.selectedTargetJsonObject.addListener((observable, oldValue, newValue) -> {
             StringBuilder buffer = new StringBuilder();
             for (String key: newValue.keySet()) {

@@ -52,9 +52,6 @@ public class AnnotatedDocumentPane extends ScrollPane {
         annotationsJson = target;
         annotationKeys = annotationsJson.getAnnotationKeySet();
 
-        // TODO: refactor!
-//        parent.notifyAnnotationSet(annotationKeys);
-
         arbitraryLabelsForSizeCalculations();
         FxTimer.runLater(Duration.ofMillis(100), this::addLabels);
 
@@ -96,12 +93,11 @@ public class AnnotatedDocumentPane extends ScrollPane {
         logger.debug("Character Height set to {}", characterHeight);
     }
 
-    // TODO clear buttons
     public void resetButtons(String key) {
         clearButtons();
         List<JsonObject> annotations = annotationsJson.getAnnotationsByKey(key);
 
-        // TODO: bind some progress property AND the value or succeed event to extract buttons list
+        // TODO: bind some progress property
         CreateButtonsTask task = new CreateButtonsTask(annotations, labelList, characterHeight);
         task.setOnSucceeded(event -> {
             buttonList = task.getValue();
