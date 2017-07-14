@@ -58,11 +58,6 @@ public class AcvContext {
 
         referenceDocumentPathProperty.addListener((observable, oldValue, newValue) -> cleanupAnnotationList());
         targetDocumentPathProperty.addListener((observable, oldValue, newValue) -> cleanupAnnotationList());
-
-
-
-        selectedTargetJsonObject.addListener(event -> logger.error("ANNOTATIONS PROPERTY JUST CHANGED! WHAT JUST HAPPENED?!"));
-        selectedReferenceJsonObject.addListener(event -> logger.error("clicked on a reference annotation button"));
     }
 
     private void cleanupAnnotationList() {

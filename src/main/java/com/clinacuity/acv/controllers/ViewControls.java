@@ -29,6 +29,9 @@ public class ViewControls extends VBox {
     @FXML private TextArea targetFeatureTree;
     @FXML private TextArea referenceFeatureTree;
 
+    public void setTargetFeatureTreeText(String text) { targetFeatureTree.setText(text); }
+    public void setReferenceFeatureTreeText(String text) { referenceFeatureTree.setText(text); }
+
     public ViewControls() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/controls/ViewControls.fxml"));
         fxmlLoader.setRoot(this);
@@ -53,21 +56,6 @@ public class ViewControls extends VBox {
         annotationComboBox.itemsProperty().bind(context.annotationList);
         annotationComboBox.getSelectionModel().selectFirst();
         context.selectedAnnotationTypeProperty.bind(annotationComboBox.valueProperty());
-
-        // populate the Feature Lists
-        context.selectedTargetJsonObject.addListener((observable, oldValue, newValue) -> {
-            StringBuilder buffer = new StringBuilder();
-            for (String key: newValue.keySet()) {
-                if (newValue.get(key).equals(JsonNull.INSTANCE)) {
-                    buffer.append("null");
-                } else {
-                    buffer.append(newValue.get(key).getAsString());
-                }
-                buffer.append("\n");
-            }
-
-            targetFeatureTree.setText(buffer.toString());
-        });
 
         // TODO: Fill in the metrics
     }

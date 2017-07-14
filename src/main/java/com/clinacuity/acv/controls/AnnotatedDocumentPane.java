@@ -4,6 +4,7 @@ import com.clinacuity.acv.context.Annotations;
 import com.clinacuity.acv.tasks.CreateButtonsTask;
 import com.clinacuity.acv.tasks.GetLabelsFromDocumentTask;
 import com.google.gson.JsonObject;
+import javafx.beans.property.ObjectProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
@@ -29,6 +30,7 @@ public class AnnotatedDocumentPane extends ScrollPane {
     private List<AnnotationButton> buttonList = new ArrayList<>();
     private Set<String> annotationKeys = new HashSet<>();
     private GetLabelsFromDocumentTask getLabelsTask;
+    private ObjectProperty<JsonObject> featureTreeJsonObject;
 
     private double characterHeight = -1.0;
 
@@ -48,9 +50,10 @@ public class AnnotatedDocumentPane extends ScrollPane {
      * This method will (re)initialize the Document Pane with new text, labels, annotations, etc.
      * without re-initializing the top-level UI controls for it
      */
-    public void initialize(Annotations target) {
-        annotationsJson = target;
+    public void initialize(Annotations annotationTarget, ObjectProperty<JsonObject> treeTarget) {
+        annotationsJson = annotationTarget;
         annotationKeys = annotationsJson.getAnnotationKeySet();
+        featureTreeJsonObject = treeTarget;
 
         arbitraryLabelsForSizeCalculations();
         FxTimer.runLater(Duration.ofMillis(100), this::addLabels);
@@ -98,7 +101,12 @@ public class AnnotatedDocumentPane extends ScrollPane {
         List<JsonObject> annotations = annotationsJson.getAnnotationsByKey(key);
 
         // TODO: bind some progress property
-        CreateButtonsTask task = new CreateButtonsTask(annotations, labelList, characterHeight);
+        if (featureTreeJsonObject == null) {
+            logger.error("There is no selected Json Object");
+            return;
+        }
+
+        CreateButtonsTask task = new CreateButtonsTask(annotations, featureTreeJsonObject, labelList, characterHeight);
         task.setOnSucceeded(event -> {
             buttonList = task.getValue();
             logger.error("{} buttons successfully added", buttonList.size());
