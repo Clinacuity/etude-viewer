@@ -1,26 +1,59 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
-<?import com.clinacuity.acv.controls.AnnotatedTextView?>
-<?import javafx.scene.control.Separator?>
 
-<GridPane xmlns="http://javafx.com/javafx/8.0.112"
+<?import javafx.geometry.Insets?>
+<?import com.clinacuity.acv.controls.AnnotatedDocumentPane?>
+<?import javafx.scene.control.Label?>
+<?import com.clinacuity.acv.controllers.ViewControls?>
+<GridPane fx:id="mainGrid"
+          xmlns="http://javafx.com/javafx/8.0.112"
           xmlns:fx="http://javafx.com/fxml/1"
-          fx:controller="com.clinacuity.acv.controllers.AcvController"
-          fx:id="mainGrid">
+          fx:controller="com.clinacuity.acv.controllers.AcvContentController">
     <columnConstraints>
-        <ColumnConstraints hgrow="ALWAYS" percentWidth="59"/>
-        <ColumnConstraints hgrow="NEVER" prefWidth="10" maxWidth="10" minWidth="10"/>
-        <ColumnConstraints />
+        <ColumnConstraints hgrow="ALWAYS" />
+        <ColumnConstraints halignment="RIGHT" hgrow="ALWAYS"/>
+        <ColumnConstraints maxWidth="500" minWidth="500" prefWidth="500" />
     </columnConstraints>
 
-    <AnnotatedTextView fx:id="annotatedTextView" GridPane.columnIndex="0"/>
-    <Separator orientation="VERTICAL" GridPane.columnIndex="1"/>
-    <AnnotatedTextView GridPane.columnIndex="2"/>
+    <rowConstraints>
+        <RowConstraints percentHeight="100" />
+    </rowConstraints>
 
     <rowConstraints>
-        <RowConstraints percentHeight="100"/>
+        <RowConstraints maxHeight="40" minHeight="40" prefHeight="40" vgrow="NEVER" />
+        <RowConstraints vgrow="ALWAYS" />
     </rowConstraints>
+
+    <GridPane>
+        <rowConstraints>
+            <RowConstraints maxHeight="40" minHeight="40" prefHeight="40" vgrow="NEVER" />
+            <RowConstraints vgrow="ALWAYS" />
+        </rowConstraints>
+
+        <columnConstraints>
+            <ColumnConstraints hgrow="ALWAYS" percentWidth="49.5"/>
+            <ColumnConstraints hgrow="NEVER" percentWidth="1" />
+            <ColumnConstraints hgrow="ALWAYS" percentWidth="49.5"/>
+        </columnConstraints>
+
+        <Label text="System Output:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+        <Label text="Reference:" GridPane.columnIndex="2" GridPane.rowIndex="0" />
+
+        <AnnotatedDocumentPane fx:id="targetPane" maxWidth="Infinity" maxHeight="Infinity" id="target"
+                               GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+        <AnnotatedDocumentPane fx:id="referencePane" maxWidth="Infinity" maxHeight="Infinity" id="reference"
+                               GridPane.columnIndex="2" GridPane.rowIndex="1"/>
+    </GridPane>
+
+    <Separator halignment="RIGHT" orientation="VERTICAL" GridPane.columnIndex="1">
+        <padding>
+            <Insets left="10" right="10"/>
+        </padding>
+    </Separator>
+
+    <ViewControls fx:id="viewControls" GridPane.rowIndex="0" GridPane.columnIndex="2"/>
 </GridPane>

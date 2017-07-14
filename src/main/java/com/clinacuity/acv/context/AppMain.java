@@ -1,50 +1,51 @@
 package com.clinacuity.acv.context;
 
-import com.clinacuity.acv.context.AcvContext;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.Locale;
 import java.util.Properties;
+import java.util.ResourceBundle;
 
 public class AppMain extends Application{
     private static final Logger logger = LogManager.getLogger();
 
+    private Scene scene;
+
     @Override
     public void start(Stage primaryStage) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/pages/AppMain.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/pages/AppMain.fxml"));
+            loader.setResources(ResourceBundle.getBundle("config_en", new Locale("en")));
+            Parent root = loader.load();
 
-            Scene scene = new Scene(root, 1600, 900);
-            primaryStage.setTitle("Annotation Comparison Viewer");
-            primaryStage.setScene(scene);
-            primaryStage.show();
-
+            scene = new Scene(root, 1600, 900);
+            scene.getStylesheets().clear();
             loadProperties();
+            prepareCss();
+
+            primaryStage.setTitle("Annotations Comparison Viewer");
+            primaryStage.setScene(scene);
+            primaryStage.setMinWidth(1000.0d);
+            primaryStage.setMinHeight(800.0d);
+            primaryStage.show();
         } catch (IOException e) {
             logger.throwing(e);
         }
     }
 
-    private void loadProperties() {
-        Properties properties = null;
-        try {
-            properties = new Properties();
-            properties.load(getClass().getResourceAsStream("/config.properties"));
-            logger.debug("Loading font: {}", properties.getProperty("mainFont"));
-        } catch (IOException e) {
-            logger.throwing(e);
-        }
+    private void loadProperties() throws IOException {
+        Properties properties = new Properties();
+        properties.load(getClass().getResourceAsStream("/config_en.properties"));
+    }
 
-        AcvContext context = AcvContext.getInstance();
-        context.setFont(Font.loadFont(getClass().getResourceAsStream(properties.getProperty("mainFont")), 12.0f));
+    private void prepareCss() throws IOException {
+        scene.getStylesheets().add(getClass().getResource("/app.css").toExternalForm());
     }
 
     public static void main(String[] args) { launch(args); }

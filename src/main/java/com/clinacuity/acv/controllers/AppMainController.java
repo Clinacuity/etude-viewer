@@ -18,13 +18,15 @@ public class AppMainController implements Initializable {
 
     @FXML private GridPane masterGrid;
     @FXML private GridPane targetGridContent;
+    private ResourceBundle resources;
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        AcvContext.getInstance().setMainController(this);
+    public void initialize(URL location, ResourceBundle resourceBundle) {
+        AcvContext.getInstance().mainController = this;
 
+        resources = resourceBundle;
         try {
-            MenuBar menuBar = FXMLLoader.load(getClass().getResource("/pages/MenuBar.fxml"));
+            MenuBar menuBar = FXMLLoader.load(getClass().getResource("/pages/MenuBar.fxml"), resources);
             masterGrid.getChildren().addAll(menuBar);
 
             reloadContent("/pages/LoadScreenView.fxml");
@@ -36,12 +38,10 @@ public class AppMainController implements Initializable {
     void reloadContent(String page) {
         try {
             masterGrid.getChildren().remove(targetGridContent);
-            targetGridContent = FXMLLoader.load(getClass().getResource(page));
+            targetGridContent = FXMLLoader.load(getClass().getResource(page), resources);
             targetGridContent.setPadding(new Insets(5.0f, 10.f, 10.0f, 10.f));
-            masterGrid.addRow(1, targetGridContent);
+            masterGrid.add(targetGridContent, 0, 1);
 
-//            targetGridContent.prefHeightProperty().bind(targetGridContent.getScene().heightProperty());
-//            targetGridContent.prefWidthProperty().bind(targetGridContent.getScene().widthProperty());
         } catch (IOException e) {
             logger.throwing(e);
         }

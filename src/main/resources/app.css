@@ -1,0 +1,108 @@
+@font-face {
+    src: url('/fonts/open/OpenSans-SemiBold.ttf');
+}
+
+@font-face {
+     src: url('/fonts/open/OpenSans-Bold.ttf');
+}
+
+@font-face {
+    src: url("/fonts/fira/FiraMono-Bold.ttf");
+}
+
+@font-face {
+    src: url("/fonts/open/OpenSans-BoldItalic.ttf");
+}
+
+@font-face {
+    src: url("/fonts/fira/FiraMono-Medium.ttf");
+}
+
+@font-face {
+    src: url("/fonts/fira/FiraMono-Regular.ttf");
+}
+
+/*    BUTTONS    */
+.button {
+    -fx-font-family: "Open Sans Bold";
+    -fx-font-size: 1;
+    -fx-border-radius: 3px;
+    -fx-border-color: DarkGray;
+}
+
+.button-clickable {
+    -fx-focus-traversable: false;
+    -fx-font-size: 10;
+}
+
+.button-actionable {
+    -fx-font-size: 14;
+}
+
+.button:hover {
+    -fx-border-radius: 3px;
+    -fx-border-color: DodgerBlue
+}
+/*    END BUTTONS   */
+
+
+/*    COMBO BOXES    */
+.jfx-combo-box {
+    -jfx-focus-color: DodgerBlue;
+    -jfx-unfocus-color: DarkGray;
+}
+
+.combo-box-popup .list-view .jfx-list-cell:odd {
+    -fx-background-color: rgb(225, 225, 225);
+}
+
+.combo-box-popup .list-view .jfx-list-cell:even {
+    -fx-background-color: rgba(240, 240, 240);
+}
+
+.jfx-list-cell:selected > .jfx-rippler > StackPane {
+    -fx-background-color: DodgerBlue;
+}
+
+.jfx-list-cell:hover > .jfx-rippler > StackPane {
+    -fx-background-color: DodgerBlue;
+}
+/*    END COMBO BOXES   */
+
+
+/*    CHECK BOXES   */
+.h-box-checkbox {
+    -fx-padding: 8 3 8 0;
+}
+
+/*    END CHECK BOXES    */
+
+
+/*    TEXT FIELDS   */
+.text-field {
+    -fx-font-family: "Open Sans Regular";
+}
+
+.tooltip {
+    -fx-font-family: "Open Sans Bold Italic";
+    -fx-font-size: 10;
+}
+
+.label-tooltip {
+    -fx-opacity: 0.2;
+}
+
+.label-tooltip:hover {
+    -fx-opacity: 1;
+}
+
+.label-header-one {
+    -fx-font-family: "Open Sans Bold Italic";
+    -fx-font-size:36;
+}
+
+.mono-text {
+    -fx-font-family: "Source Code Pro";
+    -fx-font-size: 12;
+}
+/*    END TEXT FIELDS   */

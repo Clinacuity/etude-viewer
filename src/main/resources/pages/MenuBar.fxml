@@ -3,7 +3,6 @@
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuItem?>
-<?import javafx.geometry.Insets?>
 
 <MenuBar xmlns="http://javafx.com/javafx"
          xmlns:fx="http://javafx.com/fxml"
@@ -13,11 +12,3 @@
         <MenuItem text="More Items" />
     </Menu>
 </MenuBar>
-
-<!--
-orange      == 230, 159, 000
-blue        == 086, 180, 233
-purple      == 204, 121, 167
-yellow      == 240, 228, 066
-Vermilion   == 213, 094, 000
--->
