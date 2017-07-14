@@ -7,7 +7,7 @@ public class AnnotationButton extends Button {
     JsonObject annotation;
 
     public AnnotationButton(JsonObject json) {
-        setStyle("-fx-focus-traversable: false; -fx-mouse-");
+        setStyle("-fx-focus-traversable: false;");
         annotation = json;
     }
 }

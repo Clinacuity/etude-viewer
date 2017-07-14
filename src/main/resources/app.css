@@ -22,13 +22,9 @@
     src: url("/fonts/fira/FiraMono-Regular.ttf");
 }
 
-@font-face {
-    src: url("/fonts/roboto/RobotoMono-Regular.ttf");
-}
-
 /*    BUTTONS    */
-.button* {
-    -fx-font-family: "Roboto Mono";
+.button {
+    -fx-font-family: "Open Sans Bold";
     -fx-font-size: 1;
     -fx-border-radius: 3px;
     -fx-border-color: DarkGray;
@@ -43,7 +39,7 @@
     -fx-font-size: 14;
 }
 
-.button*:hover {
+.button:hover {
     -fx-border-radius: 3px;
     -fx-border-color: DodgerBlue
 }
@@ -83,18 +79,13 @@
 
 
 /*    TEXT FIELDS   */
-.text-field, .label* {
-    -fx-font-family: "Roboto Mono";
+.text-field {
+    -fx-font-family: "Open Sans Regular";
 }
 
 .tooltip {
     -fx-font-family: "Open Sans Bold Italic";
     -fx-font-size: 10;
-}
-
-.code-area {
-    -fx-font-family: "Fira Mono Bold";
-    -fx-font-size: 14;
 }
 
 .label-tooltip {
@@ -106,15 +97,12 @@
 }
 
 .label-header-one {
+    -fx-font-family: "Open Sans Bold Italic";
     -fx-font-size:36;
 }
 
-.label-normal {
-    -fx-font-size:14;
-}
-
-.label-mono {
-    -fx-font-family: "Fira Mono Bold";
+.mono-text {
+    -fx-font-family: "Source Code Pro";
     -fx-font-size: 12;
 }
 /*    END TEXT FIELDS   */

@@ -1,5 +1,6 @@
 package com.clinacuity.acv.tasks;
 
+import com.clinacuity.acv.context.AcvContext;
 import com.clinacuity.acv.controls.AnnotationButton;
 import com.google.gson.JsonObject;
 import javafx.concurrent.Task;
@@ -19,15 +20,11 @@ public class CreateButtonsTask extends Task<List<AnnotationButton>> {
     private List<Label> taskLabels;
     private List<AnnotationButton> taskButtons = new ArrayList<>();
 
-    private static boolean willPrint = true;
-
-    private double characterWidth = -1.0d;
     private double characterHeight = -1.0;
 
-    public CreateButtonsTask(List<JsonObject> annots, List<Label> labels, double charWidth, double charHeight) {
-        taskAnnotations = annots;
+    public CreateButtonsTask(List<JsonObject> annotations, List<Label> labels, double charHeight) {
+        taskAnnotations = annotations;
         taskLabels = labels;
-        characterWidth = charWidth;
         characterHeight = charHeight;
     }
 
@@ -59,24 +56,17 @@ public class CreateButtonsTask extends Task<List<AnnotationButton>> {
 
         // the Key is the index of the label in the LabelList; the Value is the character offset
         if (beginLabel.getKey().equals(endLabel.getKey())) {
+            Label label = taskLabels.get(beginLabel.getKey());
+            double characterWidth = label.getWidth() / label.getText().length();
+
             AnnotationButton button = new AnnotationButton(annotation);
             button.setMaxSize(characterWidth * (end - begin), characterHeight);
             button.setMinSize(characterWidth * (end - begin), characterHeight);
-            button.setTranslateY(characterHeight * beginLabel.getKey() * 2.0d);
-            button.setTranslateX((int)(characterWidth * beginLabel.getValue()));
-//            AnchorPane.setTopAnchor(button, characterHeight * beginLabel.getKey() * 2.0d);
-//            AnchorPane.setLeftAnchor(button, characterWidth * (beginLabel.getValue()));
+            AnchorPane.setTopAnchor(button, characterHeight * beginLabel.getKey() * 2.0d);
+            AnchorPane.setLeftAnchor(button, (characterWidth * beginLabel.getValue()));
 
-            if (CreateButtonsTask.willPrint) {
-                logger.error("=========================================================");
-
-                for (Object key: button.getProperties().keySet()) {
-                    logger.error("{}: {}", key, button.getProperties().get(key));
-                }
-
-                logger.error("=========================================================");
-                CreateButtonsTask.willPrint = false;
-            }
+            // TODO: FIX THIS!!! it no longer works...
+            button.setOnMouseClicked(event -> AcvContext.getInstance().selectedTargetJsonObject.setValue(annotation));
 
             taskButtons.add(button);
             updateValue(taskButtons);
@@ -87,8 +77,8 @@ public class CreateButtonsTask extends Task<List<AnnotationButton>> {
 
     /**
      * Returns a Pair in the form of (index, charOffset) for the given Label.
-     * @param target
-     * @return
+     * @param target    The index being searched for in terms of the entire document text
+     * @return          A Pair whose key equals the label's index and value equals appropriate char index offset
      */
     private Pair<Integer, Integer> getLabelAttributes(int target) {
         int max = taskLabels.size();

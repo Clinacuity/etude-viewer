@@ -18,6 +18,10 @@ public class Annotations {
     private Map<String, List<JsonObject>> annotationMap = new HashMap<>();
     public Map<String, List<JsonObject>> getAnnotationMap() { return annotationMap; }
 
+    /**
+     * Convenience object for managing a document's Json objects.
+     * @param filePath      The path to the json file
+     */
     public Annotations(String filePath) {
         logger.debug("Loading Annotations from: {}", filePath);
 
@@ -61,6 +65,4 @@ public class Annotations {
     public String getRawText() {
         return root.get("raw_content").getAsString();
     }
-
-
 }

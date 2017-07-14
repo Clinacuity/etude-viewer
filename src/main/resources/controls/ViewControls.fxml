@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.geometry.Insets?>
 <?import com.jfoenix.controls.JFXComboBox?>
@@ -12,19 +11,12 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.control.Tooltip?>
 <?import com.jfoenix.controls.JFXCheckBox?>
+<?import javafx.scene.control.TextArea?>
 
-<GridPane xmlns="http://javafx.com/javafx/8.0.112"
-          xmlns:fx="http://javafx.com/fxml/1"
-          fx:controller="com.clinacuity.acv.controllers.ViewControls">
-    <rowConstraints>
-        <RowConstraints fillHeight="false"/>
-        <RowConstraints fillHeight="false"/>
-        <RowConstraints />
-    </rowConstraints>
-
-    <columnConstraints>
-        <ColumnConstraints/>
-    </columnConstraints>
+<fx:root type="javafx.scene.layout.VBox"
+         xmlns="http://javafx.com/javafx/8.0.112"
+         xmlns:fx="http://javafx.com/fxml/1"
+         spacing="20">
 
     <JFXComboBox fx:id="annotationComboBox" GridPane.columnIndex="0" GridPane.rowIndex="0">
         <GridPane.margin>
@@ -32,7 +24,7 @@
         </GridPane.margin>
     </JFXComboBox>
 
-    <VBox GridPane.columnIndex="0" GridPane.rowIndex="2">
+    <VBox GridPane.columnIndex="0" GridPane.rowIndex="1">
         <HBox alignment="CENTER_LEFT" spacing="3" styleClass="h-box-checkbox">
             <JFXCheckBox fx:id="toggleExact" text="Exact Match"
                          checkedColor="DodgerBlue" unCheckedColor="DodgerBlue"/>
@@ -95,7 +87,7 @@
             </Label>
         </HBox>
         <HBox alignment="CENTER_LEFT" spacing="3" styleClass="h-box-checkbox">
-            <JFXCheckBox fx:id="toggleFree" text="No Match"
+            <JFXCheckBox fx:id="toggleNoMatch" text="No Match"
                          checkedColor="Maroon" unCheckedColor="Maroon"/>
             <Label styleClass="label-tooltip">
                 <tooltip>
@@ -111,7 +103,25 @@
             </Label>
         </HBox>
     </VBox>
+
+    <GridPane GridPane.columnIndex="0" GridPane.rowIndex="2" >
+        <columnConstraints>
+            <ColumnConstraints percentWidth="33.3"/>
+            <ColumnConstraints percentWidth="33.3"/>
+            <ColumnConstraints percentWidth="33.3"/>
+        </columnConstraints>
+
+        <Label fx:id="recallLabel" text="Recall: " GridPane.columnIndex="0"/>
+        <Label fx:id="precisionLabel" text="Precision: " GridPane.columnIndex="1"/>
+        <Label fx:id="fOneMeasureLabel" text="F-1 Measure: " GridPane.columnIndex="2"/>
+    </GridPane>
+
+    <HBox VBox.vgrow="ALWAYS" spacing="5">
+        <TextArea fx:id="targetFeatureTree" editable="false" focusTraversable="false" mouseTransparent="true"/>
+        <TextArea fx:id="referenceFeatureTree" editable="false" focusTraversable="false" mouseTransparent="true"/>
+    </HBox>
+
     <padding>
-        <Insets left="15.0" top="80.0"/>
+        <Insets top="40.0"/>
     </padding>
-</GridPane>
+</fx:root>

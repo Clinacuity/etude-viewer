@@ -65,11 +65,14 @@ public class LoadScreenController implements Initializable {
     }
 
     private boolean checkDocumentPaths() {
-        if (testInputTextField.getText().equals("") || !(new File(testInputTextField.getText()).exists())) {
+        String test = testInputTextField.getText().trim();
+        String gold = gsInputTextField.getText().trim();
+
+        if (test.equals("") || !(new File(test).exists())) {
             // TODO: logger pop-up window saying this field is required
             return false;
         }
-        if (gsInputTextField.getText().equals("") || !(new File(gsInputTextField.getText()).exists())) {
+        if (gold.equals("") || !(new File(gold).exists())) {
             // TODO: logger pop-up window saying this field is required
             return false;
         }

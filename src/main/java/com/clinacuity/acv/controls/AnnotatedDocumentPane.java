@@ -1,8 +1,8 @@
 package com.clinacuity.acv.controls;
 
 import com.clinacuity.acv.context.Annotations;
-import com.clinacuity.acv.controllers.AnnotationComparisonViewController;
 import com.clinacuity.acv.tasks.CreateButtonsTask;
+import com.clinacuity.acv.tasks.GetLabelsFromDocumentTask;
 import com.google.gson.JsonObject;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -28,12 +28,9 @@ public class AnnotatedDocumentPane extends ScrollPane {
     private List<Label> labelList = new ArrayList<>();
     private List<AnnotationButton> buttonList = new ArrayList<>();
     private Set<String> annotationKeys = new HashSet<>();
-    private AnnotationComparisonViewController parent;
+    private GetLabelsFromDocumentTask getLabelsTask;
 
-    private double characterWidth = -1.0d;
     private double characterHeight = -1.0;
-
-    private int callCount = 0;
 
     public AnnotatedDocumentPane() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/controls/AnnotatedDocumentPane.fxml"));
@@ -51,53 +48,52 @@ public class AnnotatedDocumentPane extends ScrollPane {
      * This method will (re)initialize the Document Pane with new text, labels, annotations, etc.
      * without re-initializing the top-level UI controls for it
      */
-    public void initialize(Annotations target, AnnotationComparisonViewController parentController) {
+    public void initialize(Annotations target) {
         annotationsJson = target;
         annotationKeys = annotationsJson.getAnnotationKeySet();
 
-        parent = parentController;
-        parent.notifyAnnotationSet(annotationKeys);
+        // TODO: refactor!
+//        parent.notifyAnnotationSet(annotationKeys);
 
         arbitraryLabelsForSizeCalculations();
         FxTimer.runLater(Duration.ofMillis(100), this::addLabels);
+
+        logger.debug("Annotated Document Pane initialized.");
     }
 
     private void addLabels() {
-        if (characterWidth <= 0.0d) {
-            getCharacterSizes();
+        if (characterHeight <= 0.0d) {
+            getCharacterHeight();
         }
 
-        anchor.getChildren().removeAll(labelList);
+        if (getLabelsTask != null && getLabelsTask.isRunning()) {
+            getLabelsTask.cancel();
+        }
+
         labelList.clear();
-
         anchor.getChildren().clear();
-        String[] lines = annotationsJson.getRawText().split("\n");
-        logger.error(annotationsJson.getRawText().substring(91, 97));
 
-        double offset = 0.0d;
-        for (String line: lines) {
-            Label label = new Label(line);
-            label.getStyleClass().clear();
-            label.getStyleClass().add("label-mono");
-            AnchorPane.setTopAnchor(label, offset);
-            labelList.add(label);
-            anchor.getChildren().add(label);
-            offset += (characterHeight * 2.0d);
-        }
+        String[] lines = annotationsJson.getRawText().split("\n");
+        getLabelsTask = new GetLabelsFromDocumentTask(lines, characterHeight);
+        getLabelsTask.setOnSucceeded(event -> {
+            labelList = getLabelsTask.getValue();
+            anchor.getChildren().addAll(labelList);
+        });
+        getLabelsTask.setOnCancelled(event -> logger.warn("Get Labels Task has been cancelled -- starting a new one."));
+        new Thread(getLabelsTask).start();
     }
 
     private void arbitraryLabelsForSizeCalculations() {
-        Label label = new Label("hhh");
+        Label label = new Label("Loading . . .");
         labelList.add(label);
-        label.getStyleClass().add("label-mono");
+        label.getStyleClass().add("mono-text");
         anchor.getChildren().addAll(labelList);
     }
 
-    private void getCharacterSizes() {
+    private void getCharacterHeight() {
         Label label = labelList.get(0);
         characterHeight = label.getHeight();
-        characterWidth = (label.getWidth() / label.getText().length());
-        logger.debug("Character Sizes set to: {} x {}", characterWidth, characterHeight);
+        logger.debug("Character Height set to {}", characterHeight);
     }
 
     // TODO clear buttons
@@ -106,21 +102,14 @@ public class AnnotatedDocumentPane extends ScrollPane {
         List<JsonObject> annotations = annotationsJson.getAnnotationsByKey(key);
 
         // TODO: bind some progress property AND the value or succeed event to extract buttons list
-        CreateButtonsTask task = new CreateButtonsTask(annotations, labelList, characterWidth, characterHeight);
+        CreateButtonsTask task = new CreateButtonsTask(annotations, labelList, characterHeight);
         task.setOnSucceeded(event -> {
             buttonList = task.getValue();
             logger.error("{} buttons successfully added", buttonList.size());
             anchor.getChildren().addAll(buttonList);
-
-            for (AnnotationButton button: buttonList) {
-                logger.error(button.getTranslateX());
-            }
         });
         task.setOnFailed(event -> logger.throwing(task.getException()));
-
         new Thread(task).start();
-        callCount++;
-        logger.error(callCount);
     }
 
     public void clearButtons() {

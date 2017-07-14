@@ -23,6 +23,7 @@ public class AppMainController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resourceBundle) {
         AcvContext.getInstance().mainController = this;
+
         resources = resourceBundle;
         try {
             MenuBar menuBar = FXMLLoader.load(getClass().getResource("/pages/MenuBar.fxml"), resources);
