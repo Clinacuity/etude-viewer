@@ -40,8 +40,6 @@ public class AcvContext {
     public BooleanProperty overlappingMatchesProperty = new SimpleBooleanProperty(true);
     public BooleanProperty subsumedMatchesProperty = new SimpleBooleanProperty(true);
     public BooleanProperty noMatchesProperty = new SimpleBooleanProperty(true);
-    public ObjectProperty<JsonObject> selectedTargetJsonObject = new SimpleObjectProperty<>();
-    public ObjectProperty<JsonObject> selectedReferenceJsonObject = new SimpleObjectProperty<>();
 
     public ListProperty<String> annotationList = new SimpleListProperty<>(FXCollections.observableArrayList());
 

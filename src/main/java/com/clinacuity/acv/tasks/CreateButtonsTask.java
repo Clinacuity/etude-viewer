@@ -20,16 +20,13 @@ public class CreateButtonsTask extends Task<List<AnnotationButton>> {
     private List<JsonObject> taskAnnotations;
     private List<Label> taskLabels;
     private List<AnnotationButton> taskButtons = new ArrayList<>();
-    private ObjectProperty<JsonObject> targetFeatureTree;
 
     private double characterHeight = -1.0;
 
-    public CreateButtonsTask(
-            List<JsonObject> annotations, ObjectProperty<JsonObject> target, List<Label> labels, double charHeight) {
+    public CreateButtonsTask(List<JsonObject> annotations, List<Label> labels, double charHeight) {
         taskAnnotations = annotations;
         taskLabels = labels;
         characterHeight = charHeight;
-        targetFeatureTree = target;
     }
 
     @Override public List<AnnotationButton> call() {
@@ -68,8 +65,6 @@ public class CreateButtonsTask extends Task<List<AnnotationButton>> {
             button.setMinSize(characterWidth * (end - begin), characterHeight);
             AnchorPane.setTopAnchor(button, characterHeight * beginLabel.getKey() * 2.0d);
             AnchorPane.setLeftAnchor(button, (characterWidth * beginLabel.getValue()));
-
-            button.setOnMouseClicked(event -> targetFeatureTree.setValue(annotation));
 
             taskButtons.add(button);
             updateValue(taskButtons);
