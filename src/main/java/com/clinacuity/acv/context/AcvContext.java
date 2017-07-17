@@ -40,8 +40,6 @@ public class AcvContext {
     public BooleanProperty overlappingMatchesProperty = new SimpleBooleanProperty(true);
     public BooleanProperty subsumedMatchesProperty = new SimpleBooleanProperty(true);
     public BooleanProperty noMatchesProperty = new SimpleBooleanProperty(true);
-    public ObjectProperty<JsonObject> selectedTargetJsonObject = new SimpleObjectProperty<>();
-    public ObjectProperty<JsonObject> selectedReferenceJsonObject = new SimpleObjectProperty<>();
 
     public ListProperty<String> annotationList = new SimpleListProperty<>(FXCollections.observableArrayList());
 
@@ -58,11 +56,6 @@ public class AcvContext {
 
         referenceDocumentPathProperty.addListener((observable, oldValue, newValue) -> cleanupAnnotationList());
         targetDocumentPathProperty.addListener((observable, oldValue, newValue) -> cleanupAnnotationList());
-
-
-
-        selectedTargetJsonObject.addListener(event -> logger.error("ANNOTATIONS PROPERTY JUST CHANGED! WHAT JUST HAPPENED?!"));
-        selectedReferenceJsonObject.addListener(event -> logger.error("clicked on a reference annotation button"));
     }
 
     private void cleanupAnnotationList() {

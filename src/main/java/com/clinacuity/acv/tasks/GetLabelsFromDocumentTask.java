@@ -14,8 +14,8 @@ public class GetLabelsFromDocumentTask extends Task<List<Label>> {
     private String[] lines;
     private double offsetIncrement = 0.0d;
 
-    public GetLabelsFromDocumentTask(String[] lines, double characterHeight) {
-        this.lines = lines;
+    public GetLabelsFromDocumentTask(String rawText, double characterHeight) {
+        lines = rawText.split("\n");
         offsetIncrement = characterHeight * 2.0d;
     }
 

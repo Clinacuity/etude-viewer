@@ -4,6 +4,7 @@ import com.clinacuity.acv.context.Annotations;
 import com.clinacuity.acv.tasks.CreateButtonsTask;
 import com.clinacuity.acv.tasks.GetLabelsFromDocumentTask;
 import com.google.gson.JsonObject;
+import javafx.beans.property.ObjectProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
@@ -24,12 +25,8 @@ public class AnnotatedDocumentPane extends ScrollPane {
     private static final Logger logger = LogManager.getLogger();
 
     @FXML private AnchorPane anchor;
-    private Annotations annotationsJson;
     private List<Label> labelList = new ArrayList<>();
     private List<AnnotationButton> buttonList = new ArrayList<>();
-    private Set<String> annotationKeys = new HashSet<>();
-    private GetLabelsFromDocumentTask getLabelsTask;
-
     private double characterHeight = -1.0;
 
     public AnnotatedDocumentPane() {
@@ -42,42 +39,11 @@ public class AnnotatedDocumentPane extends ScrollPane {
         } catch (IOException e) {
             logger.throwing(e);
         }
-    }
-
-    /**
-     * This method will (re)initialize the Document Pane with new text, labels, annotations, etc.
-     * without re-initializing the top-level UI controls for it
-     */
-    public void initialize(Annotations target) {
-        annotationsJson = target;
-        annotationKeys = annotationsJson.getAnnotationKeySet();
 
         arbitraryLabelsForSizeCalculations();
-        FxTimer.runLater(Duration.ofMillis(100), this::addLabels);
+        FxTimer.runLater(Duration.ofMillis(10), this::getCharacterHeight);
 
         logger.debug("Annotated Document Pane initialized.");
-    }
-
-    private void addLabels() {
-        if (characterHeight <= 0.0d) {
-            getCharacterHeight();
-        }
-
-        if (getLabelsTask != null && getLabelsTask.isRunning()) {
-            getLabelsTask.cancel();
-        }
-
-        labelList.clear();
-        anchor.getChildren().clear();
-
-        String[] lines = annotationsJson.getRawText().split("\n");
-        getLabelsTask = new GetLabelsFromDocumentTask(lines, characterHeight);
-        getLabelsTask.setOnSucceeded(event -> {
-            labelList = getLabelsTask.getValue();
-            anchor.getChildren().addAll(labelList);
-        });
-        getLabelsTask.setOnCancelled(event -> logger.warn("Get Labels Task has been cancelled -- starting a new one."));
-        new Thread(getLabelsTask).start();
     }
 
     private void arbitraryLabelsForSizeCalculations() {
@@ -87,28 +53,30 @@ public class AnnotatedDocumentPane extends ScrollPane {
         anchor.getChildren().addAll(labelList);
     }
 
-    private void getCharacterHeight() {
+    public double getCharacterHeight() {
         Label label = labelList.get(0);
         characterHeight = label.getHeight();
         logger.debug("Character Height set to {}", characterHeight);
+        return characterHeight;
     }
 
-    public void resetButtons(String key) {
-        clearButtons();
-        List<JsonObject> annotations = annotationsJson.getAnnotationsByKey(key);
+    public void addLabels(List<Label> labels) {
+        anchor.getChildren().removeAll(labelList);
+        labelList = labels;
 
-        // TODO: bind some progress property
-        CreateButtonsTask task = new CreateButtonsTask(annotations, labelList, characterHeight);
-        task.setOnSucceeded(event -> {
-            buttonList = task.getValue();
-            logger.error("{} buttons successfully added", buttonList.size());
-            anchor.getChildren().addAll(buttonList);
-        });
-        task.setOnFailed(event -> logger.throwing(task.getException()));
-        new Thread(task).start();
+        if (!labelList.isEmpty()) {
+            anchor.getChildren().addAll(labelList);
+        }
     }
 
-    public void clearButtons() {
+    public void addButtons(List<AnnotationButton> buttons) {
         anchor.getChildren().removeAll(buttonList);
+        buttonList = buttons;
+
+        if (!buttonList.isEmpty()) {
+            anchor.getChildren().addAll(buttonList);
+        }
     }
+
+    public List<Label> getLabelList() { return labelList; }
 }

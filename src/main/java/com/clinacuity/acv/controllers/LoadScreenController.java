@@ -61,7 +61,6 @@ public class LoadScreenController implements Initializable {
             // TODO: deactivate the loading spinner
             logger.debug("loading spinner will deactivate on its own if the content is reloaded");
         }
-
     }
 
     private boolean checkDocumentPaths() {

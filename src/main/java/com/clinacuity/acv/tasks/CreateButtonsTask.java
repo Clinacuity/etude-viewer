@@ -3,6 +3,7 @@ package com.clinacuity.acv.tasks;
 import com.clinacuity.acv.context.AcvContext;
 import com.clinacuity.acv.controls.AnnotationButton;
 import com.google.gson.JsonObject;
+import javafx.beans.property.ObjectProperty;
 import javafx.concurrent.Task;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
@@ -64,8 +65,6 @@ public class CreateButtonsTask extends Task<List<AnnotationButton>> {
             button.setMinSize(characterWidth * (end - begin), characterHeight);
             AnchorPane.setTopAnchor(button, characterHeight * beginLabel.getKey() * 2.0d);
             AnchorPane.setLeftAnchor(button, (characterWidth * beginLabel.getValue()));
-
-            button.setOnMouseClicked(event -> AcvContext.getInstance().selectedTargetJsonObject.setValue(annotation));
 
             taskButtons.add(button);
             updateValue(taskButtons);
