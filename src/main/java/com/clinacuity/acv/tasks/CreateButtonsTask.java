@@ -1,9 +1,7 @@
 package com.clinacuity.acv.tasks;
 
-import com.clinacuity.acv.context.AcvContext;
 import com.clinacuity.acv.controls.AnnotationButton;
 import com.google.gson.JsonObject;
-import javafx.beans.property.ObjectProperty;
 import javafx.concurrent.Task;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
@@ -33,7 +31,7 @@ public class CreateButtonsTask extends Task<List<AnnotationButton>> {
         int max = taskAnnotations.size();
 
         for (int i = 0; i < max; i++) {
-            createNewButton(taskAnnotations.get(i));
+            processAnnotation(taskAnnotations.get(i));
             updateProgress(i, max);
         }
 
@@ -41,35 +39,64 @@ public class CreateButtonsTask extends Task<List<AnnotationButton>> {
         return taskButtons;
     }
 
-    private void createNewButton(JsonObject annotation) {
+    private void processAnnotation(JsonObject annotation) {
         // once the running Length exceeds the begin, we have found our target label
         int begin = annotation.get("begin_pos").getAsInt();
         int end = annotation.get("end_pos").getAsInt();
 
-        Pair<Integer, Integer> beginLabel = getLabelAttributes(begin);
-        Pair<Integer, Integer> endLabel = getLabelAttributes(end);
+        Pair<Integer, Integer> beginLabelAttributes = getLabelAttributes(begin);
+        Pair<Integer, Integer> endLabelAttributes = getLabelAttributes(end);
 
-        if (beginLabel == null || endLabel == null) {
+        if (beginLabelAttributes == null || endLabelAttributes == null) {
             setException(new NullPointerException());
             failed();
             return;
         }
 
         // the Key is the index of the label in the LabelList; the Value is the character offset
-        if (beginLabel.getKey().equals(endLabel.getKey())) {
-            Label label = taskLabels.get(beginLabel.getKey());
+        if (beginLabelAttributes.getKey().equals(endLabelAttributes.getKey())) {
+            Label label = taskLabels.get(beginLabelAttributes.getKey());
             double characterWidth = label.getWidth() / label.getText().length();
+            double size = characterWidth * (end - begin);
+            double leftAnchor = characterWidth * beginLabelAttributes.getValue();
+            double topAnchor = characterHeight * beginLabelAttributes.getKey() * 2.0d;
 
-            AnnotationButton button = new AnnotationButton(annotation);
-            button.setMaxSize(characterWidth * (end - begin), characterHeight);
-            button.setMinSize(characterWidth * (end - begin), characterHeight);
-            AnchorPane.setTopAnchor(button, characterHeight * beginLabel.getKey() * 2.0d);
-            AnchorPane.setLeftAnchor(button, (characterWidth * beginLabel.getValue()));
-
-            taskButtons.add(button);
+            taskButtons.add(createButton(annotation, size, topAnchor, leftAnchor));
             updateValue(taskButtons);
-//        } else {
-//            // TODO: multiple buttons have to be created
+        } else {
+            // TODO: multiple buttons have to be created
+            logger.error("FROM {} TO {}", beginLabelAttributes.getKey(), endLabelAttributes.getKey());
+            for (int i = beginLabelAttributes.getKey(); i <= endLabelAttributes.getKey(); i++) {
+                int textLength = taskLabels.get(i).getText().length();
+                double characterWidth = taskLabels.get(i).getWidth() / textLength;
+                double topAnchor = characterHeight * i * 2.0d;
+
+                // start off assuming the button takes up the entire label
+                double leftAnchor = 0.0d;
+                double size = characterWidth * textLength;
+
+                // size goes from the offset to the end
+                if (i == beginLabelAttributes.getKey()) {
+                    size = characterWidth * (textLength - beginLabelAttributes.getValue());
+                    leftAnchor = characterWidth * beginLabelAttributes.getValue();
+                    logger.error("BEGIN at label {}--- Size: {} ; Left: {}  ; value: {} ---- {} -> {}",
+                            i, size, leftAnchor, beginLabelAttributes.getValue(), begin, end);
+                }
+
+                // size goes from the beginning to the offset
+                if (i == endLabelAttributes.getKey()) {
+                    logger.error("END!!!");
+                    size = characterWidth * endLabelAttributes.getValue();
+                    leftAnchor = 0.0d;
+                }
+
+                if (size > 0.0d) {
+                    taskButtons.add(createButton(annotation, size, topAnchor, leftAnchor));
+                    updateValue(taskButtons);
+                } else {
+                    logger.warn("Sentence at [{}, {}] had some ignored characters.", begin, end);
+                }
+            }
         }
     }
 
@@ -99,5 +126,14 @@ public class CreateButtonsTask extends Task<List<AnnotationButton>> {
         failed();
 
         return null;
+    }
+
+    private AnnotationButton createButton(JsonObject annotation, double size, double topAnchor, double leftAnchor) {
+        AnnotationButton button = new AnnotationButton(annotation);
+        button.setMaxSize(size, characterHeight);
+        button.setMinSize(size, characterHeight);
+        AnchorPane.setTopAnchor(button, topAnchor);
+        AnchorPane.setLeftAnchor(button, leftAnchor);
+        return button;
     }
 }

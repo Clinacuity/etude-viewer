@@ -1,10 +1,5 @@
 package com.clinacuity.acv.controls;
 
-import com.clinacuity.acv.context.Annotations;
-import com.clinacuity.acv.tasks.CreateButtonsTask;
-import com.clinacuity.acv.tasks.GetLabelsFromDocumentTask;
-import com.google.gson.JsonObject;
-import javafx.beans.property.ObjectProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
@@ -15,8 +10,6 @@ import org.apache.logging.log4j.Logger;
 import org.reactfx.util.FxTimer;
 import java.io.IOException;
 import java.time.Duration;
-import java.util.Set;
-import java.util.HashSet;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -41,7 +34,7 @@ public class AnnotatedDocumentPane extends ScrollPane {
         }
 
         arbitraryLabelsForSizeCalculations();
-        FxTimer.runLater(Duration.ofMillis(10), this::getCharacterHeight);
+        FxTimer.runLater(Duration.ofMillis(100), this::getCharacterHeight);
 
         logger.debug("Annotated Document Pane initialized.");
     }
@@ -54,9 +47,11 @@ public class AnnotatedDocumentPane extends ScrollPane {
     }
 
     public double getCharacterHeight() {
-        Label label = labelList.get(0);
-        characterHeight = label.getHeight();
-        logger.debug("Character Height set to {}", characterHeight);
+        if (characterHeight < 0.0d) {
+            Label label = labelList.get(0);
+            characterHeight = label.getHeight();
+            logger.debug("Character Height set to {}", characterHeight);
+        }
         return characterHeight;
     }
 
