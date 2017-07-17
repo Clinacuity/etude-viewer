@@ -6,18 +6,12 @@ import com.clinacuity.acv.controls.AnnotatedDocumentPane;
 import com.clinacuity.acv.controls.AnnotationButton;
 import com.clinacuity.acv.tasks.CreateButtonsTask;
 import com.clinacuity.acv.tasks.GetLabelsFromDocumentTask;
-import com.google.gson.JsonNull;
 import com.google.gson.JsonObject;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.concurrent.WorkerStateEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.TextArea;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.reactfx.util.FxTimer;
@@ -113,36 +107,6 @@ public class AcvContentController implements Initializable {
         context.selectedAnnotationTypeProperty.addListener(selectedAnnotationTypeListener);
     }
 
-    /**
-     * Returns the String value of a JsonObject's tree view.
-     * @param value The JsonObject
-     * @return      The String representation of its tree view
-     */
-    private String updateTextArea(JsonObject value) {
-        StringBuilder buffer = new StringBuilder();
-        buffer.append(context.selectedAnnotationTypeProperty.getValueSafe());
-        buffer.append(":\n");
-
-        for (String key: value.keySet()) {
-            buffer.append("\u2014> ");
-            buffer.append(key);
-
-            if (value.get(key).equals(JsonNull.INSTANCE)) {
-                buffer.append(":  null");
-            } else {
-                buffer.append(":  ");
-                buffer.append(value.get(key).getAsString());
-            }
-            buffer.append("\n");
-        }
-
-        return buffer.toString();
-    }
-
-    private Annotations updateAnnotations(String path) {
-        return new Annotations(path);
-    }
-
     public void resetButtons(String key) {
         if (key.equals(context.getDefaultSelectedAnnotation())) {
             targetPane.addButtons(new ArrayList<>());
@@ -185,7 +149,6 @@ public class AcvContentController implements Initializable {
             new Thread(referenceButtonsTask).start();
         }
     }
-
 
     /* ******************************
      *                              *
