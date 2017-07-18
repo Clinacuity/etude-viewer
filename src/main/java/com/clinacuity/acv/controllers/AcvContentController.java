@@ -207,6 +207,9 @@ public class AcvContentController implements Initializable {
             });
 
     private ChangeListener<AnnotationButton> selectedAnnotationButtonListener = ((observable, oldValue, newValue) -> {
+        viewControls.getTargetFeatureTree().clear();
+        viewControls.getReferenceFeatureTree().clear();
+
         if (oldValue != null) {
             oldValue.clearSelected();
             for (AnnotationButton button: oldValue.matchingButtons) {

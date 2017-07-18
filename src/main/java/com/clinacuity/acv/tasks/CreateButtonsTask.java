@@ -69,6 +69,7 @@ public class CreateButtonsTask extends Task<List<AnnotationButton>> {
             taskButtons.add(button);
             updateValue(taskButtons);
         } else {
+            List<AnnotationButton> multiLineButton = new ArrayList<>();
             for (int i = beginLabelAttributes.getKey(); i <= endLabelAttributes.getKey(); i++) {
                 Label label = taskLabels.get(i);
                 int textLength = label.getText().length();
@@ -97,11 +98,23 @@ public class CreateButtonsTask extends Task<List<AnnotationButton>> {
                     button.setMinSize(size, characterHeight);
                     AnchorPane.setTopAnchor(button, topAnchor);
                     AnchorPane.setLeftAnchor(button, leftAnchor);
-                    taskButtons.add(button);
-                    updateValue(taskButtons);
+                    multiLineButton.add(button);
                 } else {
                     logger.debug("Sentence at [{}, {}] had some ignored characters.", begin, end);
                 }
+            }
+
+            // Now, link all the buttons and return them
+            for (int i = 0; i < multiLineButton.size(); i++) {
+                for (int j = i + 1; j < multiLineButton.size(); j++) {
+                    multiLineButton.get(i).matchingButtons.add(multiLineButton.get(j));
+                    multiLineButton.get(j).matchingButtons.add(multiLineButton.get(i));
+                }
+            }
+
+            for (AnnotationButton button: multiLineButton) {
+                taskButtons.add(button);
+                updateValue(taskButtons);
             }
         }
     }
