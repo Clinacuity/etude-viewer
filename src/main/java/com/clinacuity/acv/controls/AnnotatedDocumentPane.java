@@ -13,7 +13,6 @@ import java.time.Duration;
 import java.util.List;
 import java.util.ArrayList;
 
-
 public class AnnotatedDocumentPane extends ScrollPane {
     private static final Logger logger = LogManager.getLogger();
 
@@ -74,4 +73,6 @@ public class AnnotatedDocumentPane extends ScrollPane {
     }
 
     public List<Label> getLabelList() { return labelList; }
+
+    public List<AnnotationButton> getAnnotationButtonList() { return buttonList; }
 }
