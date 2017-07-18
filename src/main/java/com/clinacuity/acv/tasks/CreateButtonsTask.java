@@ -8,7 +8,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.util.Pair;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,14 +60,19 @@ public class CreateButtonsTask extends Task<List<AnnotationButton>> {
             double leftAnchor = characterWidth * beginLabelAttributes.getValue();
             double topAnchor = characterHeight * beginLabelAttributes.getKey() * 2.0d;
 
-            taskButtons.add(createButton(annotation, size, topAnchor, leftAnchor));
+
+            AnnotationButton button = new AnnotationButton(annotation, begin, end);
+            button.setMaxSize(size, characterHeight);
+            button.setMinSize(size, characterHeight);
+            AnchorPane.setTopAnchor(button, topAnchor);
+            AnchorPane.setLeftAnchor(button, leftAnchor);
+            taskButtons.add(button);
             updateValue(taskButtons);
         } else {
-            // TODO: multiple buttons have to be created
-            logger.error("FROM {} TO {}", beginLabelAttributes.getKey(), endLabelAttributes.getKey());
             for (int i = beginLabelAttributes.getKey(); i <= endLabelAttributes.getKey(); i++) {
-                int textLength = taskLabels.get(i).getText().length();
-                double characterWidth = taskLabels.get(i).getWidth() / textLength;
+                Label label = taskLabels.get(i);
+                int textLength = label.getText().length();
+                double characterWidth = label.getWidth() / textLength;
                 double topAnchor = characterHeight * i * 2.0d;
 
                 // start off assuming the button takes up the entire label
@@ -79,22 +83,24 @@ public class CreateButtonsTask extends Task<List<AnnotationButton>> {
                 if (i == beginLabelAttributes.getKey()) {
                     size = characterWidth * (textLength - beginLabelAttributes.getValue());
                     leftAnchor = characterWidth * beginLabelAttributes.getValue();
-                    logger.error("BEGIN at label {}--- Size: {} ; Left: {}  ; value: {} ---- {} -> {}",
-                            i, size, leftAnchor, beginLabelAttributes.getValue(), begin, end);
                 }
 
                 // size goes from the beginning to the offset
                 if (i == endLabelAttributes.getKey()) {
-                    logger.error("END!!!");
                     size = characterWidth * endLabelAttributes.getValue();
                     leftAnchor = 0.0d;
                 }
 
                 if (size > 0.0d) {
-                    taskButtons.add(createButton(annotation, size, topAnchor, leftAnchor));
+                    AnnotationButton button = new AnnotationButton(annotation, begin, end);
+                    button.setMaxSize(size, characterHeight);
+                    button.setMinSize(size, characterHeight);
+                    AnchorPane.setTopAnchor(button, topAnchor);
+                    AnchorPane.setLeftAnchor(button, leftAnchor);
+                    taskButtons.add(button);
                     updateValue(taskButtons);
                 } else {
-                    logger.warn("Sentence at [{}, {}] had some ignored characters.", begin, end);
+                    logger.debug("Sentence at [{}, {}] had some ignored characters.", begin, end);
                 }
             }
         }
@@ -126,14 +132,5 @@ public class CreateButtonsTask extends Task<List<AnnotationButton>> {
         failed();
 
         return null;
-    }
-
-    private AnnotationButton createButton(JsonObject annotation, double size, double topAnchor, double leftAnchor) {
-        AnnotationButton button = new AnnotationButton(annotation);
-        button.setMaxSize(size, characterHeight);
-        button.setMinSize(size, characterHeight);
-        AnchorPane.setTopAnchor(button, topAnchor);
-        AnchorPane.setLeftAnchor(button, leftAnchor);
-        return button;
     }
 }

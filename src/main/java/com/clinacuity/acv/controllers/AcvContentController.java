@@ -31,6 +31,7 @@ public class AcvContentController implements Initializable {
     @FXML private ViewControls viewControls;
     private ObjectProperty<Annotations> targetAnnotationsProperty = new SimpleObjectProperty<>();
     private ObjectProperty<Annotations> referenceAnnotationsProperty = new SimpleObjectProperty<>();
+    private ObjectProperty<AnnotationButton> selectedAnnotationButton = new SimpleObjectProperty<>();
     private double characterHeight = -1.0;
     private GetLabelsFromDocumentTask getRefLabelsTask;
     private GetLabelsFromDocumentTask getTargetLabelsTask;
@@ -58,8 +59,8 @@ public class AcvContentController implements Initializable {
      * Sets up the Annotation object properties with listeners and values
      */
     private void setupAnnotationProperties() {
-        referenceAnnotationsProperty.addListener(notifyAnnotationSet);
-        targetAnnotationsProperty.addListener(notifyAnnotationSet);
+        referenceAnnotationsProperty.addListener(annotationPropertiesListener);
+        targetAnnotationsProperty.addListener(annotationPropertiesListener);
 
         referenceAnnotationsProperty.setValue(new Annotations(context.referenceDocumentPathProperty.getValueSafe()));
         targetAnnotationsProperty.setValue(new Annotations(context.targetDocumentPathProperty.getValueSafe()));
@@ -69,6 +70,8 @@ public class AcvContentController implements Initializable {
 
         context.targetDocumentPathProperty.addListener(((observable, oldValue, newValue) ->
                 targetAnnotationsProperty.setValue(new Annotations(newValue))));
+
+        selectedAnnotationButton.addListener(selectedAnnotationButtonListener);
     }
 
     /**
@@ -107,7 +110,7 @@ public class AcvContentController implements Initializable {
         context.selectedAnnotationTypeProperty.addListener(selectedAnnotationTypeListener);
     }
 
-    public void resetButtons(String key) {
+    private void resetAnnotationButtons(String key) {
         if (key.equals(context.getDefaultSelectedAnnotation())) {
             targetPane.addButtons(new ArrayList<>());
             referencePane.addButtons(new ArrayList<>());
@@ -128,25 +131,51 @@ public class AcvContentController implements Initializable {
             // TODO: matchingButtons objects must be populated
             targetButtonsTask = new CreateButtonsTask(targetJson, targetPane.getLabelList(), characterHeight);
             targetButtonsTask.setOnSucceeded(event -> {
-                List<AnnotationButton> buttons = targetButtonsTask.getValue();
-                targetPane.addButtons(buttons);
-                for (AnnotationButton button: buttons) {
-                    button.setOnMouseClicked(buttonEvent ->
-                            viewControls.setTargetFeatureTreeText(button.getAnnotation()));
-                }
+                targetPane.addButtons(targetButtonsTask.getValue());
+                setupAnnotationButtons();
             });
             new Thread(targetButtonsTask).start();
 
             referenceButtonsTask = new CreateButtonsTask(referenceJson, referencePane.getLabelList(), characterHeight);
             referenceButtonsTask.setOnSucceeded(event -> {
-                List<AnnotationButton> buttons = referenceButtonsTask.getValue();
-                referencePane.addButtons(buttons);
-                for (AnnotationButton button: buttons) {
-                    button.setOnMouseClicked(buttonEvent ->
-                            viewControls.setReferenceFeatureTreeText(button.getAnnotation()));
-                }
+                referencePane.addButtons(referenceButtonsTask.getValue());
+                setupAnnotationButtons();
             });
             new Thread(referenceButtonsTask).start();
+        }
+    }
+
+    private int finished = 0;
+    /**
+     * Sets up the annotation buttons, including assigning their onClick events and setting their matched annotation
+     * buttons.  Note: This could not be done using the tasks' onDone() method, since both tasks are already completed
+     * by the time their onFinished() methods begin processing.
+     */
+    private void setupAnnotationButtons() {
+        finished++;
+        if (finished >= 2) {
+            finished = 0;
+            List<AnnotationButton> targetButtons = targetPane.getAnnotationButtonList();
+            List<AnnotationButton> refButtons = referencePane.getAnnotationButtonList();
+
+            for (AnnotationButton targetButton: targetButtons) {
+                for(AnnotationButton refButton: refButtons) {
+                    if (targetButton.getBegin() >= refButton.getBegin() && targetButton.getEnd() <= refButton.getEnd()) {
+                        targetButton.addMatch(refButton);
+                        refButton.addMatch(targetButton);
+                        targetButton.targetTextArea = viewControls.getTargetFeatureTree();
+                    }
+                }
+
+                targetButton.setOnMouseClicked(event -> selectedAnnotationButton.setValue(targetButton));
+            }
+
+            for (AnnotationButton refButton: refButtons) {
+                refButton.targetTextArea = viewControls.getReferenceFeatureTree();
+                refButton.setOnMouseClicked(event -> selectedAnnotationButton.setValue(refButton));
+            }
+        } else {
+            logger.debug("One of the tasks is not done yet, waiting...");
         }
     }
 
@@ -161,14 +190,14 @@ public class AcvContentController implements Initializable {
      */
     private ChangeListener<String> selectedAnnotationTypeListener = (observable, oldValue, newValue) -> {
         logger.debug("Selected Annotation Changed: {}", newValue);
-        resetButtons(newValue);
+        resetAnnotationButtons(newValue);
     };
 
     /**
      * Updates the Context's annotation type list whenever the Annotations objects are updated.  This usually occurs
      * when new documents are loaded.
      */
-    private ChangeListener<Annotations> notifyAnnotationSet = (observable, oldValue, newValue) ->
+    private ChangeListener<Annotations> annotationPropertiesListener = (observable, oldValue, newValue) ->
             newValue.getAnnotationKeySet().forEach(key -> {
                 if (AcvContext.getInstance().annotationList.contains(key)) {
                     logger.warn("Duplicate key not added: {}", key);
@@ -176,4 +205,26 @@ public class AcvContentController implements Initializable {
                     context.annotationList.add(key);
                 }
             });
+
+    private ChangeListener<AnnotationButton> selectedAnnotationButtonListener = ((observable, oldValue, newValue) -> {
+        if (oldValue != null) {
+            oldValue.clearSelected();
+            for (AnnotationButton button: oldValue.matchingButtons) {
+                button.clearSelected();
+            }
+        }
+
+        if (newValue != null) {
+            newValue.setSelected();
+            for (AnnotationButton button: newValue.matchingButtons) {
+                button.setSelected();
+            }
+
+            newValue.fire();
+
+            if (newValue.matchingButtons.size() == 1) {
+                newValue.matchingButtons.get(0).fire();
+            }
+        }
+    });
 }

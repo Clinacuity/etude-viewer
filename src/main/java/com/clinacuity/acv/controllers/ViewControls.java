@@ -1,7 +1,6 @@
 package com.clinacuity.acv.controllers;
 
 import com.clinacuity.acv.context.AcvContext;
-import com.google.gson.JsonNull;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXCheckBox;
 import javafx.fxml.FXML;
@@ -29,8 +28,8 @@ public class ViewControls extends VBox {
     @FXML private TextArea targetFeatureTree;
     @FXML private TextArea referenceFeatureTree;
 
-    public void setTargetFeatureTreeText(String text) { targetFeatureTree.setText(text); }
-    public void setReferenceFeatureTreeText(String text) { referenceFeatureTree.setText(text); }
+    TextArea getTargetFeatureTree() { return targetFeatureTree; }
+    TextArea getReferenceFeatureTree() { return referenceFeatureTree; }
 
     public ViewControls() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/controls/ViewControls.fxml"));
