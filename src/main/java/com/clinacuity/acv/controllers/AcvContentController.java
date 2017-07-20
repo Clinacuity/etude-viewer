@@ -15,7 +15,7 @@ import javafx.fxml.Initializable;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.reactfx.util.FxTimer;
-
+import com.clinacuity.acv.controls.AnnotationButton.MatchType;
 import java.net.URL;
 import java.time.Duration;
 import java.util.ArrayList;
@@ -107,6 +107,12 @@ public class AcvContentController implements Initializable {
      * Note that some listeners are initialized when the ViewControls are created.
      */
     private void setupViewControls() {
+        context.exactMatchesProperty.addListener((obs, old, newValue) -> updateButton(newValue, MatchType.EXACT_SPAN));
+        context.exactFeatureMismatchProperty.addListener((obs, old, newValue) -> updateButton(newValue, MatchType.EXACT_SPAN_DIFF_FEATURES));
+        context.overlappingMatchesProperty.addListener((obs, old, newValue) -> updateButton(newValue, MatchType.OVERLAP));
+        context.subsumedMatchesProperty.addListener((obs, old, newValue) -> updateButton(newValue, MatchType.SUBSUMED));
+        context.noMatchesProperty.addListener((obs, old, newValue) -> updateButton(newValue, MatchType.NO_MATCH));
+
         context.selectedAnnotationTypeProperty.addListener(selectedAnnotationTypeListener);
     }
 
@@ -173,10 +179,12 @@ public class AcvContentController implements Initializable {
                     }
                 }
 
+                targetButton.parent = targetPane.getAnchor();
                 targetButton.setOnMouseClicked(event -> selectedAnnotationButton.setValue(targetButton));
             }
 
             for (AnnotationButton refButton: refButtons) {
+                refButton.parent = referencePane.getAnchor();
                 refButton.targetTextArea = viewControls.getReferenceFeatureTree();
                 refButton.setOnMouseClicked(event -> selectedAnnotationButton.setValue(refButton));
             }
@@ -188,9 +196,63 @@ public class AcvContentController implements Initializable {
             */
             targetButtons.forEach(AnnotationButton::checkForMatchTypes);
             refButtons.forEach(AnnotationButton::checkForMatchTypes);
+
+            removeUncheckedAnnotations();
         } else {
             logger.debug("One of the tasks is not done yet, waiting...");
         }
+    }
+
+    private void removeUncheckedAnnotations() {
+        targetPane.getAnnotationButtonList().forEach(button -> {
+            if (!isMatchTypeChecked(button.getMatchType())) {
+                button.removeFromParent();
+            }
+        });
+
+        referencePane.getAnnotationButtonList().forEach(button -> {
+            if (!isMatchTypeChecked(button.getMatchType())) {
+                button.removeFromParent();
+            }
+        });
+    }
+
+    private void updateButton(boolean isChecked, MatchType matchType) {
+        referencePane.getAnnotationButtonList().forEach(button -> {
+            if (button.getMatchType() == matchType) {
+                if (isChecked) {
+                    button.addToParent();
+                } else {
+                    button.removeFromParent();
+                }
+            }
+        });
+
+        targetPane.getAnnotationButtonList().forEach(button -> {
+            if (button.getMatchType() == matchType) {
+                if (isChecked) {
+                    button.addToParent();
+                } else {
+                    button.removeFromParent();
+                }
+            }
+        });
+    }
+
+    private boolean isMatchTypeChecked(AnnotationButton.MatchType matchType) {
+        switch (matchType) {
+            case EXACT_SPAN:
+                return context.exactMatchesProperty.getValue();
+            case EXACT_SPAN_DIFF_FEATURES:
+                return context.exactFeatureMismatchProperty.getValue();
+            case OVERLAP:
+                return context.overlappingMatchesProperty.getValue();
+            case SUBSUMED:
+                return context.subsumedMatchesProperty.getValue();
+            case NO_MATCH:
+                return context.noMatchesProperty.getValue();
+        }
+        return false;
     }
 
     private void clearFeatureTrees() {

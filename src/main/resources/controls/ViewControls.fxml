@@ -26,7 +26,7 @@
 
     <VBox GridPane.columnIndex="0" GridPane.rowIndex="1">
         <HBox alignment="CENTER_LEFT" spacing="3" styleClass="h-box-checkbox">
-            <JFXCheckBox fx:id="toggleExact" text="Exact Match"
+            <JFXCheckBox fx:id="toggleExact" text="Exact Match" selected="true"
                          checkedColor="DodgerBlue" unCheckedColor="DodgerBlue"/>
             <Label styleClass="label-tooltip">
                 <tooltip>
@@ -41,7 +41,7 @@
             <padding><Insets top="15" bottom="15"/></padding>
         </HBox>
         <HBox alignment="CENTER_LEFT" spacing="3" styleClass="h-box-checkbox">
-            <JFXCheckBox fx:id="toggleFeatureMismatch" text="Exact Span - Mismatched Features"
+            <JFXCheckBox fx:id="toggleFeatureMismatch" text="Exact Span - Mismatched Features" selected="true"
                          checkedColor="OrangeRed" unCheckedColor="OrangeRed"/>
             <Label styleClass="label-tooltip">
                 <tooltip>
@@ -55,7 +55,7 @@
             </Label>
         </HBox>
         <HBox alignment="CENTER_LEFT" spacing="3" styleClass="h-box-checkbox">
-            <JFXCheckBox fx:id="toggleSubsumed" text="Subsumed"
+            <JFXCheckBox fx:id="toggleSubsumed" text="Subsumed" selected="true"
                          checkedColor="DarkKhaki" unCheckedColor="DarkKhaki"/>
             <Label styleClass="label-tooltip">
                 <tooltip>
@@ -71,7 +71,7 @@
             </Label>
         </HBox>
         <HBox alignment="CENTER_LEFT" spacing="3" styleClass="h-box-checkbox">
-            <JFXCheckBox fx:id="toggleOverlap" text="Overlap"
+            <JFXCheckBox fx:id="toggleOverlap" text="Overlap" selected="true"
                          checkedColor="Purple" unCheckedColor="Purple"/>
             <Label styleClass="label-tooltip">
                 <tooltip>
@@ -87,7 +87,7 @@
             </Label>
         </HBox>
         <HBox alignment="CENTER_LEFT" spacing="3" styleClass="h-box-checkbox">
-            <JFXCheckBox fx:id="toggleNoMatch" text="No Match"
+            <JFXCheckBox fx:id="toggleNoMatch" text="No Match" selected="true"
                          checkedColor="Maroon" unCheckedColor="Maroon"/>
             <Label styleClass="label-tooltip">
                 <tooltip>

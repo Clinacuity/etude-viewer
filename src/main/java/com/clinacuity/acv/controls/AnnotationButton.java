@@ -8,6 +8,7 @@ import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -33,6 +34,9 @@ public class AnnotationButton extends Button {
     public List<AnnotationButton> sameAnnotationButtons = new ArrayList<>();
     public TextArea targetTextArea;
     private String matchTypeStyle = "";
+    private MatchType matchType;
+    public AnchorPane parent;
+    public MatchType getMatchType() { return matchType; }
 
     public int getBegin() { return begin; }
 
@@ -116,6 +120,14 @@ public class AnnotationButton extends Button {
         }
     }
 
+    public void removeFromParent() {
+        parent.getChildren().remove(this);
+    }
+
+    public void addToParent() {
+        parent.getChildren().add(this);
+    }
+
     private boolean isAnnotationEquivalent(JsonObject target) {
         for (String key: target.keySet()) {
             if (!annotation.keySet().contains(key)) {
@@ -135,8 +147,8 @@ public class AnnotationButton extends Button {
         return true;
     }
 
-    private void setMatchType(MatchType matchType) {
-        switch(matchType) {
+    private void setMatchType(MatchType match) {
+        switch(match) {
             case EXACT_SPAN:
                 matchTypeStyle = "-fx-background-color: DodgerBlue";
                 break;
@@ -154,6 +166,7 @@ public class AnnotationButton extends Button {
                 break;
         }
 
+        matchType = match;
         setStyle(matchTypeStyle);
     }
 

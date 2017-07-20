@@ -22,6 +22,8 @@ public class AnnotatedDocumentPane extends ScrollPane {
     private List<AnnotationButton> buttonList = new ArrayList<>();
     private double characterHeight = -1.0;
 
+    public AnchorPane getAnchor() { return anchor; }
+
     public AnnotatedDocumentPane() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/controls/AnnotatedDocumentPane.fxml"));
         fxmlLoader.setRoot(this);
