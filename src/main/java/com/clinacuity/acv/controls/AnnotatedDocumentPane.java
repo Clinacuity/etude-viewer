@@ -14,12 +14,15 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class AnnotatedDocumentPane extends ScrollPane {
+    public static final double STANDARD_INSET = 5.0d;
     private static final Logger logger = LogManager.getLogger();
 
     @FXML private AnchorPane anchor;
     private List<Label> labelList = new ArrayList<>();
     private List<AnnotationButton> buttonList = new ArrayList<>();
     private double characterHeight = -1.0;
+
+    public AnchorPane getAnchor() { return anchor; }
 
     public AnnotatedDocumentPane() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/controls/AnnotatedDocumentPane.fxml"));

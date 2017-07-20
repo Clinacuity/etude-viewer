@@ -5,7 +5,7 @@ import com.clinacuity.acv.context.Annotations;
 import com.clinacuity.acv.controls.AnnotatedDocumentPane;
 import com.clinacuity.acv.controls.AnnotationButton;
 import com.clinacuity.acv.tasks.CreateButtonsTask;
-import com.clinacuity.acv.tasks.GetLabelsFromDocumentTask;
+import com.clinacuity.acv.tasks.CreateLabelsFromDocumentTask;
 import com.google.gson.JsonObject;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -15,7 +15,7 @@ import javafx.fxml.Initializable;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.reactfx.util.FxTimer;
-
+import com.clinacuity.acv.controls.AnnotationButton.MatchType;
 import java.net.URL;
 import java.time.Duration;
 import java.util.ArrayList;
@@ -33,8 +33,8 @@ public class AcvContentController implements Initializable {
     private ObjectProperty<Annotations> referenceAnnotationsProperty = new SimpleObjectProperty<>();
     private ObjectProperty<AnnotationButton> selectedAnnotationButton = new SimpleObjectProperty<>();
     private double characterHeight = -1.0;
-    private GetLabelsFromDocumentTask getRefLabelsTask;
-    private GetLabelsFromDocumentTask getTargetLabelsTask;
+    private CreateLabelsFromDocumentTask getRefLabelsTask;
+    private CreateLabelsFromDocumentTask getTargetLabelsTask;
     private CreateButtonsTask targetButtonsTask;
     private CreateButtonsTask referenceButtonsTask;
 
@@ -93,11 +93,11 @@ public class AcvContentController implements Initializable {
             getTargetLabelsTask.cancel();
         }
 
-        getRefLabelsTask = new GetLabelsFromDocumentTask(referenceAnnotationsProperty.getValue().getRawText(), characterHeight);
+        getRefLabelsTask = new CreateLabelsFromDocumentTask(referenceAnnotationsProperty.getValue().getRawText(), characterHeight);
         getRefLabelsTask.setOnSucceeded(event -> referencePane.addLabels(getRefLabelsTask.getValue()));
         new Thread(getRefLabelsTask).start();
 
-        getTargetLabelsTask = new GetLabelsFromDocumentTask(targetAnnotationsProperty.getValue().getRawText(), characterHeight);
+        getTargetLabelsTask = new CreateLabelsFromDocumentTask(targetAnnotationsProperty.getValue().getRawText(), characterHeight);
         getTargetLabelsTask.setOnSucceeded(event -> targetPane.addLabels(getTargetLabelsTask.getValue()));
         new Thread(getTargetLabelsTask).start();
     }
@@ -107,6 +107,12 @@ public class AcvContentController implements Initializable {
      * Note that some listeners are initialized when the ViewControls are created.
      */
     private void setupViewControls() {
+        context.exactMatchesProperty.addListener((obs, old, newValue) -> updateButton(newValue, MatchType.EXACT_SPAN));
+        context.exactFeatureMismatchProperty.addListener((obs, old, newValue) -> updateButton(newValue, MatchType.EXACT_SPAN_DIFF_FEATURES));
+        context.overlappingMatchesProperty.addListener((obs, old, newValue) -> updateButton(newValue, MatchType.OVERLAP));
+        context.subsumedMatchesProperty.addListener((obs, old, newValue) -> updateButton(newValue, MatchType.SUBSUMED));
+        context.noMatchesProperty.addListener((obs, old, newValue) -> updateButton(newValue, MatchType.NO_MATCH));
+
         context.selectedAnnotationTypeProperty.addListener(selectedAnnotationTypeListener);
     }
 
@@ -158,25 +164,100 @@ public class AcvContentController implements Initializable {
             List<AnnotationButton> targetButtons = targetPane.getAnnotationButtonList();
             List<AnnotationButton> refButtons = referencePane.getAnnotationButtonList();
 
+            // Link the buttons
             for (AnnotationButton targetButton: targetButtons) {
                 for(AnnotationButton refButton: refButtons) {
-                    if (targetButton.getBegin() >= refButton.getBegin() && targetButton.getEnd() <= refButton.getEnd()) {
-                        targetButton.addMatch(refButton);
-                        refButton.addMatch(targetButton);
+                    int beginTarget = targetButton.getBegin();
+                    int endTarget = targetButton.getEnd();
+                    int beginRef = refButton.getBegin();
+                    int endRef = refButton.getEnd();
+
+                    if ((beginTarget < endRef && beginRef < endTarget) || (beginTarget == beginRef && endTarget == endRef)) {
+                        targetButton.matchingButtons.add(refButton);
+                        refButton.matchingButtons.add(targetButton);
                         targetButton.targetTextArea = viewControls.getTargetFeatureTree();
                     }
                 }
 
+                targetButton.parent = targetPane.getAnchor();
                 targetButton.setOnMouseClicked(event -> selectedAnnotationButton.setValue(targetButton));
             }
 
             for (AnnotationButton refButton: refButtons) {
+                refButton.parent = referencePane.getAnchor();
                 refButton.targetTextArea = viewControls.getReferenceFeatureTree();
                 refButton.setOnMouseClicked(event -> selectedAnnotationButton.setValue(refButton));
             }
+
+            /*
+            * This could be faster by using either of the loops above; but for the sake of separating the logic,
+            * we will use a separate for-loop.  The cost to performance is negligible.  This loop determines
+            * which color to assign the buttons based on the type of match.
+            */
+            targetButtons.forEach(AnnotationButton::checkForMatchTypes);
+            refButtons.forEach(AnnotationButton::checkForMatchTypes);
+
+            removeUncheckedAnnotations();
         } else {
             logger.debug("One of the tasks is not done yet, waiting...");
         }
+    }
+
+    private void removeUncheckedAnnotations() {
+        targetPane.getAnnotationButtonList().forEach(button -> {
+            if (!isMatchTypeChecked(button.getMatchType())) {
+                button.removeFromParent();
+            }
+        });
+
+        referencePane.getAnnotationButtonList().forEach(button -> {
+            if (!isMatchTypeChecked(button.getMatchType())) {
+                button.removeFromParent();
+            }
+        });
+    }
+
+    private void updateButton(boolean isChecked, MatchType matchType) {
+        referencePane.getAnnotationButtonList().forEach(button -> {
+            if (button.getMatchType() == matchType) {
+                if (isChecked) {
+                    button.addToParent();
+                } else {
+                    button.removeFromParent();
+                }
+            }
+        });
+
+        targetPane.getAnnotationButtonList().forEach(button -> {
+            if (button.getMatchType() == matchType) {
+                if (isChecked) {
+                    button.addToParent();
+                } else {
+                    button.removeFromParent();
+                }
+            }
+        });
+    }
+
+    private boolean isMatchTypeChecked(AnnotationButton.MatchType matchType) {
+        switch (matchType) {
+            case EXACT_SPAN:
+                return context.exactMatchesProperty.getValue();
+            case EXACT_SPAN_DIFF_FEATURES:
+                return context.exactFeatureMismatchProperty.getValue();
+            case OVERLAP:
+                return context.overlappingMatchesProperty.getValue();
+            case SUBSUMED:
+                return context.subsumedMatchesProperty.getValue();
+            case NO_MATCH:
+                return context.noMatchesProperty.getValue();
+        }
+        return false;
+    }
+
+    private void clearFeatureTrees() {
+        viewControls.getTargetFeatureTree().clear();
+        viewControls.getReferenceFeatureTree().clear();
     }
 
     /* ******************************
@@ -189,6 +270,7 @@ public class AcvContentController implements Initializable {
      * Listens on the AcvContext's selected annotation and updates the document panes' buttons accordingly
      */
     private ChangeListener<String> selectedAnnotationTypeListener = (observable, oldValue, newValue) -> {
+        clearFeatureTrees();
         logger.debug("Selected Annotation Changed: {}", newValue);
         resetAnnotationButtons(newValue);
     };
@@ -207,24 +289,25 @@ public class AcvContentController implements Initializable {
             });
 
     private ChangeListener<AnnotationButton> selectedAnnotationButtonListener = ((observable, oldValue, newValue) -> {
-        viewControls.getTargetFeatureTree().clear();
-        viewControls.getReferenceFeatureTree().clear();
+        clearFeatureTrees();
 
         if (oldValue != null) {
             oldValue.clearSelected();
-            for (AnnotationButton button: oldValue.matchingButtons) {
-                button.clearSelected();
-            }
+            oldValue.matchingButtons.forEach(AnnotationButton::clearSelected);
+            oldValue.sameAnnotationButtons.forEach(AnnotationButton::clearSelected);
         }
 
         if (newValue != null) {
+            logger.error("Matching: {}, Same: {}", newValue.matchingButtons.size(), newValue.sameAnnotationButtons.size());
+            newValue.matchingButtons.forEach(button ->
+                logger.error("{} - {},   {} - {}", newValue.getBegin(), newValue.getEnd(), button.getBegin(), button.getEnd())
+            );
+
             newValue.setSelected();
-            for (AnnotationButton button: newValue.matchingButtons) {
-                button.setSelected();
-            }
+            newValue.matchingButtons.forEach(AnnotationButton::setSelected);
+            newValue.sameAnnotationButtons.forEach(AnnotationButton::setSelected);
 
             newValue.fire();
-
             if (newValue.matchingButtons.size() == 1) {
                 newValue.matchingButtons.get(0).fire();
             }

@@ -26,8 +26,13 @@
 .button {
     -fx-font-family: "Open Sans Bold";
     -fx-font-size: 1;
-    -fx-border-radius: 3px;
+    -fx-border-radius: 4px;
     -fx-border-color: DarkGray;
+}
+
+.button:hover {
+    -fx-border-radius: 4px;
+    -fx-border-color: DodgerBlue
 }
 
 .button-clickable {
@@ -39,9 +44,18 @@
     -fx-font-size: 14;
 }
 
-.button:hover {
-    -fx-border-radius: 3px;
-    -fx-border-color: DodgerBlue
+.button-annotation {
+    -fx-focus-traversable: false;
+    -fx-background-color: DarkGray;
+    -fx-opacity: 0.3;
+}
+
+.button-annotation:hover {
+    -fx-opacity: 0.5;
+    -fx-border-color: Orange;
+    -fx-border-radius: 4px;
+    -fx-border-insets: -3;
+    -fx-border-width: 3;
 }
 /*    END BUTTONS   */
 
@@ -102,7 +116,7 @@
 }
 
 .mono-text {
-    -fx-font-family: "Source Code Pro";
+    -fx-font-family: "Fira Mono Regular";
     -fx-font-size: 12;
 }
 /*    END TEXT FIELDS   */
