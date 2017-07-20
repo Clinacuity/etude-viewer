@@ -41,22 +41,22 @@
         </padding>
     </Label>
 
-    <Label alignment="CENTER_RIGHT" text="Gold Standard:" textAlignment="RIGHT" GridPane.halignment="RIGHT"
+    <Label alignment="CENTER_RIGHT" text="Test (System) File:" textAlignment="RIGHT" GridPane.halignment="RIGHT"
            GridPane.columnIndex="1" GridPane.rowIndex="2" />
-    <TextField fx:id="gsInputTextField" styleClass="text-field" maxHeight="Infinity" alignment="BOTTOM_LEFT"
+    <TextField fx:id="testInputTextField" maxHeight="Infinity"
                GridPane.columnIndex="2" GridPane.rowIndex="2">
         <GridPane.margin><Insets right="5" left="5"/></GridPane.margin>
     </TextField>
-    <Button onAction="#pickReferenceFile" text="..." textAlignment="CENTER" styleClass="button-clickable" GridPane.halignment="LEFT"
+    <Button onAction="#pickTestFile" text="..." textAlignment="CENTER" styleClass="button-clickable" GridPane.halignment="LEFT"
             GridPane.columnIndex="3" GridPane.rowIndex="2" maxHeight="Infinity" maxWidth="Infinity"/>
 
-    <Label alignment="CENTER_RIGHT" text="Test Files:" textAlignment="RIGHT" GridPane.halignment="RIGHT"
+    <Label alignment="CENTER_RIGHT" text="Gold Standard (Reference) File:" textAlignment="RIGHT" GridPane.halignment="RIGHT"
            GridPane.columnIndex="1" GridPane.rowIndex="4" />
-    <TextField fx:id="testInputTextField" maxHeight="Infinity"
+    <TextField fx:id="gsInputTextField" styleClass="text-field" maxHeight="Infinity" alignment="BOTTOM_LEFT"
                GridPane.columnIndex="2" GridPane.rowIndex="4">
         <GridPane.margin><Insets right="5" left="5"/></GridPane.margin>
     </TextField>
-    <Button onAction="#pickTestFile" text="..." textAlignment="CENTER" styleClass="button-clickable" GridPane.halignment="LEFT"
+    <Button onAction="#pickReferenceFile" text="..." textAlignment="CENTER" styleClass="button-clickable" GridPane.halignment="LEFT"
             GridPane.columnIndex="3" GridPane.rowIndex="4" maxHeight="Infinity" maxWidth="Infinity"/>
 
     <Button onAction="#runAcv" text="Run ACV" styleClass="button-actionable" GridPane.halignment="LEFT"

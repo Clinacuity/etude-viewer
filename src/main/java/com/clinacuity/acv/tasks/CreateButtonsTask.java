@@ -1,5 +1,6 @@
 package com.clinacuity.acv.tasks;
 
+import com.clinacuity.acv.controls.AnnotatedDocumentPane;
 import com.clinacuity.acv.controls.AnnotationButton;
 import com.google.gson.JsonObject;
 import javafx.concurrent.Task;
@@ -64,8 +65,8 @@ public class CreateButtonsTask extends Task<List<AnnotationButton>> {
             AnnotationButton button = new AnnotationButton(annotation, begin, end);
             button.setMaxSize(size, characterHeight);
             button.setMinSize(size, characterHeight);
-            AnchorPane.setTopAnchor(button, topAnchor);
-            AnchorPane.setLeftAnchor(button, leftAnchor);
+            AnchorPane.setTopAnchor(button, AnnotatedDocumentPane.STANDARD_INSET + topAnchor);
+            AnchorPane.setLeftAnchor(button, AnnotatedDocumentPane.STANDARD_INSET + leftAnchor);
             taskButtons.add(button);
             updateValue(taskButtons);
         } else {
@@ -96,8 +97,8 @@ public class CreateButtonsTask extends Task<List<AnnotationButton>> {
                     AnnotationButton button = new AnnotationButton(annotation, begin, end);
                     button.setMaxSize(size, characterHeight);
                     button.setMinSize(size, characterHeight);
-                    AnchorPane.setTopAnchor(button, topAnchor);
-                    AnchorPane.setLeftAnchor(button, leftAnchor);
+                    AnchorPane.setTopAnchor(button, AnnotatedDocumentPane.STANDARD_INSET + topAnchor);
+                    AnchorPane.setLeftAnchor(button, AnnotatedDocumentPane.STANDARD_INSET + leftAnchor);
                     multiLineButton.add(button);
                 } else {
                     logger.debug("Sentence at [{}, {}] had some ignored characters.", begin, end);
@@ -107,8 +108,8 @@ public class CreateButtonsTask extends Task<List<AnnotationButton>> {
             // Now, link all the buttons and return them
             for (int i = 0; i < multiLineButton.size(); i++) {
                 for (int j = i + 1; j < multiLineButton.size(); j++) {
-                    multiLineButton.get(i).matchingButtons.add(multiLineButton.get(j));
-                    multiLineButton.get(j).matchingButtons.add(multiLineButton.get(i));
+                    multiLineButton.get(i).sameAnnotationButtons.add(multiLineButton.get(j));
+                    multiLineButton.get(j).sameAnnotationButtons.add(multiLineButton.get(i));
                 }
             }
 

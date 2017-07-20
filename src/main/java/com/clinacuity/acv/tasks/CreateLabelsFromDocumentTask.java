@@ -1,5 +1,6 @@
 package com.clinacuity.acv.tasks;
 
+import com.clinacuity.acv.controls.AnnotatedDocumentPane;
 import javafx.concurrent.Task;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
@@ -9,12 +10,12 @@ import org.apache.logging.log4j.Logger;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GetLabelsFromDocumentTask extends Task<List<Label>> {
+public class CreateLabelsFromDocumentTask extends Task<List<Label>> {
     private static final Logger logger = LogManager.getLogger();
     private String[] lines;
     private double offsetIncrement = 0.0d;
 
-    public GetLabelsFromDocumentTask(String rawText, double characterHeight) {
+    public CreateLabelsFromDocumentTask(String rawText, double characterHeight) {
         lines = rawText.split("\n");
         offsetIncrement = characterHeight * 2.0d;
     }
@@ -27,7 +28,8 @@ public class GetLabelsFromDocumentTask extends Task<List<Label>> {
             Label label = new Label(line);
             label.getStyleClass().clear();
             label.getStyleClass().add("mono-text");
-            AnchorPane.setTopAnchor(label, offset);
+            AnchorPane.setTopAnchor(label, AnnotatedDocumentPane.STANDARD_INSET + offset);
+            AnchorPane.setLeftAnchor(label, AnnotatedDocumentPane.STANDARD_INSET);
             labelList.add(label);
             offset += offsetIncrement;
         }

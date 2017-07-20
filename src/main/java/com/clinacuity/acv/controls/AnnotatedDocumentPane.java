@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class AnnotatedDocumentPane extends ScrollPane {
+    public static final double STANDARD_INSET = 5.0d;
     private static final Logger logger = LogManager.getLogger();
 
     @FXML private AnchorPane anchor;
