@@ -4,7 +4,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextArea;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.reactfx.util.FxTimer;
@@ -13,16 +15,20 @@ import java.time.Duration;
 import java.util.List;
 import java.util.ArrayList;
 
-public class AnnotatedDocumentPane extends ScrollPane {
-    public static final double STANDARD_INSET = 5.0d;
+public class AnnotatedDocumentPane extends GridPane {
+    public static final double STANDARD_INSET = 10.0d;
     private static final Logger logger = LogManager.getLogger();
 
     @FXML private AnchorPane anchor;
+    @FXML private TextArea featureTree;
+    @FXML private ScrollPane document;
     private List<Label> labelList = new ArrayList<>();
     private List<AnnotationButton> buttonList = new ArrayList<>();
     private double characterHeight = -1.0;
 
     public AnchorPane getAnchor() { return anchor; }
+
+    public ScrollPane getDocumentScrollPane() { return document; }
 
     public AnnotatedDocumentPane() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/controls/AnnotatedDocumentPane.fxml"));
@@ -58,6 +64,8 @@ public class AnnotatedDocumentPane extends ScrollPane {
     }
 
     public void addLabels(List<Label> labels) {
+        logger.error(labels.size());
+
         anchor.getChildren().removeAll(labelList);
         labelList = labels;
 
@@ -78,4 +86,6 @@ public class AnnotatedDocumentPane extends ScrollPane {
     public List<Label> getLabelList() { return labelList; }
 
     public List<AnnotationButton> getAnnotationButtonList() { return buttonList; }
+
+    public TextArea getFeatureTreeText() { return featureTree; }
 }

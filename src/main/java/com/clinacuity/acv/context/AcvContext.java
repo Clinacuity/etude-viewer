@@ -18,6 +18,9 @@ public class AcvContext {
     private static final String propertiesFileName = "/config_en.properties";
     private static File propertiesFile;
     private static boolean propertiesActive = false;
+    private static ResourceBundle resources;
+    public ResourceBundle getResources() { return resources; }
+    public void setResources(ResourceBundle bundle) { resources = bundle; }
 
     private static AcvContext instance;
     public static AcvContext getInstance() {
@@ -36,9 +39,7 @@ public class AcvContext {
     public StringProperty targetDocumentPathProperty = new SimpleStringProperty("");
     public StringProperty selectedAnnotationTypeProperty = new SimpleStringProperty("");
     public BooleanProperty exactMatchesProperty = new SimpleBooleanProperty(true);
-    public BooleanProperty exactFeatureMismatchProperty = new SimpleBooleanProperty(true);
     public BooleanProperty overlappingMatchesProperty = new SimpleBooleanProperty(true);
-    public BooleanProperty subsumedMatchesProperty = new SimpleBooleanProperty(true);
     public BooleanProperty noMatchesProperty = new SimpleBooleanProperty(true);
 
     public ListProperty<String> annotationList = new SimpleListProperty<>(FXCollections.observableArrayList());

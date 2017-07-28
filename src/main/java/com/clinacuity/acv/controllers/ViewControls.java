@@ -6,7 +6,6 @@ import com.jfoenix.controls.JFXCheckBox;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
 import javafx.scene.layout.VBox;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -16,20 +15,12 @@ public class ViewControls extends VBox {
     private static final Logger logger = LogManager.getLogger();
 
     @FXML private JFXComboBox<String> annotationComboBox;
-    @FXML private JFXCheckBox toggleExact;
-    @FXML private JFXCheckBox toggleFeatureMismatch;
-    @FXML private JFXCheckBox toggleOverlap;
-    @FXML private JFXCheckBox toggleSubsumed;
+    @FXML private JFXCheckBox toggleExactMatches;
+    @FXML private JFXCheckBox togglePartialMatches;
     @FXML private JFXCheckBox toggleNoMatch;
     @FXML private Label recallLabel;
     @FXML private Label precisionLabel;
     @FXML private Label fOneMeasureLabel;
-
-    @FXML private TextArea targetFeatureTree;
-    @FXML private TextArea referenceFeatureTree;
-
-    TextArea getTargetFeatureTree() { return targetFeatureTree; }
-    TextArea getReferenceFeatureTree() { return referenceFeatureTree; }
 
     public ViewControls() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/controls/ViewControls.fxml"));
@@ -45,10 +36,8 @@ public class ViewControls extends VBox {
         AcvContext context = AcvContext.getInstance();
 
         // assign listener events to toggles
-        context.exactMatchesProperty.bindBidirectional(toggleExact.selectedProperty());
-        context.exactFeatureMismatchProperty.bindBidirectional(toggleFeatureMismatch.selectedProperty());
-        context.overlappingMatchesProperty.bindBidirectional(toggleOverlap.selectedProperty());
-        context.subsumedMatchesProperty.bindBidirectional(toggleSubsumed.selectedProperty());
+        context.exactMatchesProperty.bindBidirectional(toggleExactMatches.selectedProperty());
+        context.overlappingMatchesProperty.bindBidirectional(togglePartialMatches.selectedProperty());
         context.noMatchesProperty.bindBidirectional(toggleNoMatch.selectedProperty());
 
         // fill in the combo box

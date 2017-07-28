@@ -6,6 +6,7 @@ import com.google.gson.JsonObject;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -25,16 +26,22 @@ import java.util.List;
   */
 public class AnnotationButton extends Button {
     private static final Logger logger = LogManager.getLogger();
-    private static final String HIGHLIGHTED_STYLE = "-fx-opacity: 0.75;";
+    private static final String HIGHLIGHTED_STYLE = "-fx-opacity: 0.45;";
 
     private JsonObject annotation;
     private int begin;
     private int end;
+    private boolean categoryMatch = false;
+    private boolean attributesMatch = false;
+    private boolean spanMatch = false;
+    private boolean fullyContained = false;
+    private String matchTypeStyle = "";
+    private MatchType matchType;
+    private Label categoryLabel;
+
     public List<AnnotationButton> matchingButtons = new ArrayList<>();
     public List<AnnotationButton> sameAnnotationButtons = new ArrayList<>();
     public TextArea targetTextArea;
-    private String matchTypeStyle = "";
-    private MatchType matchType;
     public AnchorPane parent;
     public MatchType getMatchType() { return matchType; }
 
@@ -50,6 +57,43 @@ public class AnnotationButton extends Button {
         initialize(json, beginValue, endValue);
     }
 
+    public void setSelected() {
+        setStyle(matchTypeStyle + HIGHLIGHTED_STYLE);
+        addCategoryLabel();
+    }
+
+    public void clearSelected() {
+        setStyle(matchTypeStyle);
+        removeCategoryLabel();
+    }
+
+    public void checkMatchTypes() {
+        if (matchingButtons.size() == 0) {
+            setMatchType(MatchType.NO_MATCH);
+        } else {
+            AnnotationButton target = matchingButtons.get(0);
+
+            spanMatch = isSpanMatch(target);
+            attributesMatch = isAnnotationEquivalent(target.annotation);
+            categoryMatch = isCategoryMatch();
+            fullyContained = isFullyContainedOverlap(target);
+
+            if (spanMatch && categoryMatch) {
+                setMatchType(MatchType.EXACT_MATCH);
+            } else {
+                setMatchType(MatchType.PARTIAL_MATCH);
+            }
+        }
+    }
+
+    public void removeFromParent() {
+        parent.getChildren().remove(this);
+    }
+
+    public void addToParent() {
+        parent.getChildren().add(this);
+    }
+
     private void initialize(JsonObject json, int beginValue, int endValue) {
         getStyleClass().add("button-annotation");
         annotation = json;
@@ -59,6 +103,24 @@ public class AnnotationButton extends Button {
         setOnAction(onButtonAction);
         setOnMouseEntered(setHover);
         setOnMouseExited(unsetHover);
+    }
+
+    private void addCategoryLabel() {
+        if (categoryLabel == null) {
+            categoryLabel = new Label(annotation.get("type").getAsString());
+            categoryLabel.getStyleClass().add("label-annotation-category");
+            categoryLabel.setMaxWidth(getWidth());
+            categoryLabel.setMinWidth(getWidth());
+            AnchorPane.setTopAnchor(categoryLabel, (double) getProperties().get("pane-top-anchor") - getHeight());
+            AnchorPane.setLeftAnchor(categoryLabel, (double) getProperties().get("pane-left-anchor"));
+        }
+        parent.getChildren().add(categoryLabel);
+    }
+
+    private void removeCategoryLabel() {
+        if (categoryLabel != null) {
+            parent.getChildren().remove(categoryLabel);
+        }
     }
 
     private String getAnnotationFeatureTree() {
@@ -82,52 +144,6 @@ public class AnnotationButton extends Button {
         return buffer.toString();
     }
 
-    public void setSelected() {
-        logger.error(getStyle());
-        setStyle(matchTypeStyle + HIGHLIGHTED_STYLE);
-    }
-
-    public void clearSelected() {
-        logger.error(getStyle());
-        setStyle(matchTypeStyle);
-    }
-
-    public void checkForMatchTypes() {
-        if (matchingButtons.size() == 0) {
-            setMatchType(MatchType.NO_MATCH);
-        } else {
-            AnnotationButton target = matchingButtons.get(0);
-
-            if (target.getBegin() == getBegin() && target.getEnd() == getEnd()) {
-                if (isAnnotationEquivalent(target.annotation)) {
-                    setMatchType(MatchType.EXACT_SPAN);
-                } else {
-                    setMatchType(MatchType.EXACT_SPAN_DIFF_FEATURES);
-                }
-            } else {
-                if (getBegin() == 0 || getBegin() == 7) {
-                    logger.error("these should be marked as subsumed");
-                }
-                // Either is contained by the other
-                if ((target.getBegin() >= getBegin() && target.getEnd() <= getEnd())
-                        || (getBegin() >= target.getBegin() && getEnd() <= target.getEnd())) {
-                    setMatchType(MatchType.SUBSUMED);
-                    logger.error("something is subsumed");
-                } else {
-                    setMatchType(MatchType.OVERLAP);
-                }
-            }
-        }
-    }
-
-    public void removeFromParent() {
-        parent.getChildren().remove(this);
-    }
-
-    public void addToParent() {
-        parent.getChildren().add(this);
-    }
-
     private boolean isAnnotationEquivalent(JsonObject target) {
         for (String key: target.keySet()) {
             if (!annotation.keySet().contains(key)) {
@@ -147,23 +163,49 @@ public class AnnotationButton extends Button {
         return true;
     }
 
+    private boolean isCategoryMatch() {
+        return true;
+    }
+
+    private boolean isSpanMatch(AnnotationButton target) {
+        return (getBegin() == target.getBegin() && getEnd() == target.getEnd());
+    }
+
+    private boolean isFullyContainedOverlap(AnnotationButton target) {
+        return ((getBegin() <= target.getBegin() && getEnd() >= target.getEnd())
+                || (getBegin() >= target.getBegin() && getEnd() <= target.getEnd()));
+    }
+
     private void setMatchType(MatchType match) {
         switch(match) {
-            case EXACT_SPAN:
-                matchTypeStyle = "-fx-background-color: DodgerBlue";
+            case EXACT_MATCH:
+                matchTypeStyle = "-fx-background-color: DodgerBlue;";
+
+                if (attributesMatch) {
+                    logger.debug("attributes");
+                }
+
                 break;
-            case EXACT_SPAN_DIFF_FEATURES:
-                matchTypeStyle = "-fx-background-color: OrangeRed";
+
+            case PARTIAL_MATCH:
+                matchTypeStyle = "-fx-background-color: DarkOrchid;";
+
+                if (attributesMatch) {
+                    logger.debug("ok");
+                }
+
+                if (fullyContained) {
+                    logger.debug("this is fully contained");
+                }
+
                 break;
-            case OVERLAP:
-                matchTypeStyle = "-fx-background-color: Purple";
-                break;
-            case SUBSUMED:
-                matchTypeStyle = "-fx-background-color: DarkKhaki";
-                break;
+
             case NO_MATCH:
-                matchTypeStyle = "-fx-background-color: Maroon";
+                matchTypeStyle = "-fx-background-color: OrangeRed;";
                 break;
+
+            default:
+                matchTypeStyle = "-fx-background-color: DarkGray;";
         }
 
         matchType = match;
@@ -188,11 +230,16 @@ public class AnnotationButton extends Button {
         sameAnnotationButtons.forEach(button -> button.setHover(false));
     };
 
+    /**
+     * Exact matches -- identical category and span
+     * Partial matches -- spans overlap; categories don't match
+     * Partial matches -- spans exact; categories don't match
+     * Partial matches -- spans don't overlap; categories match
+     * No match
+     */
     public enum MatchType {
-        EXACT_SPAN,
-        EXACT_SPAN_DIFF_FEATURES,
-        OVERLAP,
-        SUBSUMED,
+        EXACT_MATCH,
+        PARTIAL_MATCH,
         NO_MATCH
     }
 }

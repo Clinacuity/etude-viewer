@@ -1,7 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.layout.AnchorPane?>
-<fx:root type="javafx.scene.control.ScrollPane"
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.GridPane?>
+
+<fx:root type="javafx.scene.layout.GridPane"
          xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1">
+    <rowConstraints>
+        <RowConstraints percentHeight="75" />
+        <RowConstraints percentHeight="5" />
+        <RowConstraints percentHeight="20" />
+    </rowConstraints>
+
+    <ScrollPane fx:id="document" fitToWidth="true" fitToHeight="true" GridPane.rowIndex="0">
         <AnchorPane fx:id="anchor"/>
+    </ScrollPane>
+
+    <Label alignment="BOTTOM_CENTER" text="&#9;Features/attributes:" styleClass="label-header-two" GridPane.rowIndex="1"/>
+
+    <TextArea fx:id="featureTree" minHeight="15" maxHeight="Infinity" styleClass="feature-tree" GridPane.rowIndex="2"/>
 </fx:root>

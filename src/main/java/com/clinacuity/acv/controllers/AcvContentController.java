@@ -6,6 +6,7 @@ import com.clinacuity.acv.controls.AnnotatedDocumentPane;
 import com.clinacuity.acv.controls.AnnotationButton;
 import com.clinacuity.acv.tasks.CreateButtonsTask;
 import com.clinacuity.acv.tasks.CreateLabelsFromDocumentTask;
+import com.clinacuity.acv.controls.AnnotationButton.MatchType;
 import com.google.gson.JsonObject;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -15,7 +16,6 @@ import javafx.fxml.Initializable;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.reactfx.util.FxTimer;
-import com.clinacuity.acv.controls.AnnotationButton.MatchType;
 import java.net.URL;
 import java.time.Duration;
 import java.util.ArrayList;
@@ -78,8 +78,11 @@ public class AcvContentController implements Initializable {
      * Sets up the children AnnotatedDocumentPanes by calling their initialize method. It also binds their scrollbars
      */
     private void setupDocumentPanes() {
-        referencePane.vvalueProperty().bindBidirectional(targetPane.vvalueProperty());
-        referencePane.hvalueProperty().bindBidirectional(targetPane.hvalueProperty());
+        targetPane.maxHeightProperty().bind(referencePane.heightProperty());
+        targetPane.maxHeightProperty().bind(referencePane.heightProperty());
+
+        referencePane.getDocumentScrollPane().vvalueProperty().bindBidirectional(targetPane.getDocumentScrollPane().vvalueProperty());
+        referencePane.getDocumentScrollPane().hvalueProperty().bindBidirectional(targetPane.getDocumentScrollPane().hvalueProperty());
 
         if (characterHeight <= 0.0d) {
             characterHeight = referencePane.getCharacterHeight();
@@ -107,10 +110,8 @@ public class AcvContentController implements Initializable {
      * Note that some listeners are initialized when the ViewControls are created.
      */
     private void setupViewControls() {
-        context.exactMatchesProperty.addListener((obs, old, newValue) -> updateButton(newValue, MatchType.EXACT_SPAN));
-        context.exactFeatureMismatchProperty.addListener((obs, old, newValue) -> updateButton(newValue, MatchType.EXACT_SPAN_DIFF_FEATURES));
-        context.overlappingMatchesProperty.addListener((obs, old, newValue) -> updateButton(newValue, MatchType.OVERLAP));
-        context.subsumedMatchesProperty.addListener((obs, old, newValue) -> updateButton(newValue, MatchType.SUBSUMED));
+        context.exactMatchesProperty.addListener((obs, old, newValue) -> updateButton(newValue, MatchType.EXACT_MATCH));
+        context.overlappingMatchesProperty.addListener((obs, old, newValue) -> updateButton(newValue, MatchType.PARTIAL_MATCH));
         context.noMatchesProperty.addListener((obs, old, newValue) -> updateButton(newValue, MatchType.NO_MATCH));
 
         context.selectedAnnotationTypeProperty.addListener(selectedAnnotationTypeListener);
@@ -175,7 +176,7 @@ public class AcvContentController implements Initializable {
                     if ((beginTarget < endRef && beginRef < endTarget) || (beginTarget == beginRef && endTarget == endRef)) {
                         targetButton.matchingButtons.add(refButton);
                         refButton.matchingButtons.add(targetButton);
-                        targetButton.targetTextArea = viewControls.getTargetFeatureTree();
+                        targetButton.targetTextArea = targetPane.getFeatureTreeText();
                     }
                 }
 
@@ -185,7 +186,7 @@ public class AcvContentController implements Initializable {
 
             for (AnnotationButton refButton: refButtons) {
                 refButton.parent = referencePane.getAnchor();
-                refButton.targetTextArea = viewControls.getReferenceFeatureTree();
+                refButton.targetTextArea = referencePane.getFeatureTreeText();
                 refButton.setOnMouseClicked(event -> selectedAnnotationButton.setValue(refButton));
             }
 
@@ -194,8 +195,8 @@ public class AcvContentController implements Initializable {
             * we will use a separate for-loop.  The cost to performance is negligible.  This loop determines
             * which color to assign the buttons based on the type of match.
             */
-            targetButtons.forEach(AnnotationButton::checkForMatchTypes);
-            refButtons.forEach(AnnotationButton::checkForMatchTypes);
+            targetButtons.forEach(AnnotationButton::checkMatchTypes);
+            refButtons.forEach(AnnotationButton::checkMatchTypes);
 
             removeUncheckedAnnotations();
         } else {
@@ -241,14 +242,10 @@ public class AcvContentController implements Initializable {
 
     private boolean isMatchTypeChecked(AnnotationButton.MatchType matchType) {
         switch (matchType) {
-            case EXACT_SPAN:
+            case EXACT_MATCH:
                 return context.exactMatchesProperty.getValue();
-            case EXACT_SPAN_DIFF_FEATURES:
-                return context.exactFeatureMismatchProperty.getValue();
-            case OVERLAP:
+            case PARTIAL_MATCH:
                 return context.overlappingMatchesProperty.getValue();
-            case SUBSUMED:
-                return context.subsumedMatchesProperty.getValue();
             case NO_MATCH:
                 return context.noMatchesProperty.getValue();
         }
@@ -256,8 +253,8 @@ public class AcvContentController implements Initializable {
     }
 
     private void clearFeatureTrees() {
-        viewControls.getTargetFeatureTree().clear();
-        viewControls.getReferenceFeatureTree().clear();
+        referencePane.getFeatureTreeText().clear();
+        targetPane.getFeatureTreeText().clear();
     }
 
     /* ******************************
@@ -298,11 +295,6 @@ public class AcvContentController implements Initializable {
         }
 
         if (newValue != null) {
-            logger.error("Matching: {}, Same: {}", newValue.matchingButtons.size(), newValue.sameAnnotationButtons.size());
-            newValue.matchingButtons.forEach(button ->
-                logger.error("{} - {},   {} - {}", newValue.getBegin(), newValue.getEnd(), button.getBegin(), button.getEnd())
-            );
-
             newValue.setSelected();
             newValue.matchingButtons.forEach(AnnotationButton::setSelected);
             newValue.sameAnnotationButtons.forEach(AnnotationButton::setSelected);
