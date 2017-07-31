@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.geometry.Insets?>
 <?import com.jfoenix.controls.JFXComboBox?>
 <?import javafx.scene.control.Label?>
@@ -11,7 +10,6 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.control.Tooltip?>
 <?import com.jfoenix.controls.JFXCheckBox?>
-<?import javafx.scene.control.TextArea?>
 
 <fx:root type="javafx.scene.layout.VBox"
          xmlns="http://javafx.com/javafx/8.0.112"
@@ -26,7 +24,7 @@
 
     <VBox GridPane.columnIndex="0" GridPane.rowIndex="1">
         <HBox alignment="CENTER_LEFT" spacing="3" styleClass="h-box-checkbox">
-            <JFXCheckBox fx:id="toggleExact" text="Exact Match" selected="true"
+            <JFXCheckBox fx:id="toggleExactMatches" text="Exact Match" selected="true"
                          checkedColor="DodgerBlue" unCheckedColor="DodgerBlue"/>
             <Label styleClass="label-tooltip">
                 <tooltip>
@@ -41,41 +39,11 @@
             <padding><Insets top="15" bottom="15"/></padding>
         </HBox>
         <HBox alignment="CENTER_LEFT" spacing="3" styleClass="h-box-checkbox">
-            <JFXCheckBox fx:id="toggleFeatureMismatch" text="Exact Span - Mismatched Features" selected="true"
-                         checkedColor="OrangeRed" unCheckedColor="OrangeRed"/>
+            <JFXCheckBox fx:id="togglePartialMatches" text="Partial Matches" selected="true"
+                         checkedColor="DarkOrchid" unCheckedColor="DarkOrchid"/>
             <Label styleClass="label-tooltip">
                 <tooltip>
-                    <Tooltip text="Toggle display of annotations spanning the same text but with different features"/>
-                </tooltip>
-                <graphic>
-                    <ImageView fitHeight="16" fitWidth="16" preserveRatio="true" pickOnBounds="true">
-                        <Image url="/img/ecommerce/16/info.png"/>
-                    </ImageView>
-                </graphic>
-            </Label>
-        </HBox>
-        <HBox alignment="CENTER_LEFT" spacing="3" styleClass="h-box-checkbox">
-            <JFXCheckBox fx:id="toggleSubsumed" text="Subsumed" selected="true"
-                         checkedColor="DarkKhaki" unCheckedColor="DarkKhaki"/>
-            <Label styleClass="label-tooltip">
-                <tooltip>
-                    <Tooltip text="Toggle display of annotations subsumed in another."/>
-                </tooltip>
-                <graphic>
-                    <ImageView fitHeight="16" fitWidth="16" preserveRatio="true" pickOnBounds="true">
-                        <image>
-                            <Image url="/img/ecommerce/16/info.png"/>
-                        </image>
-                    </ImageView>
-                </graphic>
-            </Label>
-        </HBox>
-        <HBox alignment="CENTER_LEFT" spacing="3" styleClass="h-box-checkbox">
-            <JFXCheckBox fx:id="toggleOverlap" text="Overlap" selected="true"
-                         checkedColor="Purple" unCheckedColor="Purple"/>
-            <Label styleClass="label-tooltip">
-                <tooltip>
-                    <Tooltip text="Toggle display of annotations partially overlapped by others"/>
+                    <Tooltip text="Toggle display of annotations which partially match others.&#013;Partial matches consider category, features, and span."/>
                 </tooltip>
                 <graphic>
                     <ImageView fitHeight="16" fitWidth="16" preserveRatio="true" pickOnBounds="true">
@@ -88,7 +56,7 @@
         </HBox>
         <HBox alignment="CENTER_LEFT" spacing="3" styleClass="h-box-checkbox">
             <JFXCheckBox fx:id="toggleNoMatch" text="No Match" selected="true"
-                         checkedColor="Maroon" unCheckedColor="Maroon"/>
+                         checkedColor="OrangeRed" unCheckedColor="OrangeRed"/>
             <Label styleClass="label-tooltip">
                 <tooltip>
                     <Tooltip text="Toggle display of annotations which do not have any match."/>
@@ -102,24 +70,15 @@
                 </graphic>
             </Label>
         </HBox>
+        <HBox spacing="50">
+            <Label fx:id="recallLabel" text="Recall: " GridPane.columnIndex="0"/>
+            <Label fx:id="precisionLabel" text="Precision: " GridPane.columnIndex="1"/>
+            <Label fx:id="fOneMeasureLabel" text="F-1 Measure: " GridPane.columnIndex="2"/>
+            <padding>
+                <Insets top="40"/>
+            </padding>
+        </HBox>
     </VBox>
-
-    <GridPane GridPane.columnIndex="0" GridPane.rowIndex="2" >
-        <columnConstraints>
-            <ColumnConstraints percentWidth="33.3"/>
-            <ColumnConstraints percentWidth="33.3"/>
-            <ColumnConstraints percentWidth="33.3"/>
-        </columnConstraints>
-
-        <Label fx:id="recallLabel" text="Recall: " GridPane.columnIndex="0"/>
-        <Label fx:id="precisionLabel" text="Precision: " GridPane.columnIndex="1"/>
-        <Label fx:id="fOneMeasureLabel" text="F-1 Measure: " GridPane.columnIndex="2"/>
-    </GridPane>
-
-    <HBox VBox.vgrow="ALWAYS" spacing="5">
-        <TextArea fx:id="targetFeatureTree" editable="false" focusTraversable="false" mouseTransparent="true"/>
-        <TextArea fx:id="referenceFeatureTree" editable="false" focusTraversable="false" mouseTransparent="true"/>
-    </HBox>
 
     <padding>
         <Insets top="40.0"/>

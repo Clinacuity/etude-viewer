@@ -4,7 +4,7 @@ import com.clinacuity.acv.context.AcvContext;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.control.MenuBar;
 import javafx.scene.layout.GridPane;
 import org.apache.logging.log4j.LogManager;
@@ -17,16 +17,18 @@ public class AppMainController implements Initializable {
     private static final Logger logger = LogManager.getLogger();
 
     @FXML private GridPane masterGrid;
-    @FXML private GridPane targetGridContent;
+    @FXML private Node targetGridContent;
     private ResourceBundle resources;
+    private MenuBar menuBar;
 
     @Override
     public void initialize(URL location, ResourceBundle resourceBundle) {
         AcvContext.getInstance().mainController = this;
 
         resources = resourceBundle;
+        AcvContext.getInstance().setResources(resources);
         try {
-            MenuBar menuBar = FXMLLoader.load(getClass().getResource("/pages/MenuBar.fxml"), resources);
+            menuBar = FXMLLoader.load(getClass().getResource("/pages/MenuBar.fxml"), resources);
             masterGrid.getChildren().addAll(menuBar);
 
             reloadContent("/pages/LoadScreenView.fxml");
@@ -39,9 +41,7 @@ public class AppMainController implements Initializable {
         try {
             masterGrid.getChildren().remove(targetGridContent);
             targetGridContent = FXMLLoader.load(getClass().getResource(page), resources);
-            targetGridContent.setPadding(new Insets(5.0f, 10.f, 10.0f, 10.f));
             masterGrid.add(targetGridContent, 0, 1);
-
         } catch (IOException e) {
             logger.throwing(e);
         }

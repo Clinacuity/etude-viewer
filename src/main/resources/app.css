@@ -1,13 +1,5 @@
 @font-face {
-    src: url('/fonts/open/OpenSans-SemiBold.ttf');
-}
-
-@font-face {
      src: url('/fonts/open/OpenSans-Bold.ttf');
-}
-
-@font-face {
-    src: url("/fonts/fira/FiraMono-Bold.ttf");
 }
 
 @font-face {
@@ -15,7 +7,7 @@
 }
 
 @font-face {
-    src: url("/fonts/fira/FiraMono-Medium.ttf");
+    src: url("/fonts/open/OpenSans-Italic.ttf");
 }
 
 @font-face {
@@ -25,9 +17,7 @@
 /*    BUTTONS    */
 .button {
     -fx-font-family: "Open Sans Bold";
-    -fx-font-size: 1;
     -fx-border-radius: 4px;
-    -fx-border-color: DarkGray;
 }
 
 .button:hover {
@@ -46,12 +36,11 @@
 
 .button-annotation {
     -fx-focus-traversable: false;
-    -fx-background-color: DarkGray;
-    -fx-opacity: 0.3;
+    -fx-opacity: 0.25;
 }
 
 .button-annotation:hover {
-    -fx-opacity: 0.5;
+    -fx-opacity: 0.35;
     -fx-border-color: Orange;
     -fx-border-radius: 4px;
     -fx-border-insets: -3;
@@ -88,13 +77,22 @@
 .h-box-checkbox {
     -fx-padding: 8 3 8 0;
 }
-
 /*    END CHECK BOXES    */
 
 
 /*    TEXT FIELDS   */
 .text-field {
     -fx-font-family: "Open Sans Regular";
+}
+
+.feature-tree {
+    -fx-font-family: "Fira Mono Bold";
+    -fx-font-size: 12;
+    -fx-text-fill: rgba(55, 55, 55, 0);
+    -fx-background-color: rgba(220, 220, 220, 0);
+    -fx-focus-traversable: false;
+    -fx-mouse-transparent: true;
+    -fx-editable: false;
 }
 
 .tooltip {
@@ -112,7 +110,21 @@
 
 .label-header-one {
     -fx-font-family: "Open Sans Bold Italic";
-    -fx-font-size:36;
+    -fx-font-size: 36;
+}
+
+.label-header-two {
+    -fx-font-family: "Open Sans Bold";
+    -fx-font-size: 14;
+    -fx-text-fill: rgb(55, 55, 55);
+}
+
+.label-annotation-category {
+    -fx-font-family: "Open Sans Italic";
+    -fx-font-size: 12px;
+    -fx-text-fill: DarkGray;
+    -fx-text-alignment: Center;
+    -fx-alignment: Top_Center;
 }
 
 .mono-text {

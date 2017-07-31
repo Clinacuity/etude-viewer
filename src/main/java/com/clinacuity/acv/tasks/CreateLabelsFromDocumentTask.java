@@ -34,6 +34,8 @@ public class CreateLabelsFromDocumentTask extends Task<List<Label>> {
             offset += offsetIncrement;
         }
 
+        logger.error(offset);
+
         succeeded();
         return labelList;
     }
