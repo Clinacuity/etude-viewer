@@ -14,6 +14,10 @@
     src: url("/fonts/fira/FiraMono-Regular.ttf");
 }
 
+@font-face {
+    src: url("/fonts/fira/FiraMono-Bold.ttf");
+}
+
 /*    BUTTONS    */
 .button {
     -fx-font-family: "Open Sans Bold";
@@ -88,11 +92,10 @@
 .feature-tree {
     -fx-font-family: "Fira Mono Bold";
     -fx-font-size: 12;
-    -fx-text-fill: rgba(55, 55, 55, 0);
+    -fx-text-fill: rgba(55, 55, 55, 1);
     -fx-background-color: rgba(220, 220, 220, 0);
     -fx-focus-traversable: false;
     -fx-mouse-transparent: true;
-    -fx-editable: false;
 }
 
 .tooltip {
