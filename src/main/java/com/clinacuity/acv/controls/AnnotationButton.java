@@ -182,6 +182,7 @@ public class AnnotationButton extends Button {
                 matchTypeStyle = "-fx-background-color: DodgerBlue;";
 
                 if (attributesMatch) {
+                    // TODO
                     logger.debug("attributes");
                 }
 
@@ -191,10 +192,12 @@ public class AnnotationButton extends Button {
                 matchTypeStyle = "-fx-background-color: DarkOrchid;";
 
                 if (attributesMatch) {
+                    // TODO
                     logger.debug("ok");
                 }
 
                 if (fullyContained) {
+                    // TODO
                     logger.debug("this is fully contained");
                 }
 
