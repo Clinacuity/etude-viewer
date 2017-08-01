@@ -44,16 +44,11 @@ public class AcvContext {
 
     public ListProperty<String> annotationList = new SimpleListProperty<>(FXCollections.observableArrayList());
 
-    private final String defaultSelectedAnnotation = "Select Annotation...";
-    public final String getDefaultSelectedAnnotation() { return defaultSelectedAnnotation; }
-
     private AcvContext() {
         instance = this;
 
         initProperties();
         addProperty("exactMatch", true);
-
-        annotationList.add(defaultSelectedAnnotation);
 
         referenceDocumentPathProperty.addListener((observable, oldValue, newValue) -> cleanupAnnotationList());
         targetDocumentPathProperty.addListener((observable, oldValue, newValue) -> cleanupAnnotationList());

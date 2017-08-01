@@ -43,6 +43,11 @@ public class AnnotatedDocumentPane extends GridPane {
 
         featureTree.setEditable(false);
         featureTree.setMouseTransparent(true);
+
+        document.setFitToWidth(true);
+
+        document.prefWidthProperty().bind(getColumnConstraints().get(0).prefWidthProperty());
+
         arbitraryLabelsForSizeCalculations();
         FxTimer.runLater(Duration.ofMillis(100), this::getCharacterHeight);
 

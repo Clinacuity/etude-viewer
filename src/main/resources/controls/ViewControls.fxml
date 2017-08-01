@@ -2,7 +2,6 @@
 
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.geometry.Insets?>
-<?import com.jfoenix.controls.JFXComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.layout.HBox?>
@@ -10,17 +9,14 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.control.Tooltip?>
 <?import com.jfoenix.controls.JFXCheckBox?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TableColumn?>
 
 <fx:root type="javafx.scene.layout.VBox"
          xmlns="http://javafx.com/javafx/8.0.112"
          xmlns:fx="http://javafx.com/fxml/1"
          spacing="20">
-
-    <JFXComboBox fx:id="annotationComboBox" GridPane.columnIndex="0" GridPane.rowIndex="0">
-        <GridPane.margin>
-            <Insets bottom="10"/>
-        </GridPane.margin>
-    </JFXComboBox>
 
     <VBox GridPane.columnIndex="0" GridPane.rowIndex="1">
         <HBox alignment="CENTER_LEFT" spacing="3" styleClass="h-box-checkbox">
@@ -47,9 +43,7 @@
                 </tooltip>
                 <graphic>
                     <ImageView fitHeight="16" fitWidth="16" preserveRatio="true" pickOnBounds="true">
-                        <image>
-                            <Image url="/img/ecommerce/16/info.png"/>
-                        </image>
+                        <Image url="/img/ecommerce/16/info.png"/>
                     </ImageView>
                 </graphic>
             </Label>
@@ -63,22 +57,47 @@
                 </tooltip>
                 <graphic>
                     <ImageView fitHeight="16" fitWidth="16" preserveRatio="true" pickOnBounds="true">
-                        <image>
-                            <Image url="/img/ecommerce/16/info.png"/>
-                        </image>
+                        <Image url="/img/ecommerce/16/info.png"/>
                     </ImageView>
                 </graphic>
             </Label>
         </HBox>
-        <HBox spacing="50">
-            <Label fx:id="recallLabel" text="Recall: " GridPane.columnIndex="0"/>
-            <Label fx:id="precisionLabel" text="Precision: " GridPane.columnIndex="1"/>
-            <Label fx:id="fOneMeasureLabel" text="F-1 Measure: " GridPane.columnIndex="2"/>
-            <padding>
-                <Insets top="40"/>
-            </padding>
-        </HBox>
     </VBox>
+
+    <TableView fx:id="annotationTable">
+        <columns>
+            <TableColumn text="Name" prefWidth="100">
+                <cellValueFactory>
+                    <PropertyValueFactory property="annotationName"/>
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn text="TP">
+                <cellValueFactory>
+                    <PropertyValueFactory property="truePositiveCount"/>
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn text="FP">
+                <cellValueFactory>
+                    <PropertyValueFactory property="falsePositiveCount"/>
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn text="FN">
+                <cellValueFactory>
+                    <PropertyValueFactory property="falseNegativeCount"/>
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn text="Recall">
+                <cellValueFactory>
+                    <PropertyValueFactory property="recall"/>
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn text="Precision">
+                <cellValueFactory>
+                    <PropertyValueFactory property="precision"/>
+                </cellValueFactory>
+            </TableColumn>
+        </columns>
+    </TableView>
 
     <padding>
         <Insets top="40.0"/>

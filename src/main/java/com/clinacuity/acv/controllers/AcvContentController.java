@@ -4,6 +4,7 @@ import com.clinacuity.acv.context.AcvContext;
 import com.clinacuity.acv.context.Annotations;
 import com.clinacuity.acv.controls.AnnotatedDocumentPane;
 import com.clinacuity.acv.controls.AnnotationButton;
+import com.clinacuity.acv.controls.AnnotationType;
 import com.clinacuity.acv.tasks.CreateButtonsTask;
 import com.clinacuity.acv.tasks.CreateLabelsFromDocumentTask;
 import com.clinacuity.acv.controls.AnnotationButton.MatchType;
@@ -11,6 +12,8 @@ import com.google.gson.JsonObject;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import org.apache.logging.log4j.LogManager;
@@ -110,6 +113,10 @@ public class AcvContentController implements Initializable {
      * Note that some listeners are initialized when the ViewControls are created.
      */
     private void setupViewControls() {
+        ObservableList<AnnotationType> types = FXCollections.observableArrayList();
+        context.annotationList.forEach(item -> types.add(new AnnotationType(item, 10, 12, 14, 0.5d, 0.5d)));
+        viewControls.setTableRows(types);
+
         context.exactMatchesProperty.addListener((obs, old, newValue) -> updateButton(newValue, MatchType.EXACT_MATCH));
         context.overlappingMatchesProperty.addListener((obs, old, newValue) -> updateButton(newValue, MatchType.PARTIAL_MATCH));
         context.noMatchesProperty.addListener((obs, old, newValue) -> updateButton(newValue, MatchType.NO_MATCH));
@@ -118,38 +125,32 @@ public class AcvContentController implements Initializable {
     }
 
     private void resetAnnotationButtons(String key) {
-        if (key.equals(context.getDefaultSelectedAnnotation())) {
-            targetPane.addButtons(new ArrayList<>());
-            referencePane.addButtons(new ArrayList<>());
-        } else {
-
-            if (targetButtonsTask != null && targetButtonsTask.isRunning()) {
-                targetButtonsTask.cancel();
-            }
-
-            if (referenceButtonsTask != null && referenceButtonsTask.isRunning()) {
-                referenceButtonsTask.cancel();
-            }
-
-            List<JsonObject> targetJson = targetAnnotationsProperty.getValue().getAnnotationsByKey(key);
-            List<JsonObject> referenceJson = referenceAnnotationsProperty.getValue().getAnnotationsByKey(key);
-
-            // TODO: button actions must include behaviors against their matchingButtons object
-            // TODO: matchingButtons objects must be populated
-            targetButtonsTask = new CreateButtonsTask(targetJson, targetPane.getLabelList(), characterHeight);
-            targetButtonsTask.setOnSucceeded(event -> {
-                targetPane.addButtons(targetButtonsTask.getValue());
-                setupAnnotationButtons();
-            });
-            new Thread(targetButtonsTask).start();
-
-            referenceButtonsTask = new CreateButtonsTask(referenceJson, referencePane.getLabelList(), characterHeight);
-            referenceButtonsTask.setOnSucceeded(event -> {
-                referencePane.addButtons(referenceButtonsTask.getValue());
-                setupAnnotationButtons();
-            });
-            new Thread(referenceButtonsTask).start();
+        if (targetButtonsTask != null && targetButtonsTask.isRunning()) {
+            targetButtonsTask.cancel();
         }
+
+        if (referenceButtonsTask != null && referenceButtonsTask.isRunning()) {
+            referenceButtonsTask.cancel();
+        }
+
+        List<JsonObject> targetJson = targetAnnotationsProperty.getValue().getAnnotationsByKey(key);
+        List<JsonObject> referenceJson = referenceAnnotationsProperty.getValue().getAnnotationsByKey(key);
+
+        // TODO: button actions must include behaviors against their matchingButtons object
+        // TODO: matchingButtons objects must be populated
+        targetButtonsTask = new CreateButtonsTask(targetJson, targetPane.getLabelList(), characterHeight);
+        targetButtonsTask.setOnSucceeded(event -> {
+            targetPane.addButtons(targetButtonsTask.getValue());
+            setupAnnotationButtons();
+        });
+        new Thread(targetButtonsTask).start();
+
+        referenceButtonsTask = new CreateButtonsTask(referenceJson, referencePane.getLabelList(), characterHeight);
+        referenceButtonsTask.setOnSucceeded(event -> {
+            referencePane.addButtons(referenceButtonsTask.getValue());
+            setupAnnotationButtons();
+        });
+        new Thread(referenceButtonsTask).start();
     }
 
     private int finished = 0;
