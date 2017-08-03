@@ -15,8 +15,7 @@
 
 <fx:root type="javafx.scene.layout.VBox"
          xmlns="http://javafx.com/javafx/8.0.112"
-         xmlns:fx="http://javafx.com/fxml/1"
-         spacing="20">
+         xmlns:fx="http://javafx.com/fxml/1">
 
     <VBox GridPane.columnIndex="0" GridPane.rowIndex="1">
         <HBox alignment="CENTER_LEFT" spacing="3" styleClass="h-box-checkbox">
@@ -32,7 +31,6 @@
                     </ImageView>
                 </graphic>
             </Label>
-            <padding><Insets top="15" bottom="15"/></padding>
         </HBox>
         <HBox alignment="CENTER_LEFT" spacing="3" styleClass="h-box-checkbox">
             <JFXCheckBox fx:id="togglePartialMatches" text="Partial Matches" selected="true"
@@ -66,40 +64,36 @@
 
     <TableView fx:id="annotationTable">
         <columns>
-            <TableColumn text="Name" prefWidth="100">
+            <TableColumn text="Name" prefWidth="150" styleClass="column-right-align">
                 <cellValueFactory>
                     <PropertyValueFactory property="annotationName"/>
                 </cellValueFactory>
             </TableColumn>
-            <TableColumn text="TP">
+            <TableColumn text="TP" maxWidth="50" styleClass="column-center-align">
                 <cellValueFactory>
                     <PropertyValueFactory property="truePositiveCount"/>
                 </cellValueFactory>
             </TableColumn>
-            <TableColumn text="FP">
+            <TableColumn text="FP" maxWidth="50" styleClass="column-center-align">
                 <cellValueFactory>
                     <PropertyValueFactory property="falsePositiveCount"/>
                 </cellValueFactory>
             </TableColumn>
-            <TableColumn text="FN">
+            <TableColumn text="FN" maxWidth="50" styleClass="column-center-align">
                 <cellValueFactory>
                     <PropertyValueFactory property="falseNegativeCount"/>
                 </cellValueFactory>
             </TableColumn>
-            <TableColumn text="Recall">
+            <TableColumn text="Recall" maxWidth="80" styleClass="column-center-align">
                 <cellValueFactory>
                     <PropertyValueFactory property="recall"/>
                 </cellValueFactory>
             </TableColumn>
-            <TableColumn text="Precision">
+            <TableColumn text="Precision" maxWidth="80" styleClass="column-center-align">
                 <cellValueFactory>
                     <PropertyValueFactory property="precision"/>
                 </cellValueFactory>
             </TableColumn>
         </columns>
     </TableView>
-
-    <padding>
-        <Insets top="40.0"/>
-    </padding>
 </fx:root>

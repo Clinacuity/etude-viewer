@@ -66,7 +66,7 @@ public class CreateButtonsTask extends Task<List<AnnotationButton>> {
             button.setMaxSize(size, characterHeight);
             button.setMinSize(size, characterHeight);
             AnchorPane.setTopAnchor(button, AnnotatedDocumentPane.STANDARD_INSET + topAnchor);
-            AnchorPane.setLeftAnchor(button, AnnotatedDocumentPane.STANDARD_INSET + leftAnchor);
+            AnchorPane.setLeftAnchor(button, AnnotatedDocumentPane.LINE_NUMBER_WIDTH + leftAnchor);
             taskButtons.add(button);
             updateValue(taskButtons);
         } else {
@@ -98,7 +98,7 @@ public class CreateButtonsTask extends Task<List<AnnotationButton>> {
                     button.setMaxSize(size, characterHeight);
                     button.setMinSize(size, characterHeight);
                     AnchorPane.setTopAnchor(button, AnnotatedDocumentPane.STANDARD_INSET + topAnchor);
-                    AnchorPane.setLeftAnchor(button, AnnotatedDocumentPane.STANDARD_INSET + leftAnchor);
+                    AnchorPane.setLeftAnchor(button, AnnotatedDocumentPane.LINE_NUMBER_WIDTH + leftAnchor);
                     multiLineButton.add(button);
                 } else {
                     logger.debug("Sentence at [{}, {}] had some ignored characters.", begin, end);

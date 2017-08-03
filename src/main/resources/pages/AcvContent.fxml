@@ -5,34 +5,52 @@
 <?import com.clinacuity.acv.controllers.ViewControls?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
-
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.control.Label?>
+<?import javafx.geometry.Insets?>
+
 <GridPane xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="com.clinacuity.acv.controllers.AcvContentController">
     <columnConstraints>
-        <ColumnConstraints percentWidth="1"/>
-        <ColumnConstraints percentWidth="38"/>
-        <ColumnConstraints percentWidth="1"/>
-        <ColumnConstraints percentWidth="38"/>
-        <ColumnConstraints percentWidth="1"/>
-        <ColumnConstraints percentWidth="20"/>
-        <ColumnConstraints percentWidth="1"/>
+        <ColumnConstraints percentWidth="35"/>
+        <ColumnConstraints percentWidth="35"/>
+        <ColumnConstraints />
+        <ColumnConstraints percentWidth="29"/>
     </columnConstraints>
 
     <rowConstraints>
         <RowConstraints minHeight="30" maxHeight="30"/>
-        <RowConstraints fillHeight="true"/>
+        <RowConstraints />
         <RowConstraints minHeight="15" maxHeight="15"/>
     </rowConstraints>
 
+    <Label text="System Output:" GridPane.columnIndex="0" GridPane.rowIndex="0">
+        <padding>
+            <Insets left="10"/>
+        </padding>
+    </Label>
+    <AnnotatedDocumentPane fx:id="targetPane" id="target"
+                           GridPane.columnIndex="0" GridPane.rowIndex="1">
+        <padding>
+            <Insets left="5" right="5"/>
+        </padding>
+    </AnnotatedDocumentPane>
+    <Label text="Reference:" GridPane.columnIndex="1" GridPane.rowIndex="0">
+        <padding>
+            <Insets left="10"/>
+        </padding>
+    </Label>
 
-    <Label text="System Output:" GridPane.columnIndex="1" GridPane.rowIndex="0" />
-    <AnnotatedDocumentPane fx:id="targetPane" maxWidth="Infinity" maxHeight="Infinity" id="target"
-                           GridPane.columnIndex="1" GridPane.rowIndex="1"/>
-    <Label text="Reference:" GridPane.columnIndex="3" GridPane.rowIndex="0" />
-    <AnnotatedDocumentPane fx:id="referencePane" maxWidth="Infinity" maxHeight="Infinity" id="target"
-                           GridPane.columnIndex="3" GridPane.rowIndex="1"/>
-    <Separator halignment="RIGHT" orientation="VERTICAL" GridPane.columnIndex="4" GridPane.rowSpan="3"/>
-    <ViewControls fx:id="viewControls" GridPane.columnIndex="5" GridPane.rowIndex="1"/>
+    <AnnotatedDocumentPane fx:id="referencePane" id="target"
+                           GridPane.columnIndex="1" GridPane.rowIndex="1">
+        <padding>
+            <Insets right="5"/>
+        </padding>
+    </AnnotatedDocumentPane>
+    <Separator orientation="VERTICAL" GridPane.columnIndex="2" GridPane.rowSpan="3"/>
+    <ViewControls fx:id="viewControls" GridPane.columnIndex="3" GridPane.rowIndex="1">
+        <padding>
+            <Insets left="3" right="5"/>
+        </padding>
+    </ViewControls>
 </GridPane>

@@ -133,5 +133,28 @@
 .mono-text {
     -fx-font-family: "Fira Mono Regular";
     -fx-font-size: 12;
+    -fx-text-alignment: JUSTIFY;
+}
+
+.line-number {
+    -fx-font-family: "Fira Mono Bold";
+    -fx-font-size: 12;
+    -fx-background-color: Gray;
+    -fx-alignment: CENTER_RIGHT;
+    -fx-text-fill: Gainsboro;
+    -fx-text-alignment: RIGHT;
+    -fx-opacity: 0.35;
+}
+
+.column-right-align {
+    -fx-alignment: CENTER-RIGHT;
+}
+
+.column-center-align {
+    -fx-alignment: CENTER;
+}
+
+.column-left-align {
+    -fx-alignment: CENTER-LEFT;
 }
 /*    END TEXT FIELDS   */

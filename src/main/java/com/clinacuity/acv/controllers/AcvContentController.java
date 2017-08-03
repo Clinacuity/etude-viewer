@@ -21,7 +21,6 @@ import org.apache.logging.log4j.Logger;
 import org.reactfx.util.FxTimer;
 import java.net.URL;
 import java.time.Duration;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -84,11 +83,11 @@ public class AcvContentController implements Initializable {
         targetPane.maxHeightProperty().bind(referencePane.heightProperty());
         targetPane.maxHeightProperty().bind(referencePane.heightProperty());
 
-        referencePane.getDocumentScrollPane().vvalueProperty().bindBidirectional(targetPane.getDocumentScrollPane().vvalueProperty());
-        referencePane.getDocumentScrollPane().hvalueProperty().bindBidirectional(targetPane.getDocumentScrollPane().hvalueProperty());
+        referencePane.getScrollPane().vvalueProperty().bindBidirectional(targetPane.getScrollPane().vvalueProperty());
+        referencePane.getScrollPane().hvalueProperty().bindBidirectional(targetPane.getScrollPane().hvalueProperty());
 
         if (characterHeight <= 0.0d) {
-            characterHeight = referencePane.getCharacterHeight();
+            characterHeight = AnnotatedDocumentPane.getCharacterHeight();
         }
 
         if (getRefLabelsTask != null && getRefLabelsTask.isRunning()) {
@@ -99,12 +98,18 @@ public class AcvContentController implements Initializable {
             getTargetLabelsTask.cancel();
         }
 
-        getRefLabelsTask = new CreateLabelsFromDocumentTask(referenceAnnotationsProperty.getValue().getRawText(), characterHeight);
-        getRefLabelsTask.setOnSucceeded(event -> referencePane.addLabels(getRefLabelsTask.getValue()));
+        getRefLabelsTask = new CreateLabelsFromDocumentTask(referenceAnnotationsProperty.getValue().getRawText());
+        getRefLabelsTask.setOnSucceeded(event -> {
+            referencePane.addTextLabels(getRefLabelsTask.getValue());
+            referencePane.getAnchor().getChildren().addAll(getRefLabelsTask.getLineNumbers());
+        });
         new Thread(getRefLabelsTask).start();
 
-        getTargetLabelsTask = new CreateLabelsFromDocumentTask(targetAnnotationsProperty.getValue().getRawText(), characterHeight);
-        getTargetLabelsTask.setOnSucceeded(event -> targetPane.addLabels(getTargetLabelsTask.getValue()));
+        getTargetLabelsTask = new CreateLabelsFromDocumentTask(targetAnnotationsProperty.getValue().getRawText());
+        getTargetLabelsTask.setOnSucceeded(event -> {
+            targetPane.addTextLabels(getTargetLabelsTask.getValue());
+            targetPane.getAnchor().getChildren().addAll(getTargetLabelsTask.getLineNumbers());
+        });
         new Thread(getTargetLabelsTask).start();
     }
 
