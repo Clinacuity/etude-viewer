@@ -47,6 +47,7 @@
             <Insets right="5"/>
         </padding>
     </AnnotatedDocumentPane>
+
     <Separator orientation="VERTICAL" GridPane.columnIndex="2" GridPane.rowSpan="3"/>
     <ViewControls fx:id="viewControls" GridPane.columnIndex="3" GridPane.rowIndex="1">
         <padding>

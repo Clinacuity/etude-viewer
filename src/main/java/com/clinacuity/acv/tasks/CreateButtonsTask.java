@@ -61,7 +61,6 @@ public class CreateButtonsTask extends Task<List<AnnotationButton>> {
             double leftAnchor = characterWidth * beginLabelAttributes.getValue();
             double topAnchor = characterHeight * beginLabelAttributes.getKey() * 2.0d;
 
-
             AnnotationButton button = new AnnotationButton(annotation, begin, end);
             button.setMaxSize(size, characterHeight);
             button.setMinSize(size, characterHeight);
