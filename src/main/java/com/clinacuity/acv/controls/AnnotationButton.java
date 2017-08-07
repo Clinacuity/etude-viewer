@@ -50,7 +50,15 @@ public class AnnotationButton extends Button {
     public int getEnd() { return end; }
 
     public AnnotationButton(JsonObject json) {
-        initialize(json, 0, 0);
+        int beginValue = 0;
+        int endValue = 0;
+
+        if (json.has("begin_pos") && json.has("end_pos")) {
+            beginValue = json.get("begin_pos").getAsInt();
+            endValue = json.get("end_pos").getAsInt();
+        }
+
+        initialize(json, beginValue, endValue);
     }
 
     public AnnotationButton(JsonObject json, int beginValue, int endValue) {

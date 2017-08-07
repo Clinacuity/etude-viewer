@@ -17,10 +17,10 @@
     </rowConstraints>
 
     <columnConstraints>
-        <ColumnConstraints />
+        <ColumnConstraints percentWidth="100" />
     </columnConstraints>
 
-    <ScrollPane fx:id="document" maxWidth="Infinity" fitToHeight="true"
+    <ScrollPane fx:id="document" fitToHeight="true" hbarPolicy="NEVER" fitToWidth="true"
                 GridPane.rowIndex="0" GridPane.columnIndex="0">
         <AnchorPane fx:id="anchor"/>
     </ScrollPane>

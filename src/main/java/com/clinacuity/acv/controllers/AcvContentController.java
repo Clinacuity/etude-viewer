@@ -21,7 +21,6 @@ import org.apache.logging.log4j.Logger;
 import org.reactfx.util.FxTimer;
 import java.net.URL;
 import java.time.Duration;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -35,7 +34,6 @@ public class AcvContentController implements Initializable {
     private ObjectProperty<Annotations> targetAnnotationsProperty = new SimpleObjectProperty<>();
     private ObjectProperty<Annotations> referenceAnnotationsProperty = new SimpleObjectProperty<>();
     private ObjectProperty<AnnotationButton> selectedAnnotationButton = new SimpleObjectProperty<>();
-    private double characterHeight = -1.0;
     private CreateLabelsFromDocumentTask getRefLabelsTask;
     private CreateLabelsFromDocumentTask getTargetLabelsTask;
     private CreateButtonsTask targetButtonsTask;
@@ -84,12 +82,8 @@ public class AcvContentController implements Initializable {
         targetPane.maxHeightProperty().bind(referencePane.heightProperty());
         targetPane.maxHeightProperty().bind(referencePane.heightProperty());
 
-        referencePane.getDocumentScrollPane().vvalueProperty().bindBidirectional(targetPane.getDocumentScrollPane().vvalueProperty());
-        referencePane.getDocumentScrollPane().hvalueProperty().bindBidirectional(targetPane.getDocumentScrollPane().hvalueProperty());
-
-        if (characterHeight <= 0.0d) {
-            characterHeight = referencePane.getCharacterHeight();
-        }
+        referencePane.getScrollPane().vvalueProperty().bindBidirectional(targetPane.getScrollPane().vvalueProperty());
+        referencePane.getScrollPane().hvalueProperty().bindBidirectional(targetPane.getScrollPane().hvalueProperty());
 
         if (getRefLabelsTask != null && getRefLabelsTask.isRunning()) {
             getRefLabelsTask.cancel();
@@ -99,12 +93,18 @@ public class AcvContentController implements Initializable {
             getTargetLabelsTask.cancel();
         }
 
-        getRefLabelsTask = new CreateLabelsFromDocumentTask(referenceAnnotationsProperty.getValue().getRawText(), characterHeight);
-        getRefLabelsTask.setOnSucceeded(event -> referencePane.addLabels(getRefLabelsTask.getValue()));
+        getRefLabelsTask = new CreateLabelsFromDocumentTask(referenceAnnotationsProperty.getValue().getRawText());
+        getRefLabelsTask.setOnSucceeded(event -> {
+            referencePane.addLineNumberedLabels(getRefLabelsTask.getValue());
+            referencePane.getAnchor().getChildren().addAll(getRefLabelsTask.getLineNumbers());
+        });
         new Thread(getRefLabelsTask).start();
 
-        getTargetLabelsTask = new CreateLabelsFromDocumentTask(targetAnnotationsProperty.getValue().getRawText(), characterHeight);
-        getTargetLabelsTask.setOnSucceeded(event -> targetPane.addLabels(getTargetLabelsTask.getValue()));
+        getTargetLabelsTask = new CreateLabelsFromDocumentTask(targetAnnotationsProperty.getValue().getRawText());
+        getTargetLabelsTask.setOnSucceeded(event -> {
+            targetPane.addLineNumberedLabels(getTargetLabelsTask.getValue());
+            targetPane.getAnchor().getChildren().addAll(getTargetLabelsTask.getLineNumbers());
+        });
         new Thread(getTargetLabelsTask).start();
     }
 
@@ -138,14 +138,14 @@ public class AcvContentController implements Initializable {
 
         // TODO: button actions must include behaviors against their matchingButtons object
         // TODO: matchingButtons objects must be populated
-        targetButtonsTask = new CreateButtonsTask(targetJson, targetPane.getLabelList(), characterHeight);
+        targetButtonsTask = new CreateButtonsTask(targetJson, targetPane.getLabelList());
         targetButtonsTask.setOnSucceeded(event -> {
             targetPane.addButtons(targetButtonsTask.getValue());
             setupAnnotationButtons();
         });
         new Thread(targetButtonsTask).start();
 
-        referenceButtonsTask = new CreateButtonsTask(referenceJson, referencePane.getLabelList(), characterHeight);
+        referenceButtonsTask = new CreateButtonsTask(referenceJson, referencePane.getLabelList());
         referenceButtonsTask.setOnSucceeded(event -> {
             referencePane.addButtons(referenceButtonsTask.getValue());
             setupAnnotationButtons();

@@ -2,37 +2,37 @@ package com.clinacuity.acv.tasks;
 
 import com.clinacuity.acv.controls.AnnotatedDocumentPane;
 import com.clinacuity.acv.controls.AnnotationButton;
+import com.clinacuity.acv.controls.LineNumberedLabel;
 import com.google.gson.JsonObject;
 import javafx.concurrent.Task;
-import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
-import javafx.util.Pair;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import java.util.ArrayList;
-import java.util.List;
+
+import java.util.*;
 
 public class CreateButtonsTask extends Task<List<AnnotationButton>> {
     private static final Logger logger = LogManager.getLogger();
 
     private List<JsonObject> taskAnnotations;
-    private List<Label> taskLabels;
+    private List<LineNumberedLabel> taskLabels;
     private List<AnnotationButton> taskButtons = new ArrayList<>();
 
     private double characterHeight = -1.0;
 
-    public CreateButtonsTask(List<JsonObject> annotations, List<Label> labels, double charHeight) {
+    public CreateButtonsTask(List<JsonObject> annotations, List<LineNumberedLabel> labels) {
         taskAnnotations = annotations;
+        Collections.sort(labels);
         taskLabels = labels;
-        characterHeight = charHeight;
+        characterHeight = AnnotatedDocumentPane.getCharacterHeight();
     }
 
     @Override public List<AnnotationButton> call() {
-        int max = taskAnnotations.size();
+        int size = taskAnnotations.size();
 
-        for (int i = 0; i < max; i++) {
+        for (int i = 0; i < size; i++) {
             processAnnotation(taskAnnotations.get(i));
-            updateProgress(i, max);
+            updateProgress(i, size);
         }
 
         succeeded();
@@ -40,111 +40,134 @@ public class CreateButtonsTask extends Task<List<AnnotationButton>> {
     }
 
     private void processAnnotation(JsonObject annotation) {
-        // once the running Length exceeds the begin, we have found our target label
+        // once the running Length exceeds the begin, we have found our BEGIN label
         int begin = annotation.get("begin_pos").getAsInt();
         int end = annotation.get("end_pos").getAsInt();
 
-        Pair<Integer, Integer> beginLabelAttributes = getLabelAttributes(begin);
-        Pair<Integer, Integer> endLabelAttributes = getLabelAttributes(end);
+        List<LineNumberedLabel> spannedLabels = getSpannedLabels(begin, end);
+        addButtons(annotation, spannedLabels, begin, end);
+    }
 
-        if (beginLabelAttributes == null || endLabelAttributes == null) {
-            setException(new NullPointerException());
-            failed();
-            return;
+    /**
+     * Gets the list of LineNumberedLabels spanned by the JsonObject's annotation based on its begin and end values.
+     * @param begin The begin offset relative to the JsonObject's raw text
+     * @param end   The end offset relative to the JsonObject's rew text
+     * @return
+     */
+    private List<LineNumberedLabel> getSpannedLabels(int begin, int end) {
+        List<LineNumberedLabel> spannedLabels = new ArrayList<>();
+        int currentLineNumber = 1;
+
+        boolean beginFound = false;
+        for (int i = 0; i < taskLabels.size(); i++) {
+            LineNumberedLabel index = taskLabels.get(i);
+            int indexTextLength = index.getLineText().length();
+            int offset = index.getTextOffset();
+
+            if (currentLineNumber != index.getLineNumberIndex()) {
+                currentLineNumber = index.getLineNumberIndex();
+            }
+
+            if (!beginFound) {
+                if (offset <= begin && offset + indexTextLength >= begin) {
+                    beginFound = true;
+                    spannedLabels.add(index);
+                    /*
+                    /Users/jkaccetta/Desktop/g_out/test2.json
+                     */
+                }
+            }
+
+            if (beginFound) {
+                if (!spannedLabels.contains(index)) {
+                    spannedLabels.add(index);
+                } else {
+                    logger.debug("Label already in List");
+                }
+
+                if (offset <= end && offset + indexTextLength >= end) {
+                    break;
+                }
+            }
         }
 
-        // the Key is the index of the label in the LabelList; the Value is the character offset
-        if (beginLabelAttributes.getKey().equals(endLabelAttributes.getKey())) {
-            Label label = taskLabels.get(beginLabelAttributes.getKey());
-            double characterWidth = label.getWidth() / label.getText().length();
-            double size = characterWidth * (end - begin);
-            double leftAnchor = characterWidth * beginLabelAttributes.getValue();
-            double topAnchor = characterHeight * beginLabelAttributes.getKey() * 2.0d;
+        return spannedLabels;
+    }
 
-
-            AnnotationButton button = new AnnotationButton(annotation, begin, end);
-            button.setMaxSize(size, characterHeight);
-            button.setMinSize(size, characterHeight);
-            AnchorPane.setTopAnchor(button, AnnotatedDocumentPane.STANDARD_INSET + topAnchor);
-            AnchorPane.setLeftAnchor(button, AnnotatedDocumentPane.STANDARD_INSET + leftAnchor);
-            taskButtons.add(button);
+    /**
+     * Creates the AnnotationButton objects.  There are four possibilities, detailed below:
+     *
+     * 1. If labels.size() == 1, the button is entirely within that single line.  Otherwise:
+     * 2. The start label will be offset and go through until the end of the line
+     * 3. The middle labels will cover the entire line
+     * 4. The end label will start at the beginning of the line and end at the appropriate offset
+     *
+     * @param annotation    The JsonObject to be associated with the label
+     * @param labels        The labels spanned by the JsonObject
+     * @param begin         The begin offset relative to the JsonObject's raw text
+     * @param end           The end offset relative to the JsonObject's rew text
+     */
+    private void addButtons(JsonObject annotation, List<LineNumberedLabel> labels, int begin, int end) {
+        // CASE #1
+        if (labels.size() == 1) {
+            LineNumberedLabel label = labels.get(0);
+            taskButtons.add(createButton(annotation, label, begin, end));
             updateValue(taskButtons);
         } else {
-            List<AnnotationButton> multiLineButton = new ArrayList<>();
-            for (int i = beginLabelAttributes.getKey(); i <= endLabelAttributes.getKey(); i++) {
-                Label label = taskLabels.get(i);
-                int textLength = label.getText().length();
-                double characterWidth = label.getWidth() / textLength;
-                double topAnchor = characterHeight * i * 2.0d;
+            // This button spans at least 2 lines
+            labels.forEach(label -> {
+                double charWidth = label.getTextLabel().getWidth() / label.getLineText().length();
+                double topAnchor = characterHeight * taskLabels.indexOf(label) * 2.0d;
 
-                // start off assuming the button takes up the entire label
-                double leftAnchor = 0.0d;
-                double size = characterWidth * textLength;
+                // if the offset is less than the begin, this is the starting line
+                if (label.getTextOffset() <= begin) {
+                    double size = charWidth * (label.getTextOffset() + label.getLineText().length() - begin);
+                    double leftAnchor = charWidth * (begin - label.getTextOffset());
 
-                // size goes from the offset to the end
-                if (i == beginLabelAttributes.getKey()) {
-                    size = characterWidth * (textLength - beginLabelAttributes.getValue());
-                    leftAnchor = characterWidth * beginLabelAttributes.getValue();
-                }
-
-                // size goes from the beginning to the offset
-                if (i == endLabelAttributes.getKey()) {
-                    size = characterWidth * endLabelAttributes.getValue();
-                    leftAnchor = 0.0d;
-                }
-
-                if (size > 0.0d) {
-                    AnnotationButton button = new AnnotationButton(annotation, begin, end);
-                    button.setMaxSize(size, characterHeight);
-                    button.setMinSize(size, characterHeight);
-                    AnchorPane.setTopAnchor(button, AnnotatedDocumentPane.STANDARD_INSET + topAnchor);
-                    AnchorPane.setLeftAnchor(button, AnnotatedDocumentPane.STANDARD_INSET + leftAnchor);
-                    multiLineButton.add(button);
+                    taskButtons.add(createButton(annotation, size, leftAnchor, topAnchor));
                 } else {
-                    logger.debug("Sentence at [{}, {}] had some ignored characters.", begin, end);
-                }
-            }
+                    // if the offset + length are greater than the end, this is the ending line
+                    if (label.getTextOffset() + label.getLineText().length() > end) {
+                        double size = charWidth * (end - label.getTextOffset());
+                        double leftAnchor = 0.0d;
 
-            // Now, link all the buttons and return them
-            for (int i = 0; i < multiLineButton.size(); i++) {
-                for (int j = i + 1; j < multiLineButton.size(); j++) {
-                    multiLineButton.get(i).sameAnnotationButtons.add(multiLineButton.get(j));
-                    multiLineButton.get(j).sameAnnotationButtons.add(multiLineButton.get(i));
-                }
-            }
+                        taskButtons.add(createButton(annotation, size, leftAnchor, topAnchor));
+                    } else {
+                        // this is a middle line fully covered by the button
+                        double size = charWidth * label.getLineText().length();
+                        double leftAnchor = 0.0d;
 
-            for (AnnotationButton button: multiLineButton) {
-                taskButtons.add(button);
-                updateValue(taskButtons);
-            }
+                        taskButtons.add(createButton(annotation, size, leftAnchor, topAnchor));
+                    }
+                }
+            });
         }
     }
 
     /**
-     * Returns a Pair in the form of (index, charOffset) for the given Label.
-     * @param target    The index being searched for in terms of the entire document text
-     * @return          A Pair whose key equals the label's index and value equals appropriate char index offset
+     * User this for single-line buttons
+     * @param annotation    The annotation which will be linked to the button
+     * @param label         The label whose
+     * @param begin
+     * @param end
+     * @return
      */
-    private Pair<Integer, Integer> getLabelAttributes(int target) {
-        int max = taskLabels.size();
-        int runningLength = 0;
-        int currentLength = 0;
+    private AnnotationButton createButton(JsonObject annotation, LineNumberedLabel label, int begin, int end) {
+        double characterWidth = label.getTextLabel().getWidth() / label.getLineText().length();
+        double size = characterWidth * (end - begin);
+        double topAnchor = characterHeight * taskLabels.indexOf(label) * 2.0d;
+        double leftAnchor = characterWidth * (begin - label.getTextOffset());
 
-        for (int i = 0; i < max; i++) {
-            // The +1 accounts for removed new-lines when splitting the text into labels
-            currentLength = taskLabels.get(i).getText().length() + 1;
+        return createButton(annotation, size, leftAnchor, topAnchor);
+    }
 
-            if (runningLength + currentLength > target) {
-                return new Pair<>(i, target - runningLength);
-            }
+    private AnnotationButton createButton(JsonObject annotation, double size, double leftAnchor, double topAnchor) {
+        AnnotationButton button = new AnnotationButton(annotation);
+        button.setMaxSize(size, characterHeight);
+        button.setMinSize(size, characterHeight);
+        AnchorPane.setTopAnchor(button, AnnotatedDocumentPane.STANDARD_INSET + topAnchor);
+        AnchorPane.setLeftAnchor(button, leftAnchor + AnnotatedDocumentPane.LINE_NUMBER_WIDTH);
 
-            runningLength += currentLength;
-        }
-
-        setException(new ArrayIndexOutOfBoundsException("Cannot extract Begin index; not enough labels."));
-        logger.error("Target index = {}, but the total length of the text is {} + {}", target, runningLength, currentLength);
-        failed();
-
-        return null;
+        return button;
     }
 }

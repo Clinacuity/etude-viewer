@@ -132,6 +132,36 @@
 
 .mono-text {
     -fx-font-family: "Fira Mono Regular";
-    -fx-font-size: 12;
+    -fx-font-size: 10;
+    -fx-text-alignment: LEFT;
+    -fx-alignment: CENTER_LEFT;
+    -fx-border-color: Gainsboro;
+    -fx-border-width: 1 0 1 0;
+    -fx-padding: 1 0 1 0;
+}
+
+.line-number {
+    -fx-min-width: 30px;
+    -fx-max-width: 30px;
+    -fx-font-family: "Fira Mono Regular";
+    -fx-font-size: 10;
+    -fx-text-fill: SlateGray;
+    -fx-text-alignment: RIGHT;
+    -fx-alignment: CENTER_RIGHT;
+    -fx-border-color: SlateGray;
+    -fx-border-width: 0 1 0 0;
+    -fx-padding: 2 5 2 0;
+}
+
+.column-right-align {
+    -fx-alignment: CENTER-RIGHT;
+}
+
+.column-center-align {
+    -fx-alignment: CENTER;
+}
+
+.column-left-align {
+    -fx-alignment: CENTER-LEFT;
 }
 /*    END TEXT FIELDS   */

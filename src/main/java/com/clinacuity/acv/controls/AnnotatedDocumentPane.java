@@ -2,7 +2,6 @@ package com.clinacuity.acv.controls;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.AnchorPane;
@@ -16,19 +15,28 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class AnnotatedDocumentPane extends GridPane {
-    public static final double STANDARD_INSET = 10.0d;
     private static final Logger logger = LogManager.getLogger();
+    private static double characterHeight = -1.0d;
+    private static double characterWidth = -1.0d;
+    private static int maxCharactersPerLabel = -1;
+
+    public static final double STANDARD_INSET = 10.0d;
+    public static final double LINE_NUMBER_WIDTH = 30.0d;
+    public static double getCharacterHeight() { return characterHeight; }
+    public static int getMaxCharactersPerLabel() { return maxCharactersPerLabel; }
 
     @FXML private AnchorPane anchor;
-    @FXML private TextArea featureTree;
     @FXML private ScrollPane document;
-    private List<Label> labelList = new ArrayList<>();
+    @FXML private TextArea featureTree;
+    private List<LineNumberedLabel> labelList = new ArrayList<>();
     private List<AnnotationButton> buttonList = new ArrayList<>();
-    private double characterHeight = -1.0;
+    private double documentScrollWidth = -1.0d;
 
     public AnchorPane getAnchor() { return anchor; }
-
-    public ScrollPane getDocumentScrollPane() { return document; }
+    public ScrollPane getScrollPane() { return document; }
+    public TextArea getFeatureTreeText() { return featureTree; }
+    public List<LineNumberedLabel> getLabelList() { return labelList; }
+    public List<AnnotationButton> getAnnotationButtonList() { return buttonList; }
 
     public AnnotatedDocumentPane() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/controls/AnnotatedDocumentPane.fxml"));
@@ -43,36 +51,41 @@ public class AnnotatedDocumentPane extends GridPane {
 
         featureTree.setEditable(false);
         featureTree.setMouseTransparent(true);
-
-        document.setFitToWidth(true);
-
-        document.prefWidthProperty().bind(getColumnConstraints().get(0).prefWidthProperty());
-
         arbitraryLabelsForSizeCalculations();
-        FxTimer.runLater(Duration.ofMillis(100), this::getCharacterHeight);
+        FxTimer.runLater(Duration.ofMillis(100), this::getCharacterDimensions);
+
+        document.widthProperty().addListener(((observable, oldValue, newValue) ->
+                documentScrollWidth = newValue.doubleValue()));
 
         logger.debug("Annotated Document Pane initialized.");
     }
 
     private void arbitraryLabelsForSizeCalculations() {
-        Label label = new Label("Loading . . .");
-        labelList.add(label);
-        label.getStyleClass().add("mono-text");
+        labelList.add(new LineNumberedLabel("Loading . . .", 1));
         anchor.getChildren().addAll(labelList);
     }
 
-    public double getCharacterHeight() {
+    private void getCharacterDimensions() {
+        LineNumberedLabel label = labelList.get(0);
+
         if (characterHeight < 0.0d) {
-            Label label = labelList.get(0);
-            characterHeight = label.getHeight();
+            characterHeight = label.getTextLabel().getHeight();
             logger.debug("Character Height set to {}", characterHeight);
         }
-        return characterHeight;
+
+        if ( characterWidth < 0) {
+            characterWidth = label.getWidth() / label.getLineText().length();
+        }
+
+        // the scroll panes may vary by a handful of pixels; take the smallest
+        int maxChars = (int)(documentScrollWidth / characterWidth);
+        if (maxCharactersPerLabel < maxChars) {
+            maxCharactersPerLabel = maxChars;
+            logger.error(maxCharactersPerLabel);
+        }
     }
 
-    public void addLabels(List<Label> labels) {
-        logger.error(labels.size());
-
+    public void addLineNumberedLabels(List<LineNumberedLabel> labels) {
         anchor.getChildren().removeAll(labelList);
         labelList = labels;
 
@@ -89,10 +102,4 @@ public class AnnotatedDocumentPane extends GridPane {
             anchor.getChildren().addAll(buttonList);
         }
     }
-
-    public List<Label> getLabelList() { return labelList; }
-
-    public List<AnnotationButton> getAnnotationButtonList() { return buttonList; }
-
-    public TextArea getFeatureTreeText() { return featureTree; }
 }
