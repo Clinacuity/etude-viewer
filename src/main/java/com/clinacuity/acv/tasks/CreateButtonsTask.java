@@ -147,10 +147,10 @@ public class CreateButtonsTask extends Task<List<AnnotationButton>> {
     /**
      * User this for single-line buttons
      * @param annotation    The annotation which will be linked to the button
-     * @param label         The label whose
-     * @param begin
-     * @param end
-     * @return
+     * @param label         The label whose index will be used for determining the top offset
+     * @param begin         The begin position of the annotation's text
+     * @param end           The end position of the annotation's text
+     * @return              Returns an AnnotationButton appropriately formatted and offset on top of its text
      */
     private AnnotationButton createButton(JsonObject annotation, LineNumberedLabel label, int begin, int end) {
         double characterWidth = label.getTextLabel().getWidth() / label.getLineText().length();
