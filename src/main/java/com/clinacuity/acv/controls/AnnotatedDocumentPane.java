@@ -2,7 +2,6 @@ package com.clinacuity.acv.controls;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.AnchorPane;
@@ -29,14 +28,14 @@ public class AnnotatedDocumentPane extends GridPane {
     @FXML private AnchorPane anchor;
     @FXML private ScrollPane document;
     @FXML private TextArea featureTree;
-    private List<Label> labelList = new ArrayList<>();
+    private List<LineNumberedLabel> labelList = new ArrayList<>();
     private List<AnnotationButton> buttonList = new ArrayList<>();
     private double documentScrollWidth = -1.0d;
 
     public AnchorPane getAnchor() { return anchor; }
     public ScrollPane getScrollPane() { return document; }
     public TextArea getFeatureTreeText() { return featureTree; }
-    public List<Label> getLabelList() { return labelList; }
+    public List<LineNumberedLabel> getLabelList() { return labelList; }
     public List<AnnotationButton> getAnnotationButtonList() { return buttonList; }
 
     public AnnotatedDocumentPane() {
@@ -62,32 +61,31 @@ public class AnnotatedDocumentPane extends GridPane {
     }
 
     private void arbitraryLabelsForSizeCalculations() {
-        Label label = new Label("Loading . . .");
-        labelList.add(label);
-        label.getStyleClass().add("mono-text");
+        labelList.add(new LineNumberedLabel("Loading . . .", 1));
         anchor.getChildren().addAll(labelList);
     }
 
     private void getCharacterDimensions() {
-        Label label = labelList.get(0);
+        LineNumberedLabel label = labelList.get(0);
 
         if (characterHeight < 0.0d) {
-            characterHeight = label.getHeight();
+            characterHeight = label.getTextLabel().getHeight();
             logger.debug("Character Height set to {}", characterHeight);
         }
 
         if ( characterWidth < 0) {
-            characterWidth = label.getWidth() / label.getText().length();
+            characterWidth = label.getWidth() / label.getLineText().length();
         }
 
         // the scroll panes may vary by a handful of pixels; take the smallest
         int maxChars = (int)(documentScrollWidth / characterWidth);
         if (maxCharactersPerLabel < maxChars) {
             maxCharactersPerLabel = maxChars;
+            logger.error(maxCharactersPerLabel);
         }
     }
 
-    public void addTextLabels(List<Label> labels) {
+    public void addLineNumberedLabels(List<LineNumberedLabel> labels) {
         anchor.getChildren().removeAll(labelList);
         labelList = labels;
 
