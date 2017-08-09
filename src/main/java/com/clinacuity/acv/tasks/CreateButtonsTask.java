@@ -115,32 +115,45 @@ public class CreateButtonsTask extends Task<List<AnnotationButton>> {
             updateValue(taskButtons);
         } else {
             // This button spans at least 2 lines
+            List<AnnotationButton> buttons = new ArrayList<>();
+
             labels.forEach(label -> {
                 double charWidth = label.getTextLabel().getWidth() / label.getLineText().length();
                 double topAnchor = characterHeight * taskLabels.indexOf(label) * 2.0d;
+
+                AnnotationButton newButton = null;
 
                 // if the offset is less than the begin, this is the starting line
                 if (label.getTextOffset() <= begin) {
                     double size = charWidth * (label.getTextOffset() + label.getLineText().length() - begin);
                     double leftAnchor = charWidth * (begin - label.getTextOffset());
 
-                    taskButtons.add(createButton(annotation, size, leftAnchor, topAnchor));
+                    // create button
+                    newButton = createButton(annotation, size, leftAnchor, topAnchor);
                 } else {
                     // if the offset + length are greater than the end, this is the ending line
                     if (label.getTextOffset() + label.getLineText().length() > end) {
                         double size = charWidth * (end - label.getTextOffset());
                         double leftAnchor = 0.0d;
 
-                        taskButtons.add(createButton(annotation, size, leftAnchor, topAnchor));
+                        newButton = createButton(annotation, size, leftAnchor, topAnchor);
                     } else {
                         // this is a middle line fully covered by the button
                         double size = charWidth * label.getLineText().length();
                         double leftAnchor = 0.0d;
 
-                        taskButtons.add(createButton(annotation, size, leftAnchor, topAnchor));
+                        newButton = createButton(annotation, size, leftAnchor, topAnchor);
                     }
+
+                    for (AnnotationButton sameButton: buttons) {
+                        sameButton.sameAnnotationButtons.add(newButton);
+                    }
+                    buttons.add(newButton);
+                    newButton.sameAnnotationButtons.addAll(buttons);
                 }
             });
+            
+            taskButtons.addAll(buttons);
         }
     }
 
