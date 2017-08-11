@@ -1,0 +1,47 @@
+{
+    "metadata": {
+        "raw_text": "does not match the sample, really"
+    },
+    "annotations": {
+        "3489": [
+            {
+                "type": "Provider",
+                "end_pos": "3502",
+                "raw_text": null,
+                "begin_pos": "3489"
+            }
+        ],
+        "2865": [
+            {
+                "type": "Patient",
+                "end_pos": "2874",
+                "raw_text": null,
+                "begin_pos": "2865"
+            }
+        ],
+        "9134": [
+            {
+                "type": "Age",
+                "end_pos": "9135",
+                "raw_text": null,
+                "begin_pos": "9134"
+            }
+        ],
+        "9372": [
+            {
+                "type": "OtherOrg",
+                "end_pos": "9384",
+                "raw_text": null,
+                "begin_pos": "9372"
+            }
+        ],
+        "87": [
+            {
+                "type": "DateTime",
+                "end_pos": "97",
+                "raw_text": null,
+                "begin_pos": "87"
+            }
+        ]
+    }
+}

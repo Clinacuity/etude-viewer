@@ -1,0 +1,183 @@
+@font-face {
+    src: url('/fonts/open/OpenSans-Light.ttf');
+}
+
+@font-face {
+     src: url('/fonts/open/OpenSans-Bold.ttf');
+}
+
+@font-face {
+    src: url("/fonts/open/OpenSans-BoldItalic.ttf");
+}
+
+@font-face {
+    src: url("/fonts/open/OpenSans-Italic.ttf");
+}
+
+@font-face {
+    src: url("/fonts/fira/FiraMono-Regular.ttf");
+}
+
+@font-face {
+    src: url("/fonts/fira/FiraMono-Bold.ttf");
+}
+
+/*    BUTTONS    */
+.button {
+    -fx-font-family: "Open Sans Bold";
+    -fx-border-radius: 4px;
+}
+
+.button-table {
+    -fx-font-family: "Open Sans Light";
+    -fx-font-size: 12;
+}
+
+.button-table-selected {
+    -fx-font-family: "open Sans Bold";
+    -fx-border-color: DodgerBlue;
+    -fx-font-size: 12;
+}
+
+.button:hover {
+    -fx-border-radius: 4px;
+    -fx-border-color: DodgerBlue;
+    -fx-focus-traversable: false;
+}
+
+.button-clickable {
+    -fx-focus-traversable: false;
+    -fx-font-size: 10;
+}
+
+.button-actionable {
+    -fx-font-size: 14;
+}
+
+.button-annotation {
+    -fx-focus-traversable: false;
+    -fx-opacity: 0.25;
+}
+
+.button-annotation:hover {
+    -fx-opacity: 0.35;
+    -fx-border-color: Orange;
+    -fx-border-radius: 4px;
+    -fx-border-insets: -3;
+    -fx-border-width: 3;
+}
+/*    END BUTTONS   */
+
+
+/*    COMBO BOXES    */
+.jfx-combo-box {
+    -jfx-focus-color: DodgerBlue;
+    -jfx-unfocus-color: DarkGray;
+}
+
+.combo-box-popup .list-view .jfx-list-cell:odd {
+    -fx-background-color: rgb(225, 225, 225);
+}
+
+.combo-box-popup .list-view .jfx-list-cell:even {
+    -fx-background-color: rgba(240, 240, 240);
+}
+
+.jfx-list-cell:selected > .jfx-rippler > StackPane {
+    -fx-background-color: DodgerBlue;
+}
+
+.jfx-list-cell:hover > .jfx-rippler > StackPane {
+    -fx-background-color: DodgerBlue;
+}
+/*    END COMBO BOXES   */
+
+
+/*    CHECK BOXES   */
+.h-box-checkbox {
+    -fx-padding: 8 3 8 0;
+}
+/*    END CHECK BOXES    */
+
+
+/*    TEXT FIELDS   */
+.text-field {
+    -fx-font-family: "Open Sans Regular";
+}
+
+.feature-tree {
+    -fx-font-family: "Fira Mono Bold";
+    -fx-font-size: 12;
+    -fx-text-fill: rgba(55, 55, 55, 1);
+    -fx-background-color: rgba(220, 220, 220, 0);
+    -fx-focus-traversable: false;
+    -fx-mouse-transparent: true;
+}
+
+.tooltip {
+    -fx-font-family: "Open Sans Bold Italic";
+    -fx-font-size: 10;
+}
+
+.label-tooltip {
+    -fx-opacity: 0.2;
+}
+
+.label-tooltip:hover {
+    -fx-opacity: 1;
+}
+
+.label-header-one {
+    -fx-font-family: "Open Sans Bold Italic";
+    -fx-font-size: 36;
+}
+
+.label-header-two {
+    -fx-font-family: "Open Sans Bold";
+    -fx-font-size: 14;
+    -fx-text-fill: rgb(55, 55, 55);
+}
+
+.label-annotation-category {
+    -fx-font-family: "Open Sans Italic";
+    -fx-font-size: 12px;
+    -fx-text-fill: DarkGray;
+    -fx-text-alignment: Center;
+    -fx-alignment: Top_Center;
+}
+
+.mono-text {
+    -fx-font-family: "Fira Mono Regular";
+    -fx-font-size: 10;
+    -fx-text-alignment: LEFT;
+    -fx-alignment: CENTER_LEFT;
+    -fx-border-color: Gainsboro;
+    -fx-border-width: 1 0 1 0;
+    -fx-padding: 1 0 1 0;
+}
+
+.line-number {
+    -fx-min-width: 30px;
+    -fx-max-width: 30px;
+    -fx-font-family: "Fira Mono Regular";
+    -fx-font-size: 10;
+    -fx-text-fill: SlateGray;
+    -fx-text-alignment: RIGHT;
+    -fx-alignment: CENTER_RIGHT;
+    -fx-border-color: SlateGray;
+    -fx-border-width: 0 1 0 0;
+    -fx-padding: 2 5 2 0;
+}
+
+.column-right-align {
+    -fx-alignment: CENTER-RIGHT;
+}
+
+.column-center-align {
+    -fx-alignment: CENTER;
+}
+
+.column-left-align {
+    -fx-alignment: CENTER-LEFT;
+}
+/*    END TEXT FIELDS   */

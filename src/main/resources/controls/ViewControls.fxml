@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.control.Tooltip?>
+<?import com.jfoenix.controls.JFXCheckBox?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TableColumn?>
+
+<fx:root type="javafx.scene.layout.VBox"
+         xmlns="http://javafx.com/javafx/8.0.112"
+         xmlns:fx="http://javafx.com/fxml/1">
+
+    <VBox GridPane.columnIndex="0" GridPane.rowIndex="1">
+        <HBox alignment="CENTER_LEFT" spacing="3" styleClass="h-box-checkbox">
+            <JFXCheckBox fx:id="toggleExactMatches" text="Exact Match" selected="true"
+                         checkedColor="DodgerBlue" unCheckedColor="DodgerBlue"/>
+            <Label styleClass="label-tooltip">
+                <tooltip>
+                    <Tooltip text="Toggle display of exact matches, including their features"/>
+                </tooltip>
+                <graphic>
+                    <ImageView fitHeight="16" fitWidth="16" preserveRatio="true" pickOnBounds="true">
+                        <Image url="/img/ecommerce/16/info.png"/>
+                    </ImageView>
+                </graphic>
+            </Label>
+        </HBox>
+        <HBox alignment="CENTER_LEFT" spacing="3" styleClass="h-box-checkbox">
+            <JFXCheckBox fx:id="togglePartialMatches" text="Partial Matches" selected="true"
+                         checkedColor="DarkOrchid" unCheckedColor="DarkOrchid"/>
+            <Label styleClass="label-tooltip">
+                <tooltip>
+                    <Tooltip text="Toggle display of annotations which partially match others.&#013;Partial matches consider category, features, and span."/>
+                </tooltip>
+                <graphic>
+                    <ImageView fitHeight="16" fitWidth="16" preserveRatio="true" pickOnBounds="true">
+                        <Image url="/img/ecommerce/16/info.png"/>
+                    </ImageView>
+                </graphic>
+            </Label>
+        </HBox>
+        <HBox alignment="CENTER_LEFT" spacing="3" styleClass="h-box-checkbox">
+            <JFXCheckBox fx:id="toggleNoMatch" text="No Match" selected="true"
+                         checkedColor="OrangeRed" unCheckedColor="OrangeRed"/>
+            <Label styleClass="label-tooltip">
+                <tooltip>
+                    <Tooltip text="Toggle display of annotations which do not have any match."/>
+                </tooltip>
+                <graphic>
+                    <ImageView fitHeight="16" fitWidth="16" preserveRatio="true" pickOnBounds="true">
+                        <Image url="/img/ecommerce/16/info.png"/>
+                    </ImageView>
+                </graphic>
+            </Label>
+        </HBox>
+    </VBox>
+
+    <TableView fx:id="annotationTable" fixedCellSize="35">
+        <columns>
+            <TableColumn text="Name" fx:id="annotationNameColumn" prefWidth="150" styleClass="column-center-align">
+                <cellValueFactory>
+                    <PropertyValueFactory property="annotationName"/>
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn text="TP" fx:id="truePosColumn" maxWidth="50" styleClass="column-center-align">
+                <cellValueFactory>
+                    <PropertyValueFactory property="truePositiveCount"/>
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn text="FP" fx:id="falsePosColumn" maxWidth="50" styleClass="column-center-align">
+                <cellValueFactory>
+                    <PropertyValueFactory property="falsePositiveCount"/>
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn text="FN" fx:id="falseNegColumn" maxWidth="50" styleClass="column-center-align">
+                <cellValueFactory>
+                    <PropertyValueFactory property="falseNegativeCount"/>
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn text="Recall" maxWidth="80" styleClass="column-center-align">
+                <cellValueFactory>
+                    <PropertyValueFactory property="recall"/>
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn text="Precision" maxWidth="80" styleClass="column-center-align">
+                <cellValueFactory>
+                    <PropertyValueFactory property="precision"/>
+                </cellValueFactory>
+            </TableColumn>
+        </columns>
+    </TableView>
+</fx:root>
