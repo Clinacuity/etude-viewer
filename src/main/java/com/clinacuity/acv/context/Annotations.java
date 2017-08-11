@@ -13,7 +13,6 @@ import java.util.*;
 public class Annotations {
     private static final Logger logger = LogManager.getLogger();
 
-    private Gson gson = new Gson();
     private JsonObject root;
     private Map<String, List<JsonObject>> annotationMap = new HashMap<>();
     public Map<String, List<JsonObject>> getAnnotationMap() { return annotationMap; }

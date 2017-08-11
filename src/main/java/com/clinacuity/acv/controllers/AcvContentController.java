@@ -113,9 +113,7 @@ public class AcvContentController implements Initializable {
      * Note that some listeners are initialized when the ViewControls are created.
      */
     private void setupViewControls() {
-        ObservableList<AnnotationType> types = FXCollections.observableArrayList();
-        context.annotationList.forEach(item -> types.add(new AnnotationType(item, 10, 12, 14, 0.5d, 0.5d)));
-        viewControls.setTableRows(types);
+        createTableRows();
 
         context.exactMatchesProperty.addListener((obs, old, newValue) -> updateButton(newValue, MatchType.EXACT_MATCH));
         context.overlappingMatchesProperty.addListener((obs, old, newValue) -> updateButton(newValue, MatchType.PARTIAL_MATCH));
@@ -256,6 +254,12 @@ public class AcvContentController implements Initializable {
     private void clearFeatureTrees() {
         referencePane.getFeatureTreeText().clear();
         targetPane.getFeatureTreeText().clear();
+    }
+
+    private void createTableRows() {
+        ObservableList<AnnotationType> types = FXCollections.observableArrayList();
+        context.annotationList.forEach(item -> types.add(new AnnotationType(item, 10, 12, 14, 0.5d, 0.5d)));
+        viewControls.setTableRows(types);
     }
 
     /* ******************************

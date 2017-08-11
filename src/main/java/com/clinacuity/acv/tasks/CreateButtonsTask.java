@@ -152,7 +152,7 @@ public class CreateButtonsTask extends Task<List<AnnotationButton>> {
                     newButton.sameAnnotationButtons.addAll(buttons);
                 }
             });
-            
+
             taskButtons.addAll(buttons);
         }
     }
