@@ -1,4 +1,8 @@
 @font-face {
+    src: url('/fonts/open/OpenSans-Light.ttf');
+}
+
+@font-face {
      src: url('/fonts/open/OpenSans-Bold.ttf');
 }
 
@@ -24,9 +28,21 @@
     -fx-border-radius: 4px;
 }
 
+.button-table {
+    -fx-font-family: "Open Sans Light";
+    -fx-font-size: 12;
+}
+
+.button-table-selected {
+    -fx-font-family: "open Sans Bold";
+    -fx-border-color: DodgerBlue;
+    -fx-font-size: 12;
+}
+
 .button:hover {
     -fx-border-radius: 4px;
-    -fx-border-color: DodgerBlue
+    -fx-border-color: DodgerBlue;
+    -fx-focus-traversable: false;
 }
 
 .button-clickable {

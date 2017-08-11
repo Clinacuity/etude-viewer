@@ -72,9 +72,6 @@ public class CreateButtonsTask extends Task<List<AnnotationButton>> {
                 if (offset <= begin && offset + indexTextLength >= begin) {
                     beginFound = true;
                     spannedLabels.add(index);
-                    /*
-                    /Users/jkaccetta/Desktop/g_out/test2.json
-                     */
                 }
             }
 
@@ -152,7 +149,7 @@ public class CreateButtonsTask extends Task<List<AnnotationButton>> {
                     newButton.sameAnnotationButtons.addAll(buttons);
                 }
             });
-            
+
             taskButtons.addAll(buttons);
         }
     }
