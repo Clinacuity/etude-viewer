@@ -148,5 +148,7 @@ public class Annotations {
             logger.warn("There is no metrics object; key <{}> begin set to 0.0d.");
             return 0.0d;
         }
+
+        return 0.0d;
     }
 }
