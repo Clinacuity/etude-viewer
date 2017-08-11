@@ -258,7 +258,16 @@ public class AcvContentController implements Initializable {
 
     private void createTableRows() {
         ObservableList<AnnotationType> types = FXCollections.observableArrayList();
-        context.annotationList.forEach(item -> types.add(new AnnotationType(item, 10, 12, 14, 0.5d, 0.5d)));
+        context.annotationList.forEach(annotationKey -> {
+            Annotations annotation = targetAnnotationsProperty.get();
+            double tp = annotation.getMetricsTruePositive(annotationKey);
+            double fp = annotation.getMetricsFalsePositive(annotationKey);
+            double fn = annotation.getMetricsFalseNegative(annotationKey);
+            double recall = tp / (tp + fn);
+            double precision = tp / (tp + fp);
+
+            types.add(new AnnotationType(annotationKey, tp, fp, fn, recall, precision));
+        });
         viewControls.setTableRows(types);
     }
 

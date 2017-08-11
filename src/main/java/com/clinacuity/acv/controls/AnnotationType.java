@@ -12,13 +12,13 @@ public class AnnotationType {
     private final SimpleStringProperty recall = new SimpleStringProperty();
     private final SimpleStringProperty precision = new SimpleStringProperty();
 
-    public AnnotationType(String name, int tpCount, int fpCount, int fnCount, double recallPercent, double precisionPercent) {
+    public AnnotationType(String name, double tpCount, double fpCount, double fnCount, double recallPercent, double precisionPercent) {
         annotationName.setValue(new CellButton(name));
-        truePositiveCount.setValue(Integer.toString(tpCount));
-        falsePositiveCount.setValue(Integer.toString(fpCount));
-        falseNegativeCount.setValue(Integer.toString(fnCount));
-        recall.setValue(Double.toString(recallPercent) + "%");
-        precision.setValue(Double.toString(precisionPercent) + "%");
+        truePositiveCount.setValue(Integer.toString((int)tpCount));
+        falsePositiveCount.setValue(Integer.toString((int)fpCount));
+        falseNegativeCount.setValue(Integer.toString((int)fnCount));
+        recall.setValue(String.format("%,.2f%%", recallPercent));
+        precision.setValue(String.format("%,.2f%%", precisionPercent));
     }
 
     public String getAnnotationName() { return annotationName.getValue().getText(); }
