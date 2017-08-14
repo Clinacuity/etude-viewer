@@ -40,7 +40,8 @@ public class AcvContext {
     public StringProperty selectedAnnotationTypeProperty = new SimpleStringProperty("");
     public BooleanProperty exactMatchesProperty = new SimpleBooleanProperty(true);
     public BooleanProperty overlappingMatchesProperty = new SimpleBooleanProperty(true);
-    public BooleanProperty noMatchesProperty = new SimpleBooleanProperty(true);
+    public BooleanProperty falsePositivesProperty = new SimpleBooleanProperty(true);
+    public BooleanProperty falseNegativesProperty = new SimpleBooleanProperty(true);
 
     public ListProperty<String> annotationList = new SimpleListProperty<>(FXCollections.observableArrayList());
 
