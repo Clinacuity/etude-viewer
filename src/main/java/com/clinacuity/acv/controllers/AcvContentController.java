@@ -120,6 +120,15 @@ public class AcvContentController implements Initializable {
         context.falsePositivesProperty.addListener((obs, old, newValue) -> updateButton(newValue, MatchType.FALSE_POS, targetPane));
         context.falseNegativesProperty.addListener((obs, old, newValue) -> updateButton(newValue, MatchType.FALSE_NEG, referencePane));
 
+        viewControls.getPreviousButton().setOnAction(event -> {
+            logger.error("debug");
+            logger.error(selectedAnnotationButton.getValue());
+        });
+
+        viewControls.getNextButton().setOnAction(event -> {
+            logger.error("next button");
+            logger.error(selectedAnnotationButton.getValue());
+        });
 
         context.selectedAnnotationTypeProperty.addListener(selectedAnnotationTypeListener);
     }

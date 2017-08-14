@@ -22,6 +22,8 @@ public class ViewControls extends VBox {
     @FXML private JFXCheckBox toggleFalsePosMatch;
     @FXML private JFXCheckBox toggleFalseNegMatch;
     @FXML private TableView<AnnotationType> annotationTable;
+    @FXML private Button previousButton;
+    @FXML private Button nextButton;
     @FXML private Label recallLabel;
     @FXML private Label precisionLabel;
     @FXML private Label fOneMeasureLabel;
@@ -51,20 +53,13 @@ public class ViewControls extends VBox {
         });
     }
 
-    public void setTableRows(ObservableList<AnnotationType> types) {
+    void setTableRows(ObservableList<AnnotationType> types) {
         Button button = new Button("Hello");
         button.setOnAction(event -> logger.error("SAY WHAT?!"));
 
         annotationTable.setItems(types);
     }
 
-    @FXML
-    private void previousAnnotation() {
-        logger.error("Do stuff");
-    }
-
-    @FXML
-    private void nextAnnotation() {
-        logger.error("Do stuff");
-    }
+    public Button getPreviousButton() { return previousButton; }
+    public Button getNextButton() { return nextButton; }
 }

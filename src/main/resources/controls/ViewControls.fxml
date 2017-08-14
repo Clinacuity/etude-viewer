@@ -76,7 +76,7 @@
             </Label>
         </HBox>
         <HBox id="AnnotationNavBox" alignment="CENTER_LEFT" spacing="10">
-            <Button styleClass="button-arrows" onAction="#previousAnnotation">
+            <Button styleClass="button-arrows" fx:id="previousButton">
                 <graphic>
                     <HBox>
                         <ImageView fitHeight="24" preserveRatio="true">
@@ -86,7 +86,7 @@
                     </HBox>
                 </graphic>
             </Button>
-            <Button styleClass="button-arrows" onAction="#nextAnnotation">
+            <Button styleClass="button-arrows" fx:id="nextButton">
                 <graphic>
                     <HBox>
                         <Label  text="NEXT" maxHeight="Infinity"/>
