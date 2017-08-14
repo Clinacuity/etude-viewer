@@ -34,7 +34,7 @@
 }
 
 .button-table-selected {
-    -fx-font-family: "open Sans Bold";
+    -fx-font-family: "Open Sans Bold";
     -fx-border-color: DodgerBlue;
     -fx-font-size: 12;
 }
@@ -65,6 +65,14 @@
     -fx-border-radius: 4px;
     -fx-border-insets: -3;
     -fx-border-width: 3;
+}
+
+.button-arrows {
+    -fx-border-radius: 2px;
+    -fx-border-color: transparent;
+    -fx-font-family: "Open Sans Bold";
+    -fx-font-size: 12;
+    -fx-text-fill: DarkGray;
 }
 /*    END BUTTONS   */
 

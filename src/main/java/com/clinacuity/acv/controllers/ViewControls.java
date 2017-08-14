@@ -57,4 +57,14 @@ public class ViewControls extends VBox {
 
         annotationTable.setItems(types);
     }
+
+    @FXML
+    private void previousAnnotation() {
+        logger.error("Do stuff");
+    }
+
+    @FXML
+    private void nextAnnotation() {
+        logger.error("Do stuff");
+    }
 }
