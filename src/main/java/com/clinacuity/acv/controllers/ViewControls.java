@@ -2,7 +2,6 @@ package com.clinacuity.acv.controllers;
 
 import com.clinacuity.acv.context.AcvContext;
 import com.clinacuity.acv.controls.AnnotationType;
-import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXCheckBox;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -20,7 +19,8 @@ public class ViewControls extends VBox {
 
     @FXML private JFXCheckBox toggleExactMatches;
     @FXML private JFXCheckBox togglePartialMatches;
-    @FXML private JFXCheckBox toggleNoMatch;
+    @FXML private JFXCheckBox toggleFalsePosMatch;
+    @FXML private JFXCheckBox toggleFalseNegMatch;
     @FXML private TableView<AnnotationType> annotationTable;
     @FXML private Label recallLabel;
     @FXML private Label precisionLabel;
@@ -42,7 +42,8 @@ public class ViewControls extends VBox {
         // assign listener events to toggles
         context.exactMatchesProperty.bindBidirectional(toggleExactMatches.selectedProperty());
         context.overlappingMatchesProperty.bindBidirectional(togglePartialMatches.selectedProperty());
-        context.noMatchesProperty.bindBidirectional(toggleNoMatch.selectedProperty());
+        context.falsePositivesProperty.bindBidirectional(toggleFalsePosMatch.selectedProperty());
+        context.falseNegativesProperty.bindBidirectional(toggleFalseNegMatch.selectedProperty());
 
         annotationTable.getSelectionModel().selectedItemProperty().addListener((obs, old, newValue) -> {
             logger.debug(newValue.getAnnotationName());

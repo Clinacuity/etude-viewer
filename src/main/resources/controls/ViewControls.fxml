@@ -25,7 +25,7 @@
                     <Tooltip text="Toggle display of exact matches, including their features"/>
                 </tooltip>
                 <graphic>
-                    <ImageView fitHeight="16" fitWidth="16" preserveRatio="true" pickOnBounds="true">
+                    <ImageView fitHeight="12" fitWidth="12" preserveRatio="true" pickOnBounds="true">
                         <Image url="/img/ecommerce/16/info.png"/>
                     </ImageView>
                 </graphic>
@@ -39,21 +39,35 @@
                     <Tooltip text="Toggle display of annotations which partially match others.&#013;Partial matches consider category, features, and span."/>
                 </tooltip>
                 <graphic>
-                    <ImageView fitHeight="16" fitWidth="16" preserveRatio="true" pickOnBounds="true">
+                    <ImageView fitHeight="12" fitWidth="12" preserveRatio="true" pickOnBounds="true">
                         <Image url="/img/ecommerce/16/info.png"/>
                     </ImageView>
                 </graphic>
             </Label>
         </HBox>
         <HBox alignment="CENTER_LEFT" spacing="3" styleClass="h-box-checkbox">
-            <JFXCheckBox fx:id="toggleNoMatch" text="No Match" selected="true"
+            <JFXCheckBox fx:id="toggleFalsePosMatch" text="False Positives" selected="true"
                          checkedColor="OrangeRed" unCheckedColor="OrangeRed"/>
             <Label styleClass="label-tooltip">
                 <tooltip>
-                    <Tooltip text="Toggle display of annotations which do not have any match."/>
+                    <Tooltip text="Toggle display of annotations on the system output&#013;which were not present on the reference standard."/>
                 </tooltip>
                 <graphic>
-                    <ImageView fitHeight="16" fitWidth="16" preserveRatio="true" pickOnBounds="true">
+                    <ImageView fitHeight="12" fitWidth="12" preserveRatio="true" pickOnBounds="true">
+                        <Image url="/img/ecommerce/16/info.png"/>
+                    </ImageView>
+                </graphic>
+            </Label>
+        </HBox>
+        <HBox alignment="CENTER_LEFT" spacing="3" styleClass="h-box-checkbox">
+            <JFXCheckBox fx:id="toggleFalseNegMatch" text="False Negatives" selected="true"
+                         checkedColor="OrangeRed" unCheckedColor="OrangeRed"/>
+            <Label styleClass="label-tooltip">
+                <tooltip>
+                    <Tooltip text="Toggle display of annotations on the reference standard&#013;which were not found on the system output."/>
+                </tooltip>
+                <graphic>
+                    <ImageView fitHeight="12" fitWidth="12" preserveRatio="true" pickOnBounds="true">
                         <Image url="/img/ecommerce/16/info.png"/>
                     </ImageView>
                 </graphic>

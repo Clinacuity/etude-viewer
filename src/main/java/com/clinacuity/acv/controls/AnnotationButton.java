@@ -75,9 +75,9 @@ public class AnnotationButton extends Button {
         removeCategoryLabel();
     }
 
-    public void checkMatchTypes() {
+    public void checkMatchTypes(MatchType noMatchType) {
         if (matchingButtons.size() == 0) {
-            setMatchType(MatchType.NO_MATCH);
+            setMatchType(noMatchType);
         } else {
             AnnotationButton target = matchingButtons.get(0);
 
@@ -211,7 +211,8 @@ public class AnnotationButton extends Button {
 
                 break;
 
-            case NO_MATCH:
+            case FALSE_POS:
+            case FALSE_NEG:
                 matchTypeStyle = "-fx-background-color: OrangeRed;";
                 break;
 
@@ -251,6 +252,7 @@ public class AnnotationButton extends Button {
     public enum MatchType {
         EXACT_MATCH,
         PARTIAL_MATCH,
-        NO_MATCH
+        FALSE_POS,
+        FALSE_NEG
     }
 }

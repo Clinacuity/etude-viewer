@@ -117,7 +117,9 @@ public class AcvContentController implements Initializable {
 
         context.exactMatchesProperty.addListener((obs, old, newValue) -> updateButton(newValue, MatchType.EXACT_MATCH));
         context.overlappingMatchesProperty.addListener((obs, old, newValue) -> updateButton(newValue, MatchType.PARTIAL_MATCH));
-        context.noMatchesProperty.addListener((obs, old, newValue) -> updateButton(newValue, MatchType.NO_MATCH));
+        context.falsePositivesProperty.addListener((obs, old, newValue) -> updateButton(newValue, MatchType.FALSE_POS, targetPane));
+        context.falseNegativesProperty.addListener((obs, old, newValue) -> updateButton(newValue, MatchType.FALSE_NEG, referencePane));
+
 
         context.selectedAnnotationTypeProperty.addListener(selectedAnnotationTypeListener);
     }
@@ -194,8 +196,8 @@ public class AcvContentController implements Initializable {
             * we will use a separate for-loop.  The cost to performance is negligible.  This loop determines
             * which color to assign the buttons based on the type of match.
             */
-            targetButtons.forEach(AnnotationButton::checkMatchTypes);
-            refButtons.forEach(AnnotationButton::checkMatchTypes);
+            targetButtons.forEach(button -> button.checkMatchTypes(MatchType.FALSE_POS));
+            refButtons.forEach(button -> button.checkMatchTypes(MatchType.FALSE_NEG));
 
             removeUncheckedAnnotations();
         } else {
@@ -239,14 +241,28 @@ public class AcvContentController implements Initializable {
         });
     }
 
+    private void updateButton(boolean isChecked, MatchType matchType, AnnotatedDocumentPane documentPane) {
+        documentPane.getAnnotationButtonList().forEach(button -> {
+            if (button.getMatchType() == matchType) {
+                if (isChecked) {
+                    button.addToParent();
+                } else {
+                    button.removeFromParent();
+                }
+            }
+        });
+    }
+
     private boolean isMatchTypeChecked(AnnotationButton.MatchType matchType) {
         switch (matchType) {
             case EXACT_MATCH:
                 return context.exactMatchesProperty.getValue();
             case PARTIAL_MATCH:
                 return context.overlappingMatchesProperty.getValue();
-            case NO_MATCH:
-                return context.noMatchesProperty.getValue();
+            case FALSE_POS:
+                return context.falsePositivesProperty.getValue();
+            case FALSE_NEG:
+                return context.falseNegativesProperty.getValue();
         }
         return false;
     }
