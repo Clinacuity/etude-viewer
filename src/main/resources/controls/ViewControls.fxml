@@ -11,13 +11,15 @@
 <?import javafx.scene.control.cell.PropertyValueFactory?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TableColumn?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
 
 <fx:root type="javafx.scene.layout.VBox"
          xmlns="http://javafx.com/javafx/8.0.112"
          xmlns:fx="http://javafx.com/fxml/1">
 
-    <VBox GridPane.columnIndex="0" GridPane.rowIndex="1">
-        <HBox alignment="CENTER_LEFT" spacing="3" styleClass="h-box-checkbox">
+    <VBox GridPane.columnIndex="0" GridPane.rowIndex="1" spacing="3">
+        <HBox id="ExactMatchBox" alignment="CENTER_LEFT" spacing="3" styleClass="h-box-checkbox">
             <JFXCheckBox fx:id="toggleExactMatches" text="Exact Match" selected="true"
                          checkedColor="DodgerBlue" unCheckedColor="DodgerBlue"/>
             <Label styleClass="label-tooltip">
@@ -31,7 +33,7 @@
                 </graphic>
             </Label>
         </HBox>
-        <HBox alignment="CENTER_LEFT" spacing="3" styleClass="h-box-checkbox">
+        <HBox id="PartialMatchBox" alignment="CENTER_LEFT" spacing="3" styleClass="h-box-checkbox">
             <JFXCheckBox fx:id="togglePartialMatches" text="Partial Matches" selected="true"
                          checkedColor="DarkOrchid" unCheckedColor="DarkOrchid"/>
             <Label styleClass="label-tooltip">
@@ -45,7 +47,7 @@
                 </graphic>
             </Label>
         </HBox>
-        <HBox alignment="CENTER_LEFT" spacing="3" styleClass="h-box-checkbox">
+        <HBox id="FalsePosBox" alignment="CENTER_LEFT" spacing="3" styleClass="h-box-checkbox">
             <JFXCheckBox fx:id="toggleFalsePosMatch" text="False Positives" selected="true"
                          checkedColor="OrangeRed" unCheckedColor="OrangeRed"/>
             <Label styleClass="label-tooltip">
@@ -59,7 +61,7 @@
                 </graphic>
             </Label>
         </HBox>
-        <HBox alignment="CENTER_LEFT" spacing="3" styleClass="h-box-checkbox">
+        <HBox id="FalseNegBox" alignment="CENTER_LEFT" spacing="3" styleClass="h-box-checkbox">
             <JFXCheckBox fx:id="toggleFalseNegMatch" text="False Negatives" selected="true"
                          checkedColor="OrangeRed" unCheckedColor="OrangeRed"/>
             <Label styleClass="label-tooltip">
@@ -73,40 +75,64 @@
                 </graphic>
             </Label>
         </HBox>
+        <HBox id="AnnotationNavBox" alignment="CENTER_LEFT" spacing="10">
+            <Button styleClass="button-arrows" fx:id="previousButton">
+                <graphic>
+                    <HBox>
+                        <ImageView fitHeight="24" preserveRatio="true">
+                            <Image url="/img/icons8/arrow_back.png"/>
+                        </ImageView>
+                        <Label text="PREV" maxHeight="Infinity"/>
+                    </HBox>
+                </graphic>
+            </Button>
+            <Button styleClass="button-arrows" fx:id="nextButton">
+                <graphic>
+                    <HBox>
+                        <Label  text="NEXT" maxHeight="Infinity"/>
+                        <ImageView fitHeight="24" preserveRatio="true">
+                            <Image url="/img/icons8/arrow_forward.png"/>
+                        </ImageView>
+                    </HBox>
+                </graphic>
+            </Button>
+            <padding>
+                <Insets topRightBottomLeft="5"/>
+            </padding>
+        </HBox>
+        <TableView fx:id="annotationTable" fixedCellSize="35">
+            <columns>
+                <TableColumn text="Name" fx:id="annotationNameColumn" prefWidth="140" styleClass="column-center-align">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="annotationName"/>
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn text="TP" fx:id="truePosColumn" maxWidth="50" styleClass="column-center-align">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="truePositiveCount"/>
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn text="FP" fx:id="falsePosColumn" maxWidth="50" styleClass="column-center-align">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="falsePositiveCount"/>
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn text="FN" fx:id="falseNegColumn" maxWidth="50" styleClass="column-center-align">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="falseNegativeCount"/>
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn text="Recall" maxWidth="80" styleClass="column-center-align">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="recall"/>
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn text="Precision" maxWidth="80" styleClass="column-center-align">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="precision"/>
+                    </cellValueFactory>
+                </TableColumn>
+            </columns>
+        </TableView>
     </VBox>
-
-    <TableView fx:id="annotationTable" fixedCellSize="35">
-        <columns>
-            <TableColumn text="Name" fx:id="annotationNameColumn" prefWidth="150" styleClass="column-center-align">
-                <cellValueFactory>
-                    <PropertyValueFactory property="annotationName"/>
-                </cellValueFactory>
-            </TableColumn>
-            <TableColumn text="TP" fx:id="truePosColumn" maxWidth="50" styleClass="column-center-align">
-                <cellValueFactory>
-                    <PropertyValueFactory property="truePositiveCount"/>
-                </cellValueFactory>
-            </TableColumn>
-            <TableColumn text="FP" fx:id="falsePosColumn" maxWidth="50" styleClass="column-center-align">
-                <cellValueFactory>
-                    <PropertyValueFactory property="falsePositiveCount"/>
-                </cellValueFactory>
-            </TableColumn>
-            <TableColumn text="FN" fx:id="falseNegColumn" maxWidth="50" styleClass="column-center-align">
-                <cellValueFactory>
-                    <PropertyValueFactory property="falseNegativeCount"/>
-                </cellValueFactory>
-            </TableColumn>
-            <TableColumn text="Recall" maxWidth="80" styleClass="column-center-align">
-                <cellValueFactory>
-                    <PropertyValueFactory property="recall"/>
-                </cellValueFactory>
-            </TableColumn>
-            <TableColumn text="Precision" maxWidth="80" styleClass="column-center-align">
-                <cellValueFactory>
-                    <PropertyValueFactory property="precision"/>
-                </cellValueFactory>
-            </TableColumn>
-        </columns>
-    </TableView>
 </fx:root>

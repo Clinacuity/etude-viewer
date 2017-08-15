@@ -120,6 +120,8 @@ public class AcvContentController implements Initializable {
         context.falsePositivesProperty.addListener((obs, old, newValue) -> updateButton(newValue, MatchType.FALSE_POS, targetPane));
         context.falseNegativesProperty.addListener((obs, old, newValue) -> updateButton(newValue, MatchType.FALSE_NEG, referencePane));
 
+        viewControls.getPreviousButton().setOnAction(event -> changeAnnotationButton(false));
+        viewControls.getNextButton().setOnAction(event -> changeAnnotationButton(true));
 
         context.selectedAnnotationTypeProperty.addListener(selectedAnnotationTypeListener);
     }
@@ -285,6 +287,27 @@ public class AcvContentController implements Initializable {
             types.add(new AnnotationType(annotationKey, tp, fp, fn, recall, precision));
         });
         viewControls.setTableRows(types);
+    }
+
+    private void changeAnnotationButton(boolean isNext) {
+        AnnotationButton currentButton = selectedAnnotationButton.getValue();
+        if (currentButton != null) {
+            if (isNext) {
+                if (currentButton.nextButton != null) {
+                    selectedAnnotationButton.setValue(currentButton.nextButton);
+                } else {
+                    logger.warn("Current button does not have a Next value.");
+                }
+            } else {
+                if (currentButton.previousButton != null) {
+                    selectedAnnotationButton.setValue(currentButton.previousButton);
+                } else {
+                    logger.warn("Current button does not have a Previous value.");
+                }
+            }
+        } else {
+            logger.warn("No annotation selected!");
+        }
     }
 
     /* ******************************
