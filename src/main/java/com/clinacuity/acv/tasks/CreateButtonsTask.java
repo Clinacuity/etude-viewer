@@ -17,6 +17,7 @@ public class CreateButtonsTask extends Task<List<AnnotationButton>> {
     private List<JsonObject> taskAnnotations;
     private List<LineNumberedLabel> taskLabels;
     private List<AnnotationButton> taskButtons = new ArrayList<>();
+    private AnnotationButton previousButton = null;
 
     private double characterHeight = -1.0;
 
@@ -108,8 +109,15 @@ public class CreateButtonsTask extends Task<List<AnnotationButton>> {
         // CASE #1
         if (labels.size() == 1) {
             LineNumberedLabel label = labels.get(0);
-            taskButtons.add(createButton(annotation, label, begin, end));
-            updateValue(taskButtons);
+            AnnotationButton newButton = createButton(annotation, label, begin, end);
+
+            if (previousButton != null) {
+                newButton.previousButton = previousButton;
+                previousButton.nextButton = newButton;
+            }
+
+            previousButton = newButton;
+            taskButtons.add(newButton);
         } else {
             // This button spans at least 2 lines
             List<AnnotationButton> buttons = new ArrayList<>();
@@ -118,7 +126,7 @@ public class CreateButtonsTask extends Task<List<AnnotationButton>> {
                 double charWidth = label.getTextLabel().getWidth() / label.getLineText().length();
                 double topAnchor = characterHeight * taskLabels.indexOf(label) * 2.0d;
 
-                AnnotationButton newButton = null;
+                AnnotationButton newButton;
 
                 // if the offset is less than the begin, this is the starting line
                 if (label.getTextOffset() <= begin) {
@@ -127,6 +135,7 @@ public class CreateButtonsTask extends Task<List<AnnotationButton>> {
 
                     // create button
                     newButton = createButton(annotation, size, leftAnchor, topAnchor);
+                    buttons.add(newButton);
                 } else {
                     // if the offset + length are greater than the end, this is the ending line
                     if (label.getTextOffset() + label.getLineText().length() > end) {
@@ -150,8 +159,17 @@ public class CreateButtonsTask extends Task<List<AnnotationButton>> {
                 }
             });
 
+            if (previousButton != null) {
+                buttons.forEach(button -> button.previousButton = previousButton);
+                previousButton.nextButton = buttons.get(0);
+                previousButton.sameAnnotationButtons.forEach(button -> button.nextButton = buttons.get(0));
+            }
+
+            previousButton = buttons.get(0);
             taskButtons.addAll(buttons);
         }
+
+        updateValue(taskButtons);
     }
 
     /**

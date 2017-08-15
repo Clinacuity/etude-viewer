@@ -38,6 +38,8 @@ public class AnnotationButton extends Button {
     private String matchTypeStyle = "";
     private MatchType matchType;
     private Label categoryLabel;
+    public AnnotationButton previousButton = null;
+    public AnnotationButton nextButton = null;
 
     public List<AnnotationButton> matchingButtons = new ArrayList<>();
     public List<AnnotationButton> sameAnnotationButtons = new ArrayList<>();
