@@ -12,23 +12,23 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
+<?import com.jfoenix.controls.JFXButton?>
 
 <fx:root type="javafx.scene.layout.VBox"
          xmlns="http://javafx.com/javafx/8.0.112"
          xmlns:fx="http://javafx.com/fxml/1">
 
-    <VBox GridPane.columnIndex="0" GridPane.rowIndex="1" spacing="3">
+    <VBox GridPane.columnIndex="0" GridPane.rowIndex="1" spacing="10">
         <HBox id="ExactMatchBox" alignment="CENTER_LEFT" spacing="3" styleClass="h-box-checkbox">
             <JFXCheckBox fx:id="toggleExactMatches" text="Exact Match" selected="true"
                          checkedColor="DodgerBlue" unCheckedColor="DodgerBlue"/>
-            <Label styleClass="label-tooltip">
+            <Label styleClass="label-tooltip" alignment="TOP_LEFT">
                 <tooltip>
                     <Tooltip text="Toggle display of exact matches, including their features"/>
                 </tooltip>
                 <graphic>
-                    <ImageView fitHeight="12" fitWidth="12" preserveRatio="true" pickOnBounds="true">
-                        <Image url="/img/ecommerce/16/info.png"/>
+                    <ImageView fitHeight="18" fitWidth="12" preserveRatio="true" pickOnBounds="true">
+                        <Image url="/img/icons8/info_button.png"/>
                     </ImageView>
                 </graphic>
             </Label>
@@ -36,38 +36,38 @@
         <HBox id="PartialMatchBox" alignment="CENTER_LEFT" spacing="3" styleClass="h-box-checkbox">
             <JFXCheckBox fx:id="togglePartialMatches" text="Partial Matches" selected="true"
                          checkedColor="DarkOrchid" unCheckedColor="DarkOrchid"/>
-            <Label styleClass="label-tooltip">
+            <Label styleClass="label-tooltip" alignment="TOP_LEFT">
                 <tooltip>
                     <Tooltip text="Toggle display of annotations which partially match others.&#013;Partial matches consider category, features, and span."/>
                 </tooltip>
                 <graphic>
-                    <ImageView fitHeight="12" fitWidth="12" preserveRatio="true" pickOnBounds="true">
-                        <Image url="/img/ecommerce/16/info.png"/>
+                    <ImageView fitHeight="18" fitWidth="12" preserveRatio="true" pickOnBounds="true">
+                        <Image url="/img/icons8/info_button.png"/>
                     </ImageView>
                 </graphic>
             </Label>
         </HBox>
         <HBox id="AnnotationNavBox" alignment="CENTER_LEFT" spacing="10">
-            <Button styleClass="button-arrows" fx:id="previousButton">
+            <JFXButton fx:id="previousButton" styleClass="text-small">
                 <graphic>
-                    <HBox>
-                        <ImageView fitHeight="24" preserveRatio="true">
+                    <HBox spacing="5">
+                        <ImageView fitHeight="18" preserveRatio="true">
                             <Image url="/img/icons8/arrow_back.png"/>
                         </ImageView>
                         <Label text="PREV" maxHeight="Infinity"/>
                     </HBox>
                 </graphic>
-            </Button>
-            <Button styleClass="button-arrows" fx:id="nextButton">
+            </JFXButton>
+            <JFXButton fx:id="nextButton" styleClass="text-small">
                 <graphic>
-                    <HBox>
+                    <HBox spacing="5">
                         <Label  text="NEXT" maxHeight="Infinity"/>
-                        <ImageView fitHeight="24" preserveRatio="true">
+                        <ImageView fitHeight="18" preserveRatio="true">
                             <Image url="/img/icons8/arrow_forward.png"/>
                         </ImageView>
                     </HBox>
                 </graphic>
-            </Button>
+            </JFXButton>
             <padding>
                 <Insets topRightBottomLeft="5"/>
             </padding>

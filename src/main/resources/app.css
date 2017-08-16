@@ -22,41 +22,72 @@
     src: url("/fonts/fira/FiraMono-Bold.ttf");
 }
 
-/*    BUTTONS    */
-.button {
-    -fx-font-family: "Open Sans Bold";
-    -fx-border-radius: 4px;
+
+/*    MISC        */
+.no-focus {
+    -fx-focus-traversable: false;
 }
 
-.button-table {
+.no-mouse {
+    -fx-mouse-traversable: false;
+}
+
+.text-small {
+    -fx-font-size: 10px;
+}
+
+.text-medium {
+    -fx-font-size: 14px;
+}
+
+.text-large {
+    -fx-font-size: 36px;
+}
+/*    MISC        */
+
+/*    BUTTONS     */
+.button* {
     -fx-font-family: "Open Sans Light";
-    -fx-font-size: 12;
+    -fx-padding: 0.7em 0.57em;
+    -fx-text-fill: Black;
 }
 
-.button-table-selected {
-    -fx-font-family: "Open Sans Bold";
-    -fx-border-color: DodgerBlue;
-    -fx-font-size: 12;
+.button-raised {
+    -jfx-button-type: RAISED;
+    -fx-background-color: rgb(77,102,204);
+}
+
+.button-blue {
+    -fx-background-color: rgb(77, 102, 204);
+    -fx-text-fill: Azure;
 }
 
 .button:hover {
-    -fx-border-radius: 4px;
-    -fx-border-color: DodgerBlue;
-    -fx-focus-traversable: false;
+    -fx-background-color: LightGray;
 }
 
-.button-clickable {
-    -fx-focus-traversable: false;
-    -fx-font-size: 10;
+.button-blue:hover {
+    -fx-background-color: rgb(27, 52, 154);
 }
 
-.button-actionable {
-    -fx-font-size: 14;
+.button-gray {
+    -fx-background-color: LightGray;
+}
+
+.button-gray:hover {
+    -fx-background-color: DarkGray;
 }
 
 .button-annotation {
-    -fx-focus-traversable: false;
     -fx-opacity: 0.25;
+}
+
+.button-annotation-selected {
+    -fx-opacity: 0.5;
+    -fx-border-color: Black;
+    -fx-border-radius: 4px;
+    -fx-border-insets: -2;
+    -fx-border-width: 2;
 }
 
 .button-annotation:hover {
@@ -66,60 +97,17 @@
     -fx-border-insets: -3;
     -fx-border-width: 3;
 }
-
-.button-arrows {
-    -fx-border-radius: 2px;
-    -fx-border-color: transparent;
-    -fx-font-family: "Open Sans Bold";
-    -fx-font-size: 12;
-    -fx-text-fill: DarkGray;
-}
-/*    END BUTTONS   */
+/*  END BUTTONS   */
 
 
-/*    COMBO BOXES    */
-.jfx-combo-box {
-    -jfx-focus-color: DodgerBlue;
-    -jfx-unfocus-color: DarkGray;
-}
-
-.combo-box-popup .list-view .jfx-list-cell:odd {
-    -fx-background-color: rgb(225, 225, 225);
-}
-
-.combo-box-popup .list-view .jfx-list-cell:even {
-    -fx-background-color: rgba(240, 240, 240);
-}
-
-.jfx-list-cell:selected > .jfx-rippler > StackPane {
-    -fx-background-color: DodgerBlue;
-}
-
-.jfx-list-cell:hover > .jfx-rippler > StackPane {
-    -fx-background-color: DodgerBlue;
-}
-/*    END COMBO BOXES   */
-
-
-/*    CHECK BOXES   */
-.h-box-checkbox {
-    -fx-padding: 8 3 8 0;
-}
-/*    END CHECK BOXES    */
-
-
-/*    TEXT FIELDS   */
+/*   TEXT FIELDS  */
 .text-field {
     -fx-font-family: "Open Sans Regular";
 }
 
 .feature-tree {
     -fx-font-family: "Fira Mono Bold";
-    -fx-font-size: 12;
-    -fx-text-fill: rgba(55, 55, 55, 1);
     -fx-background-color: rgba(220, 220, 220, 0);
-    -fx-focus-traversable: false;
-    -fx-mouse-transparent: true;
 }
 
 .tooltip {
@@ -132,15 +120,15 @@
 }
 
 .label-tooltip:hover {
-    -fx-opacity: 1;
+    -fx-opacity: 0.8;
 }
 
-.label-header-one {
+.header-one {
     -fx-font-family: "Open Sans Bold Italic";
     -fx-font-size: 36;
 }
 
-.label-header-two {
+.header-two {
     -fx-font-family: "Open Sans Bold";
     -fx-font-size: 14;
     -fx-text-fill: rgb(55, 55, 55);
