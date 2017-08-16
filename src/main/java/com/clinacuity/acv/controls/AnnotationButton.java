@@ -26,7 +26,8 @@ import java.util.List;
   */
 public class AnnotationButton extends Button {
     private static final Logger logger = LogManager.getLogger();
-    private static final String HIGHLIGHTED_STYLE = "-fx-opacity: 0.45;";
+    private static final String NORMAL_STYLE = "button-annotation";
+    private static final String HIGHLIGHTED_STYLE = "button-annotation-selected";
 
     private JsonObject annotation;
     private int begin;
@@ -64,12 +65,16 @@ public class AnnotationButton extends Button {
     }
 
     public void setSelected() {
-        setStyle(matchTypeStyle + HIGHLIGHTED_STYLE);
+        setStyle(matchTypeStyle);
+        getStyleClass().remove(NORMAL_STYLE);
+        getStyleClass().add(HIGHLIGHTED_STYLE);
         addCategoryLabel();
     }
 
     public void clearSelected() {
         setStyle(matchTypeStyle);
+        getStyleClass().remove(HIGHLIGHTED_STYLE);
+        getStyleClass().add(NORMAL_STYLE);
         removeCategoryLabel();
     }
 
@@ -101,7 +106,8 @@ public class AnnotationButton extends Button {
     }
 
     private void initialize(JsonObject json, int beginValue, int endValue) {
-        getStyleClass().add("button-annotation");
+        getStyleClass().add(NORMAL_STYLE);
+        getStyleClass().add("no-focus");
         annotation = json;
         begin = beginValue;
         end = endValue;

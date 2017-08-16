@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.control.Button?>
+<?import com.jfoenix.controls.JFXButton?>
 
 <GridPane alignment="CENTER" minHeight="300" minWidth="400"
           xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1"
@@ -34,8 +34,8 @@
         <RowConstraints minHeight="10" />
     </rowConstraints>
 
-    <Label styleClass="label-header-one" text="Welcome" alignment="BOTTOM_CENTER" textAlignment="CENTER" GridPane.halignment="CENTER"
-           GridPane.columnIndex="1" GridPane.columnSpan="2">
+    <Label styleClass="header-one" text="Welcome" alignment="BOTTOM_CENTER" textAlignment="CENTER"
+           GridPane.halignment="CENTER" GridPane.columnIndex="1" GridPane.columnSpan="2">
         <padding>
             <Insets bottom="50" top="50" left="50" right="50"/>
         </padding>
@@ -47,8 +47,9 @@
                GridPane.columnIndex="2" GridPane.rowIndex="2">
         <GridPane.margin><Insets right="5" left="5"/></GridPane.margin>
     </TextField>
-    <Button onAction="#pickTestFile" text="..." textAlignment="CENTER" styleClass="button-clickable" GridPane.halignment="LEFT"
-            GridPane.columnIndex="3" GridPane.rowIndex="2" maxHeight="Infinity" maxWidth="Infinity"/>
+    <JFXButton text="..." onAction="#pickTestFile" textAlignment="CENTER" maxHeight="Infinity" maxWidth="Infinity"
+               styleClass="button, button-raised, button-gray, no-focus, text-small" buttonType="RAISED"
+               GridPane.halignment="LEFT" GridPane.columnIndex="3" GridPane.rowIndex="2"/>
 
     <Label alignment="CENTER_RIGHT" text="Gold Standard (Reference) File:" textAlignment="RIGHT" GridPane.halignment="RIGHT"
            GridPane.columnIndex="1" GridPane.rowIndex="4" />
@@ -56,11 +57,15 @@
                GridPane.columnIndex="2" GridPane.rowIndex="4">
         <GridPane.margin><Insets right="5" left="5"/></GridPane.margin>
     </TextField>
-    <Button onAction="#pickReferenceFile" text="..." textAlignment="CENTER" styleClass="button-clickable" GridPane.halignment="LEFT"
-            GridPane.columnIndex="3" GridPane.rowIndex="4" maxHeight="Infinity" maxWidth="Infinity"/>
+    <JFXButton text="..." onAction="#pickReferenceFile" textAlignment="CENTER" maxHeight="Infinity" maxWidth="Infinity"
+               styleClass="button-raised, button-gray, no-focus, text-small" buttonType="RAISED"
+               GridPane.halignment="LEFT" GridPane.columnIndex="3" GridPane.rowIndex="4"/>
 
-    <Button onAction="#runAcv" text="Run ACV" styleClass="button-actionable" GridPane.halignment="LEFT"
-            GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.rowIndex="6">
-        <GridPane.margin><Insets topRightBottomLeft="10"/></GridPane.margin>
-    </Button>
+    <JFXButton onAction="#runAcv" text="RUN ACV" buttonType="RAISED"
+               styleClass="button-raised, button-gray, text-medium"
+               GridPane.halignment="LEFT" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.rowIndex="6">
+        <GridPane.margin>
+            <Insets topRightBottomLeft="10"/>
+        </GridPane.margin>
+    </JFXButton>
 </GridPane>
