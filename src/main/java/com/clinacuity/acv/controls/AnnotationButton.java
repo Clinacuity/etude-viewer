@@ -63,10 +63,6 @@ public class AnnotationButton extends Button {
         initialize(json, beginValue, endValue);
     }
 
-    public AnnotationButton(JsonObject json, int beginValue, int endValue) {
-        initialize(json, beginValue, endValue);
-    }
-
     public void setSelected() {
         setStyle(matchTypeStyle + HIGHLIGHTED_STYLE);
         addCategoryLabel();

@@ -17,8 +17,6 @@ import java.io.IOException;
 
 public class ViewControls extends VBox {
     private static final Logger logger = LogManager.getLogger();
-    private static final String BUTTON_STYLE = "button-table";
-    private static final String BUTTON_SELECTED = "button-table-selected";
 
     @FXML private JFXCheckBox toggleExactMatches;
     @FXML private JFXCheckBox togglePartialMatches;
@@ -56,15 +54,6 @@ public class ViewControls extends VBox {
     }
 
     private void setTableColumns() {
-//        annotationNameColumn.setCellFactory(param -> new TableCell<AnnotationType, String>() {
-//            @Override
-//            public void updateItem(String item, boolean empty) {
-//                super.updateItem(item, empty);
-//                setText(null);
-//                setGraphic(empty ? null : getTableButton(item, ColumnType.NAME));
-//            }
-//        });
-
         annotationNameColumn.setCellFactory(param -> new TableCell<AnnotationType, String>() {
             @Override
             public void updateItem(String item, boolean empty) {
@@ -82,25 +71,6 @@ public class ViewControls extends VBox {
 
         falseNegColumn.setGraphic(getHeaderGraphic(ColumnType.FN));
         falseNegColumn.setText(null);
-    }
-
-    private Button getTableButton(String text, ColumnType type) {
-        Button button = new Button(text);
-        button.getStyleClass().add(BUTTON_STYLE);
-
-        switch(type) {
-            case NAME:
-                button.setOnAction(event -> AcvContext.getInstance().selectedAnnotationTypeProperty.set(text));
-                logger.error("Stuff happened and got set to {}", text);
-                break;
-
-            case TP:
-            case FP:
-            case FN:
-                break;
-        }
-
-        return button;
     }
 
     private HBox getHeaderGraphic(ColumnType type) {

@@ -53,7 +53,7 @@ public class CreateButtonsTask extends Task<List<AnnotationButton>> {
      * Gets the list of LineNumberedLabels spanned by the JsonObject's annotation based on its begin and end values.
      * @param begin The begin offset relative to the JsonObject's raw text
      * @param end   The end offset relative to the JsonObject's rew text
-     * @return
+     * @return      Returns a list of the labels which are spanned by the given annotation's begin/end values
      */
     private List<LineNumberedLabel> getSpannedLabels(int begin, int end) {
         List<LineNumberedLabel> spannedLabels = new ArrayList<>();

@@ -1,15 +1,11 @@
 package com.clinacuity.acv.context;
 
 import com.clinacuity.acv.controllers.AppMainController;
-import com.google.gson.JsonObject;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import javax.annotation.Resource;
 import java.io.*;
-import java.util.Locale;
 import java.util.Properties;
 import java.util.ResourceBundle;
 
@@ -19,7 +15,6 @@ public class AcvContext {
     private static File propertiesFile;
     private static boolean propertiesActive = false;
     private static ResourceBundle resources;
-    public ResourceBundle getResources() { return resources; }
     public void setResources(ResourceBundle bundle) { resources = bundle; }
 
     private static AcvContext instance;
@@ -32,7 +27,6 @@ public class AcvContext {
 
     public AppMainController mainController;
     private Properties properties;
-    public Properties getProperties() { return properties; }
 
     // Properties
     public StringProperty referenceDocumentPathProperty = new SimpleStringProperty("");
