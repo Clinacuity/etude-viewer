@@ -121,6 +121,7 @@ public class AcvContentController implements Initializable {
         context.falseNegativesProperty.addListener((obs, old, newValue) -> updateButton(newValue, MatchType.FALSE_NEG, referencePane));
 
         viewControls.getPreviousButton().setOnAction(event -> changeAnnotationButton(false));
+        viewControls.getClearButton().setOnAction(event -> selectedAnnotationButton.setValue(null));
         viewControls.getNextButton().setOnAction(event -> changeAnnotationButton(true));
 
         context.selectedAnnotationTypeProperty.addListener(selectedAnnotationTypeListener);

@@ -58,6 +58,11 @@
                     </HBox>
                 </graphic>
             </JFXButton>
+            <JFXButton fx:id="clearButton" styleClass="text-small" maxHeight="Infinity">
+                <graphic>
+                    <Label text="CLEAR" maxHeight="Infinity"/>
+                </graphic>
+            </JFXButton>
             <JFXButton fx:id="nextButton" styleClass="text-small">
                 <graphic>
                     <HBox spacing="5">
