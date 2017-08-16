@@ -19,8 +19,8 @@
          xmlns:fx="http://javafx.com/fxml/1">
 
     <VBox GridPane.columnIndex="0" GridPane.rowIndex="1" spacing="10">
-        <HBox id="ExactMatchBox" alignment="CENTER_LEFT" spacing="3" styleClass="h-box-checkbox">
-            <JFXCheckBox fx:id="toggleExactMatches" text="Exact Match" selected="true"
+        <HBox id="ExactMatchBox" alignment="CENTER_LEFT" spacing="3">
+            <JFXCheckBox fx:id="toggleExactMatches" text="Exact Match" selected="true" styleClass="text-medium-normal"
                          checkedColor="DodgerBlue" unCheckedColor="DodgerBlue"/>
             <Label styleClass="label-tooltip" alignment="TOP_LEFT">
                 <tooltip>
@@ -33,8 +33,8 @@
                 </graphic>
             </Label>
         </HBox>
-        <HBox id="PartialMatchBox" alignment="CENTER_LEFT" spacing="3" styleClass="h-box-checkbox">
-            <JFXCheckBox fx:id="togglePartialMatches" text="Partial Matches" selected="true"
+        <HBox id="PartialMatchBox" alignment="CENTER_LEFT" spacing="3">
+            <JFXCheckBox fx:id="togglePartialMatches" text="Partial Matches" selected="true" styleClass="text-medium-normal"
                          checkedColor="DarkOrchid" unCheckedColor="DarkOrchid"/>
             <Label styleClass="label-tooltip" alignment="TOP_LEFT">
                 <tooltip>
@@ -48,7 +48,7 @@
             </Label>
         </HBox>
         <HBox id="AnnotationNavBox" alignment="CENTER_LEFT" spacing="10">
-            <JFXButton fx:id="previousButton" styleClass="text-small">
+            <JFXButton fx:id="previousButton" styleClass="text-small-bold">
                 <graphic>
                     <HBox spacing="5">
                         <ImageView fitHeight="18" preserveRatio="true">
@@ -58,12 +58,12 @@
                     </HBox>
                 </graphic>
             </JFXButton>
-            <JFXButton fx:id="clearButton" styleClass="text-small" maxHeight="Infinity">
+            <JFXButton fx:id="clearButton" styleClass="text-small-bold" maxHeight="Infinity">
                 <graphic>
                     <Label text="CLEAR" maxHeight="Infinity"/>
                 </graphic>
             </JFXButton>
-            <JFXButton fx:id="nextButton" styleClass="text-small">
+            <JFXButton fx:id="nextButton" styleClass="text-small-bold">
                 <graphic>
                     <HBox spacing="5">
                         <Label  text="NEXT" maxHeight="Infinity"/>

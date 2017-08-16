@@ -24,7 +24,7 @@
         <RowConstraints minHeight="15" maxHeight="15"/>
     </rowConstraints>
 
-    <Label text="System Output:" GridPane.columnIndex="0" GridPane.rowIndex="0">
+    <Label text="System Output:" GridPane.columnIndex="0" GridPane.rowIndex="0" styleClass="text-medium-bold">
         <padding>
             <Insets left="10"/>
         </padding>
@@ -35,7 +35,7 @@
             <Insets left="5" right="5"/>
         </padding>
     </AnnotatedDocumentPane>
-    <Label text="Reference:" GridPane.columnIndex="1" GridPane.rowIndex="0">
+    <Label text="Reference:" GridPane.columnIndex="1" GridPane.rowIndex="0" styleClass="text-medium-bold">
         <padding>
             <Insets left="10"/>
         </padding>
