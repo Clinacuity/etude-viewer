@@ -48,7 +48,7 @@
         <GridPane.margin><Insets right="5" left="5"/></GridPane.margin>
     </TextField>
     <JFXButton text="..." onAction="#pickTestFile" textAlignment="CENTER" maxHeight="Infinity" maxWidth="Infinity"
-               styleClass="button, button-raised, button-gray, no-focus, text-small" buttonType="RAISED"
+               styleClass="button, button-raised, button-gray, no-focus, text-small-bold" buttonType="RAISED"
                GridPane.halignment="LEFT" GridPane.columnIndex="3" GridPane.rowIndex="2"/>
 
     <Label alignment="CENTER_RIGHT" text="Gold Standard (Reference) File:" textAlignment="RIGHT" GridPane.halignment="RIGHT"
@@ -58,11 +58,11 @@
         <GridPane.margin><Insets right="5" left="5"/></GridPane.margin>
     </TextField>
     <JFXButton text="..." onAction="#pickReferenceFile" textAlignment="CENTER" maxHeight="Infinity" maxWidth="Infinity"
-               styleClass="button-raised, button-gray, no-focus, text-small" buttonType="RAISED"
+               styleClass="button-raised, button-gray, no-focus, text-small-bold" buttonType="RAISED"
                GridPane.halignment="LEFT" GridPane.columnIndex="3" GridPane.rowIndex="4"/>
 
     <JFXButton onAction="#runAcv" text="RUN ACV" buttonType="RAISED"
-               styleClass="button-raised, button-gray, text-medium"
+               styleClass="button-raised, button-gray, text-medium-normal"
                GridPane.halignment="LEFT" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.rowIndex="6">
         <GridPane.margin>
             <Insets topRightBottomLeft="10"/>
