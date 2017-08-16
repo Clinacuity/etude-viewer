@@ -28,7 +28,7 @@
                 </tooltip>
                 <graphic>
                     <ImageView fitHeight="12" fitWidth="12" preserveRatio="true" pickOnBounds="true">
-                        <Image url="/img/ecommerce/16/info.png"/>
+                        <Image url="/img/icons8/info_button.png"/>
                     </ImageView>
                 </graphic>
             </Label>
@@ -42,7 +42,7 @@
                 </tooltip>
                 <graphic>
                     <ImageView fitHeight="12" fitWidth="12" preserveRatio="true" pickOnBounds="true">
-                        <Image url="/img/ecommerce/16/info.png"/>
+                        <Image url="/img/icons8/info_button.png"/>
                     </ImageView>
                 </graphic>
             </Label>
@@ -50,7 +50,7 @@
         <HBox id="AnnotationNavBox" alignment="CENTER_LEFT" spacing="10">
             <Button styleClass="button-arrows" fx:id="previousButton">
                 <graphic>
-                    <HBox>
+                    <HBox spacing="5">
                         <ImageView fitHeight="24" preserveRatio="true">
                             <Image url="/img/icons8/arrow_back.png"/>
                         </ImageView>
@@ -60,7 +60,7 @@
             </Button>
             <Button styleClass="button-arrows" fx:id="nextButton">
                 <graphic>
-                    <HBox>
+                    <HBox spacing="5">
                         <Label  text="NEXT" maxHeight="Infinity"/>
                         <ImageView fitHeight="24" preserveRatio="true">
                             <Image url="/img/icons8/arrow_forward.png"/>
