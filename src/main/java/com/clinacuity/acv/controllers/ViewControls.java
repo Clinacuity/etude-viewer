@@ -22,6 +22,7 @@ public class ViewControls extends VBox {
     @FXML private JFXCheckBox togglePartialMatches;
     @FXML private TableView<AnnotationType> annotationTable;
     @FXML private Button previousButton;
+    @FXML private Button clearButton;
     @FXML private Button nextButton;
     @FXML private TableColumn<AnnotationType, String> annotationNameColumn;
     @FXML private TableColumn<AnnotationType, String> truePosColumn;
@@ -112,6 +113,7 @@ public class ViewControls extends VBox {
     }
 
     Button getPreviousButton() { return previousButton; }
+    Button getClearButton() { return clearButton; }
     Button getNextButton() { return nextButton; }
 
     private enum ColumnType {
