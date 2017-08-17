@@ -288,8 +288,8 @@ public class AcvContentController implements Initializable {
             double tp = annotation.getMetricsTruePositive(annotationKey);
             double fp = annotation.getMetricsFalsePositive(annotationKey);
             double fn = annotation.getMetricsFalseNegative(annotationKey);
-            double recall = tp / (tp + fn);
-            double precision = tp / (tp + fp);
+            double recall = tp / (tp + fn) * 100.0d;
+            double precision = tp / (tp + fp) * 100.0d;
 
             types.add(new AnnotationType(annotationKey, tp, fp, fn, recall, precision));
         });
