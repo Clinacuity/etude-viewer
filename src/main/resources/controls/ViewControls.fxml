@@ -22,12 +22,12 @@
         <HBox id="ExactMatchBox" alignment="CENTER_LEFT" spacing="3">
             <JFXCheckBox fx:id="toggleExactMatches" text="Exact Match" selected="true" styleClass="text-medium-normal"
                          checkedColor="DodgerBlue" unCheckedColor="DodgerBlue"/>
-            <Label styleClass="label-tooltip" alignment="TOP_LEFT">
+            <Label styleClass="label-tooltip" maxHeight="Infinity">
                 <tooltip>
                     <Tooltip text="Toggle display of exact matches, including their features"/>
                 </tooltip>
                 <graphic>
-                    <ImageView fitHeight="18" fitWidth="12" preserveRatio="true" pickOnBounds="true">
+                    <ImageView fitWidth="12" preserveRatio="true" pickOnBounds="true">
                         <Image url="/img/icons8/info_button.png"/>
                     </ImageView>
                 </graphic>
@@ -36,19 +36,19 @@
         <HBox id="PartialMatchBox" alignment="CENTER_LEFT" spacing="3">
             <JFXCheckBox fx:id="togglePartialMatches" text="Partial Matches" selected="true" styleClass="text-medium-normal"
                          checkedColor="DarkOrchid" unCheckedColor="DarkOrchid"/>
-            <Label styleClass="label-tooltip" alignment="TOP_LEFT">
+            <Label styleClass="label-tooltip" maxHeight="Infinity">
                 <tooltip>
                     <Tooltip text="Toggle display of annotations which partially match others.&#013;Partial matches consider category, features, and span."/>
                 </tooltip>
                 <graphic>
-                    <ImageView fitHeight="18" fitWidth="12" preserveRatio="true" pickOnBounds="true">
+                    <ImageView fitWidth="12" preserveRatio="true" pickOnBounds="true">
                         <Image url="/img/icons8/info_button.png"/>
                     </ImageView>
                 </graphic>
             </Label>
         </HBox>
-        <HBox id="AnnotationNavBox" alignment="CENTER_LEFT" spacing="10">
-            <JFXButton fx:id="previousButton" styleClass="text-small-bold">
+        <HBox id="AnnotationNavBox" alignment="CENTER_LEFT" spacing="3">
+            <JFXButton fx:id="previousButton" styleClass="text-small-normal">
                 <graphic>
                     <HBox spacing="5">
                         <ImageView fitHeight="18" preserveRatio="true">
@@ -58,12 +58,12 @@
                     </HBox>
                 </graphic>
             </JFXButton>
-            <JFXButton fx:id="clearButton" styleClass="text-small-bold" maxHeight="Infinity">
+            <JFXButton fx:id="clearButton" styleClass="text-small-normal" maxHeight="Infinity">
                 <graphic>
                     <Label text="CLEAR" maxHeight="Infinity"/>
                 </graphic>
             </JFXButton>
-            <JFXButton fx:id="nextButton" styleClass="text-small-bold">
+            <JFXButton fx:id="nextButton" styleClass="text-small-normal">
                 <graphic>
                     <HBox spacing="5">
                         <Label  text="NEXT" maxHeight="Infinity"/>
@@ -73,6 +73,16 @@
                     </HBox>
                 </graphic>
             </JFXButton>
+            <Label styleClass="label-tooltip" maxHeight="Infinity">
+                <tooltip>
+                    <Tooltip text="Navigate through the displayed annotations of the selected type.&#013;This will only cycle through annotations on the respective panel."/>
+                </tooltip>
+                <graphic>
+                    <ImageView fitWidth="12" preserveRatio="true" pickOnBounds="true">
+                        <Image url="/img/icons8/info_button.png"/>
+                    </ImageView>
+                </graphic>
+            </Label>
             <padding>
                 <Insets topRightBottomLeft="5"/>
             </padding>
@@ -111,5 +121,22 @@
                 </TableColumn>
             </columns>
         </TableView>
+        <HBox id="clearSelectionBox" spacing="3">
+            <JFXButton text="CLEAR SELECTION" styleClass="text-small-normal" onAction="#clearTableSelection">
+            </JFXButton>
+            <Label styleClass="label-tooltip" maxHeight="Infinity">
+                <tooltip>
+                    <Tooltip text="Clears the table's selection.  This will also clear the annotations on the right-side panels."/>
+                </tooltip>
+                <graphic>
+                    <ImageView fitWidth="12" preserveRatio="true" pickOnBounds="true">
+                        <Image url="/img/icons8/info_button.png"/>
+                    </ImageView>
+                </graphic>
+            </Label>
+            <VBox.margin>
+                <Insets left="20"/>
+            </VBox.margin>
+        </HBox>
     </VBox>
 </fx:root>

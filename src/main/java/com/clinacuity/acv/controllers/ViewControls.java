@@ -47,8 +47,8 @@ public class ViewControls extends VBox {
         context.overlappingMatchesProperty.bindBidirectional(togglePartialMatches.selectedProperty());
 
         annotationTable.getSelectionModel().selectedItemProperty().addListener((obs, old, newValue) -> {
-            logger.debug(newValue.getAnnotationName());
-            context.selectedAnnotationTypeProperty.setValue(newValue.getAnnotationName());
+            String value = newValue != null ? newValue.getAnnotationName() : null;
+            context.selectedAnnotationTypeProperty.setValue(value);
         });
 
         setTableColumns();
@@ -110,6 +110,11 @@ public class ViewControls extends VBox {
         button.setOnAction(event -> logger.error("SAY WHAT?!"));
 
         annotationTable.setItems(types);
+    }
+
+    @FXML
+    private void clearTableSelection() {
+        annotationTable.getSelectionModel().clearSelection();
     }
 
     Button getPreviousButton() { return previousButton; }

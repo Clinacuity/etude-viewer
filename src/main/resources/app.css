@@ -32,6 +32,11 @@
     -fx-mouse-traversable: false;
 }
 
+.text-small-normal {
+    -fx-font-size: 10px;
+    -fx-font-family: "Open Sans Light";
+}
+
 .text-small-bold {
     -fx-font-size: 10px;
     -fx-font-family: "Open Sans Bold";
@@ -103,11 +108,7 @@
 /*  END BUTTONS   */
 
 
-/*   TEXT FIELDS  */
-.text-field {
-    -fx-font-family: "Open Sans Regular";
-}
-
+/*   TEXT         */
 .feature-tree {
     -fx-font-family: "Fira Mono Bold";
     -fx-background-color: rgba(220, 220, 220, 0);
@@ -120,6 +121,7 @@
 
 .label-tooltip {
     -fx-opacity: 0.2;
+    -fx-alignment: top-left;
 }
 
 .label-tooltip:hover {
@@ -183,4 +185,4 @@
 .column-left-align {
     -fx-alignment: CENTER-LEFT;
 }
-/*    END TEXT FIELDS   */
+/*    END TEXT    */
