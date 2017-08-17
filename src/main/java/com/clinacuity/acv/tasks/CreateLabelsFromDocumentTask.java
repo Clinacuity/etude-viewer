@@ -28,8 +28,9 @@ public class CreateLabelsFromDocumentTask extends Task<List<LineNumberedLabel>> 
         int maxChars = AnnotatedDocumentPane.getMaxCharactersPerLabel();
         double offset = 0.0d;
         double offsetIncrement = AnnotatedDocumentPane.getCharacterHeight() * 2.0d;
-
-        logger.error(maxChars);
+        if (offsetIncrement <= 0.0d) {
+            offsetIncrement = 34.0d;
+        }
 
         int runningLength = 0;
         for (int i = 0; i < lines.length; i++) {

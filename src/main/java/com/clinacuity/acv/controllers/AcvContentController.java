@@ -44,7 +44,7 @@ public class AcvContentController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         context = AcvContext.getInstance();
 
-        FxTimer.runLater(Duration.ofMillis(300), this::init);
+        FxTimer.runLater(Duration.ofMillis(500), this::init);
     }
 
     private void init() {
