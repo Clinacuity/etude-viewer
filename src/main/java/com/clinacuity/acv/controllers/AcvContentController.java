@@ -21,6 +21,7 @@ import org.apache.logging.log4j.Logger;
 import org.reactfx.util.FxTimer;
 import java.net.URL;
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -136,24 +137,29 @@ public class AcvContentController implements Initializable {
             referenceButtonsTask.cancel();
         }
 
-        List<JsonObject> targetJson = targetAnnotationsProperty.getValue().getAnnotationsByKey(key);
-        List<JsonObject> referenceJson = referenceAnnotationsProperty.getValue().getAnnotationsByKey(key);
+        if (key != null) {
+            List<JsonObject> targetJson = targetAnnotationsProperty.getValue().getAnnotationsByKey(key);
+            List<JsonObject> referenceJson = referenceAnnotationsProperty.getValue().getAnnotationsByKey(key);
 
-        // TODO: button actions must include behaviors against their matchingButtons object
-        // TODO: matchingButtons objects must be populated
-        targetButtonsTask = new CreateButtonsTask(targetJson, targetPane.getLabelList());
-        targetButtonsTask.setOnSucceeded(event -> {
-            targetPane.addButtons(targetButtonsTask.getValue());
-            setupAnnotationButtons();
-        });
-        new Thread(targetButtonsTask).start();
+            // TODO: button actions must include behaviors against their matchingButtons object
+            // TODO: matchingButtons objects must be populated
+            targetButtonsTask = new CreateButtonsTask(targetJson, targetPane.getLabelList());
+            targetButtonsTask.setOnSucceeded(event -> {
+                targetPane.addButtons(targetButtonsTask.getValue());
+                setupAnnotationButtons();
+            });
+            new Thread(targetButtonsTask).start();
 
-        referenceButtonsTask = new CreateButtonsTask(referenceJson, referencePane.getLabelList());
-        referenceButtonsTask.setOnSucceeded(event -> {
-            referencePane.addButtons(referenceButtonsTask.getValue());
-            setupAnnotationButtons();
-        });
-        new Thread(referenceButtonsTask).start();
+            referenceButtonsTask = new CreateButtonsTask(referenceJson, referencePane.getLabelList());
+            referenceButtonsTask.setOnSucceeded(event -> {
+                referencePane.addButtons(referenceButtonsTask.getValue());
+                setupAnnotationButtons();
+            });
+            new Thread(referenceButtonsTask).start();
+        } else {
+            targetPane.addButtons(new ArrayList<>());
+            referencePane.addButtons(new ArrayList<>());
+        }
     }
 
     private int finished = 0;
