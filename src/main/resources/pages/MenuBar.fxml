@@ -6,9 +6,15 @@
 
 <MenuBar xmlns="http://javafx.com/javafx"
          xmlns:fx="http://javafx.com/fxml"
-         fx:id="menuBar">
+         fx:id="menuBar"
+         fx:controller="com.clinacuity.acv.controllers.MenuBarController">
     <Menu text="File">
-        <MenuItem text="DONE" />
-        <MenuItem text="More Items" />
+        <MenuItem text="Main Page" onAction="#reloadMainPage"/>
+        <MenuItem text="Exit" onAction="#exitApplication"/>
+    </Menu>
+    <Menu text="Help">
+        <MenuItem text="How to Use" onAction="#showHowToUse"/>
+        <MenuItem text="Licenses" onAction="#showLicenses"/>
+        <MenuItem text="Our website" onAction="#goToHomepage"/>
     </Menu>
 </MenuBar>

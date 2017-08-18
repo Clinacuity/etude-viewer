@@ -53,7 +53,7 @@ public class LoadScreenController implements Initializable {
             context.referenceDocumentPathProperty.setValue(gsInputTextField.getText());
 
             // load the Acv main view
-            context.mainController.reloadContent("/pages/AcvContent.fxml");
+            context.mainController.reloadContent(AcvContext.COMPARISON_VIEW);
         } else {
             // TODO: deactivate the loading spinner
             logger.debug("loading spinner will deactivate on its own if the content is reloaded");

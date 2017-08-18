@@ -10,6 +10,11 @@ import java.util.Properties;
 import java.util.ResourceBundle;
 
 public class AcvContext {
+    public static final String LOAD_SCREEN = "/pages/LoadScreenView.fxml";
+    public static final String COMPARISON_VIEW = "/pages/AcvContent.fxml";
+    public static final String APP_MAIN_VIEW = "/pages/AppMain.fxml";
+    public static final String MENU_BAR = "/pages/MenuBar.fxml";
+
     private static final Logger logger = LogManager.getLogger();
     private static final String propertiesFileName = "/config_en.properties";
     private static File propertiesFile;
