@@ -28,10 +28,10 @@ public class AppMainController implements Initializable {
         resources = resourceBundle;
         AcvContext.getInstance().setResources(resources);
         try {
-            menuBar = FXMLLoader.load(getClass().getResource("/pages/MenuBar.fxml"), resources);
+            menuBar = FXMLLoader.load(getClass().getResource(AcvContext.MENU_BAR), resources);
             masterGrid.getChildren().addAll(menuBar);
 
-            reloadContent("/pages/LoadScreenView.fxml");
+            reloadContent(AcvContext.LOAD_SCREEN);
         } catch (IOException e) {
             logger.throwing(e);
         }

@@ -20,7 +20,7 @@ public class AppMain extends Application{
     @Override
     public void start(Stage primaryStage) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/pages/AppMain.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(AcvContext.APP_MAIN_VIEW));
             loader.setResources(ResourceBundle.getBundle("config_en", new Locale("en")));
             Parent root = loader.load();
 
