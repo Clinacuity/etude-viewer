@@ -14,28 +14,34 @@ import java.util.ResourceBundle;
 
 public class AppMain extends Application{
     private static final Logger logger = LogManager.getLogger();
-
     private Scene scene;
 
+    private static Application application = null;
+    public static void getWebPage(String page) { application.getHostServices().showDocument(page); }
+
     @Override
-    public void start(Stage primaryStage) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(AcvContext.APP_MAIN_VIEW));
-            loader.setResources(ResourceBundle.getBundle("config_en", new Locale("en")));
-            Parent root = loader.load();
+    synchronized public void start(Stage primaryStage) {
+        if (application == null) {
+            application = this;
 
-            scene = new Scene(root, 1600, 900);
-            scene.getStylesheets().clear();
-            loadProperties();
-            prepareCss();
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource(AcvContext.APP_MAIN_VIEW));
+                loader.setResources(ResourceBundle.getBundle("config_en", new Locale("en")));
+                Parent root = loader.load();
 
-            primaryStage.setTitle("Annotations Comparison Viewer");
-            primaryStage.setScene(scene);
-            primaryStage.setMinWidth(1000.0d);
-            primaryStage.setMinHeight(800.0d);
-            primaryStage.show();
-        } catch (IOException e) {
-            logger.throwing(e);
+                scene = new Scene(root, 1600, 900);
+                scene.getStylesheets().clear();
+                loadProperties();
+                prepareCss();
+
+                primaryStage.setTitle("Annotations Comparison Viewer");
+                primaryStage.setScene(scene);
+                primaryStage.setMinWidth(1000.0d);
+                primaryStage.setMinHeight(800.0d);
+                primaryStage.show();
+            } catch (IOException e) {
+                logger.throwing(e);
+            }
         }
     }
 

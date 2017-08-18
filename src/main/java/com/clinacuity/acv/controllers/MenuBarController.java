@@ -38,7 +38,7 @@ public class MenuBarController implements Initializable {
     }
 
     @FXML private void goToHomepage() {
-        logger.warn("not yet implemented");
+        AppMain.getWebPage("https://www.clinacuity.com");
     }
 
     @FXML private void reloadMainPage() {
