@@ -12,6 +12,11 @@
         <MenuItem text="Main Page" onAction="#reloadMainPage"/>
         <MenuItem text="Exit" onAction="#exitApplication"/>
     </Menu>
+    <Menu text="View">
+        <MenuItem text="ETUDE (Process directories)" onAction="#showEtudeRunner"/>
+        <MenuItem text="Configuration Creator" onAction="#showConfigurationCreator"/>
+        <MenuItem text="Compare Files" onAction="#reloadMainPage"/>
+    </Menu>
     <Menu text="Help">
         <MenuItem text="How to Use" onAction="#showHowToUse"/>
         <MenuItem text="Licenses" onAction="#showLicenses"/>
