@@ -11,6 +11,7 @@ import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -23,6 +24,22 @@ public class MenuBarController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
+    }
+
+    @FXML private void reloadMainPage() {
+        AcvContext.getInstance().mainController.reloadContent("/pages/LoadScreenView.fxml");
+    }
+
+    @FXML private void exitApplication() {
+        ((Stage)menuBar.getScene().getWindow()).close();
+    }
+
+    @FXML private void showEtudeRunner() {
+        AcvContext.getInstance().mainController.reloadContent(AcvContext.ETUDE_RUNNER);
+    }
+
+    @FXML private void showConfigurationCreator() {
+        logger.throwing(new NotImplementedException());
     }
 
     @FXML private void showHowToUse() {
@@ -39,13 +56,5 @@ public class MenuBarController implements Initializable {
 
     @FXML private void goToHomepage() {
         AppMain.getWebPage("https://www.clinacuity.com");
-    }
-
-    @FXML private void reloadMainPage() {
-        AcvContext.getInstance().mainController.reloadContent("/pages/LoadScreenView.fxml");
-    }
-
-    @FXML private void exitApplication() {
-        ((Stage)menuBar.getScene().getWindow()).close();
     }
 }

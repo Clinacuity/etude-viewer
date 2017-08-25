@@ -3,6 +3,7 @@ package com.clinacuity.acv.context;
 import com.clinacuity.acv.controllers.AppMainController;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
+import javafx.stage.Window;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import java.io.*;
@@ -14,6 +15,8 @@ public class AcvContext {
     public static final String COMPARISON_VIEW = "/pages/AcvContent.fxml";
     public static final String APP_MAIN_VIEW = "/pages/AppMain.fxml";
     public static final String MENU_BAR = "/pages/MenuBar.fxml";
+    public static final String ETUDE_RUNNER = "/pages/EtudeRunner.fxml";
+//    public static final String CONFIG_CREATOR = "/pages/";
 
     private static final Logger logger = LogManager.getLogger();
     private static final String propertiesFileName = "/config_en.properties";
@@ -31,6 +34,7 @@ public class AcvContext {
     }
 
     public AppMainController mainController;
+    public Window mainWindow;
     private Properties properties;
 
     // Properties
@@ -73,7 +77,7 @@ public class AcvContext {
         }
     }
 
-    private static void addProperty(Object key, Object value) {
+    private void addProperty(Object key, Object value) {
         instance.properties.put(key, value);
 
         if (propertiesActive) {

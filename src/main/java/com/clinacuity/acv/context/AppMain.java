@@ -39,6 +39,8 @@ public class AppMain extends Application{
                 primaryStage.setMinWidth(1000.0d);
                 primaryStage.setMinHeight(800.0d);
                 primaryStage.show();
+
+                AcvContext.getInstance().mainWindow = scene.getWindow();
             } catch (IOException e) {
                 logger.throwing(e);
             }
