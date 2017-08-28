@@ -302,19 +302,6 @@
             </Label>
         </HBox>
         <HBox spacing="3">
-            <JFXCheckBox text="Delimiter for output streams" styleClass="text-medium-normal"/>
-            <Label styleClass="label-tooltip">
-                <tooltip>
-                    <Tooltip text="Toggle display of exact matches, including their features"/>
-                </tooltip>
-                <graphic>
-                    <ImageView fitWidth="12" preserveRatio="true" pickOnBounds="true">
-                        <Image url="/img/icons8/info_button.png"/>
-                    </ImageView>
-                </graphic>
-            </Label>
-        </HBox>
-        <HBox spacing="3">
             <JFXCheckBox fx:id="byFileCheckbox" text="By-File metrics" styleClass="text-medium-normal"/>
             <Label styleClass="label-tooltip">
                 <tooltip>
@@ -367,46 +354,7 @@
             </Label>
         </HBox>
         <HBox spacing="3">
-            <JFXCheckBox text="Count pattern types" styleClass="text-medium-normal"/>
-            <Label styleClass="label-tooltip">
-                <tooltip>
-                    <Tooltip text="Toggle display of exact matches, including their features"/>
-                </tooltip>
-                <graphic>
-                    <ImageView fitWidth="12" preserveRatio="true" pickOnBounds="true">
-                        <Image url="/img/icons8/info_button.png"/>
-                    </ImageView>
-                </graphic>
-            </Label>
-        </HBox>
-        <HBox spacing="3">
-            <JFXCheckBox text="Align tokens" styleClass="text-medium-normal"/>
-            <Label styleClass="label-tooltip">
-                <tooltip>
-                    <Tooltip text="Toggle display of exact matches, including their features"/>
-                </tooltip>
-                <graphic>
-                    <ImageView fitWidth="12" preserveRatio="true" pickOnBounds="true">
-                        <Image url="/img/icons8/info_button.png"/>
-                    </ImageView>
-                </graphic>
-            </Label>
-        </HBox>
-        <HBox spacing="3">
             <JFXCheckBox fx:id="ignoreWhitespaceCheckbox" text="Ignore whitespace" styleClass="text-medium-normal"/>
-            <Label styleClass="label-tooltip">
-                <tooltip>
-                    <Tooltip text="Toggle display of exact matches, including their features"/>
-                </tooltip>
-                <graphic>
-                    <ImageView fitWidth="12" preserveRatio="true" pickOnBounds="true">
-                        <Image url="/img/icons8/info_button.png"/>
-                    </ImageView>
-                </graphic>
-            </Label>
-        </HBox>
-        <HBox spacing="3">
-            <JFXCheckBox text="Heed whitespace (should be a toggle)" styleClass="text-medium-normal"/>
             <Label styleClass="label-tooltip">
                 <tooltip>
                     <Tooltip text="Toggle display of exact matches, including their features"/>
