@@ -11,10 +11,9 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import com.jfoenix.controls.JFXCheckBox?>
-
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.control.Tooltip?>
-<?import com.jfoenix.controls.JFXComboBox?>
+
 <GridPane xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="com.clinacuity.acv.controllers.EtudeController"
           fx:id="grid">
@@ -250,20 +249,44 @@
 
         <Label text="More Settings" styleClass="text-large-bold, underlined"/>
         <HBox spacing="3">
-            <padding>
-                <Insets top="20"/>
-            </padding>
-            <JFXCheckBox text="Metrics" styleClass="text-medium-normal"/>
-            <Label styleClass="label-tooltip">
-                <tooltip>
-                    <Tooltip text="Toggle display of exact matches, including their features"/>
-                </tooltip>
-                <graphic>
-                    <ImageView fitWidth="12" preserveRatio="true" pickOnBounds="true">
-                        <Image url="/img/icons8/info_button.png"/>
-                    </ImageView>
-                </graphic>
-            </Label>
+            <VBox spacing="10">
+                <padding>
+                    <Insets top="20" bottom="10" left="20"/>
+                </padding>
+                <HBox spacing="3">
+                    <Label text="Metrics to generate:" styleClass="text-medium-normal"/>
+                    <Label styleClass="label-tooltip">
+                        <tooltip>
+                            <Tooltip text="Toggle which metrics will be listed in the output files under each 'metrics' property"/>
+                        </tooltip>
+                        <graphic>
+                            <ImageView fitWidth="12" preserveRatio="true" pickOnBounds="true">
+                                <Image url="/img/icons8/info_button.png"/>
+                            </ImageView>
+                        </graphic>
+                    </Label>
+                </HBox>
+                <HBox id="metricsCheckboxes" spacing="25">
+                    <VBox spacing="5">
+                        <JFXCheckBox fx:id="metricsTP" text="True Positives (TP)" styleClass="text-medium-normal"
+                                     selected="true"/>
+                        <JFXCheckBox fx:id="metricsFP" text="False Positives (FP)" styleClass="text-medium-normal"
+                                     selected="true"/>
+                        <JFXCheckBox fx:id="metricsFN" text="False Negatives (FN)" styleClass="text-medium-normal"
+                                     selected="true"/>
+                        <JFXCheckBox fx:id="metricsF1" text="F1 Measure" styleClass="text-medium-normal"/>
+                    </VBox>
+                    <VBox spacing="5">
+                        <JFXCheckBox fx:id="metricsPrecision" text="Precision" styleClass="text-medium-normal"
+                                     selected="true"/>
+                        <JFXCheckBox fx:id="metricsRecall" text="Recall" styleClass="text-medium-normal"
+                                     selected="true"/>
+                        <JFXCheckBox fx:id="metricsSensitivity" text="Sensitivity" styleClass="text-medium-normal"/>
+                        <JFXCheckBox fx:id="metricsSpecificity" text="Specificity" styleClass="text-medium-normal"/>
+                        <JFXCheckBox fx:id="metricsAccuracy" text="Accuracy" styleClass="text-medium-normal"/>
+                    </VBox>
+                </HBox>
+            </VBox>
         </HBox>
         <HBox spacing="3">
             <JFXCheckBox text="Fuzzy Matching" styleClass="text-medium-normal"/>

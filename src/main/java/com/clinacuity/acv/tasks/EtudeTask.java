@@ -7,6 +7,8 @@ import org.apache.logging.log4j.Logger;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 
 public class EtudeTask extends Task<Void> {
     private static final Logger logger = LogManager.getLogger();
@@ -23,6 +25,15 @@ public class EtudeTask extends Task<Void> {
     private String filePrefix = null;
     private String fileSuffix = null;
     private String fuzzyMatchFlags = null;
+    private boolean metricsTP = false;
+    private boolean metricsFP = false;
+    private boolean metricsFN = false;
+    private boolean metricsPrecision = false;
+    private boolean metricsRecall = false;
+    private boolean metricsSensitivity = false;
+    private boolean metricsSpecificity = false;
+    private boolean metricsAccuracy = false;
+    private boolean metricsF1 = false;
     private boolean byFile = false;
     private boolean byFileAndType = false;
     private boolean byType = false;
@@ -41,6 +52,15 @@ public class EtudeTask extends Task<Void> {
     public void setFilePrefix(String value) { filePrefix = value; }
     public void setFileSuffix(String value) { fileSuffix = value; }
     public void setFuzzyMatchFlags(String value) { fuzzyMatchFlags = value; }
+    public void setMetricsTP(boolean value) { metricsTP = value; }
+    public void setMetricsFP(boolean value) { metricsFP = value; }
+    public void setMetricsFN(boolean value) { metricsFN = value; }
+    public void setMetricsPrecision(boolean value) { metricsPrecision = value; }
+    public void setMetricsRecall(boolean value) { metricsRecall = value; }
+    public void setMetricsSensitivity(boolean value) { metricsSensitivity = value; }
+    public void setMetricsSpecificity(boolean value) { metricsSpecificity = value; }
+    public void setMetricsAccuracy(boolean value) { metricsAccuracy = value; }
+    public void setMetricsF1(boolean value) { metricsF1 = value; }
     public void setByFile(boolean value) { byFile = value; }
     public void setByFileAndType(boolean value) { byFileAndType= value; }
     public void setByType(boolean value) { byType = value; }
@@ -49,23 +69,7 @@ public class EtudeTask extends Task<Void> {
 
     @Override
     public Void call() {
-        logger.error(goldConfigFilePath);
-        logger.error(testConfigFilePath);
-        logger.error(goldInputDirPath);
-        logger.error(testInputDirPath);
-        logger.error(goldOutputDirPath);
-        logger.error(testOutputDirPath);
-        logger.error(corpusFilePath);
-        logger.error(scoreKey);
-        logger.error(scoreValues);
-        logger.error(filePrefix);
-        logger.error(fileSuffix);
-        logger.error(fuzzyMatchFlags);
-        logger.error(byFile);
-        logger.error(byFileAndType);
-        logger.error(byType);
-        logger.error(byTypeAndFile);
-        logger.error(ignoreWhitespace);
+        logger.error(getCommand());
 
         // TODO: this is TBD while we figure out how to run ETUDE correctly
 //        try {
@@ -204,7 +208,25 @@ public class EtudeTask extends Task<Void> {
             command += " --heed-whitespace";
         }
 
+        command += getMetricsValues();
+
         return command;
+    }
+
+    private String getMetricsValues() {
+        List<String> metrics = new ArrayList<>();
+
+        if (metricsTP) { metrics.add("TP"); }
+        if (metricsFP) { metrics.add("FP"); }
+        if (metricsFN) { metrics.add("FN"); }
+        if (metricsPrecision) { metrics.add("Precision"); }
+        if (metricsRecall) { metrics.add("Recall"); }
+        if (metricsSensitivity) { metrics.add("Sensitivity"); }
+        if (metricsSpecificity) { metrics.add("Specificity"); }
+        if (metricsAccuracy) { metrics.add("Accuracy"); }
+        if (metricsF1) { metrics.add("F1"); }
+
+        return String.join(",", metrics);
     }
 
     private void setFailing(Exception exception) {
