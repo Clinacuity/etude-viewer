@@ -26,8 +26,8 @@
         <ColumnConstraints percentWidth="50"/>
     </columnConstraints>
 
-    <Pane GridPane.columnIndex="0" styleClass="card" maxWidth="Infinity" maxHeight="Infinity"/>
-    <Pane GridPane.columnIndex="1" styleClass="card" maxWidth="Infinity" maxHeight="Infinity"/>
+    <Pane GridPane.columnIndex="0" styleClass="card-big" maxWidth="Infinity" maxHeight="Infinity"/>
+    <Pane GridPane.columnIndex="1" styleClass="card-big" maxWidth="Infinity" maxHeight="Infinity"/>
 
     <VBox id="textFields" spacing="10" GridPane.rowIndex="0" GridPane.columnIndex="0">
         <padding>
