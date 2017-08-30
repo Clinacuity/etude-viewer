@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+
+<?import javafx.scene.layout.VBox?>
+<fx:root type="javafx.scene.layout.Pane"
+         xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1">
+    <VBox fx:id="mainBox" maxWidth="Infinity">
+        <StackPane>
+            <Pane styleClass="card-small"/>
+            <Label text="Here is a card.  This will be replaced with the appropriate elements" styleClass="text-medium-normal">
+                <padding>
+                    <Insets topRightBottomLeft="10"/>
+                </padding>
+            </Label>
+        </StackPane>
+    </VBox>
+</fx:root>
