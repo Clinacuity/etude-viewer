@@ -4,7 +4,6 @@ import com.clinacuity.acv.context.AcvContext;
 import com.clinacuity.acv.controls.ConfigurationBlock;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import org.apache.commons.io.FileUtils;
@@ -13,13 +12,15 @@ import org.apache.logging.log4j.Logger;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class ConfigurationBuilderController implements Initializable {
     private static Logger logger = LogManager.getLogger();
 
     @FXML private VBox itemBox;
-    @FXML private ScrollPane scrollPane;
+    private List<ConfigurationBlock> blocks = new ArrayList<>();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -30,8 +31,10 @@ public class ConfigurationBuilderController implements Initializable {
     @FXML
     private void addConfigurationBlock() {
         int size = itemBox.getChildren().size();
-        int targetIndex = size == 1 ? 0 : size - 2;
-        itemBox.getChildren().add(targetIndex, new ConfigurationBlock(scrollPane.getMinWidth()));
+        int targetIndex = size == 1 ? 0 : size - 1;
+        ConfigurationBlock block = new ConfigurationBlock(itemBox);
+        itemBox.getChildren().add(targetIndex, block);
+        blocks.add(block);
     }
 
     @FXML
@@ -40,11 +43,15 @@ public class ConfigurationBuilderController implements Initializable {
         fileChooser.setTitle("Save the configuration file");
         File file = fileChooser.showSaveDialog(AcvContext.getInstance().mainWindow);
 
-        if (file != null) {
-            saveFile(file);
-        } else {
-            logger.warn("User cancelled file selection!");
-        }
+//        if (file != null) {
+//            saveFile(file);
+//        } else {
+//            logger.warn("User cancelled file selection!");
+//        }
+
+        blocks.forEach(block -> {
+            logger.error("\n\n{}\n\n", block.getText());
+        });
     }
 
     private void saveFile(File file) {

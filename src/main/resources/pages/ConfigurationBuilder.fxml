@@ -22,13 +22,13 @@
                 <Insets left="20"/>
             </VBox.margin>
         </Label>
-        <ScrollPane fx:id="scrollPane" styleClass="card-big" VBox.vgrow="ALWAYS" maxHeight="Infinity" minWidth="600">
+        <ScrollPane styleClass="card-big" VBox.vgrow="ALWAYS" maxHeight="Infinity" minWidth="600" vbarPolicy="ALWAYS">
             <padding>
                 <Insets topRightBottomLeft="10"/>
             </padding>
             <VBox fx:id="itemBox" spacing="20">
                 <VBox alignment="CENTER_RIGHT" minWidth="600">
-                    <JFXButton onAction="#addConfigurationBlock"
+                    <JFXButton onAction="#addConfigurationBlock" text="ADD SECTION"
                                styleClass="button-raised, button-gray, no-focus" buttonType="RAISED">
                         <graphic>
                             <ImageView fitHeight="24" preserveRatio="true" pickOnBounds="true">
@@ -41,7 +41,7 @@
                             <Insets top="20" bottom="20" right="-20"/>
                         </padding>
                     </Separator>
-                    <JFXButton text="Save Configuration" onAction="#saveConfigurationDialog"
+                    <JFXButton text="SAVE CONFIGURATION" onAction="#saveConfigurationDialog"
                                styleClass="button-raised, button-gray, no-focus" buttonType="RAISED"/>
                     <padding>
                         <Insets right="20" bottom="20"/>

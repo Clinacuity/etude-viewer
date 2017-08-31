@@ -117,6 +117,14 @@
     -fx-background-color: DarkGray;
 }
 
+.button-red {
+    -fx-background-color: rgba(255, 0, 0 , 0);
+}
+
+.button-red:hover {
+    -fx-background-color: rgba(255, 0, 0 , 0.3);
+}
+
 .button-annotation {
     -fx-opacity: 0.25;
 }
