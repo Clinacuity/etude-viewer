@@ -11,7 +11,6 @@ import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -39,7 +38,7 @@ public class MenuBarController implements Initializable {
     }
 
     @FXML private void showConfigurationCreator() {
-        logger.throwing(new NotImplementedException());
+        AcvContext.getInstance().mainController.reloadContent(AcvContext.CONFIGURATION_BUILDER);
     }
 
     @FXML private void showHowToUse() {

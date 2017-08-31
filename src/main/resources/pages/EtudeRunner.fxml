@@ -22,12 +22,13 @@
     </GridPane.margin>
 
     <columnConstraints>
-        <ColumnConstraints percentWidth="50"/>
-        <ColumnConstraints percentWidth="50"/>
+        <ColumnConstraints percentWidth="49.75"/>
+        <ColumnConstraints percentWidth="0.5"/>
+        <ColumnConstraints percentWidth="48.75"/>
     </columnConstraints>
 
-    <Pane GridPane.columnIndex="0" styleClass="card" maxWidth="Infinity" maxHeight="Infinity"/>
-    <Pane GridPane.columnIndex="1" styleClass="card" maxWidth="Infinity" maxHeight="Infinity"/>
+    <Pane GridPane.columnIndex="0" styleClass="card-big" maxWidth="Infinity" maxHeight="Infinity"/>
+    <Pane GridPane.columnIndex="2" styleClass="card-big" maxWidth="Infinity" maxHeight="Infinity"/>
 
     <VBox id="textFields" spacing="10" GridPane.rowIndex="0" GridPane.columnIndex="0">
         <padding>
@@ -242,7 +243,7 @@
             </Label>
         </HBox>
     </VBox>
-    <VBox id="checkboxes" spacing="10" GridPane.rowIndex="0" GridPane.columnIndex="1">
+    <VBox id="checkboxes" spacing="10" GridPane.rowIndex="0" GridPane.columnIndex="2">
         <padding>
             <Insets topRightBottomLeft="25"/>
         </padding>
@@ -367,7 +368,7 @@
             </Label>
         </HBox>
     </VBox>
-    <VBox maxWidth="Infinity" GridPane.rowIndex="1" GridPane.columnIndex="1" alignment="CENTER_RIGHT">
+    <VBox maxWidth="Infinity" GridPane.rowIndex="1" GridPane.columnIndex="2" alignment="CENTER_RIGHT">
         <padding>
             <Insets top="15" bottom="15" right="40" left="40"/>
         </padding>
