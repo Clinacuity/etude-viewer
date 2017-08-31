@@ -45,7 +45,7 @@ public class ConfigurationBlock extends StackPane {
             parent.getChildren().remove(this);
         }
     }
-    
+
     @FXML private void addAttributeRow() {
         HBox row = new HBox();
         row.setSpacing(25.0d);
@@ -57,6 +57,10 @@ public class ConfigurationBlock extends StackPane {
         JFXTextField valueTextField = new JFXTextField();
         valueTextField.promptTextProperty().setValue("Value");
         valueTextField.getStyleClass().add("text-medium-normal");
+
+        VBox buttonBox = new VBox();
+        buttonBox.setAlignment(Pos.CENTER);
+        buttonBox.setMaxHeight(Double.MAX_VALUE);
 
         JFXButton button = new JFXButton();
         ImageView image = new ImageView(new Image("/img/icons8/delete.png"));
@@ -71,8 +75,9 @@ public class ConfigurationBlock extends StackPane {
         button.setMinHeight(16.0d);
         button.setGraphic(image);
         button.setOnAction(event -> mainBox.getChildren().remove(row));
-        
-        row.getChildren().addAll(attributeTextField, valueTextField, button);
+        buttonBox.getChildren().add(button);
+
+        row.getChildren().addAll(attributeTextField, valueTextField, buttonBox);
         attributeTextFieldsList.add(attributeTextField);
         valueTextFieldsList.add(valueTextField);
 

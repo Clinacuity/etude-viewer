@@ -19,22 +19,32 @@ import java.util.ResourceBundle;
 public class ConfigurationBuilderController implements Initializable {
     private static Logger logger = LogManager.getLogger();
 
-    @FXML private VBox itemBox;
-    private List<ConfigurationBlock> blocks = new ArrayList<>();
+    @FXML private VBox testItemBox;
+    @FXML private VBox referenceItemBox;
+    private List<ConfigurationBlock> testBlocks = new ArrayList<>();
+    private List<ConfigurationBlock> referenceBlocks = new ArrayList<>();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         logger.debug("Configuration Builder Controller initialized");
         addConfigurationBlock();
+        addReferenceConfigurationBlock();
     }
 
     @FXML
     private void addConfigurationBlock() {
-        int size = itemBox.getChildren().size();
-        int targetIndex = size == 1 ? 0 : size - 1;
-        ConfigurationBlock block = new ConfigurationBlock(itemBox);
-        itemBox.getChildren().add(targetIndex, block);
-        blocks.add(block);
+        int index = testItemBox.getChildren().size() - 1;
+        ConfigurationBlock block = new ConfigurationBlock(testItemBox);
+        testItemBox.getChildren().add(index, block);
+        testBlocks.add(block);
+    }
+
+    @FXML
+    private void addReferenceConfigurationBlock() {
+        int index = referenceItemBox.getChildren().size() - 1;
+        ConfigurationBlock block = new ConfigurationBlock(referenceItemBox);
+        referenceItemBox.getChildren().add(index, block);
+        referenceBlocks.add(block);
     }
 
     @FXML
@@ -43,25 +53,34 @@ public class ConfigurationBuilderController implements Initializable {
         fileChooser.setTitle("Save the configuration file");
         File file = fileChooser.showSaveDialog(AcvContext.getInstance().mainWindow);
 
-        if (file != null) {
-            saveFile(file);
-        } else {
-            logger.warn("User cancelled file selection!");
-        }
+        saveFile(file, testBlocks);
     }
 
-    private void saveFile(File file) {
-        if (!file.getAbsolutePath().endsWith(".config")) {
-            file = new File(file.getAbsolutePath() + ".config");
-        }
+    @FXML private void saveConfigurationDialogReference() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Save reference configuration");
+        File file = fileChooser.showSaveDialog(AcvContext.getInstance().mainWindow);
 
-        StringBuilder text = new StringBuilder();
-        blocks.forEach(block -> text.append(block.getText()));
+        saveFile(file, referenceBlocks);
+    }
 
-        try {
-            FileUtils.writeStringToFile(file, text.toString());
-        } catch (IOException e) {
-            logger.throwing(e);
+    private void saveFile(File file, List<ConfigurationBlock> targetBlocks) {
+        if (file != null) {
+
+            if (!file.getAbsolutePath().endsWith(".config")) {
+                file = new File(file.getAbsolutePath() + ".config");
+            }
+
+            StringBuilder text = new StringBuilder();
+            targetBlocks.forEach(block -> text.append(block.getText()));
+
+            try {
+                FileUtils.writeStringToFile(file, text.toString());
+            } catch (IOException e) {
+                logger.throwing(e);
+            }
+        } else {
+            logger.warn("User cancelled file selection!");
         }
     }
 }
