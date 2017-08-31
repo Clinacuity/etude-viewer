@@ -89,6 +89,8 @@ public class ConfigurationBlock extends StackPane {
                 text.append(String.format("%s: %s\n",
                         attributeTextFieldsList.get(i).getText(), valueTextFieldsList.get(i).getText()));
             }
+
+            text.append("\n");
             return text.toString();
         } else {
             return null;

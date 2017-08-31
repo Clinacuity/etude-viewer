@@ -43,15 +43,11 @@ public class ConfigurationBuilderController implements Initializable {
         fileChooser.setTitle("Save the configuration file");
         File file = fileChooser.showSaveDialog(AcvContext.getInstance().mainWindow);
 
-//        if (file != null) {
-//            saveFile(file);
-//        } else {
-//            logger.warn("User cancelled file selection!");
-//        }
-
-        blocks.forEach(block -> {
-            logger.error("\n\n{}\n\n", block.getText());
-        });
+        if (file != null) {
+            saveFile(file);
+        } else {
+            logger.warn("User cancelled file selection!");
+        }
     }
 
     private void saveFile(File file) {
@@ -59,10 +55,11 @@ public class ConfigurationBuilderController implements Initializable {
             file = new File(file.getAbsolutePath() + ".config");
         }
 
-        logger.error(file);
+        StringBuilder text = new StringBuilder();
+        blocks.forEach(block -> text.append(block.getText()));
 
         try {
-            FileUtils.writeStringToFile(file, "Hello World");
+            FileUtils.writeStringToFile(file, text.toString());
         } catch (IOException e) {
             logger.throwing(e);
         }
