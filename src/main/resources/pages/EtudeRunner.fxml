@@ -269,22 +269,91 @@
                 </HBox>
                 <HBox id="metricsCheckboxes" spacing="25">
                     <VBox spacing="5">
-                        <JFXCheckBox fx:id="metricsTP" text="True Positives (TP)" styleClass="text-medium-normal"
-                                     selected="true"/>
-                        <JFXCheckBox fx:id="metricsFP" text="False Positives (FP)" styleClass="text-medium-normal"
-                                     selected="true"/>
-                        <JFXCheckBox fx:id="metricsFN" text="False Negatives (FN)" styleClass="text-medium-normal"
-                                     selected="true"/>
-                        <JFXCheckBox fx:id="metricsF1" text="F1 Measure" styleClass="text-medium-normal"/>
+                        <HBox spacing="3">
+                            <JFXCheckBox fx:id="metricsTP" text="True Positives (TP)" styleClass="text-medium-normal"
+                                         selected="true"/>
+                            <Label styleClass="label-tooltip">
+                                <tooltip>
+                                    <Tooltip text="True positives are annotations in the reference files which correctly found in the test files"/>
+                                </tooltip>
+                                <graphic>
+                                    <ImageView fitWidth="12" preserveRatio="true" pickOnBounds="true">
+                                        <Image url="/img/icons8/info_button.png"/>
+                                    </ImageView>
+                                </graphic>
+                            </Label>
+                        </HBox>
+                        <HBox spacing="3">
+                            <JFXCheckBox fx:id="metricsFP" text="False Positives (FP)" styleClass="text-medium-normal"
+                                         selected="true"/>
+                            <Label styleClass="label-tooltip">
+                                <tooltip>
+                                    <Tooltip text="False Positives are annotations incorrectly found in the test files due not being present in the reference files"/>
+                                </tooltip>
+                                <graphic>
+                                    <ImageView fitWidth="12" preserveRatio="true" pickOnBounds="true">
+                                        <Image url="/img/icons8/info_button.png"/>
+                                    </ImageView>
+                                </graphic>
+                            </Label>
+                        </HBox>
+                        <HBox spacing="3">
+                            <JFXCheckBox fx:id="metricsFN" text="False Negatives (FN)" styleClass="text-medium-normal"
+                                         selected="true"/>
+                            <Label styleClass="label-tooltip">
+                                <tooltip>
+                                    <Tooltip text="False Negatives are annotations in the reference files which were not found in the test files"/>
+                                </tooltip>
+                                <graphic>
+                                    <ImageView fitWidth="12" preserveRatio="true" pickOnBounds="true">
+                                        <Image url="/img/icons8/info_button.png"/>
+                                    </ImageView>
+                                </graphic>
+                            </Label>
+                        </HBox>
                     </VBox>
                     <VBox spacing="5">
-                        <JFXCheckBox fx:id="metricsPrecision" text="Precision" styleClass="text-medium-normal"
-                                     selected="true"/>
-                        <JFXCheckBox fx:id="metricsRecall" text="Recall" styleClass="text-medium-normal"
-                                     selected="true"/>
-                        <JFXCheckBox fx:id="metricsSensitivity" text="Sensitivity" styleClass="text-medium-normal"/>
-                        <JFXCheckBox fx:id="metricsSpecificity" text="Specificity" styleClass="text-medium-normal"/>
-                        <JFXCheckBox fx:id="metricsAccuracy" text="Accuracy" styleClass="text-medium-normal"/>
+                        <HBox spacing="3">
+                            <JFXCheckBox fx:id="metricsPrecision" text="Precision" styleClass="text-medium-normal"
+                                         selected="true"/>
+                            <Label styleClass="label-tooltip">
+                                <tooltip>
+                                    <Tooltip text="Precision is a measure of relevant instances among the instances found.&#10;It is calculated as follows: TP / (TP + FP)"/>
+                                </tooltip>
+                                <graphic>
+                                    <ImageView fitWidth="12" preserveRatio="true" pickOnBounds="true">
+                                        <Image url="/img/icons8/info_button.png"/>
+                                    </ImageView>
+                                </graphic>
+                            </Label>
+                        </HBox>
+                        <HBox spacing="3">
+                            <JFXCheckBox fx:id="metricsRecall" text="Recall" styleClass="text-medium-normal"
+                                         selected="true"/>
+                            <Label styleClass="label-tooltip">
+                                <tooltip>
+                                    <Tooltip text="Recall is a measure of relevant instances retrieved from the total of relevant instances.&#10;It is calculated as follows: TP / (TP + FN)"/>
+                                </tooltip>
+                                <graphic>
+                                    <ImageView fitWidth="12" preserveRatio="true" pickOnBounds="true">
+                                        <Image url="/img/icons8/info_button.png"/>
+                                    </ImageView>
+                                </graphic>
+                            </Label>
+                        </HBox>
+                        <HBox spacing="3">
+                            <JFXCheckBox fx:id="metricsF1" text="F1 Measure" styleClass="text-medium-normal"/>
+                            <Label styleClass="label-tooltip">
+                                <tooltip>
+                                    <Tooltip text="The F-measure is the harmonic mean of precision and recall.&#10;It is calculated as follows: (2 * precision * recall) / (precision + recall)"/>
+                                </tooltip>
+                                <graphic>
+                                    <ImageView fitWidth="12" preserveRatio="true" pickOnBounds="true">
+                                        <Image url="/img/icons8/info_button.png"/>
+                                    </ImageView>
+                                </graphic>
+                            </Label>
+                        </HBox>
                     </VBox>
                 </HBox>
             </VBox>
