@@ -30,9 +30,6 @@ public class EtudeTask extends Task<Void> {
     private boolean metricsFN = false;
     private boolean metricsPrecision = false;
     private boolean metricsRecall = false;
-    private boolean metricsSensitivity = false;
-    private boolean metricsSpecificity = false;
-    private boolean metricsAccuracy = false;
     private boolean metricsF1 = false;
     private boolean byFile = false;
     private boolean byFileAndType = false;
@@ -57,9 +54,6 @@ public class EtudeTask extends Task<Void> {
     public void setMetricsFN(boolean value) { metricsFN = value; }
     public void setMetricsPrecision(boolean value) { metricsPrecision = value; }
     public void setMetricsRecall(boolean value) { metricsRecall = value; }
-    public void setMetricsSensitivity(boolean value) { metricsSensitivity = value; }
-    public void setMetricsSpecificity(boolean value) { metricsSpecificity = value; }
-    public void setMetricsAccuracy(boolean value) { metricsAccuracy = value; }
     public void setMetricsF1(boolean value) { metricsF1 = value; }
     public void setByFile(boolean value) { byFile = value; }
     public void setByFileAndType(boolean value) { byFileAndType= value; }
@@ -221,9 +215,6 @@ public class EtudeTask extends Task<Void> {
         if (metricsFN) { metrics.add("FN"); }
         if (metricsPrecision) { metrics.add("Precision"); }
         if (metricsRecall) { metrics.add("Recall"); }
-        if (metricsSensitivity) { metrics.add("Sensitivity"); }
-        if (metricsSpecificity) { metrics.add("Specificity"); }
-        if (metricsAccuracy) { metrics.add("Accuracy"); }
         if (metricsF1) { metrics.add("F1"); }
 
         return String.join(",", metrics);

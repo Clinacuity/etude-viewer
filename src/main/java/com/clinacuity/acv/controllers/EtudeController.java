@@ -43,9 +43,6 @@ public class EtudeController implements Initializable{
     @FXML private JFXCheckBox metricsFN;
     @FXML private JFXCheckBox metricsPrecision;
     @FXML private JFXCheckBox metricsRecall;
-    @FXML private JFXCheckBox metricsSensitivity;
-    @FXML private JFXCheckBox metricsSpecificity;
-    @FXML private JFXCheckBox metricsAccuracy;
     @FXML private JFXCheckBox metricsF1;
 
     @FXML private JFXCheckBox byFileCheckbox;
@@ -91,28 +88,25 @@ public class EtudeController implements Initializable{
         }
     }
 
-    private void runEtude() {
-        etudeTask.setGoldConfigFilePath(goldConfigInputField.getText());
-        etudeTask.setTestConfigFilePath(testConfigInputField.getText());
-        etudeTask.setGoldInputDirPath(goldInputTextField.getText());
-        etudeTask.setTestInputDirPath(testInputTextField.getText());
+    private void runEtude() {etudeTask.setGoldConfigFilePath(goldConfigInputField.getText());
+            etudeTask.setTestConfigFilePath(testConfigInputField.getText());
+            etudeTask.setGoldInputDirPath(goldInputTextField.getText());
+            etudeTask.setTestInputDirPath(testInputTextField.getText());
 //            etudeTask.setGoldOutputDirPath(goldOutputTextField.getText());
 //            etudeTask.setTestOutputDirPath(testOutputTextField.getText());
 //            etudeTask.setCorpusFilePath(corpusOutputTextField.getText());
-        etudeTask.setMetricsTP(metricsTP.isSelected());
-        etudeTask.setMetricsFP(metricsFP.isSelected());
-        etudeTask.setMetricsFN(metricsFN.isSelected());
-        etudeTask.setMetricsPrecision(metricsPrecision.isSelected());
-        etudeTask.setMetricsRecall(metricsRecall.isSelected());
-        etudeTask.setMetricsSensitivity(metricsSensitivity.isSelected());
-        etudeTask.setMetricsSpecificity(metricsSpecificity.isSelected());
-        etudeTask.setMetricsAccuracy(metricsAccuracy.isSelected());
-        etudeTask.setMetricsF1(metricsF1.isSelected());
-        etudeTask.setByFile(byFileCheckbox.isSelected());
-        etudeTask.setByFileAndType(byFileAndTypeCheckbox.isSelected());
-        etudeTask.setByType(byTypeCheckbox.isSelected());
-        etudeTask.setByTypeAndFile(byTypeAndFileCheckbox.isSelected());
-        etudeTask.setIgnoreWhitespace(ignoreWhitespaceCheckbox.isSelected());
+            etudeTask.setMetricsTP(metricsTP.isSelected());
+            etudeTask.setMetricsFP(metricsFP.isSelected());
+            etudeTask.setMetricsFN(metricsFN.isSelected());
+            etudeTask.setMetricsPrecision(metricsPrecision.isSelected());
+            etudeTask.setMetricsRecall(metricsRecall.isSelected());
+
+            etudeTask.setMetricsF1(metricsF1.isSelected());
+            etudeTask.setByFile(byFileCheckbox.isSelected());
+            etudeTask.setByFileAndType(byFileAndTypeCheckbox.isSelected());
+            etudeTask.setByType(byTypeCheckbox.isSelected());
+            etudeTask.setByTypeAndFile(byTypeAndFileCheckbox.isSelected());
+            etudeTask.setIgnoreWhitespace(ignoreWhitespaceCheckbox.isSelected());
 
         if (!scoreKeyTextField.getText().equals("") && scoreKeyTextField.getText() != null) {
             etudeTask.setScoreKey(scoreKeyTextField.getText());
