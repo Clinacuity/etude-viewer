@@ -117,6 +117,14 @@
     -fx-background-color: DarkGray;
 }
 
+.button-blue {
+    -fx-background-color: rgba(50, 105, 255, 1);
+}
+
+.button-blue:hover {
+    -fx-background-color: rgba(0, 0, 255, 1);
+}
+
 .button-red {
     -fx-background-color: rgba(255, 0, 0 , 0);
 }
@@ -170,6 +178,11 @@
 .header-one {
     -fx-font-family: "Open Sans Bold Italic";
     -fx-font-size: 36;
+}
+
+.header-two {
+    -fx-font-family: "Open Sans Bold Italic";
+    -fx-font-size: 18;
 }
 
 .label-annotation-category {

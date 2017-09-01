@@ -2,7 +2,8 @@ package com.clinacuity.acv.controllers;
 
 import com.clinacuity.acv.context.AcvContext;
 import com.clinacuity.acv.context.AppMain;
-import com.clinacuity.acv.controls.Modal;
+import com.clinacuity.acv.modals.ConfirmationModal;
+import com.clinacuity.acv.modals.Modal;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -44,13 +45,17 @@ public class MenuBarController implements Initializable {
     @FXML private void showHowToUse() {
         HBox box = new HBox();
         box.getChildren().addAll(new Label("How to Use PDF will go here."));
-        new Modal(menuBar.getScene().getWindow(), box);
+
+        // TODO: use a static modal class
+        (new Modal(menuBar.getScene().getWindow(), box)).show();
     }
 
     @FXML private void showLicenses() {
         HBox box = new HBox();
         box.getChildren().addAll(new Label("License information will go here."));
-        new Modal(menuBar.getScene().getWindow(), box);
+
+        // TODO: use a static modal class
+        (new Modal(menuBar.getScene().getWindow(), box)).show();
     }
 
     @FXML private void goToHomepage() {
