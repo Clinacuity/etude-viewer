@@ -2,13 +2,11 @@ package com.clinacuity.acv.controllers;
 
 import com.clinacuity.acv.context.AcvContext;
 import com.clinacuity.acv.tasks.EtudeTask;
-import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXTextField;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
@@ -25,7 +23,6 @@ public class EtudeController implements Initializable{
     private static EtudeTask etudeTask = null;
     private static final String ERROR_ID = "errLabel";
 
-    @FXML private GridPane grid;
     @FXML private JFXTextField goldConfigInputField;
     @FXML private JFXTextField testConfigInputField;
     @FXML private JFXTextField goldInputTextField;
@@ -42,9 +39,6 @@ public class EtudeController implements Initializable{
     @FXML private JFXCheckBox metricsFN;
     @FXML private JFXCheckBox metricsPrecision;
     @FXML private JFXCheckBox metricsRecall;
-    @FXML private JFXCheckBox metricsSensitivity;
-    @FXML private JFXCheckBox metricsSpecificity;
-    @FXML private JFXCheckBox metricsAccuracy;
     @FXML private JFXCheckBox metricsF1;
 
     @FXML private JFXCheckBox byFileCheckbox;
@@ -98,9 +92,6 @@ public class EtudeController implements Initializable{
             etudeTask.setMetricsFN(metricsFN.isSelected());
             etudeTask.setMetricsPrecision(metricsPrecision.isSelected());
             etudeTask.setMetricsRecall(metricsRecall.isSelected());
-            etudeTask.setMetricsSensitivity(metricsSensitivity.isSelected());
-            etudeTask.setMetricsSpecificity(metricsSpecificity.isSelected());
-            etudeTask.setMetricsAccuracy(metricsAccuracy.isSelected());
             etudeTask.setMetricsF1(metricsF1.isSelected());
             etudeTask.setByFile(byFileCheckbox.isSelected());
             etudeTask.setByFileAndType(byFileAndTypeCheckbox.isSelected());
