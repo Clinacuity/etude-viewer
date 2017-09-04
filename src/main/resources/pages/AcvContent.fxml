@@ -14,7 +14,7 @@
     <columnConstraints>
         <ColumnConstraints percentWidth="35"/>
         <ColumnConstraints percentWidth="35"/>
-        <ColumnConstraints />
+        <ColumnConstraints/>
         <ColumnConstraints percentWidth="29"/>
     </columnConstraints>
 
