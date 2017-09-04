@@ -33,10 +33,9 @@ public class SideBarController implements Initializable {
     @FXML
     private void changeColor(ActionEvent event) {
         JFXButton btn = (JFXButton) event.getSource();
-        System.out.println(btn.getText());
 
         switch(btn.getText()) {
-        case "b1":
+        case "File 1":
             btn.setStyle("-fx-background-color:#00FF00");
             break;
         }
