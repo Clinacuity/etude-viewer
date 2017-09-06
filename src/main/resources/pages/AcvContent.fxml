@@ -12,10 +12,10 @@
 <?import com.jfoenix.controls.JFXDrawer?>
 <?import com.jfoenix.controls.JFXHamburger?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.HBox?>
 <GridPane xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="com.clinacuity.acv.controllers.AcvContentController">
     <StackPane GridPane.columnIndex="1" GridPane.rowIndex="1">
-
         <GridPane>
             <columnConstraints>
                 <ColumnConstraints percentWidth="35"/>
@@ -25,19 +25,27 @@
             </columnConstraints>
 
             <rowConstraints>
-                <RowConstraints minHeight="30" maxHeight="30"/>
-                <RowConstraints />
+                <RowConstraints/>
+                <RowConstraints/>
                 <RowConstraints/>
                 <RowConstraints minHeight="15" maxHeight="15"/>
             </rowConstraints>
+
+            <HBox spacing="25" GridPane.columnSpan="4" GridPane.rowIndex="0">
+                <JFXHamburger fx:id="hamburger" maxHeight="Infinity"
+                              onMouseClicked="#collapsePanel" alignment="CENTER_LEFT"/>
+                <Label text="Comparison View" styleClass="header-one, underlined"/>
+                <padding>
+                    <Insets top="5" bottom="10" left="10"/>
+                </padding>
+            </HBox>
 
             <Label text="System Output:" GridPane.columnIndex="0" GridPane.rowIndex="1" styleClass="text-medium-bold">
                 <padding>
                     <Insets left="25"/>
                 </padding>
             </Label>
-            <AnnotatedDocumentPane fx:id="targetPane" id="target"
-                                   GridPane.columnIndex="0" GridPane.rowIndex="2">
+            <AnnotatedDocumentPane fx:id="targetPane" id="target" GridPane.columnIndex="0" GridPane.rowIndex="2">
                 <padding>
                     <Insets left="5" right="5"/>
                 </padding>
@@ -50,8 +58,7 @@
                 </padding>
             </Label>
 
-            <AnnotatedDocumentPane fx:id="referencePane" id="target"
-                                   GridPane.columnIndex="1" GridPane.rowIndex="2">
+            <AnnotatedDocumentPane fx:id="referencePane" id="target" GridPane.columnIndex="1" GridPane.rowIndex="2">
                 <padding>
                     <Insets right="5"/>
                 </padding>
@@ -64,8 +71,6 @@
                 </padding>
             </ViewControls>
         </GridPane>
-        <JFXDrawer fx:id="drawer" defaultDrawerSize="250.0" layoutY="-6.0" prefHeight="388.0" prefWidth="225.0" mouseTransparent="false"/>
+        <JFXDrawer fx:id="drawer" defaultDrawerSize="250.0" prefHeight="388.0" prefWidth="225.0" resizableOnDrag="true" mouseTransparent="true"/>
     </StackPane>
-    <JFXHamburger fx:id="hamburger" onMouseClicked="#collapsePanel" prefHeight="156.0" prefWidth="225.0" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
-
 </GridPane>
