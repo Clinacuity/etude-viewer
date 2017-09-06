@@ -9,16 +9,24 @@ import com.clinacuity.acv.tasks.CreateButtonsTask;
 import com.clinacuity.acv.tasks.CreateLabelsFromDocumentTask;
 import com.clinacuity.acv.controls.AnnotationButton.MatchType;
 import com.google.gson.JsonObject;
+import com.jfoenix.controls.JFXDrawer;
+import com.jfoenix.controls.JFXHamburger;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.layout.VBox;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.reactfx.util.FxTimer;
+
+import java.awt.event.ActionEvent;
 import java.net.URL;
 import java.time.Duration;
 import java.util.ArrayList;
@@ -32,6 +40,9 @@ public class AcvContentController implements Initializable {
     @FXML private AnnotatedDocumentPane referencePane;
     @FXML private AnnotatedDocumentPane targetPane;
     @FXML private ViewControls viewControls;
+    @FXML private JFXDrawer drawer;
+    @FXML private JFXHamburger hamburger;
+    @FXML private VBox sideBar;
     private ObjectProperty<Annotations> targetAnnotationsProperty = new SimpleObjectProperty<>();
     private ObjectProperty<Annotations> referenceAnnotationsProperty = new SimpleObjectProperty<>();
     private ObjectProperty<AnnotationButton> selectedAnnotationButton = new SimpleObjectProperty<>();
@@ -43,6 +54,24 @@ public class AcvContentController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         context = AcvContext.getInstance();
+        try {
+            VBox box = FXMLLoader.load(getClass().getResource(AcvContext.SIDE_BAR), resources);
+            drawer.setSidePane(box);
+            drawer.setOverLayVisible(true);
+            drawer.setMouseTransparent(true);
+            drawer.setOnDrawerClosed(new EventHandler<Event>() {
+                public void handle(Event event) {
+                    drawer.setMouseTransparent(true);
+                }
+            });
+            drawer.setOnDrawerOpened(new EventHandler<Event>() {
+                public void handle(Event event) {
+                    drawer.setMouseTransparent(false);
+                }
+            });
+        } catch (Exception e) {
+
+        }
 
         FxTimer.runLater(Duration.ofMillis(500), this::init);
     }
@@ -365,4 +394,12 @@ public class AcvContentController implements Initializable {
             }
         }
     });
+
+    public void collapsePanel() {
+        if (drawer.isShown()) {
+            drawer.close();
+        } else {
+            drawer.open();
+        }
+    }
 }

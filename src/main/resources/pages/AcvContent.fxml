@@ -9,49 +9,63 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.geometry.Insets?>
 
+<?import com.jfoenix.controls.JFXDrawer?>
+<?import com.jfoenix.controls.JFXHamburger?>
+<?import javafx.scene.layout.StackPane?>
 <GridPane xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="com.clinacuity.acv.controllers.AcvContentController">
-    <columnConstraints>
-        <ColumnConstraints percentWidth="35"/>
-        <ColumnConstraints percentWidth="35"/>
-        <ColumnConstraints/>
-        <ColumnConstraints percentWidth="29"/>
-    </columnConstraints>
+    <StackPane GridPane.columnIndex="1" GridPane.rowIndex="1">
 
-    <rowConstraints>
-        <RowConstraints minHeight="30" maxHeight="30"/>
-        <RowConstraints />
-        <RowConstraints minHeight="15" maxHeight="15"/>
-    </rowConstraints>
+        <GridPane>
+            <columnConstraints>
+                <ColumnConstraints percentWidth="35"/>
+                <ColumnConstraints percentWidth="35"/>
+                <ColumnConstraints/>
+                <ColumnConstraints percentWidth="29"/>
+            </columnConstraints>
 
-    <Label text="System Output:" GridPane.columnIndex="0" GridPane.rowIndex="0" styleClass="text-medium-bold">
-        <padding>
-            <Insets left="25"/>
-        </padding>
-    </Label>
-    <AnnotatedDocumentPane fx:id="targetPane" id="target"
-                           GridPane.columnIndex="0" GridPane.rowIndex="1">
-        <padding>
-            <Insets left="5" right="5"/>
-        </padding>
-    </AnnotatedDocumentPane>
-    <Label text="Reference:" GridPane.columnIndex="1" GridPane.rowIndex="0" styleClass="text-medium-bold">
-        <padding>
-            <Insets left="25"/>
-        </padding>
-    </Label>
+            <rowConstraints>
+                <RowConstraints minHeight="30" maxHeight="30"/>
+                <RowConstraints />
+                <RowConstraints/>
+                <RowConstraints minHeight="15" maxHeight="15"/>
+            </rowConstraints>
 
-    <AnnotatedDocumentPane fx:id="referencePane" id="target"
-                           GridPane.columnIndex="1" GridPane.rowIndex="1">
-        <padding>
-            <Insets right="5"/>
-        </padding>
-    </AnnotatedDocumentPane>
+            <Label text="System Output:" GridPane.columnIndex="0" GridPane.rowIndex="1" styleClass="text-medium-bold">
+                <padding>
+                    <Insets left="25"/>
+                </padding>
+            </Label>
+            <AnnotatedDocumentPane fx:id="targetPane" id="target"
+                                   GridPane.columnIndex="0" GridPane.rowIndex="2">
+                <padding>
+                    <Insets left="5" right="5"/>
+                </padding>
+            </AnnotatedDocumentPane>
 
-    <Separator orientation="VERTICAL" GridPane.columnIndex="2" GridPane.rowSpan="3"/>
-    <ViewControls fx:id="viewControls" GridPane.columnIndex="3" GridPane.rowIndex="1">
-        <padding>
-            <Insets left="3" right="5"/>
-        </padding>
-    </ViewControls>
+
+            <Label text="Reference:" GridPane.columnIndex="1" GridPane.rowIndex="1" styleClass="text-medium-bold">
+                <padding>
+                    <Insets left="25"/>
+                </padding>
+            </Label>
+
+            <AnnotatedDocumentPane fx:id="referencePane" id="target"
+                                   GridPane.columnIndex="1" GridPane.rowIndex="2">
+                <padding>
+                    <Insets right="5"/>
+                </padding>
+            </AnnotatedDocumentPane>
+
+            <Separator orientation="VERTICAL" GridPane.columnIndex="2" GridPane.rowSpan="3"/>
+            <ViewControls fx:id="viewControls" GridPane.columnIndex="3" GridPane.rowIndex="2">
+                <padding>
+                    <Insets left="3" right="5"/>
+                </padding>
+            </ViewControls>
+        </GridPane>
+        <JFXDrawer fx:id="drawer" defaultDrawerSize="250.0" layoutY="-6.0" prefHeight="388.0" prefWidth="225.0" mouseTransparent="false"/>
+    </StackPane>
+    <JFXHamburger fx:id="hamburger" onMouseClicked="#collapsePanel" prefHeight="156.0" prefWidth="225.0" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+
 </GridPane>
