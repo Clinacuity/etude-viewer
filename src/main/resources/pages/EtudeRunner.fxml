@@ -27,32 +27,24 @@
         <ColumnConstraints percentWidth="48.75"/>
     </columnConstraints>
 
-    <Pane GridPane.columnIndex="0" styleClass="card-big" maxWidth="Infinity" maxHeight="Infinity"/>
-    <Pane GridPane.columnIndex="2" styleClass="card-big" maxWidth="Infinity" maxHeight="Infinity"/>
+    <VBox minHeight="100">
+        <Label text="Configuration Builder" styleClass="header-one, underlined" alignment="TOP_LEFT">
+            <padding>
+                <Insets left="20"/>
+            </padding>
+        </Label>
+    </VBox>
 
-    <VBox id="textFields" spacing="10" GridPane.rowIndex="0" GridPane.columnIndex="0">
+    <Pane GridPane.columnIndex="0" GridPane.rowIndex="1" styleClass="card-big" maxWidth="Infinity" maxHeight="Infinity"/>
+    <Pane GridPane.columnIndex="2" GridPane.rowIndex="1" styleClass="card-big" maxWidth="Infinity" maxHeight="Infinity"/>
+
+    <VBox id="textFields" spacing="10" GridPane.rowIndex="1" GridPane.columnIndex="0">
         <padding>
+
             <Insets topRightBottomLeft="25"/>
         </padding>
 
         <Label text="Configuration Files" styleClass="text-large-bold, underlined"/>
-        <HBox id="goldConfig" spacing="10">
-            <Label text="Gold:" styleClass="text-medium-normal"
-                   alignment="BOTTOM_RIGHT" textAlignment="RIGHT" minWidth="100" maxWidth="100" maxHeight="Infinity"/>
-            <JFXTextField fx:id="goldConfigInputField" styleClass="text-medium-normal" minWidth="300" maxWidth="450"/>
-            <JFXButton text="..." onAction="#pickGoldConfigFile" prefWidth="32" maxWidth="Infinity"
-                       styleClass="button-raised, button-gray, no-focus, text-small-normal" buttonType="RAISED"/>
-            <Label styleClass="label-tooltip">
-                <tooltip>
-                    <Tooltip text="Select the configuration file used to parse through the gold standard files."/>
-                </tooltip>
-                <graphic>
-                    <ImageView fitWidth="12" preserveRatio="true" pickOnBounds="true">
-                        <Image url="/img/icons8/info_button.png"/>
-                    </ImageView>
-                </graphic>
-            </Label>
-        </HBox>
         <HBox id="testConfig" spacing="10">
             <Label text="Test:" styleClass="text-medium-normal"
                    alignment="BOTTOM_RIGHT" textAlignment="RIGHT" minWidth="100" maxWidth="100" maxHeight="Infinity"/>
@@ -70,21 +62,15 @@
                 </graphic>
             </Label>
         </HBox>
-
-        <Label text="Input Directories" styleClass="text-large-bold, underlined">
-            <padding>
-                <Insets top="20"/>
-            </padding>
-        </Label>
-        <HBox id="goldInput" spacing="10">
-            <Label text="Gold:" styleClass="text-medium-normal"
+        <HBox id="goldConfig" spacing="10">
+            <Label text="Reference:" styleClass="text-medium-normal"
                    alignment="BOTTOM_RIGHT" textAlignment="RIGHT" minWidth="100" maxWidth="100" maxHeight="Infinity"/>
-            <JFXTextField fx:id="goldInputTextField" styleClass="text-medium-normal" minWidth="300" maxWidth="450"/>
-            <JFXButton text="..." onAction="#pickGoldInDirectory" prefWidth="32" maxWidth="Infinity"
+            <JFXTextField fx:id="goldConfigInputField" styleClass="text-medium-normal" minWidth="300" maxWidth="450"/>
+            <JFXButton text="..." onAction="#pickGoldConfigFile" prefWidth="32" maxWidth="Infinity"
                        styleClass="button-raised, button-gray, no-focus, text-small-normal" buttonType="RAISED"/>
             <Label styleClass="label-tooltip">
                 <tooltip>
-                    <Tooltip text="Select a directory containing the Gold Standard files"/>
+                    <Tooltip text="Select the configuration file used to parse through the gold standard files."/>
                 </tooltip>
                 <graphic>
                     <ImageView fitWidth="12" preserveRatio="true" pickOnBounds="true">
@@ -93,6 +79,12 @@
                 </graphic>
             </Label>
         </HBox>
+
+        <Label text="Input Directories" styleClass="text-large-bold, underlined">
+            <padding>
+                <Insets top="20"/>
+            </padding>
+        </Label>
         <HBox id="testInput" spacing="10">
             <Label text="Test:" styleClass="text-medium-normal"
                    alignment="BOTTOM_RIGHT" textAlignment="RIGHT" minWidth="100" maxWidth="100" maxHeight="Infinity"/>
@@ -102,6 +94,23 @@
             <Label styleClass="label-tooltip">
                 <tooltip>
                     <Tooltip text="Select a directory containing the test files"/>
+                </tooltip>
+                <graphic>
+                    <ImageView fitWidth="12" preserveRatio="true" pickOnBounds="true">
+                        <Image url="/img/icons8/info_button.png"/>
+                    </ImageView>
+                </graphic>
+            </Label>
+        </HBox>
+        <HBox id="goldInput" spacing="10">
+            <Label text="Reference:" styleClass="text-medium-normal"
+                   alignment="BOTTOM_RIGHT" textAlignment="RIGHT" minWidth="100" maxWidth="100" maxHeight="Infinity"/>
+            <JFXTextField fx:id="goldInputTextField" styleClass="text-medium-normal" minWidth="300" maxWidth="450"/>
+            <JFXButton text="..." onAction="#pickGoldInDirectory" prefWidth="32" maxWidth="Infinity"
+                       styleClass="button-raised, button-gray, no-focus, text-small-normal" buttonType="RAISED"/>
+            <Label styleClass="label-tooltip">
+                <tooltip>
+                    <Tooltip text="Select a directory containing the Gold Standard files"/>
                 </tooltip>
                 <graphic>
                     <ImageView fitWidth="12" preserveRatio="true" pickOnBounds="true">
@@ -203,7 +212,7 @@
             </Label>
         </HBox>
     </VBox>
-    <VBox id="checkboxes" spacing="10" GridPane.rowIndex="0" GridPane.columnIndex="2">
+    <VBox id="checkboxes" spacing="10" GridPane.rowIndex="1" GridPane.columnIndex="2">
         <padding>
             <Insets topRightBottomLeft="25"/>
         </padding>
@@ -397,7 +406,7 @@
             </Label>
         </HBox>
     </VBox>
-    <VBox maxWidth="Infinity" GridPane.rowIndex="1" GridPane.columnIndex="2" alignment="CENTER_RIGHT">
+    <VBox maxWidth="Infinity" GridPane.rowIndex="2" GridPane.columnIndex="2" alignment="CENTER_RIGHT">
         <padding>
             <Insets top="15" bottom="15" right="40" left="40"/>
         </padding>
