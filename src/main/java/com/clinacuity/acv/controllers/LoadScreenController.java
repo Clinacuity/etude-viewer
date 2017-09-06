@@ -97,14 +97,4 @@ public class LoadScreenController implements Initializable {
         return new FileChooser.ExtensionFilter("(*.json) ETUDE Output Dictionary", "*.json", "*.xml");
     }
 
-    public void collapsePanel() {
-//        HamburgerBackArrowBasicTransition transition = new HamburgerBackArrowBasicTransition(hamburger);
-//        transition.setRate(-1);
-//        transition.setRate(transition.getRate() * -1);
-//        transition.play();
-        if (drawer.isShown()) {
-            drawer.close();
-        } else
-            drawer.open();
-    }
 }

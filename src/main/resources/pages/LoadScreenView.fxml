@@ -8,17 +8,12 @@
 <?import com.jfoenix.controls.JFXButton?>
 
 <?import com.jfoenix.controls.JFXTextField?>
-<?import com.jfoenix.controls.JFXDrawer?>
-<?import com.jfoenix.controls.JFXHamburger?>
 <GridPane alignment="CENTER" minHeight="300" minWidth="400"
           xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="com.clinacuity.acv.controllers.LoadScreenController">
     <padding>
         <Insets bottom="100" top="25" />
     </padding>
-
-    <JFXDrawer fx:id="drawer" defaultDrawerSize="250.0" layoutY="-6.0" prefHeight="368.0" prefWidth="108.0" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
-    <JFXHamburger fx:id="hamburger" onMouseClicked="#collapsePanel" GridPane.columnIndex="5" GridPane.rowIndex="0"/>
 
     <columnConstraints>
         <ColumnConstraints percentWidth="15"/>
