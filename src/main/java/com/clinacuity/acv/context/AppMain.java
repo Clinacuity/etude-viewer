@@ -17,6 +17,7 @@ public class AppMain extends Application{
     private Scene scene;
 
     private static Application application = null;
+    public static Properties properties;
     public static void getWebPage(String page) { application.getHostServices().showDocument(page); }
 
     @Override
@@ -48,7 +49,7 @@ public class AppMain extends Application{
     }
 
     private void loadProperties() throws IOException {
-        Properties properties = new Properties();
+        properties = new Properties();
         properties.load(getClass().getResourceAsStream("/config_en.properties"));
     }
 

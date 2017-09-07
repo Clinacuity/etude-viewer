@@ -1,6 +1,7 @@
 package com.clinacuity.acv.controllers;
 
 import com.clinacuity.acv.context.AcvContext;
+import com.clinacuity.acv.context.AppMain;
 import com.clinacuity.acv.tasks.EtudeTask;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
@@ -15,6 +16,8 @@ import javafx.stage.FileChooser;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -58,6 +61,20 @@ public class EtudeController implements Initializable{
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        metricsTP.setSelected(Boolean.valueOf(AppMain.properties.getProperty("TP")));
+        metricsFP.setSelected(Boolean.valueOf(AppMain.properties.getProperty("FP")));
+        metricsFN.setSelected(Boolean.valueOf(AppMain.properties.getProperty("FN")));
+        metricsPrecision.setSelected(Boolean.valueOf(AppMain.properties.getProperty("PRECISION")));
+        metricsRecall.setSelected(Boolean.valueOf(AppMain.properties.getProperty("RECALL")));
+        metricsSensitivity.setSelected(Boolean.valueOf(AppMain.properties.getProperty("SENSITIVITY")));
+        metricsSpecificity.setSelected(Boolean.valueOf(AppMain.properties.getProperty("SPECIFICITY")));
+        metricsAccuracy.setSelected(Boolean.valueOf(AppMain.properties.getProperty("ACCURACY")));
+        metricsF1.setSelected(Boolean.valueOf(AppMain.properties.getProperty("F1")));
+        byFileCheckbox.setSelected(Boolean.valueOf(AppMain.properties.getProperty("BYFILE")));
+        byFileAndTypeCheckbox.setSelected(Boolean.valueOf(AppMain.properties.getProperty("BYFILEANDTYPE")));
+        byTypeCheckbox.setSelected(Boolean.valueOf(AppMain.properties.getProperty("BYTYPE")));
+        byTypeAndFileCheckbox.setSelected(Boolean.valueOf(AppMain.properties.getProperty("BYTYPEANDFILE")));
+        ignoreWhitespaceCheckbox.setSelected(Boolean.valueOf(AppMain.properties.getProperty("IGNOREWHITESPACE")));
         goldConfigInputField.focusedProperty().addListener(
                 (obs, old, newValue) -> focusChanged(newValue, goldConfigInputField, true));
         testConfigInputField.focusedProperty().addListener(
@@ -85,7 +102,27 @@ public class EtudeController implements Initializable{
 
         etudeTask.reset();
 
-        if (checkInputs()) {
+//        if (checkInputs()) {
+        try {
+            FileOutputStream out = new FileOutputStream("src/main/resources/config_en.properties");
+            AppMain.properties.setProperty("TP", String.valueOf(metricsTP.isSelected()));
+            AppMain.properties.setProperty("FP", String.valueOf(metricsFP.isSelected()));
+            AppMain.properties.setProperty("FN", String.valueOf(metricsFN.isSelected()));
+            AppMain.properties.setProperty("PRECISION", String.valueOf(metricsPrecision.isSelected()));
+            AppMain.properties.setProperty("RECALL", String.valueOf(metricsRecall.isSelected()));
+            AppMain.properties.setProperty("SENSITIVITY", String.valueOf(metricsSensitivity.isSelected()));
+            AppMain.properties.setProperty("SPECIFICITY", String.valueOf(metricsSpecificity.isSelected()));
+            AppMain.properties.setProperty("ACCURACY", String.valueOf(metricsAccuracy.isSelected()));
+            AppMain.properties.setProperty("F1", String.valueOf(metricsF1.isSelected()));
+            AppMain.properties.setProperty("BYFILE", String.valueOf(byFileCheckbox.isSelected()));
+            AppMain.properties.setProperty("BYFILEANDTYPE", String.valueOf(byFileAndTypeCheckbox.isSelected()));
+            AppMain.properties.setProperty("BYTYPE", String.valueOf(byTypeCheckbox.isSelected()));
+            AppMain.properties.setProperty("BYTYPEANDFILE", String.valueOf(byTypeAndFileCheckbox.isSelected()));
+            AppMain.properties.setProperty("IGNOREWHITESPACE", String.valueOf(ignoreWhitespaceCheckbox.isSelected()));
+            AppMain.properties.store(out, null);
+
+
+
             etudeTask.setGoldConfigFilePath(goldConfigInputField.getText());
             etudeTask.setTestConfigFilePath(testConfigInputField.getText());
             etudeTask.setGoldInputDirPath(goldInputTextField.getText());
@@ -93,7 +130,7 @@ public class EtudeController implements Initializable{
             etudeTask.setGoldOutputDirPath(goldOutputTextField.getText());
             etudeTask.setTestOutputDirPath(testOutputTextField.getText());
             etudeTask.setCorpusFilePath(corpusOutputTextField.getText());
-            etudeTask.setMetricsTP(metricsTP.isSelected());
+            etudeTask.setMetricsTP(Boolean.valueOf(AppMain.properties.getProperty("TP")));
             etudeTask.setMetricsFP(metricsFP.isSelected());
             etudeTask.setMetricsFN(metricsFN.isSelected());
             etudeTask.setMetricsPrecision(metricsPrecision.isSelected());
@@ -123,9 +160,12 @@ public class EtudeController implements Initializable{
             if (!fileSuffixTextField.getText().equals("") && fileSuffixTextField.getText() != null) {
                 etudeTask.setFileSuffix(fileSuffixTextField.getText());
             }
+        } catch (Exception e) {
+
+        }
 
             new Thread(etudeTask).start();
-        }
+//        }
     }
 
     /**
