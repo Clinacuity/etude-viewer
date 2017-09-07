@@ -14,7 +14,7 @@
     </Menu>
     <Menu text="View">
         <MenuItem text="ETUDE (Process directories)" onAction="#showEtudeRunner"/>
-        <MenuItem text="Configuration Creator" onAction="#showConfigurationCreator"/>
+        <MenuItem text="Configuration Builder" onAction="#showConfigurationCreator"/>
         <MenuItem text="Compare Files" onAction="#reloadMainPage"/>
     </Menu>
     <Menu text="Help">
