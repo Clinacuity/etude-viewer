@@ -50,6 +50,7 @@ public class EtudeController implements Initializable{
     @FXML private JFXCheckBox metricsAccuracy;
     @FXML private JFXCheckBox metricsF1;
 
+    @FXML private JFXCheckBox fuzzyMatchingCheckbox;
     @FXML private JFXCheckBox byFileCheckbox;
     @FXML private JFXCheckBox byFileAndTypeCheckbox;
     @FXML private JFXCheckBox byTypeCheckbox;
@@ -70,6 +71,7 @@ public class EtudeController implements Initializable{
         metricsSpecificity.setSelected(Boolean.valueOf(AppMain.properties.getProperty("SPECIFICITY")));
         metricsAccuracy.setSelected(Boolean.valueOf(AppMain.properties.getProperty("ACCURACY")));
         metricsF1.setSelected(Boolean.valueOf(AppMain.properties.getProperty("F1")));
+        fuzzyMatchingCheckbox.setSelected(Boolean.valueOf(AppMain.properties.getProperty("FUZZYMATCHING")));
         byFileCheckbox.setSelected(Boolean.valueOf(AppMain.properties.getProperty("BYFILE")));
         byFileAndTypeCheckbox.setSelected(Boolean.valueOf(AppMain.properties.getProperty("BYFILEANDTYPE")));
         byTypeCheckbox.setSelected(Boolean.valueOf(AppMain.properties.getProperty("BYTYPE")));
@@ -104,7 +106,7 @@ public class EtudeController implements Initializable{
 
 //        if (checkInputs()) {
         try {
-            FileOutputStream out = new FileOutputStream("src/main/resources/config_en.properties");
+            FileOutputStream out = new FileOutputStream("config_en.properties");
             AppMain.properties.setProperty("TP", String.valueOf(metricsTP.isSelected()));
             AppMain.properties.setProperty("FP", String.valueOf(metricsFP.isSelected()));
             AppMain.properties.setProperty("FN", String.valueOf(metricsFN.isSelected()));
@@ -114,6 +116,7 @@ public class EtudeController implements Initializable{
             AppMain.properties.setProperty("SPECIFICITY", String.valueOf(metricsSpecificity.isSelected()));
             AppMain.properties.setProperty("ACCURACY", String.valueOf(metricsAccuracy.isSelected()));
             AppMain.properties.setProperty("F1", String.valueOf(metricsF1.isSelected()));
+            AppMain.properties.setProperty("FUZZYMATCHING", String.valueOf(fuzzyMatchingCheckbox.isSelected()));
             AppMain.properties.setProperty("BYFILE", String.valueOf(byFileCheckbox.isSelected()));
             AppMain.properties.setProperty("BYFILEANDTYPE", String.valueOf(byFileAndTypeCheckbox.isSelected()));
             AppMain.properties.setProperty("BYTYPE", String.valueOf(byTypeCheckbox.isSelected()));
