@@ -24,7 +24,7 @@
         <RowConstraints minHeight="15" maxHeight="15"/>
     </rowConstraints>
 
-    <Label text="Test:" GridPane.columnIndex="0" GridPane.rowIndex="0" styleClass="text-medium-bold">
+    <Label text="System Output:" GridPane.columnIndex="0" GridPane.rowIndex="0" styleClass="text-medium-bold">
         <padding>
             <Insets left="25"/>
         </padding>

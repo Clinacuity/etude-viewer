@@ -25,7 +25,7 @@
         </Label>
         <HBox spacing="20">
             <VBox spacing="15">
-                <Label text="Test Configuration:" styleClass="text-medium-bold">
+                <Label text="System Output Configuration:" styleClass="text-medium-bold">
                     <padding>
                         <Insets left="20"/>
                     </padding>
@@ -59,7 +59,7 @@
                 </ScrollPane>
             </VBox>
             <VBox spacing="15">
-                <Label text="Reference Configuration:" styleClass="text-medium-bold">
+                <Label text="Reference Standard Configuration:" styleClass="text-medium-bold">
                     <padding>
                         <Insets left="20"/>
                     </padding>

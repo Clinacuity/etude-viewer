@@ -46,7 +46,7 @@
 
         <Label text="Configuration Files" styleClass="text-large-bold, underlined"/>
         <HBox id="testConfig" spacing="10">
-            <Label text="Test:" styleClass="text-medium-normal"
+            <Label text="System:" styleClass="text-medium-normal"
                    alignment="BOTTOM_RIGHT" textAlignment="RIGHT" minWidth="100" maxWidth="100" maxHeight="Infinity"/>
             <JFXTextField fx:id="testConfigInputField" styleClass="text-medium-normal" minWidth="300" maxWidth="450"/>
             <JFXButton text="..." onAction="#pickTestConfigFile" prefWidth="32" maxWidth="Infinity"
@@ -86,7 +86,7 @@
             </padding>
         </Label>
         <HBox id="testInput" spacing="10">
-            <Label text="Test:" styleClass="text-medium-normal"
+            <Label text="System:" styleClass="text-medium-normal"
                    alignment="BOTTOM_RIGHT" textAlignment="RIGHT" minWidth="100" maxWidth="100" maxHeight="Infinity"/>
             <JFXTextField fx:id="testInputTextField" styleClass="text-medium-normal" minWidth="300" maxWidth="450"/>
             <JFXButton text="..." onAction="#pickTestInDirectory" prefWidth="32" maxWidth="Infinity"

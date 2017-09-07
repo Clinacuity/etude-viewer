@@ -45,7 +45,7 @@
     </VBox>
 
 
-    <Label text="Test File (System Output):" styleClass="text-medium-normal" alignment="CENTER_RIGHT" textAlignment="RIGHT"
+    <Label text="System (Test) Output:" styleClass="text-medium-normal" alignment="CENTER_RIGHT" textAlignment="RIGHT"
            GridPane.halignment="RIGHT" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
     <JFXTextField fx:id="testInputTextField" styleClass="text-medium-normal" GridPane.columnIndex="2" GridPane.rowIndex="2">
         <GridPane.margin>
@@ -57,7 +57,7 @@
                GridPane.halignment="LEFT" GridPane.columnIndex="3" GridPane.rowIndex="2"/>
 
 
-    <Label text="Reference File (Gold Standard):" styleClass="text-medium-normal" alignment="CENTER_RIGHT" textAlignment="RIGHT"
+    <Label text="Reference (Gold) Standard:" styleClass="text-medium-normal" alignment="CENTER_RIGHT" textAlignment="RIGHT"
            GridPane.halignment="RIGHT" GridPane.columnIndex="1" GridPane.rowIndex="4" />
     <JFXTextField fx:id="gsInputTextField" styleClass="text-medium-normal" GridPane.columnIndex="2" GridPane.rowIndex="4">
         <GridPane.margin>
