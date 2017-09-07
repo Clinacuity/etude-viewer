@@ -17,6 +17,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URL;
 import java.util.ArrayList;
@@ -93,7 +94,7 @@ public class EtudeController implements Initializable{
                 (obs, old, newValue) -> focusChanged(newValue, corpusOutputTextField, true));
     }
 
-    @FXML private void runEtude() {
+    @FXML private void runEtude() throws IOException {
         if (etudeTask == null) {
             etudeTask = new EtudeTask();
         }
@@ -104,8 +105,7 @@ public class EtudeController implements Initializable{
 
         etudeTask.reset();
 
-//        if (checkInputs()) {
-        try {
+        if (checkInputs()) {
             FileOutputStream out = new FileOutputStream("config_en.properties");
             AppMain.properties.setProperty("TP", String.valueOf(metricsTP.isSelected()));
             AppMain.properties.setProperty("FP", String.valueOf(metricsFP.isSelected()));
@@ -163,12 +163,9 @@ public class EtudeController implements Initializable{
             if (!fileSuffixTextField.getText().equals("") && fileSuffixTextField.getText() != null) {
                 etudeTask.setFileSuffix(fileSuffixTextField.getText());
             }
-        } catch (Exception e) {
-
-        }
 
             new Thread(etudeTask).start();
-//        }
+        }
     }
 
     /**
