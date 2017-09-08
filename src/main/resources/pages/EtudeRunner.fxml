@@ -117,7 +117,7 @@
             </padding>
         </Label>
         <HBox id="outputDirectory" spacing="10">
-            <Label text="Directory" styleClass="text-medium-normal"
+            <Label text="Directory:" styleClass="text-medium-normal"
                    alignment="BOTTOM_RIGHT" textAlignment="RIGHT" minWidth="100" maxWidth="100" maxHeight="Infinity"/>
             <JFXTextField fx:id="outputDirectoryTextField" styleClass="text-medium-normal" minWidth="300" maxWidth="450"/>
             <JFXButton text="..." onAction="#pickGoldOutDirectory" prefWidth="32" maxWidth="Infinity"
