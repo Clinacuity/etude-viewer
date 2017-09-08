@@ -110,6 +110,36 @@
                 </graphic>
             </Label>
         </HBox>
+        <HBox id="filePrefixes" spacing="10">
+            <Label text="File Prefix:" styleClass="text-medium-normal"
+                   alignment="BOTTOM_RIGHT" textAlignment="RIGHT" minWidth="100" maxWidth="100" maxHeight="Infinity"/>
+            <JFXTextField fx:id="filePrefixTextField" styleClass="text-medium-normal" minWidth="300" maxWidth="450"/>
+            <Label styleClass="label-tooltip">
+                <tooltip>
+                    <Tooltip text="A prefix to use as a filter for the input files"/>
+                </tooltip>
+                <graphic>
+                    <ImageView fitWidth="12" preserveRatio="true" pickOnBounds="true">
+                        <Image url="/img/icons8/info_button.png"/>
+                    </ImageView>
+                </graphic>
+            </Label>
+        </HBox>
+        <HBox id="fileSuffixes" spacing="10">
+            <Label text="File Suffix:" styleClass="text-medium-normal"
+                   alignment="BOTTOM_RIGHT" textAlignment="RIGHT" minWidth="100" maxWidth="100" maxHeight="Infinity"/>
+            <JFXTextField fx:id="fileSuffixTextField" styleClass="text-medium-normal" minWidth="300" maxWidth="450"/>
+            <Label styleClass="label-tooltip">
+                <tooltip>
+                    <Tooltip text="Comman-separated suffixes to use as filters for the input files"/>
+                </tooltip>
+                <graphic>
+                    <ImageView fitWidth="12" preserveRatio="true" pickOnBounds="true">
+                        <Image url="/img/icons8/info_button.png"/>
+                    </ImageView>
+                </graphic>
+            </Label>
+        </HBox>
 
         <Label text="Output Directories" styleClass="text-large-bold, underlined">
             <padding>
@@ -134,7 +164,7 @@
             </Label>
         </HBox>
 
-        <Label text="Configuration Format" styleClass="text-large-bold, underlined">
+        <Label text="Annotations" styleClass="text-large-bold, underlined">
             <padding>
                 <Insets top="20"/>
             </padding>
@@ -162,38 +192,6 @@
             <Label styleClass="label-tooltip">
                 <tooltip>
                     <Tooltip text="Additional attributes which must be present with the score key.&#10;Annotations found with the score key which do not contain the attributes will be ignored."/>
-                </tooltip>
-                <graphic>
-                    <ImageView fitWidth="12" preserveRatio="true" pickOnBounds="true">
-                        <Image url="/img/icons8/info_button.png"/>
-                    </ImageView>
-                </graphic>
-            </Label>
-        </HBox>
-
-        <HBox id="filePrefixes" spacing="10">
-            <Label text="File Prefix:" styleClass="text-medium-normal"
-                   alignment="BOTTOM_RIGHT" textAlignment="RIGHT" minWidth="100" maxWidth="100" maxHeight="Infinity"/>
-            <JFXTextField fx:id="filePrefixTextField" styleClass="text-medium-normal" minWidth="300" maxWidth="450"/>
-            <Label styleClass="label-tooltip">
-                <tooltip>
-                    <Tooltip text="A prefix to use as a filter for the input files"/>
-                </tooltip>
-                <graphic>
-                    <ImageView fitWidth="12" preserveRatio="true" pickOnBounds="true">
-                        <Image url="/img/icons8/info_button.png"/>
-                    </ImageView>
-                </graphic>
-            </Label>
-        </HBox>
-
-        <HBox id="fileSuffixes" spacing="10">
-            <Label text="File Prefix:" styleClass="text-medium-normal"
-                   alignment="BOTTOM_RIGHT" textAlignment="RIGHT" minWidth="100" maxWidth="100" maxHeight="Infinity"/>
-            <JFXTextField fx:id="fileSuffixTextField" styleClass="text-medium-normal" minWidth="300" maxWidth="450"/>
-            <Label styleClass="label-tooltip">
-                <tooltip>
-                    <Tooltip text="Comman-separated suffixes to use as filters for the input files"/>
                 </tooltip>
                 <graphic>
                     <ImageView fitWidth="12" preserveRatio="true" pickOnBounds="true">
