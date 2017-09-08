@@ -7,6 +7,8 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Locale;
 import java.util.Properties;
@@ -17,6 +19,7 @@ public class AppMain extends Application{
     private Scene scene;
 
     private static Application application = null;
+    public static Properties properties;
     public static void getWebPage(String page) { application.getHostServices().showDocument(page); }
 
     @Override
@@ -48,8 +51,8 @@ public class AppMain extends Application{
     }
 
     private void loadProperties() throws IOException {
-        Properties properties = new Properties();
-        properties.load(getClass().getResourceAsStream("/config_en.properties"));
+        properties = new Properties();
+        properties.load(new FileInputStream("config_en.properties"));
     }
 
     private void prepareCss() throws IOException {

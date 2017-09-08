@@ -326,7 +326,7 @@
             </VBox>
         </HBox>
         <HBox spacing="3">
-            <JFXCheckBox text="Fuzzy Matching" styleClass="text-medium-normal"/>
+            <JFXCheckBox fx:id="fuzzyMatchingCheckbox" text="Fuzzy Matching" styleClass="text-medium-normal"/>
             <Label styleClass="label-tooltip">
                 <tooltip>
                     <Tooltip text="Select which types of matching will be used.&#10;Each type will have its own dictionary in the output"/>
