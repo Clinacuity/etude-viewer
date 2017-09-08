@@ -34,7 +34,6 @@
         <RowConstraints minHeight="10" />
     </rowConstraints>
 
-
     <Label styleClass="header-one" text="Welcome" alignment="BOTTOM_CENTER" textAlignment="CENTER"
            GridPane.halignment="CENTER" GridPane.columnIndex="1" GridPane.columnSpan="2">
         <padding>
