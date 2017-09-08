@@ -45,7 +45,7 @@ public class Annotations {
         if (f.exists()) {
             try {
                 JsonParser parser = new JsonParser();
-                root = parser.parse(FileUtils.readFileToString(new File(filePath), "UTF-8")).getAsJsonObject();
+                root = parser.parse(FileUtils.readFileToString(f, "UTF-8")).getAsJsonObject();
 
                 if (hasOffsetMapping()) {
                     root.get(OFFSETS_KEY).getAsJsonObject();
