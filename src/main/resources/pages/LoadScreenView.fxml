@@ -36,9 +36,8 @@
     </rowConstraints>
 
 
-    <VBox spacing="30" GridPane.halignment="CENTER" GridPane.columnIndex="1" GridPane.columnSpan="2">
-        <Label styleClass="header-one, underlined" text="Welcome to ACV" alignment="BOTTOM_CENTER" textAlignment="CENTER"/>
-        <Label styleClass="text-medium-normal" text="This tool will help you compare files processed by a given system (such as CliniDeid)&#10;against files on a given Gold Standard corpus."/>
+<VBox spacing="30" GridPane.halignment="CENTER" GridPane.columnIndex="1" GridPane.columnSpan="2">    <Label styleClass="header-one, underlined" text="Welcometo ACV" alignment="BOTTOM_CENTER" textAlignment="CENTER"/>
+           <Label styleClass="text-medium-normal" text="This tool will help you compare files processed by a given system (such as CliniDeid)&#10;against files on a given Gold Standard corpus."/>
         <padding>
             <Insets bottom="50" top="50" left="50" right="50"/>
         </padding>
