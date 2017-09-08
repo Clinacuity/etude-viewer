@@ -1,15 +1,14 @@
 package com.clinacuity.acv.controllers;
 
 import com.clinacuity.acv.context.AcvContext;
+import com.clinacuity.acv.modals.ConfirmationModal;
 import com.clinacuity.acv.context.AppMain;
 import com.clinacuity.acv.tasks.EtudeTask;
-import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXTextField;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
@@ -18,8 +17,8 @@ import org.apache.logging.log4j.Logger;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.net.URL;
+import java.nio.file.FileSystemException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -29,14 +28,11 @@ public class EtudeController implements Initializable{
     private static EtudeTask etudeTask = null;
     private static final String ERROR_ID = "errLabel";
 
-    @FXML private GridPane grid;
     @FXML private JFXTextField goldConfigInputField;
     @FXML private JFXTextField testConfigInputField;
     @FXML private JFXTextField goldInputTextField;
     @FXML private JFXTextField testInputTextField;
-    @FXML private JFXTextField goldOutputTextField;
-    @FXML private JFXTextField testOutputTextField;
-    @FXML private JFXTextField corpusOutputTextField;
+    @FXML private JFXTextField outputDirectoryTextField;
     @FXML private JFXTextField scoreKeyTextField;
     @FXML private JFXTextField scoreValuesTextField;
     @FXML private JFXTextField filePrefixTextField;
@@ -46,9 +42,6 @@ public class EtudeController implements Initializable{
     @FXML private JFXCheckBox metricsFN;
     @FXML private JFXCheckBox metricsPrecision;
     @FXML private JFXCheckBox metricsRecall;
-    @FXML private JFXCheckBox metricsSensitivity;
-    @FXML private JFXCheckBox metricsSpecificity;
-    @FXML private JFXCheckBox metricsAccuracy;
     @FXML private JFXCheckBox metricsF1;
 
     @FXML private JFXCheckBox fuzzyMatchingCheckbox;
@@ -68,9 +61,6 @@ public class EtudeController implements Initializable{
         metricsFN.setSelected(Boolean.valueOf(AppMain.properties.getProperty("FN")));
         metricsPrecision.setSelected(Boolean.valueOf(AppMain.properties.getProperty("PRECISION")));
         metricsRecall.setSelected(Boolean.valueOf(AppMain.properties.getProperty("RECALL")));
-        metricsSensitivity.setSelected(Boolean.valueOf(AppMain.properties.getProperty("SENSITIVITY")));
-        metricsSpecificity.setSelected(Boolean.valueOf(AppMain.properties.getProperty("SPECIFICITY")));
-        metricsAccuracy.setSelected(Boolean.valueOf(AppMain.properties.getProperty("ACCURACY")));
         metricsF1.setSelected(Boolean.valueOf(AppMain.properties.getProperty("F1")));
         fuzzyMatchingCheckbox.setSelected(Boolean.valueOf(AppMain.properties.getProperty("FUZZYMATCHING")));
         byFileCheckbox.setSelected(Boolean.valueOf(AppMain.properties.getProperty("BYFILE")));
@@ -86,15 +76,11 @@ public class EtudeController implements Initializable{
                 (obs, old, newValue) -> focusChanged(newValue, goldInputTextField, false));
         testInputTextField.focusedProperty().addListener(
                 (obs, old, newValue) -> focusChanged(newValue, testInputTextField, false));
-        goldOutputTextField.focusedProperty().addListener(
-                (obs, old, newValue) -> focusChanged(newValue, goldOutputTextField, false));
-        testOutputTextField.focusedProperty().addListener(
-                (obs, old, newValue) -> focusChanged(newValue, testOutputTextField, false));
-        corpusOutputTextField.focusedProperty().addListener(
-                (obs, old, newValue) -> focusChanged(newValue, corpusOutputTextField, true));
+        outputDirectoryTextField.focusedProperty().addListener(
+                (obs, old, newValue) -> focusChanged(newValue, outputDirectoryTextField, false));
     }
 
-    @FXML private void runEtude() throws IOException {
+    @FXML private void runEtudeButtonAction() throws IOException {
         if (etudeTask == null) {
             etudeTask = new EtudeTask();
         }
@@ -112,9 +98,6 @@ public class EtudeController implements Initializable{
             AppMain.properties.setProperty("FN", String.valueOf(metricsFN.isSelected()));
             AppMain.properties.setProperty("PRECISION", String.valueOf(metricsPrecision.isSelected()));
             AppMain.properties.setProperty("RECALL", String.valueOf(metricsRecall.isSelected()));
-            AppMain.properties.setProperty("SENSITIVITY", String.valueOf(metricsSensitivity.isSelected()));
-            AppMain.properties.setProperty("SPECIFICITY", String.valueOf(metricsSpecificity.isSelected()));
-            AppMain.properties.setProperty("ACCURACY", String.valueOf(metricsAccuracy.isSelected()));
             AppMain.properties.setProperty("F1", String.valueOf(metricsF1.isSelected()));
             AppMain.properties.setProperty("FUZZYMATCHING", String.valueOf(fuzzyMatchingCheckbox.isSelected()));
             AppMain.properties.setProperty("BYFILE", String.valueOf(byFileCheckbox.isSelected()));
@@ -127,20 +110,27 @@ public class EtudeController implements Initializable{
 
 
             etudeTask.setGoldConfigFilePath(goldConfigInputField.getText());
+            if (checkOutputDirectory()) {
+                runEtude();
+            } else {
+                confirmEtudeOverwrite();
+            }
+        }
+    }
+
+    private void runEtude() {etudeTask.setGoldConfigFilePath(goldConfigInputField.getText());
             etudeTask.setTestConfigFilePath(testConfigInputField.getText());
             etudeTask.setGoldInputDirPath(goldInputTextField.getText());
             etudeTask.setTestInputDirPath(testInputTextField.getText());
-            etudeTask.setGoldOutputDirPath(goldOutputTextField.getText());
-            etudeTask.setTestOutputDirPath(testOutputTextField.getText());
-            etudeTask.setCorpusFilePath(corpusOutputTextField.getText());
+//            etudeTask.setGoldOutputDirPath(goldOutputTextField.getText());
+//            etudeTask.setTestOutputDirPath(testOutputTextField.getText());
+//            etudeTask.setCorpusFilePath(corpusOutputTextField.getText());
             etudeTask.setMetricsTP(Boolean.valueOf(AppMain.properties.getProperty("TP")));
             etudeTask.setMetricsFP(metricsFP.isSelected());
             etudeTask.setMetricsFN(metricsFN.isSelected());
             etudeTask.setMetricsPrecision(metricsPrecision.isSelected());
             etudeTask.setMetricsRecall(metricsRecall.isSelected());
-            etudeTask.setMetricsSensitivity(metricsSensitivity.isSelected());
-            etudeTask.setMetricsSpecificity(metricsSpecificity.isSelected());
-            etudeTask.setMetricsAccuracy(metricsAccuracy.isSelected());
+
             etudeTask.setMetricsF1(metricsF1.isSelected());
             etudeTask.setByFile(byFileCheckbox.isSelected());
             etudeTask.setByFileAndType(byFileAndTypeCheckbox.isSelected());
@@ -148,28 +138,27 @@ public class EtudeController implements Initializable{
             etudeTask.setByTypeAndFile(byTypeAndFileCheckbox.isSelected());
             etudeTask.setIgnoreWhitespace(ignoreWhitespaceCheckbox.isSelected());
 
-            if (!scoreKeyTextField.getText().equals("") && scoreKeyTextField.getText() != null) {
-                etudeTask.setScoreKey(scoreKeyTextField.getText());
-            }
-
-            if (!scoreValuesTextField.getText().equals("") && scoreValuesTextField.getText() != null) {
-                etudeTask.setScoreValues(scoreValuesTextField.getText());
-            }
-
-            if (!filePrefixTextField.getText().equals("") && filePrefixTextField.getText() != null) {
-                etudeTask.setFilePrefix(filePrefixTextField.getText());
-            }
-
-            if (!fileSuffixTextField.getText().equals("") && fileSuffixTextField.getText() != null) {
-                etudeTask.setFileSuffix(fileSuffixTextField.getText());
-            }
-
-            new Thread(etudeTask).start();
+        if (!scoreKeyTextField.getText().equals("") && scoreKeyTextField.getText() != null) {
+            etudeTask.setScoreKey(scoreKeyTextField.getText());
         }
+
+        if (!scoreValuesTextField.getText().equals("") && scoreValuesTextField.getText() != null) {
+            etudeTask.setScoreValues(scoreValuesTextField.getText());
+        }
+
+        if (!filePrefixTextField.getText().equals("") && filePrefixTextField.getText() != null) {
+            etudeTask.setFilePrefix(filePrefixTextField.getText());
+        }
+
+        if (!fileSuffixTextField.getText().equals("") && fileSuffixTextField.getText() != null) {
+            etudeTask.setFileSuffix(fileSuffixTextField.getText());
+        }
+
+//            new Thread(etudeTask).start();
     }
 
     /**
-     * Validates all inputs; if yes, it returns true and allows the etudeTask to run.
+     * Validates all inputs; if no fields are failing, it returns true and allows the etudeTask to run.
      * @return  Returns true if inputs are valid; false otherwise and etude won't run.
      */
     private boolean checkInputs() {
@@ -180,6 +169,61 @@ public class EtudeController implements Initializable{
         }
         
         return passes;
+    }
+
+    /**
+     * Checks the directory to which etude will save its output.  Specifically, it checks whether
+     * "test" and "reference" directories exist.  If either exists and has files, it will return false.
+     * It also checks whether a corpus output file already exists; if so, it will also return false.
+     * @return  Returns true if both test and reference directories are clean and no corpus file exists.
+     */
+    private boolean checkOutputDirectory() {
+        File directory = new File(outputDirectoryTextField.getText());
+
+        File testDirectory = new File(directory.getAbsolutePath() + "/test");
+        File referenceDirectory = new File(directory.getAbsolutePath() + "/reference");
+        File corpusFile = new File(directory.getAbsolutePath() + "/corpus.json");
+
+        boolean isDirectoryClean = true;
+
+        if (testDirectory.exists() && testDirectory.isDirectory() && testDirectory.length() > 0) {
+            isDirectoryClean = false;
+            logger.warn("Test directory already exists and contains data");
+        } else {
+            if (!testDirectory.mkdir()) {
+                logger.throwing(new FileSystemException(
+                        String.format("Unable to create file: %s", testDirectory.getAbsolutePath())));
+            }
+        }
+
+        if (referenceDirectory.exists() && referenceDirectory.isDirectory() & referenceDirectory.length() > 0) {
+            isDirectoryClean = false;
+            logger.warn("Reference directory already exists");
+        } else {
+            if (!referenceDirectory.mkdir()) {
+                logger.throwing(new FileSystemException(
+                        String.format("Unable to create file: %s", referenceDirectory.getAbsolutePath())));
+            }
+        }
+
+        if (corpusFile.exists() && corpusFile.isFile()) {
+            isDirectoryClean = false;
+            logger.warn("Corpus output file already exists");
+        }
+
+        return isDirectoryClean;
+    }
+
+    private void confirmEtudeOverwrite() {
+        StringBuilder message = new StringBuilder();
+        message.append("The selected output directory contains files which may conflict with ETUDE.  ");
+        message.append("Files would not be deleted, but they would be overwritten with new data.  ");
+        message.append("\n\nDo you want to proceed?");
+
+        ConfirmationModal.createModal("Overwrite files?", message.toString(), "YES", "NO");
+        ConfirmationModal.setConfirmAction(event -> runEtude());
+        ConfirmationModal.setCancelAction(event -> logger.warn("User cancelled Etude due to conflicting files."));
+        ConfirmationModal.show();
     }
 
     private void focusChanged(boolean focusGained, JFXTextField field, boolean checkForFile) {
@@ -274,26 +318,7 @@ public class EtudeController implements Initializable{
     @FXML private void pickGoldOutDirectory() {
         File directory = getDirectory("Gold Standard Output Directory");
         if (directory != null) {
-            goldOutputTextField.setText(directory.getAbsolutePath());
-        }
-    }
-
-    @FXML private void pickTestOutDirectory() {
-        File directory = getDirectory("Test Output Directory");
-        if (directory != null) {
-            testOutputTextField.setText(directory.getAbsolutePath());
-        }
-    }
-
-    @FXML private void pickCorpusOutFile() {
-        File directory = getDirectory("Choose directory in which to save Corpus dictionary");
-        if (directory != null) {
-            corpusOutputTextField.setText(directory.getAbsolutePath() + "/corpus.json");
-
-            File file = new File(corpusOutputTextField.getText());
-            if (file.exists()) {
-                logger.warn("THE FILE EXISTS! Currently... it'll just be overwritten");
-            }
+            outputDirectoryTextField.setText(directory.getAbsolutePath());
         }
     }
 

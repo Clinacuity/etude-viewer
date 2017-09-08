@@ -6,8 +6,9 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import com.jfoenix.controls.JFXButton?>
-
 <?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.layout.VBox?>
+
 <GridPane alignment="CENTER" minHeight="300" minWidth="400"
           xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="com.clinacuity.acv.controllers.LoadScreenController">
@@ -34,15 +35,16 @@
         <RowConstraints minHeight="10" />
     </rowConstraints>
 
-    <Label styleClass="header-one" text="Welcome" alignment="BOTTOM_CENTER" textAlignment="CENTER"
-           GridPane.halignment="CENTER" GridPane.columnIndex="1" GridPane.columnSpan="2">
+
+<VBox spacing="30" GridPane.halignment="CENTER" GridPane.columnIndex="1" GridPane.columnSpan="2">    <Label styleClass="header-one, underlined" text="Welcometo ACV" alignment="BOTTOM_CENTER" textAlignment="CENTER"/>
+           <Label styleClass="text-medium-normal" text="This tool will help you compare files processed by a given system (such as CliniDeid)&#10;against files on a given Gold Standard corpus."/>
         <padding>
             <Insets bottom="50" top="50" left="50" right="50"/>
         </padding>
-    </Label>
+    </VBox>
 
 
-    <Label text="Test (System) File:" styleClass="text-medium-normal" alignment="CENTER_RIGHT" textAlignment="RIGHT"
+    <Label text="System (Test) Output:" styleClass="text-medium-normal" alignment="CENTER_RIGHT" textAlignment="RIGHT"
            GridPane.halignment="RIGHT" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
     <JFXTextField fx:id="testInputTextField" styleClass="text-medium-normal" GridPane.columnIndex="2" GridPane.rowIndex="2">
         <GridPane.margin>
@@ -54,7 +56,7 @@
                GridPane.halignment="LEFT" GridPane.columnIndex="3" GridPane.rowIndex="2"/>
 
 
-    <Label text="Gold Standard (Reference) File:" styleClass="text-medium-normal" alignment="CENTER_RIGHT" textAlignment="RIGHT"
+    <Label text="Reference (Gold) Standard:" styleClass="text-medium-normal" alignment="CENTER_RIGHT" textAlignment="RIGHT"
            GridPane.halignment="RIGHT" GridPane.columnIndex="1" GridPane.rowIndex="4" />
     <JFXTextField fx:id="gsInputTextField" styleClass="text-medium-normal" GridPane.columnIndex="2" GridPane.rowIndex="4">
         <GridPane.margin>

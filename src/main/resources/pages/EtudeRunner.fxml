@@ -27,34 +27,26 @@
         <ColumnConstraints percentWidth="48.75"/>
     </columnConstraints>
 
-    <Pane GridPane.columnIndex="0" styleClass="card-big" maxWidth="Infinity" maxHeight="Infinity"/>
-    <Pane GridPane.columnIndex="2" styleClass="card-big" maxWidth="Infinity" maxHeight="Infinity"/>
+    <VBox minHeight="100">
+        <Label text="Configuration Builder" styleClass="header-one, underlined" alignment="TOP_LEFT">
+            <padding>
+                <Insets left="20"/>
+            </padding>
+        </Label>
+    </VBox>
 
-    <VBox id="textFields" spacing="10" GridPane.rowIndex="0" GridPane.columnIndex="0">
+    <Pane GridPane.columnIndex="0" GridPane.rowIndex="1" styleClass="card-big" maxWidth="Infinity" maxHeight="Infinity"/>
+    <Pane GridPane.columnIndex="2" GridPane.rowIndex="1" styleClass="card-big" maxWidth="Infinity" maxHeight="Infinity"/>
+
+    <VBox id="textFields" spacing="10" GridPane.rowIndex="1" GridPane.columnIndex="0">
         <padding>
+
             <Insets topRightBottomLeft="25"/>
         </padding>
 
         <Label text="Configuration Files" styleClass="text-large-bold, underlined"/>
-        <HBox id="goldConfig" spacing="10">
-            <Label text="Gold:" styleClass="text-medium-normal"
-                   alignment="BOTTOM_RIGHT" textAlignment="RIGHT" minWidth="100" maxWidth="100" maxHeight="Infinity"/>
-            <JFXTextField fx:id="goldConfigInputField" styleClass="text-medium-normal" minWidth="300" maxWidth="450"/>
-            <JFXButton text="..." onAction="#pickGoldConfigFile" prefWidth="32" maxWidth="Infinity"
-                       styleClass="button-raised, button-gray, no-focus, text-small-normal" buttonType="RAISED"/>
-            <Label styleClass="label-tooltip">
-                <tooltip>
-                    <Tooltip text="Select the configuration file used to parse through the gold standard files."/>
-                </tooltip>
-                <graphic>
-                    <ImageView fitWidth="12" preserveRatio="true" pickOnBounds="true">
-                        <Image url="/img/icons8/info_button.png"/>
-                    </ImageView>
-                </graphic>
-            </Label>
-        </HBox>
         <HBox id="testConfig" spacing="10">
-            <Label text="Test:" styleClass="text-medium-normal"
+            <Label text="System:" styleClass="text-medium-normal"
                    alignment="BOTTOM_RIGHT" textAlignment="RIGHT" minWidth="100" maxWidth="100" maxHeight="Infinity"/>
             <JFXTextField fx:id="testConfigInputField" styleClass="text-medium-normal" minWidth="300" maxWidth="450"/>
             <JFXButton text="..." onAction="#pickTestConfigFile" prefWidth="32" maxWidth="Infinity"
@@ -70,21 +62,15 @@
                 </graphic>
             </Label>
         </HBox>
-
-        <Label text="Input Directories" styleClass="text-large-bold, underlined">
-            <padding>
-                <Insets top="20"/>
-            </padding>
-        </Label>
-        <HBox id="goldInput" spacing="10">
-            <Label text="Gold:" styleClass="text-medium-normal"
+        <HBox id="goldConfig" spacing="10">
+            <Label text="Reference:" styleClass="text-medium-normal"
                    alignment="BOTTOM_RIGHT" textAlignment="RIGHT" minWidth="100" maxWidth="100" maxHeight="Infinity"/>
-            <JFXTextField fx:id="goldInputTextField" styleClass="text-medium-normal" minWidth="300" maxWidth="450"/>
-            <JFXButton text="..." onAction="#pickGoldInDirectory" prefWidth="32" maxWidth="Infinity"
+            <JFXTextField fx:id="goldConfigInputField" styleClass="text-medium-normal" minWidth="300" maxWidth="450"/>
+            <JFXButton text="..." onAction="#pickGoldConfigFile" prefWidth="32" maxWidth="Infinity"
                        styleClass="button-raised, button-gray, no-focus, text-small-normal" buttonType="RAISED"/>
             <Label styleClass="label-tooltip">
                 <tooltip>
-                    <Tooltip text="Select a directory containing the Gold Standard files"/>
+                    <Tooltip text="Select the configuration file used to parse through the gold standard files."/>
                 </tooltip>
                 <graphic>
                     <ImageView fitWidth="12" preserveRatio="true" pickOnBounds="true">
@@ -93,8 +79,14 @@
                 </graphic>
             </Label>
         </HBox>
+
+        <Label text="Input Directories" styleClass="text-large-bold, underlined">
+            <padding>
+                <Insets top="20"/>
+            </padding>
+        </Label>
         <HBox id="testInput" spacing="10">
-            <Label text="Test:" styleClass="text-medium-normal"
+            <Label text="System:" styleClass="text-medium-normal"
                    alignment="BOTTOM_RIGHT" textAlignment="RIGHT" minWidth="100" maxWidth="100" maxHeight="Infinity"/>
             <JFXTextField fx:id="testInputTextField" styleClass="text-medium-normal" minWidth="300" maxWidth="450"/>
             <JFXButton text="..." onAction="#pickTestInDirectory" prefWidth="32" maxWidth="Infinity"
@@ -110,16 +102,63 @@
                 </graphic>
             </Label>
         </HBox>
+        <HBox id="goldInput" spacing="10">
+            <Label text="Reference:" styleClass="text-medium-normal"
+                   alignment="BOTTOM_RIGHT" textAlignment="RIGHT" minWidth="100" maxWidth="100" maxHeight="Infinity"/>
+            <JFXTextField fx:id="goldInputTextField" styleClass="text-medium-normal" minWidth="300" maxWidth="450"/>
+            <JFXButton text="..." onAction="#pickGoldInDirectory" prefWidth="32" maxWidth="Infinity"
+                       styleClass="button-raised, button-gray, no-focus, text-small-normal" buttonType="RAISED"/>
+            <Label styleClass="label-tooltip">
+                <tooltip>
+                    <Tooltip text="Select a directory containing the Gold Standard files"/>
+                </tooltip>
+                <graphic>
+                    <ImageView fitWidth="12" preserveRatio="true" pickOnBounds="true">
+                        <Image url="/img/icons8/info_button.png"/>
+                    </ImageView>
+                </graphic>
+            </Label>
+        </HBox>
+        <HBox id="filePrefixes" spacing="10">
+            <Label text="File Prefix:" styleClass="text-medium-normal"
+                   alignment="BOTTOM_RIGHT" textAlignment="RIGHT" minWidth="100" maxWidth="100" maxHeight="Infinity"/>
+            <JFXTextField fx:id="filePrefixTextField" styleClass="text-medium-normal" minWidth="300" maxWidth="450"/>
+            <Label styleClass="label-tooltip">
+                <tooltip>
+                    <Tooltip text="A prefix to use as a filter for the input files"/>
+                </tooltip>
+                <graphic>
+                    <ImageView fitWidth="12" preserveRatio="true" pickOnBounds="true">
+                        <Image url="/img/icons8/info_button.png"/>
+                    </ImageView>
+                </graphic>
+            </Label>
+        </HBox>
+        <HBox id="fileSuffixes" spacing="10">
+            <Label text="File Suffix:" styleClass="text-medium-normal"
+                   alignment="BOTTOM_RIGHT" textAlignment="RIGHT" minWidth="100" maxWidth="100" maxHeight="Infinity"/>
+            <JFXTextField fx:id="fileSuffixTextField" styleClass="text-medium-normal" minWidth="300" maxWidth="450"/>
+            <Label styleClass="label-tooltip">
+                <tooltip>
+                    <Tooltip text="Comman-separated suffixes to use as filters for the input files"/>
+                </tooltip>
+                <graphic>
+                    <ImageView fitWidth="12" preserveRatio="true" pickOnBounds="true">
+                        <Image url="/img/icons8/info_button.png"/>
+                    </ImageView>
+                </graphic>
+            </Label>
+        </HBox>
 
         <Label text="Output Directories" styleClass="text-large-bold, underlined">
             <padding>
                 <Insets top="20"/>
             </padding>
         </Label>
-        <HBox id="goldOutput" spacing="10">
-            <Label text="Gold:" styleClass="text-medium-normal"
+        <HBox id="outputDirectory" spacing="10">
+            <Label text="Directory:" styleClass="text-medium-normal"
                    alignment="BOTTOM_RIGHT" textAlignment="RIGHT" minWidth="100" maxWidth="100" maxHeight="Infinity"/>
-            <JFXTextField fx:id="goldOutputTextField" styleClass="text-medium-normal" minWidth="300" maxWidth="450"/>
+            <JFXTextField fx:id="outputDirectoryTextField" styleClass="text-medium-normal" minWidth="300" maxWidth="450"/>
             <JFXButton text="..." onAction="#pickGoldOutDirectory" prefWidth="32" maxWidth="Infinity"
                        styleClass="button-raised, button-gray, no-focus, text-small-normal" buttonType="RAISED"/>
             <Label styleClass="label-tooltip">
@@ -133,48 +172,8 @@
                 </graphic>
             </Label>
         </HBox>
-        <HBox id="testOutput" spacing="10">
-            <Label text="Test:" styleClass="text-medium-normal"
-                   alignment="BOTTOM_RIGHT" textAlignment="RIGHT" minWidth="100" maxWidth="100" maxHeight="Infinity"/>
-            <JFXTextField fx:id="testOutputTextField" styleClass="text-medium-normal" minWidth="300" maxWidth="450"/>
-            <JFXButton text="..." onAction="#pickTestOutDirectory" prefWidth="32" maxWidth="Infinity"
-                       styleClass="button-raised, button-gray, no-focus, text-small-normal" buttonType="RAISED"/>
-            <Label styleClass="label-tooltip">
-                <tooltip>
-                    <Tooltip text="Directory to which the test json dictionaries will be saved."/>
-                </tooltip>
-                <graphic>
-                    <ImageView fitWidth="12" preserveRatio="true" pickOnBounds="true">
-                        <Image url="/img/icons8/info_button.png"/>
-                    </ImageView>
-                </graphic>
-            </Label>
-        </HBox>
-        
-        <Label text="Corpus-level Output" styleClass="text-large-bold, underlined">
-            <padding>
-                <Insets top="20"/>
-            </padding>
-        </Label>
-        <HBox id="corpusOutput" spacing="10">
-            <Label text="Corpus Output:" styleClass="text-medium-normal"
-                   alignment="BOTTOM_RIGHT" textAlignment="RIGHT" minWidth="100" maxWidth="100" maxHeight="Infinity"/>
-            <JFXTextField fx:id="corpusOutputTextField" styleClass="text-medium-normal" minWidth="300" maxWidth="450"/>
-            <JFXButton text="..." onAction="#pickCorpusOutFile" prefWidth="32" maxWidth="Infinity"
-                       styleClass="button-raised, button-gray, no-focus, text-small-normal" buttonType="RAISED"/>
-            <Label styleClass="label-tooltip">
-                <tooltip>
-                    <Tooltip text="File to which the corpus-level metrics and properties will be saved"/>
-                </tooltip>
-                <graphic>
-                    <ImageView fitWidth="12" preserveRatio="true" pickOnBounds="true">
-                        <Image url="/img/icons8/info_button.png"/>
-                    </ImageView>
-                </graphic>
-            </Label>
-        </HBox>
 
-        <Label text="Configuration Format" styleClass="text-large-bold, underlined">
+        <Label text="Annotations" styleClass="text-large-bold, underlined">
             <padding>
                 <Insets top="20"/>
             </padding>
@@ -210,40 +209,8 @@
                 </graphic>
             </Label>
         </HBox>
-
-        <HBox id="filePrefixes" spacing="10">
-            <Label text="File Prefix:" styleClass="text-medium-normal"
-                   alignment="BOTTOM_RIGHT" textAlignment="RIGHT" minWidth="100" maxWidth="100" maxHeight="Infinity"/>
-            <JFXTextField fx:id="filePrefixTextField" styleClass="text-medium-normal" minWidth="300" maxWidth="450"/>
-            <Label styleClass="label-tooltip">
-                <tooltip>
-                    <Tooltip text="A prefix to use as a filter for the input files"/>
-                </tooltip>
-                <graphic>
-                    <ImageView fitWidth="12" preserveRatio="true" pickOnBounds="true">
-                        <Image url="/img/icons8/info_button.png"/>
-                    </ImageView>
-                </graphic>
-            </Label>
-        </HBox>
-
-        <HBox id="fileSuffixes" spacing="10">
-            <Label text="File Prefix:" styleClass="text-medium-normal"
-                   alignment="BOTTOM_RIGHT" textAlignment="RIGHT" minWidth="100" maxWidth="100" maxHeight="Infinity"/>
-            <JFXTextField fx:id="fileSuffixTextField" styleClass="text-medium-normal" minWidth="300" maxWidth="450"/>
-            <Label styleClass="label-tooltip">
-                <tooltip>
-                    <Tooltip text="Comman-separated suffixes to use as filters for the input files"/>
-                </tooltip>
-                <graphic>
-                    <ImageView fitWidth="12" preserveRatio="true" pickOnBounds="true">
-                        <Image url="/img/icons8/info_button.png"/>
-                    </ImageView>
-                </graphic>
-            </Label>
-        </HBox>
     </VBox>
-    <VBox id="checkboxes" spacing="10" GridPane.rowIndex="0" GridPane.columnIndex="2">
+    <VBox id="checkboxes" spacing="10" GridPane.rowIndex="1" GridPane.columnIndex="2">
         <padding>
             <Insets topRightBottomLeft="25"/>
         </padding>
@@ -269,22 +236,91 @@
                 </HBox>
                 <HBox id="metricsCheckboxes" spacing="25">
                     <VBox spacing="5">
-                        <JFXCheckBox fx:id="metricsTP" text="True Positives (TP)" styleClass="text-medium-normal"
-                                     selected="true"/>
-                        <JFXCheckBox fx:id="metricsFP" text="False Positives (FP)" styleClass="text-medium-normal"
-                                     selected="true"/>
-                        <JFXCheckBox fx:id="metricsFN" text="False Negatives (FN)" styleClass="text-medium-normal"
-                                     selected="true"/>
-                        <JFXCheckBox fx:id="metricsF1" text="F1 Measure" styleClass="text-medium-normal"/>
+                        <HBox spacing="3">
+                            <JFXCheckBox fx:id="metricsTP" text="True Positives (TP)" styleClass="text-medium-normal"
+                                         selected="true"/>
+                            <Label styleClass="label-tooltip">
+                                <tooltip>
+                                    <Tooltip text="True positives are annotations in the reference files which correctly found in the test files"/>
+                                </tooltip>
+                                <graphic>
+                                    <ImageView fitWidth="12" preserveRatio="true" pickOnBounds="true">
+                                        <Image url="/img/icons8/info_button.png"/>
+                                    </ImageView>
+                                </graphic>
+                            </Label>
+                        </HBox>
+                        <HBox spacing="3">
+                            <JFXCheckBox fx:id="metricsFP" text="False Positives (FP)" styleClass="text-medium-normal"
+                                         selected="true"/>
+                            <Label styleClass="label-tooltip">
+                                <tooltip>
+                                    <Tooltip text="False Positives are annotations incorrectly found in the test files due not being present in the reference files"/>
+                                </tooltip>
+                                <graphic>
+                                    <ImageView fitWidth="12" preserveRatio="true" pickOnBounds="true">
+                                        <Image url="/img/icons8/info_button.png"/>
+                                    </ImageView>
+                                </graphic>
+                            </Label>
+                        </HBox>
+                        <HBox spacing="3">
+                            <JFXCheckBox fx:id="metricsFN" text="False Negatives (FN)" styleClass="text-medium-normal"
+                                         selected="true"/>
+                            <Label styleClass="label-tooltip">
+                                <tooltip>
+                                    <Tooltip text="False Negatives are annotations in the reference files which were not found in the test files"/>
+                                </tooltip>
+                                <graphic>
+                                    <ImageView fitWidth="12" preserveRatio="true" pickOnBounds="true">
+                                        <Image url="/img/icons8/info_button.png"/>
+                                    </ImageView>
+                                </graphic>
+                            </Label>
+                        </HBox>
                     </VBox>
                     <VBox spacing="5">
-                        <JFXCheckBox fx:id="metricsPrecision" text="Precision" styleClass="text-medium-normal"
-                                     selected="true"/>
-                        <JFXCheckBox fx:id="metricsRecall" text="Recall" styleClass="text-medium-normal"
-                                     selected="true"/>
-                        <JFXCheckBox fx:id="metricsSensitivity" text="Sensitivity" styleClass="text-medium-normal"/>
-                        <JFXCheckBox fx:id="metricsSpecificity" text="Specificity" styleClass="text-medium-normal"/>
-                        <JFXCheckBox fx:id="metricsAccuracy" text="Accuracy" styleClass="text-medium-normal"/>
+                        <HBox spacing="3">
+                            <JFXCheckBox fx:id="metricsPrecision" text="Precision" styleClass="text-medium-normal"
+                                         selected="true"/>
+                            <Label styleClass="label-tooltip">
+                                <tooltip>
+                                    <Tooltip text="Precision is a measure of relevant instances among the instances found.&#10;It is calculated as follows: TP / (TP + FP)"/>
+                                </tooltip>
+                                <graphic>
+                                    <ImageView fitWidth="12" preserveRatio="true" pickOnBounds="true">
+                                        <Image url="/img/icons8/info_button.png"/>
+                                    </ImageView>
+                                </graphic>
+                            </Label>
+                        </HBox>
+                        <HBox spacing="3">
+                            <JFXCheckBox fx:id="metricsRecall" text="Recall" styleClass="text-medium-normal"
+                                         selected="true"/>
+                            <Label styleClass="label-tooltip">
+                                <tooltip>
+                                    <Tooltip text="Recall is a measure of relevant instances retrieved from the total of relevant instances.&#10;It is calculated as follows: TP / (TP + FN)"/>
+                                </tooltip>
+                                <graphic>
+                                    <ImageView fitWidth="12" preserveRatio="true" pickOnBounds="true">
+                                        <Image url="/img/icons8/info_button.png"/>
+                                    </ImageView>
+                                </graphic>
+                            </Label>
+                        </HBox>
+                        <HBox spacing="3">
+                            <JFXCheckBox fx:id="metricsF1" text="F1 Measure" styleClass="text-medium-normal"/>
+                            <Label styleClass="label-tooltip">
+                                <tooltip>
+                                    <Tooltip text="The F-measure is the harmonic mean of precision and recall.&#10;It is calculated as follows: (2 * precision * recall) / (precision + recall)"/>
+                                </tooltip>
+                                <graphic>
+                                    <ImageView fitWidth="12" preserveRatio="true" pickOnBounds="true">
+                                        <Image url="/img/icons8/info_button.png"/>
+                                    </ImageView>
+                                </graphic>
+                            </Label>
+                        </HBox>
                     </VBox>
                 </HBox>
             </VBox>
@@ -368,11 +404,11 @@
             </Label>
         </HBox>
     </VBox>
-    <VBox maxWidth="Infinity" GridPane.rowIndex="1" GridPane.columnIndex="2" alignment="CENTER_RIGHT">
+    <VBox maxWidth="Infinity" GridPane.rowIndex="2" GridPane.columnIndex="2" alignment="CENTER_RIGHT">
         <padding>
             <Insets top="15" bottom="15" right="40" left="40"/>
         </padding>
-        <JFXButton fx:id="runEtude" text="RUN ETUDE" onAction="#runEtude" buttonType="RAISED"
+        <JFXButton fx:id="runEtudeButtonAction" text="RUN ETUDE" onAction="#runEtudeButtonAction" buttonType="RAISED"
                    maxWidth="150" minWidth="150" styleClass="button-raised, button-gray, text-medium-normal">
         </JFXButton>
     </VBox>

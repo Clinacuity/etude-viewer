@@ -18,7 +18,6 @@ public class CreateButtonsTask extends Task<List<AnnotationButton>> {
     private List<LineNumberedLabel> taskLabels;
     private List<AnnotationButton> taskButtons = new ArrayList<>();
     private AnnotationButton previousButton = null;
-
     private double characterHeight = -1.0;
 
     public CreateButtonsTask(List<JsonObject> annotations, List<LineNumberedLabel> labels) {

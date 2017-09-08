@@ -10,44 +10,88 @@
 <?import javafx.scene.image.Image?>
 
 <?import javafx.scene.control.Separator?>
+<?import javafx.scene.layout.HBox?>
 <GridPane alignment="TOP_CENTER"
           xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="com.clinacuity.acv.controllers.ConfigurationBuilderController">
     <padding>
-        <Insets topRightBottomLeft="30"/>
+        <Insets topRightBottomLeft="5"/>
     </padding>
-    <VBox spacing="15" maxWidth="Infinity">
-        <Label text="Configuration Builder" styleClass="text-large-bold, underlined">
+    <VBox spacing="50" maxWidth="Infinity">
+        <Label text="Configuration Builder" styleClass="header-one, underlined">
             <VBox.margin>
                 <Insets left="20"/>
             </VBox.margin>
         </Label>
-        <ScrollPane styleClass="card-big" VBox.vgrow="ALWAYS" maxHeight="Infinity" minWidth="600" vbarPolicy="ALWAYS">
-            <padding>
-                <Insets topRightBottomLeft="10"/>
-            </padding>
-            <VBox fx:id="itemBox" spacing="20">
-                <VBox alignment="CENTER_RIGHT" minWidth="600">
-                    <JFXButton onAction="#addConfigurationBlock" text="ADD SECTION"
-                               styleClass="button-raised, button-gray, no-focus" buttonType="RAISED">
-                        <graphic>
-                            <ImageView fitHeight="24" preserveRatio="true" pickOnBounds="true">
-                                <Image url="/img/icons8/plus.png"/>
-                            </ImageView>
-                        </graphic>
-                    </JFXButton>
-                    <Separator>
-                        <padding>
-                            <Insets top="20" bottom="20" right="-20"/>
-                        </padding>
-                    </Separator>
-                    <JFXButton text="SAVE CONFIGURATION" onAction="#saveConfigurationDialog"
-                               styleClass="button-raised, button-gray, no-focus" buttonType="RAISED"/>
+        <HBox spacing="20">
+            <VBox spacing="15">
+                <Label text="System Output Configuration:" styleClass="text-medium-bold">
                     <padding>
-                        <Insets right="20" bottom="20"/>
+                        <Insets left="20"/>
                     </padding>
-                </VBox>
+                </Label>
+                <ScrollPane styleClass="card-big" VBox.vgrow="ALWAYS" maxHeight="Infinity" minWidth="600" vbarPolicy="ALWAYS">
+                    <padding>
+                        <Insets topRightBottomLeft="10"/>
+                    </padding>
+                    <VBox fx:id="testItemBox" spacing="20">
+                        <VBox alignment="CENTER_RIGHT" minWidth="600">
+                            <JFXButton onAction="#addConfigurationBlock" text="ADD SECTION"
+                                       styleClass="button-raised, button-gray, no-focus" buttonType="RAISED">
+                                <graphic>
+                                    <ImageView fitHeight="24" preserveRatio="true" pickOnBounds="true">
+                                        <Image url="/img/icons8/plus.png"/>
+                                    </ImageView>
+                                </graphic>
+                            </JFXButton>
+                            <Separator>
+                                <padding>
+                                    <Insets top="20" bottom="20" right="-20"/>
+                                </padding>
+                            </Separator>
+                            <JFXButton text="SAVE CONFIGURATION" onAction="#saveConfigurationDialog"
+                                       styleClass="button-raised, button-gray, no-focus" buttonType="RAISED"/>
+                            <padding>
+                                <Insets right="20" bottom="20"/>
+                            </padding>
+                        </VBox>
+                    </VBox>
+                </ScrollPane>
             </VBox>
-        </ScrollPane>
+            <VBox spacing="15">
+                <Label text="Reference Standard Configuration:" styleClass="text-medium-bold">
+                    <padding>
+                        <Insets left="20"/>
+                    </padding>
+                </Label>
+                <ScrollPane styleClass="card-big" VBox.vgrow="ALWAYS" maxHeight="Infinity" minWidth="600" vbarPolicy="ALWAYS">
+                    <padding>
+                        <Insets topRightBottomLeft="10"/>
+                    </padding>
+                    <VBox fx:id="referenceItemBox" spacing="20" alignment="CENTER_RIGHT" minWidth="600">
+                        <VBox alignment="CENTER_RIGHT" minWidth="600">
+                            <JFXButton onAction="#addReferenceConfigurationBlock" text="ADD SECTION"
+                                       styleClass="button-raise, button-gray, no-focus" buttonType="RAISED">
+                                <graphic>
+                                    <ImageView fitHeight="24" preserveRatio="true" pickOnBounds="true">
+                                        <Image url="/img/icons8/plus.png"/>
+                                    </ImageView>
+                                </graphic>
+                            </JFXButton>
+                            <Separator>
+                                <padding>
+                                    <Insets top="20" bottom="20" right="-20"/>
+                                </padding>
+                            </Separator>
+                            <JFXButton text="SAVE CONFIGURATION" onAction="#saveConfigurationDialogReference"
+                                       styleClass="button-raised, button-gray, no-focus" buttonType="RAISED"/>
+                            <padding>
+                                <Insets right="20" bottom="20"/>
+                            </padding>
+                        </VBox>
+                    </VBox>
+                </ScrollPane>
+            </VBox>
+        </HBox>
     </VBox>
 </GridPane>
