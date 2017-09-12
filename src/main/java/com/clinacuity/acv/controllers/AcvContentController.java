@@ -5,28 +5,23 @@ import com.clinacuity.acv.context.Annotations;
 import com.clinacuity.acv.controls.AnnotatedDocumentPane;
 import com.clinacuity.acv.controls.AnnotationButton;
 import com.clinacuity.acv.controls.AnnotationType;
+import com.clinacuity.acv.controls.SideBar;
 import com.clinacuity.acv.tasks.CreateButtonsTask;
 import com.clinacuity.acv.tasks.CreateLabelsFromDocumentTask;
 import com.clinacuity.acv.controls.AnnotationButton.MatchType;
+import com.clinacuity.acv.tasks.CreateSidebarItemsTask;
 import com.google.gson.JsonObject;
 import com.jfoenix.controls.JFXDrawer;
-import com.jfoenix.controls.JFXHamburger;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.layout.VBox;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.reactfx.util.FxTimer;
-
-import java.awt.event.ActionEvent;
 import java.net.URL;
 import java.time.Duration;
 import java.util.ArrayList;
@@ -41,8 +36,7 @@ public class AcvContentController implements Initializable {
     @FXML private AnnotatedDocumentPane targetPane;
     @FXML private ViewControls viewControls;
     @FXML private JFXDrawer drawer;
-    @FXML private JFXHamburger hamburger;
-    @FXML private VBox sideBar;
+    @FXML private SideBar sideBar;
     private ObjectProperty<Annotations> targetAnnotationsProperty = new SimpleObjectProperty<>();
     private ObjectProperty<Annotations> referenceAnnotationsProperty = new SimpleObjectProperty<>();
     private ObjectProperty<AnnotationButton> selectedAnnotationButton = new SimpleObjectProperty<>();
@@ -54,29 +48,13 @@ public class AcvContentController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         context = AcvContext.getInstance();
-        try {
-            VBox box = FXMLLoader.load(getClass().getResource(AcvContext.SIDE_BAR), resources);
-            drawer.setSidePane(box);
-            drawer.setOverLayVisible(true);
-            drawer.setMouseTransparent(true);
-            drawer.setOnDrawerClosed(new EventHandler<Event>() {
-                public void handle(Event event) {
-                    drawer.setMouseTransparent(true);
-                }
-            });
-            drawer.setOnDrawerOpened(new EventHandler<Event>() {
-                public void handle(Event event) {
-                    drawer.setMouseTransparent(false);
-                }
-            });
-        } catch (Exception e) {
-
-        }
 
         FxTimer.runLater(Duration.ofMillis(500), this::init);
     }
 
     private void init() {
+        setupSideBar();
+
         setupAnnotationProperties();
 
         setupDocumentPanes();
@@ -84,6 +62,19 @@ public class AcvContentController implements Initializable {
         setupViewControls();
 
         logger.debug("Annotation Comparison View Controller initialized");
+    }
+
+    private void setupSideBar() {
+        sideBar.setDrawer(drawer);
+        drawer.setDefaultDrawerSize(SideBar.MIN_WIDTH);
+
+        CreateSidebarItemsTask sidebarTask = new CreateSidebarItemsTask();
+        sidebarTask.setCorpusDictionary(AcvContext.getInstance().getCorpusDictionary());
+        sidebarTask.setOnSucceeded(event -> {
+            sideBar.getChildren().add(sidebarTask.getValue());
+            logger.debug("Side bar completed set up.");
+        });
+        new Thread(sidebarTask).start();
     }
 
     /**

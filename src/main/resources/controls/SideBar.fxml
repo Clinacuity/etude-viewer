@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+
+<fx:root type="javafx.scene.layout.VBox"
+         xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1">
+    <VBox fx:id="box1">
+        <HBox spacing="40">
+            <Label text="Documents:" styleClass="header-two, underlined" alignment="CENTER"/>
+            <VBox fx:id="box2" maxWidth="Infinity">
+                <JFXButton onAction="#collapse">
+                    <graphic>
+                        <ImageView fitHeight="16" preserveRatio="true" pickOnBounds="true">
+                            <Image url="/img/icons8/delete.png"/>
+                        </ImageView>
+                    </graphic>
+                </JFXButton>
+            </VBox>
+        </HBox>
+    </VBox>
+</fx:root>
