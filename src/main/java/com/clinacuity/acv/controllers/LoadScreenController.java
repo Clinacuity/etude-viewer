@@ -7,58 +7,70 @@ import com.jfoenix.transitions.hamburger.HamburgerBackArrowBasicTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
+import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
+import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.io.filefilter.FileFileFilter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import java.io.File;
+import java.io.FileFilter;
+import java.io.FilenameFilter;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class LoadScreenController implements Initializable {
     private static final Logger logger = LogManager.getLogger();
 
-    @FXML private GridPane masterGrid;
     @FXML private TextField gsInputTextField;
     @FXML private TextField testInputTextField;
-    @FXML private JFXDrawer drawer;
-    @FXML private JFXHamburger hamburger;
-    @FXML private VBox sideBar;
+    @FXML private Text errorText;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        try {
-            VBox box = FXMLLoader.load(getClass().getResource(AcvContext.SIDE_BAR), resources);
-            drawer.setSidePane(box);
-            masterGrid.getChildren().addAll(box);
-        }catch (Exception e) {
-
-        }
-        //            masterGrid.getChildren().addAll(menuBar);
     }
 
-    @FXML private void pickReferenceFile() {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Select Gold Standard Dictionaries Folder");
-        fileChooser.getExtensionFilters().add(getFilter());
-        File file = fileChooser.showOpenDialog(gsInputTextField.getScene().getWindow());
+    @FXML private void pickReferenceFile() throws Exception {
+        DirectoryChooser directoryChooser = new DirectoryChooser();
+        directoryChooser.setTitle("Select Gold Standard Dictionaries Folder");
+        File directory = directoryChooser.showDialog(gsInputTextField.getScene().getWindow());
 
-        if (file != null) {
-            gsInputTextField.setText(file.getAbsolutePath());
+        if (directory != null) {
+            gsInputTextField.setText(directory.getAbsolutePath());
         }
+//
+        for(File file : directory.listFiles()) {
+            if(!FilenameUtils.getExtension(file.toString()).equals("json") && !FilenameUtils.getExtension(file.toString()).equals("xml")) {
+                displayExceptionModal(new Exception());
+            }
+        }
+
+
     }
+
 
     @FXML private void pickTestFile() {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Select Test Dictionaries Folder");
-        fileChooser.getExtensionFilters().add(getFilter());
-        File file = fileChooser.showOpenDialog(testInputTextField.getScene().getWindow());
+        DirectoryChooser directoryChooser = new DirectoryChooser();
+        directoryChooser.setTitle("Select Test Dictionaries Folder");
+//        directoryChooser.getExtensionFilters().add(getFilter());
+        File directory = directoryChooser.showDialog(testInputTextField.getScene().getWindow());
 
-        if (file != null) {
-            testInputTextField.setText(file.getAbsolutePath());
+        if (directory != null) {
+            testInputTextField.setText(directory.getAbsolutePath());
         }
+
+        //        for(File file : directory.listFiles()) {
+        //            if(!FilenameUtils.getExtension(file.toString()).equals("json") && !FilenameUtils.getExtension(file.toString()).equals("xml")) {
+        //                throw new Exception();
+        //            }
+        //        }
     }
 
     @FXML private void runAcv() {
@@ -82,11 +94,11 @@ public class LoadScreenController implements Initializable {
         String gold = gsInputTextField.getText().trim();
 
         if (test.equals("") || !(new File(test).exists())) {
-            // TODO: logger pop-up window saying this field is required
+            errorText.setVisible(true);
             return false;
         }
         if (gold.equals("") || !(new File(gold).exists())) {
-            // TODO: logger pop-up window saying this field is required
+            errorText.setVisible(true);
             return false;
         }
 
@@ -95,6 +107,18 @@ public class LoadScreenController implements Initializable {
 
     private FileChooser.ExtensionFilter getFilter() {
         return new FileChooser.ExtensionFilter("(*.json) ETUDE Output Dictionary", "*.json", "*.xml");
+    }
+
+    private void displayExceptionModal(Throwable exception) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error");
+//        if (exception instanceof UserInputException) {
+//            alert.setContentText(exception.getMessage());
+//        } else {
+            alert.setContentText("An unexpected error occurred! Please send the log file to support@Clinacuity.com");
+//        }
+        alert.setResizable(true);
+        alert.show();
     }
 
 }

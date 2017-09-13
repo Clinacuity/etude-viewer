@@ -27,6 +27,7 @@ import org.apache.logging.log4j.Logger;
 import org.reactfx.util.FxTimer;
 
 import java.awt.event.ActionEvent;
+import java.io.IOException;
 import java.net.URL;
 import java.time.Duration;
 import java.util.ArrayList;
@@ -59,18 +60,10 @@ public class AcvContentController implements Initializable {
             drawer.setSidePane(box);
             drawer.setOverLayVisible(true);
             drawer.setMouseTransparent(true);
-            drawer.setOnDrawerClosed(new EventHandler<Event>() {
-                public void handle(Event event) {
-                    drawer.setMouseTransparent(true);
-                }
-            });
-            drawer.setOnDrawerOpened(new EventHandler<Event>() {
-                public void handle(Event event) {
-                    drawer.setMouseTransparent(false);
-                }
-            });
-        } catch (Exception e) {
-
+            drawer.setOnDrawerClosed(event -> drawer.setMouseTransparent(true));
+            drawer.setOnDrawerOpened(event -> drawer.setMouseTransparent(false));
+        } catch (IOException e) {
+            logger.throwing(e);
         }
 
         FxTimer.runLater(Duration.ofMillis(500), this::init);
