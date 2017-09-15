@@ -130,4 +130,6 @@ public class CorpusDictionary {
             return null;
         }
     }
+
+    public Map<String, String> getFileMappings() { return fileMappings; }
 }

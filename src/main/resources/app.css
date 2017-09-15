@@ -52,6 +52,11 @@
     -fx-font-family: "Open Sans Bold";
 }
 
+.text-medium-italic {
+    -fx-font-size: 14px;
+    -fx-font-family: "Open Sans Italic";
+}
+
 .text-large-normal {
     -fx-font-size: 20px;
     -fx-font-family: "Open Sans Light";
@@ -156,6 +161,10 @@
 
 
 /*   TEXT         */
+.file-list-metrics {
+    -fx-text-fill: rgba(100, 200, 100, 1);
+}
+
 .feature-tree {
     -fx-font-family: "Fira Mono Bold";
     -fx-background-color: rgba(220, 220, 220, 0);
