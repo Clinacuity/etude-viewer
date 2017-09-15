@@ -19,6 +19,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ScrollPane;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.reactfx.util.FxTimer;
@@ -71,8 +72,11 @@ public class AcvContentController implements Initializable {
         CreateSidebarItemsTask sidebarTask = new CreateSidebarItemsTask();
         sidebarTask.setCorpusDictionary(AcvContext.getInstance().getCorpusDictionary());
         sidebarTask.setOnSucceeded(event -> {
-            sideBar.getChildren().add(sidebarTask.getValue());
-            logger.debug("Side bar completed set up.");
+            ScrollPane pane = sidebarTask.getValue();
+            if (pane != null) {
+                sideBar.getChildren().add(pane);
+                logger.debug("Side bar completed set up.");
+            }
         });
         new Thread(sidebarTask).start();
     }
