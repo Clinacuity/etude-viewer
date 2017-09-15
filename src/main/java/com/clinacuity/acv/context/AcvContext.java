@@ -37,12 +37,18 @@ public class AcvContext {
 
     public AppMainController mainController;
     public Window mainWindow;
+
     private Properties properties;
+    public Properties getProperties() { return properties; }
+
+    private CorpusDictionary corpusDictionary;
+    public CorpusDictionary getCorpusDictionary() { return corpusDictionary; }
 
     // Properties
     public StringProperty referenceDocumentPathProperty = new SimpleStringProperty("");
     public StringProperty targetDocumentPathProperty = new SimpleStringProperty("");
     public StringProperty selectedAnnotationTypeProperty = new SimpleStringProperty("");
+    public StringProperty corpusFilePathProperty = new SimpleStringProperty("");
     public BooleanProperty exactMatchesProperty = new SimpleBooleanProperty(true);
     public BooleanProperty overlappingMatchesProperty = new SimpleBooleanProperty(true);
     public BooleanProperty falsePositivesProperty = new SimpleBooleanProperty(true);
@@ -54,10 +60,11 @@ public class AcvContext {
         instance = this;
 
         initProperties();
-        addProperty("exactMatch", true);
+        addProperty("exactMatch", Boolean.toString(true));
 
         referenceDocumentPathProperty.addListener((observable, oldValue, newValue) -> cleanupAnnotationList());
         targetDocumentPathProperty.addListener((observable, oldValue, newValue) -> cleanupAnnotationList());
+        corpusFilePathProperty.addListener((observable, oldValue, newValue) -> loadCorpusDictionary());
     }
 
     private void cleanupAnnotationList() {
@@ -65,6 +72,10 @@ public class AcvContext {
             annotationList.remove(1, annotationList.size() - 1);
             selectedAnnotationTypeProperty.setValue(annotationList.get(0));
         }
+    }
+
+    private void loadCorpusDictionary() {
+        corpusDictionary = new CorpusDictionary(corpusFilePathProperty.getValueSafe());
     }
 
     private void initProperties() {
@@ -79,7 +90,7 @@ public class AcvContext {
         }
     }
 
-    private void addProperty(Object key, Object value) {
+    private void addProperty(String key, String value) {
         instance.properties.put(key, value);
 
         if (propertiesActive) {

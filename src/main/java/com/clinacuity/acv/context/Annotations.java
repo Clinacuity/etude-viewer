@@ -146,7 +146,7 @@ public class Annotations {
                 return 0.0d;
             }
         } else {
-            logger.warn("There is no metrics object; key <{}> begin set to 0.0d.");
+            logger.warn("There is no metrics object; key <{}> begin set to 0.0d.", annotationKey);
             return 0.0d;
         }
 
