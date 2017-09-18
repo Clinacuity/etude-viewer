@@ -81,7 +81,6 @@ public class AnnotatedDocumentPane extends GridPane {
         int maxChars = (int)(documentScrollWidth / characterWidth);
         if (maxCharactersPerLabel < maxChars) {
             maxCharactersPerLabel = maxChars;
-            logger.error(maxCharactersPerLabel);
         }
     }
 

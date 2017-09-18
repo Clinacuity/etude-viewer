@@ -1,15 +1,9 @@
 package com.clinacuity.acv.controllers;
 
 import com.clinacuity.acv.context.AcvContext;
-import com.jfoenix.controls.JFXDrawer;
-import com.jfoenix.controls.JFXHamburger;
-import com.jfoenix.transitions.hamburger.HamburgerBackArrowBasicTransition;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -20,23 +14,12 @@ import java.util.ResourceBundle;
 public class LoadScreenController implements Initializable {
     private static final Logger logger = LogManager.getLogger();
 
-    @FXML private GridPane masterGrid;
     @FXML private TextField gsInputTextField;
     @FXML private TextField testInputTextField;
-    @FXML private JFXDrawer drawer;
-    @FXML private JFXHamburger hamburger;
-    @FXML private VBox sideBar;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        try {
-            VBox box = FXMLLoader.load(getClass().getResource(AcvContext.SIDE_BAR), resources);
-            drawer.setSidePane(box);
-            masterGrid.getChildren().addAll(box);
-        }catch (Exception e) {
 
-        }
-        //            masterGrid.getChildren().addAll(menuBar);
     }
 
     @FXML private void pickReferenceFile() {
@@ -62,6 +45,8 @@ public class LoadScreenController implements Initializable {
     }
 
     @FXML private void runAcv() {
+        AcvContext.getInstance().corpusFilePathProperty.setValue("/Users/jkaccetta/Desktop/corpus.json");
+
         // TODO: Activate loading spinner
         if (checkDocumentPaths()) {
             // load documents' file paths into context [triggers creating Annotations objects]
