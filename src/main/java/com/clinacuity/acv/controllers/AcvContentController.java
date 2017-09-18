@@ -19,7 +19,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.HBox;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.reactfx.util.FxTimer;
@@ -41,8 +41,8 @@ public class AcvContentController implements Initializable {
     private ObjectProperty<Annotations> targetAnnotationsProperty = new SimpleObjectProperty<>();
     private ObjectProperty<Annotations> referenceAnnotationsProperty = new SimpleObjectProperty<>();
     private ObjectProperty<AnnotationButton> selectedAnnotationButton = new SimpleObjectProperty<>();
-    private CreateLabelsFromDocumentTask getRefLabelsTask;
-    private CreateLabelsFromDocumentTask getTargetLabelsTask;
+    private CreateLabelsFromDocumentTask referenceLabelsTask;
+    private CreateLabelsFromDocumentTask targetLabelsTask;
     private CreateButtonsTask targetButtonsTask;
     private CreateButtonsTask referenceButtonsTask;
 
@@ -72,10 +72,12 @@ public class AcvContentController implements Initializable {
         CreateSidebarItemsTask sidebarTask = new CreateSidebarItemsTask();
         sidebarTask.setCorpusDictionary(AcvContext.getInstance().getCorpusDictionary());
         sidebarTask.setOnSucceeded(event -> {
-            ScrollPane pane = sidebarTask.getValue();
-            if (pane != null) {
-                sideBar.getChildren().add(pane);
-                logger.debug("Side bar completed set up.");
+            List<HBox> results = sidebarTask.getValue();
+
+            if (results != null) {
+                sideBar.setFileList(results);
+                results.forEach(box -> box.setOnMouseClicked(click ->
+                    sideBar.getDocument(results.indexOf(box), box.getId())));
             }
         });
         new Thread(sidebarTask).start();
@@ -110,27 +112,11 @@ public class AcvContentController implements Initializable {
         referencePane.getScrollPane().vvalueProperty().bindBidirectional(targetPane.getScrollPane().vvalueProperty());
         referencePane.getScrollPane().hvalueProperty().bindBidirectional(targetPane.getScrollPane().hvalueProperty());
 
-        if (getRefLabelsTask != null && getRefLabelsTask.isRunning()) {
-            getRefLabelsTask.cancel();
-        }
+        resetLabels(true, referenceAnnotationsProperty.getValue());
+        resetLabels(false, referenceAnnotationsProperty.getValue());
 
-        if (getTargetLabelsTask != null && getTargetLabelsTask.isRunning()) {
-            getTargetLabelsTask.cancel();
-        }
-
-        getRefLabelsTask = new CreateLabelsFromDocumentTask(referenceAnnotationsProperty.getValue().getRawText());
-        getRefLabelsTask.setOnSucceeded(event -> {
-            referencePane.addLineNumberedLabels(getRefLabelsTask.getValue());
-            referencePane.getAnchor().getChildren().addAll(getRefLabelsTask.getLineNumbers());
-        });
-        new Thread(getRefLabelsTask).start();
-
-        getTargetLabelsTask = new CreateLabelsFromDocumentTask(targetAnnotationsProperty.getValue().getRawText());
-        getTargetLabelsTask.setOnSucceeded(event -> {
-            targetPane.addLineNumberedLabels(getTargetLabelsTask.getValue());
-            targetPane.getAnchor().getChildren().addAll(getTargetLabelsTask.getLineNumbers());
-        });
-        new Thread(getTargetLabelsTask).start();
+        targetAnnotationsProperty.addListener((observable, old, newValue) -> resetLabels(false, newValue));
+        referenceAnnotationsProperty.addListener((observable, old, newValue) -> resetLabels(true, newValue));
     }
 
     /**
@@ -139,6 +125,7 @@ public class AcvContentController implements Initializable {
      */
     private void setupViewControls() {
         createTableRows();
+        context.annotationList.addListener((observable, old, newValue) -> createTableRows());
 
         context.exactMatchesProperty.addListener((obs, old, newValue) -> updateButton(newValue, MatchType.EXACT_MATCH));
         context.overlappingMatchesProperty.addListener((obs, old, newValue) -> updateButton(newValue, MatchType.PARTIAL_MATCH));
@@ -151,7 +138,32 @@ public class AcvContentController implements Initializable {
 
         context.selectedAnnotationTypeProperty.addListener(selectedAnnotationTypeListener);
     }
-
+    
+    private void resetLabels(boolean isReference, Annotations newValue) {
+        // both methods have to be the same, referencing different objects. Lambdas require (effectively) final vars
+        if (isReference) {
+            if (referenceLabelsTask != null && referenceLabelsTask.isRunning()) {
+                referenceLabelsTask.cancel();
+            }
+            referenceLabelsTask = new CreateLabelsFromDocumentTask(newValue.getRawText());
+            referenceLabelsTask.setOnSucceeded(event -> {
+                referencePane.addLineNumberedLabels(referenceLabelsTask.getValue());
+                referencePane.getAnchor().getChildren().addAll(referenceLabelsTask.getLineNumbers());
+            });
+            new Thread(referenceLabelsTask).start();
+        } else {
+            if (targetLabelsTask != null && targetLabelsTask.isRunning()) {
+                targetLabelsTask.cancel();
+            }
+            targetLabelsTask = new CreateLabelsFromDocumentTask(newValue.getRawText());
+            targetLabelsTask.setOnSucceeded(event -> {
+                targetPane.addLineNumberedLabels(targetLabelsTask.getValue());
+                targetPane.getAnchor().getChildren().addAll(targetLabelsTask.getLineNumbers());
+            });
+            new Thread(targetLabelsTask).start();
+        }
+    }
+    
     private void resetAnnotationButtons(String key) {
         if (targetButtonsTask != null && targetButtonsTask.isRunning()) {
             targetButtonsTask.cancel();
@@ -341,6 +353,15 @@ public class AcvContentController implements Initializable {
         }
     }
 
+    @FXML
+    private void getPreviousDocument() {
+        sideBar.getPreviousDocument();
+    }
+
+    @FXML private void getNextDocument() {
+        sideBar.getNextDocument();
+    }
+
     /* ******************************
      *                              *
      * Change Listeners             *
@@ -362,9 +383,7 @@ public class AcvContentController implements Initializable {
      */
     private ChangeListener<Annotations> annotationPropertiesListener = (observable, oldValue, newValue) ->
             newValue.getAnnotationKeySet().forEach(key -> {
-                if (AcvContext.getInstance().annotationList.contains(key)) {
-                    logger.warn("Duplicate key not added: {}", key);
-                } else {
+                if (!AcvContext.getInstance().annotationList.contains(key)) {
                     context.annotationList.add(key);
                 }
             });
