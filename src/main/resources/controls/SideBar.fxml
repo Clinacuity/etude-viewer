@@ -6,13 +6,15 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.image.Image?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.geometry.Insets?>
 
 <fx:root type="javafx.scene.layout.VBox"
          xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1">
-    <VBox fx:id="box1">
+    <VBox>
         <HBox spacing="40">
             <Label text="Documents:" styleClass="header-two, underlined" alignment="CENTER"/>
-            <VBox fx:id="box2" maxWidth="Infinity">
+            <VBox maxWidth="Infinity">
                 <JFXButton onAction="#collapse">
                     <graphic>
                         <ImageView fitHeight="16" preserveRatio="true" pickOnBounds="true">
@@ -23,4 +25,10 @@
             </VBox>
         </HBox>
     </VBox>
+    <ScrollPane fx:id="scrollPane" vbarPolicy="NEVER" fitToHeight="true">
+        <VBox fx:id="fileList" spacing="1"/>
+        <padding>
+            <Insets topRightBottomLeft="3"/>
+        </padding>
+    </ScrollPane>
 </fx:root>

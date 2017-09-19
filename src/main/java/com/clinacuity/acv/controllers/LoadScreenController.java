@@ -1,59 +1,61 @@
 package com.clinacuity.acv.controllers;
 
 import com.clinacuity.acv.context.AcvContext;
-import com.jfoenix.controls.JFXDrawer;
-import com.jfoenix.controls.JFXHamburger;
-import com.jfoenix.transitions.hamburger.HamburgerBackArrowBasicTransition;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import org.apache.commons.io.FilenameUtils;
-import org.apache.commons.io.filefilter.FileFileFilter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import java.io.File;
-import java.io.FileFilter;
-import java.io.FilenameFilter;
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class LoadScreenController implements Initializable {
     private static final Logger logger = LogManager.getLogger();
 
+    @FXML private TextField gsInputTextField;
     @FXML private TextField testInputTextField;
     @FXML private Text errorText;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+    }
+
+    @FXML private void pickReferenceFile() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Select Gold Standard Dictionaries Folder");
+        fileChooser.getExtensionFilters().add(getFilter());
+        File file = fileChooser.showOpenDialog(gsInputTextField.getScene().getWindow());
+
+        if (file != null) {
+            gsInputTextField.setText(file.getAbsolutePath());
+        }
     }
 
     @FXML private void pickTestFile() {
         DirectoryChooser directoryChooser = new DirectoryChooser();
         directoryChooser.setTitle("Select Test Dictionaries Folder");
-//        directoryChooser.getExtensionFilters().add(getFilter());
         File directory = directoryChooser.showDialog(testInputTextField.getScene().getWindow());
 
         if (directory != null) {
             testInputTextField.setText(directory.getAbsolutePath());
-        }
-
-                for(File file : directory.listFiles()) {
-                    if(!FilenameUtils.getExtension(file.toString()).equals("json") && !FilenameUtils.getExtension(file.toString()).equals("xml")) {
-                        displayExceptionModal(new Exception("Invalid file extension(s)!"));
-                    }
+            for (File file : directory.listFiles()) {
+                if(!FilenameUtils.getExtension(file.toString()).equals("json") && !FilenameUtils.getExtension(file.toString()).equals("xml")) {
+                    displayExceptionModal(new Exception("Invalid file extension(s)!"));
                 }
+            }
+        }
     }
 
     @FXML private void runAcv() {
+        AcvContext.getInstance().corpusFilePathProperty.setValue("/Users/jkaccetta/Desktop/corpus.json");
+
         // TODO: Activate loading spinner
         if (checkDocumentPaths()) {
             // load documents' file paths into context [triggers creating Annotations objects]
@@ -91,5 +93,4 @@ public class LoadScreenController implements Initializable {
         alert.setResizable(true);
         alert.show();
     }
-
 }
