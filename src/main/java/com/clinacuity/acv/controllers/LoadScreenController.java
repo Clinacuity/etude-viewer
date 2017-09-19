@@ -3,8 +3,12 @@ package com.clinacuity.acv.controllers;
 import com.clinacuity.acv.context.AcvContext;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
+import javafx.scene.text.Text;
+import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
+import org.apache.commons.io.FilenameUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import java.io.File;
@@ -16,6 +20,7 @@ public class LoadScreenController implements Initializable {
 
     @FXML private TextField gsInputTextField;
     @FXML private TextField testInputTextField;
+    @FXML private Text errorText;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -34,13 +39,17 @@ public class LoadScreenController implements Initializable {
     }
 
     @FXML private void pickTestFile() {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Select Test Dictionaries Folder");
-        fileChooser.getExtensionFilters().add(getFilter());
-        File file = fileChooser.showOpenDialog(testInputTextField.getScene().getWindow());
+        DirectoryChooser directoryChooser = new DirectoryChooser();
+        directoryChooser.setTitle("Select Test Dictionaries Folder");
+        File directory = directoryChooser.showDialog(testInputTextField.getScene().getWindow());
 
-        if (file != null) {
-            testInputTextField.setText(file.getAbsolutePath());
+        if (directory != null) {
+            testInputTextField.setText(directory.getAbsolutePath());
+            for (File file : directory.listFiles()) {
+                if(!FilenameUtils.getExtension(file.toString()).equals("json") && !FilenameUtils.getExtension(file.toString()).equals("xml")) {
+                    displayExceptionModal(new Exception("Invalid file extension(s)!"));
+                }
+            }
         }
     }
 
@@ -51,8 +60,9 @@ public class LoadScreenController implements Initializable {
         if (checkDocumentPaths()) {
             // load documents' file paths into context [triggers creating Annotations objects]
             AcvContext context = AcvContext.getInstance();
-            context.targetDocumentPathProperty.setValue(testInputTextField.getText());
-            context.referenceDocumentPathProperty.setValue(gsInputTextField.getText());
+            context.corpusFilePathProperty.setValue(testInputTextField.getText());
+//            context.targetDocumentPathProperty.setValue(testInputTextField.getText());
+//            context.referenceDocumentPathProperty.setValue(gsInputTextField.getText());
 
             // load the Acv main view
             context.mainController.reloadContent(AcvContext.COMPARISON_VIEW);
@@ -64,17 +74,11 @@ public class LoadScreenController implements Initializable {
 
     private boolean checkDocumentPaths() {
         String test = testInputTextField.getText().trim();
-        String gold = gsInputTextField.getText().trim();
 
         if (test.equals("") || !(new File(test).exists())) {
-            // TODO: logger pop-up window saying this field is required
+            errorText.setVisible(true);
             return false;
         }
-        if (gold.equals("") || !(new File(gold).exists())) {
-            // TODO: logger pop-up window saying this field is required
-            return false;
-        }
-
         return true;
     }
 
@@ -82,4 +86,11 @@ public class LoadScreenController implements Initializable {
         return new FileChooser.ExtensionFilter("(*.json) ETUDE Output Dictionary", "*.json", "*.xml");
     }
 
+    private void displayExceptionModal(Throwable exception) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setContentText("An unexpected error occurred! Please send the log file to support@Clinacuity.com");
+        alert.setResizable(true);
+        alert.show();
+    }
 }
