@@ -29,32 +29,12 @@ import java.util.ResourceBundle;
 public class LoadScreenController implements Initializable {
     private static final Logger logger = LogManager.getLogger();
 
-    @FXML private TextField gsInputTextField;
     @FXML private TextField testInputTextField;
     @FXML private Text errorText;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
     }
-
-    @FXML private void pickReferenceFile() throws Exception {
-        DirectoryChooser directoryChooser = new DirectoryChooser();
-        directoryChooser.setTitle("Select Gold Standard Dictionaries Folder");
-        File directory = directoryChooser.showDialog(gsInputTextField.getScene().getWindow());
-
-        if (directory != null) {
-            gsInputTextField.setText(directory.getAbsolutePath());
-        }
-//
-        for(File file : directory.listFiles()) {
-            if(!FilenameUtils.getExtension(file.toString()).equals("json") && !FilenameUtils.getExtension(file.toString()).equals("xml")) {
-                displayExceptionModal(new Exception());
-            }
-        }
-
-
-    }
-
 
     @FXML private void pickTestFile() {
         DirectoryChooser directoryChooser = new DirectoryChooser();
@@ -66,11 +46,11 @@ public class LoadScreenController implements Initializable {
             testInputTextField.setText(directory.getAbsolutePath());
         }
 
-        //        for(File file : directory.listFiles()) {
-        //            if(!FilenameUtils.getExtension(file.toString()).equals("json") && !FilenameUtils.getExtension(file.toString()).equals("xml")) {
-        //                throw new Exception();
-        //            }
-        //        }
+                for(File file : directory.listFiles()) {
+                    if(!FilenameUtils.getExtension(file.toString()).equals("json") && !FilenameUtils.getExtension(file.toString()).equals("xml")) {
+                        displayExceptionModal(new Exception("Invalid file extension(s)!"));
+                    }
+                }
     }
 
     @FXML private void runAcv() {
@@ -78,8 +58,9 @@ public class LoadScreenController implements Initializable {
         if (checkDocumentPaths()) {
             // load documents' file paths into context [triggers creating Annotations objects]
             AcvContext context = AcvContext.getInstance();
-            context.targetDocumentPathProperty.setValue(testInputTextField.getText());
-            context.referenceDocumentPathProperty.setValue(gsInputTextField.getText());
+            context.corpusFilePathProperty.setValue(testInputTextField.getText());
+//            context.targetDocumentPathProperty.setValue(testInputTextField.getText());
+//            context.referenceDocumentPathProperty.setValue(gsInputTextField.getText());
 
             // load the Acv main view
             context.mainController.reloadContent(AcvContext.COMPARISON_VIEW);
@@ -91,17 +72,11 @@ public class LoadScreenController implements Initializable {
 
     private boolean checkDocumentPaths() {
         String test = testInputTextField.getText().trim();
-        String gold = gsInputTextField.getText().trim();
 
         if (test.equals("") || !(new File(test).exists())) {
             errorText.setVisible(true);
             return false;
         }
-        if (gold.equals("") || !(new File(gold).exists())) {
-            errorText.setVisible(true);
-            return false;
-        }
-
         return true;
     }
 
@@ -112,11 +87,7 @@ public class LoadScreenController implements Initializable {
     private void displayExceptionModal(Throwable exception) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Error");
-//        if (exception instanceof UserInputException) {
-//            alert.setContentText(exception.getMessage());
-//        } else {
-            alert.setContentText("An unexpected error occurred! Please send the log file to support@Clinacuity.com");
-//        }
+        alert.setContentText("An unexpected error occurred! Please send the log file to support@Clinacuity.com");
         alert.setResizable(true);
         alert.show();
     }

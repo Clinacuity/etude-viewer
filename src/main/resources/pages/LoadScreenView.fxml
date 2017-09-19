@@ -37,7 +37,7 @@
 
 
     <VBox spacing="30" GridPane.halignment="CENTER" GridPane.columnIndex="1" GridPane.columnSpan="2">
-        <Label styleClass="header-one, underlined" text="Welcometo ACV" alignment="BOTTOM_CENTER"
+        <Label styleClass="header-one, underlined" text="ETUDE" alignment="BOTTOM_CENTER"
                textAlignment="CENTER"/>
         <Label styleClass="text-medium-normal"
                text="This tool will help you compare files processed by a given system (such as CliniDeid)&#10;against files on a given Gold Standard corpus."/>
@@ -47,7 +47,7 @@
     </VBox>
 
 
-    <Label text="System (Test) Output:" styleClass="text-medium-normal" alignment="CENTER_RIGHT" textAlignment="RIGHT"
+    <Label text="Output Directory:" styleClass="text-medium-normal" alignment="CENTER_RIGHT" textAlignment="RIGHT"
            GridPane.halignment="RIGHT" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
     <JFXTextField fx:id="testInputTextField" styleClass="text-medium-normal" GridPane.columnIndex="2"
                   GridPane.rowIndex="2">
@@ -58,20 +58,6 @@
     <JFXButton text="..." onAction="#pickTestFile" textAlignment="CENTER" maxHeight="Infinity" maxWidth="Infinity"
                styleClass="button-raised, button-gray, no-focus, text-small-bold" buttonType="RAISED"
                GridPane.halignment="LEFT" GridPane.columnIndex="3" GridPane.rowIndex="2"/>
-
-
-    <Label text="Reference (Gold) Standard:" styleClass="text-medium-normal" alignment="CENTER_RIGHT"
-           textAlignment="RIGHT"
-           GridPane.halignment="RIGHT" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
-    <JFXTextField fx:id="gsInputTextField" styleClass="text-medium-normal" GridPane.columnIndex="2"
-                  GridPane.rowIndex="4">
-        <GridPane.margin>
-            <Insets right="20" left="15"/>
-        </GridPane.margin>
-    </JFXTextField>
-    <JFXButton text="..." onAction="#pickReferenceFile" textAlignment="CENTER" maxHeight="Infinity" maxWidth="Infinity"
-               styleClass="button-raised, button-gray, no-focus, text-small-bold" buttonType="RAISED"
-               GridPane.halignment="LEFT" GridPane.columnIndex="3" GridPane.rowIndex="4"/>
 
 
     <JFXButton onAction="#runAcv" text="RUN ACV" buttonType="RAISED"
