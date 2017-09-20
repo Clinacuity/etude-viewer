@@ -4,72 +4,50 @@
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Text?>
+<?import javafx.scene.layout.HBox?>
+
 <GridPane alignment="CENTER" minHeight="300" minWidth="400"
           xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="com.clinacuity.acv.controllers.LoadScreenController">
-    <padding>
-        <Insets bottom="100" top="25"/>
-    </padding>
-
-    <columnConstraints>
-        <ColumnConstraints percentWidth="15"/>
-        <ColumnConstraints percentWidth="20"/>
-        <ColumnConstraints percentWidth="30"/>
-        <ColumnConstraints percentWidth="2"/>
-        <ColumnConstraints percentWidth="18"/>
-        <ColumnConstraints percentWidth="15"/>
-    </columnConstraints>
-
-    <rowConstraints>
-        <RowConstraints minHeight="10"/>
-        <RowConstraints minHeight="10" prefHeight="30"/>
-        <RowConstraints minHeight="10"/>
-        <RowConstraints minHeight="10" prefHeight="30"/>
-        <RowConstraints minHeight="10"/>
-        <RowConstraints minHeight="10" prefHeight="80"/>
-        <RowConstraints minHeight="10"/>
-    </rowConstraints>
-
-
-    <VBox spacing="30" GridPane.halignment="CENTER" GridPane.columnIndex="1" GridPane.columnSpan="2">
-        <Label styleClass="header-one, underlined" text="ETUDE" alignment="BOTTOM_CENTER"
-               textAlignment="CENTER"/>
-        <Label styleClass="text-medium-normal"
-               text="This tool will help you compare files processed by a given system (such as CliniDeid)&#10;against files on a given Gold Standard corpus."/>
+    <VBox spacing="30" maxWidth="Infinity" minWidth="1000" maxHeight="Infinity" minHeight="1000" alignment="CENTER">
         <padding>
-            <Insets bottom="50" top="50" left="50" right="50"/>
+            <Insets topRightBottomLeft="25"/>
         </padding>
+        <VBox spacing="10">
+            <Label styleClass="header-one, underlined" text="ETUDE" textAlignment="CENTER"/>
+            <Label styleClass="text-medium-normal"
+                   text="This tool will help you compare files processed by a given system (such as CliniDeid)&#10;against files on a given Gold Standard corpus."/>
+            <padding>
+                <Insets bottom="50" top="50" left="50" right="50"/>
+            </padding>
+        </VBox>
+
+        <HBox spacing="10">
+            <Label text="Output Directory:" styleClass="text-medium-normal" alignment="CENTER_RIGHT" textAlignment="RIGHT"/>
+            <VBox spacing="3">
+                <JFXTextField fx:id="masterDirectoryTextField" styleClass="text-medium-normal" minWidth="400"/>
+                <padding>
+                    <Insets right="20" left="15"/>
+                </padding>
+            </VBox>
+            <JFXButton text="..." onAction="#pickMasterDirectory" prefWidth="32" maxWidth="Infinity"
+                       styleClass="button-raised, button-gray, no-focus, text-small-normal" buttonType="RAISED"/>
+            <Label fx:id="errorLabel" text="* Please choose a valid directory" alignment="CENTER"
+                   styleClass="text-medium-normal, error-text"/>
+            <padding>
+                <Insets left="100"/>
+            </padding>
+        </HBox>
+
+        <HBox alignment="CENTER_RIGHT">
+            <JFXButton onAction="#runAcv" text="RUN ACV" buttonType="RAISED"
+                       styleClass="button-raised, button-gray, text-medium-normal">
+            </JFXButton>
+            <padding>
+                <Insets right="250"/>
+            </padding>
+        </HBox>
     </VBox>
-
-
-    <Label text="Output Directory:" styleClass="text-medium-normal" alignment="CENTER_RIGHT" textAlignment="RIGHT"
-           GridPane.halignment="RIGHT" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
-    <JFXTextField fx:id="testInputTextField" styleClass="text-medium-normal" GridPane.columnIndex="2"
-                  GridPane.rowIndex="2">
-        <GridPane.margin>
-            <Insets right="20" left="15"/>
-        </GridPane.margin>
-    </JFXTextField>
-    <JFXButton text="..." onAction="#pickTestFile" textAlignment="CENTER" maxHeight="Infinity" maxWidth="Infinity"
-               styleClass="button-raised, button-gray, no-focus, text-small-bold" buttonType="RAISED"
-               GridPane.halignment="LEFT" GridPane.columnIndex="3" GridPane.rowIndex="2"/>
-
-
-    <JFXButton onAction="#runAcv" text="RUN ACV" buttonType="RAISED"
-               styleClass="button-raised, button-gray, text-medium-normal"
-               GridPane.halignment="LEFT" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.rowIndex="6">
-        <GridPane.margin>
-            <Insets topRightBottomLeft="10"/>
-        </GridPane.margin>
-    </JFXButton>
-    <Text fx:id="errorText" text="Error! Please choose a valid directory!" GridPane.rowIndex="2" GridPane.columnIndex="4" visible="false" fill="red">
-        <GridPane.margin>
-            <Insets topRightBottomLeft="10"/>
-        </GridPane.margin>
-    </Text>
 </GridPane>

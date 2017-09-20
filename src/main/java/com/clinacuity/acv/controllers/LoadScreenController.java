@@ -1,13 +1,13 @@
 package com.clinacuity.acv.controllers;
 
 import com.clinacuity.acv.context.AcvContext;
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXTextField;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.text.Text;
 import javafx.stage.DirectoryChooser;
-import javafx.stage.FileChooser;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -17,54 +17,56 @@ import java.util.ResourceBundle;
 
 public class LoadScreenController implements Initializable {
     private static final Logger logger = LogManager.getLogger();
+    private static final String CORPUS_DICTIONARY_NAME = "/corpus.json";
+    private static final String REFERENCE_DIRECTORY_NAME = "/reference/";
+    private static final String TEST_DIRECTORY_NAME = "/system/";
 
     @FXML private TextField gsInputTextField;
-    @FXML private TextField testInputTextField;
-    @FXML private Text errorText;
+    @FXML private JFXTextField masterDirectoryTextField;
+    @FXML private Label errorLabel;
+
+    private boolean isValidDirectory = false;
+    private File corpusFile;
+    private File targetDirectory;
+    private File referenceDirectory;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        masterDirectoryTextField.focusedProperty().addListener((obs, old, focusGained) -> {
+            if (focusGained) {
+                errorLabel.setVisible(false);
+            } else {
+                String path = masterDirectoryTextField.getText();
 
-    }
+                checkItemsInDirectory(path);
 
-    @FXML private void pickReferenceFile() {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Select Gold Standard Dictionaries Folder");
-        fileChooser.getExtensionFilters().add(getFilter());
-        File file = fileChooser.showOpenDialog(gsInputTextField.getScene().getWindow());
-
-        if (file != null) {
-            gsInputTextField.setText(file.getAbsolutePath());
-        }
-    }
-
-    @FXML private void pickTestFile() {
-        DirectoryChooser directoryChooser = new DirectoryChooser();
-        directoryChooser.setTitle("Select Test Dictionaries Folder");
-        File directory = directoryChooser.showDialog(testInputTextField.getScene().getWindow());
-
-        if (directory != null) {
-            testInputTextField.setText(directory.getAbsolutePath());
-            for (File file : directory.listFiles()) {
-                if(!FilenameUtils.getExtension(file.toString()).equals("json") && !FilenameUtils.getExtension(file.toString()).equals("xml")) {
-                    displayExceptionModal(new Exception("Invalid file extension(s)!"));
+                if (isValidDirectory) {
+                    errorLabel.setVisible(false);
+                } else {
+                    errorLabel.setVisible(true);
                 }
             }
+        });
+    }
+
+    @FXML private void pickMasterDirectory() {
+        DirectoryChooser directoryChooser = new DirectoryChooser();
+        directoryChooser.setTitle("Select Test Dictionaries Folder");
+        File directory = directoryChooser.showDialog(masterDirectoryTextField.getScene().getWindow());
+
+        if (directory != null) {
+            masterDirectoryTextField.setText(directory.getAbsolutePath());
         }
     }
 
     @FXML private void runAcv() {
-        AcvContext.getInstance().corpusFilePathProperty.setValue("/Users/jkaccetta/Desktop/corpus.json");
-
-        // TODO: Activate loading spinner
-        if (checkDocumentPaths()) {
-            // load documents' file paths into context [triggers creating Annotations objects]
+        if (isValidDirectory) {
             AcvContext context = AcvContext.getInstance();
-            context.corpusFilePathProperty.setValue(testInputTextField.getText());
-//            context.targetDocumentPathProperty.setValue(testInputTextField.getText());
-//            context.referenceDocumentPathProperty.setValue(gsInputTextField.getText());
 
-            // load the Acv main view
+            context.corpusFilePathProperty.setValue(corpusFile.getAbsolutePath());
+            context.targetDirectoryProperty.setValue(targetDirectory.getAbsolutePath());
+            context.referenceDirectoryProperty.setValue(referenceDirectory.getAbsolutePath());
+
             context.mainController.reloadContent(AcvContext.COMPARISON_VIEW);
         } else {
             // TODO: deactivate the loading spinner
@@ -72,25 +74,32 @@ public class LoadScreenController implements Initializable {
         }
     }
 
-    private boolean checkDocumentPaths() {
-        String test = testInputTextField.getText().trim();
+    private void checkItemsInDirectory(String path) {
+        corpusFile = new File(path + CORPUS_DICTIONARY_NAME);
+        targetDirectory = new File(path + TEST_DIRECTORY_NAME);
+        referenceDirectory = new File(path + REFERENCE_DIRECTORY_NAME);
 
-        if (test.equals("") || !(new File(test).exists())) {
-            errorText.setVisible(true);
-            return false;
+        if (!targetDirectory.exists() || targetDirectory.isFile()
+                || !referenceDirectory.exists() || referenceDirectory.isFile()
+                || !corpusFile.exists() || corpusFile.isDirectory()) {
+            isValidDirectory = false;
+        } else {
+            isValidDirectory = true;
         }
-        return true;
-    }
 
-    private FileChooser.ExtensionFilter getFilter() {
-        return new FileChooser.ExtensionFilter("(*.json) ETUDE Output Dictionary", "*.json", "*.xml");
-    }
+        if (!targetDirectory.exists() || targetDirectory.isFile()) {
+            logger.error("TARGET");
+            logger.error(targetDirectory.getAbsolutePath());
+        }
 
-    private void displayExceptionModal(Throwable exception) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Error");
-        alert.setContentText("An unexpected error occurred! Please send the log file to support@Clinacuity.com");
-        alert.setResizable(true);
-        alert.show();
+        if (!referenceDirectory.exists() || referenceDirectory.isFile()) {
+            logger.error("REFERENCE");
+            logger.error(referenceDirectory.getAbsolutePath());
+        }
+
+        if (!corpusFile.exists() || corpusFile.isDirectory()) {
+            logger.error("CORPUS");
+            logger.error(corpusFile.getAbsolutePath());
+        }
     }
 }
