@@ -48,6 +48,7 @@ public class AcvContext {
     public StringProperty referenceDirectoryProperty = new SimpleStringProperty("");
     public StringProperty targetDirectoryProperty = new SimpleStringProperty("");
     public StringProperty selectedAnnotationTypeProperty = new SimpleStringProperty("");
+    public StringProperty selectedMatchTypeProperty = new SimpleStringProperty("exact");
     public StringProperty corpusFilePathProperty = new SimpleStringProperty("");
     public BooleanProperty exactMatchesProperty = new SimpleBooleanProperty(true);
     public BooleanProperty overlappingMatchesProperty = new SimpleBooleanProperty(true);

@@ -64,8 +64,8 @@ public class LoadScreenController implements Initializable {
             AcvContext context = AcvContext.getInstance();
 
             context.corpusFilePathProperty.setValue(corpusFile.getAbsolutePath());
-            context.targetDirectoryProperty.setValue(targetDirectory.getAbsolutePath());
-            context.referenceDirectoryProperty.setValue(referenceDirectory.getAbsolutePath());
+            context.targetDirectoryProperty.setValue(targetDirectory.getAbsolutePath() + "/");
+            context.referenceDirectoryProperty.setValue(referenceDirectory.getAbsolutePath() + "");
 
             context.mainController.reloadContent(AcvContext.COMPARISON_VIEW);
         } else {
@@ -85,21 +85,6 @@ public class LoadScreenController implements Initializable {
             isValidDirectory = false;
         } else {
             isValidDirectory = true;
-        }
-
-        if (!targetDirectory.exists() || targetDirectory.isFile()) {
-            logger.error("TARGET");
-            logger.error(targetDirectory.getAbsolutePath());
-        }
-
-        if (!referenceDirectory.exists() || referenceDirectory.isFile()) {
-            logger.error("REFERENCE");
-            logger.error(referenceDirectory.getAbsolutePath());
-        }
-
-        if (!corpusFile.exists() || corpusFile.isDirectory()) {
-            logger.error("CORPUS");
-            logger.error(corpusFile.getAbsolutePath());
         }
     }
 }

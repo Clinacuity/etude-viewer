@@ -61,7 +61,7 @@ public class AnnotatedDocumentPane extends GridPane {
     }
 
     private void arbitraryLabelsForSizeCalculations() {
-        labelList.add(new LineNumberedLabel("Loading . . .", 1));
+        labelList.add(new LineNumberedLabel("Select a document from the side bar. . .", 1));
         anchor.getChildren().addAll(labelList);
     }
 

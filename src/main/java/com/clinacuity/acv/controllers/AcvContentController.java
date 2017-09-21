@@ -2,6 +2,7 @@ package com.clinacuity.acv.controllers;
 
 import com.clinacuity.acv.context.AcvContext;
 import com.clinacuity.acv.context.Annotations;
+import com.clinacuity.acv.context.MetricValues;
 import com.clinacuity.acv.controls.AnnotatedDocumentPane;
 import com.clinacuity.acv.controls.AnnotationButton;
 import com.clinacuity.acv.controls.AnnotationType;
@@ -77,7 +78,9 @@ public class AcvContentController implements Initializable {
             if (results != null) {
                 sideBar.setFileList(results);
                 results.forEach(box -> box.setOnMouseClicked(click ->
-                    sideBar.getDocument(results.indexOf(box), box.getId())));
+                    sideBar.getDocument(results.indexOf(box))));
+
+                getNextDocument();
             }
         });
         new Thread(sidebarTask).start();
@@ -111,9 +114,6 @@ public class AcvContentController implements Initializable {
 
         referencePane.getScrollPane().vvalueProperty().bindBidirectional(targetPane.getScrollPane().vvalueProperty());
         referencePane.getScrollPane().hvalueProperty().bindBidirectional(targetPane.getScrollPane().hvalueProperty());
-
-        resetLabels(true, referenceAnnotationsProperty.getValue());
-        resetLabels(false, referenceAnnotationsProperty.getValue());
 
         targetAnnotationsProperty.addListener((observable, old, newValue) -> resetLabels(false, newValue));
         referenceAnnotationsProperty.addListener((observable, old, newValue) -> resetLabels(true, newValue));
@@ -321,9 +321,11 @@ public class AcvContentController implements Initializable {
         ObservableList<AnnotationType> types = FXCollections.observableArrayList();
         context.annotationList.forEach(annotationKey -> {
             Annotations annotation = targetAnnotationsProperty.get();
-            double tp = annotation.getMetricsTruePositive(annotationKey);
-            double fp = annotation.getMetricsFalsePositive(annotationKey);
-            double fn = annotation.getMetricsFalseNegative(annotationKey);
+            MetricValues values = annotation.getMetricValues(annotationKey);
+
+            double tp = values.getTruePositive();
+            double fp = values.getFalsePositive();
+            double fn = values.getFalseNegative();
             double recall = tp / (tp + fn) * 100.0d;
             double precision = tp / (tp + fp) * 100.0d;
 
