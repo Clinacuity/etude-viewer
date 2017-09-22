@@ -65,7 +65,7 @@ public class LoadScreenController implements Initializable {
 
             context.corpusFilePathProperty.setValue(corpusFile.getAbsolutePath());
             context.targetDirectoryProperty.setValue(targetDirectory.getAbsolutePath() + "/");
-            context.referenceDirectoryProperty.setValue(referenceDirectory.getAbsolutePath() + "");
+            context.referenceDirectoryProperty.setValue(referenceDirectory.getAbsolutePath() + "/");
 
             context.mainController.reloadContent(AcvContext.COMPARISON_VIEW);
         } else {
