@@ -234,8 +234,7 @@ public class EtudeController implements Initializable{
         if (currentId == null || !currentId.equals(ERROR_ID)) {
             label = new Label();
             label.setId(ERROR_ID);
-            label.getStyleClass().add("text-medium-normal");
-            label.setStyle("-fx-text-fill: Red;");
+            label.getStyleClass().addAll("text-medium-normal", "error-text");
         } else {
             label = (Label)box.getChildren().get(box.getChildren().size() - 1);
         }

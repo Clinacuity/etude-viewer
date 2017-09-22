@@ -212,6 +212,10 @@
     -fx-padding: 1 0 1 0;
 }
 
+.error-text {
+    -fx-text-fill: Red;
+}
+
 .line-number {
     -fx-min-width: 30px;
     -fx-max-width: 30px;

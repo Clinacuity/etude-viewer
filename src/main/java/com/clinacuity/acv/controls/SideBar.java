@@ -50,15 +50,11 @@ public class SideBar extends VBox {
         fileListSize = files.size();
     }
 
-    public void getDocument(int index, String keyId) {
+    public void getDocument(int index) {
         context.annotationList.clear();
         selectedBox = index;
 
-        logger.error(context.corpusFilePathProperty.getValueSafe());
-
-        // TODO: Load files from appropriate directory
-        context.targetDocumentPathProperty.setValue("/Users/jkaccetta/Desktop/t_out/" + keyId);
-        context.referenceDocumentPathProperty.setValue("/Users/jkaccetta/Desktop/g_2/" + context.getCorpusDictionary().getFileMappings().get(keyId));
+        loadDocument();
     }
 
     public void getNextDocument() {
@@ -66,12 +62,26 @@ public class SideBar extends VBox {
             logger.warn("Doing nothing -- already at the last document.");
         } else {
             selectedBox++;
+            loadDocument();
         }
     }
 
     public void getPreviousDocument() {
         if (selectedBox - 1 <= 0) {
             logger.warn("Doing nothing -- already on the first document.");
+        } else {
+            selectedBox--;
+            loadDocument();
         }
+    }
+
+    private void loadDocument() {
+        String id = fileList.getChildren().get(selectedBox).getId();
+        String target = context.targetDirectoryProperty.getValueSafe() + id;
+        String reference = context.referenceDirectoryProperty.getValueSafe() +
+                context.getCorpusDictionary().getFileMappings().get(id);
+
+        context.targetDocumentPathProperty.setValue(target);
+        context.referenceDocumentPathProperty.setValue(reference);
     }
 }
