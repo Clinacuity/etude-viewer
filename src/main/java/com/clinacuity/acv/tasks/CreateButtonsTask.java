@@ -105,7 +105,7 @@ public class CreateButtonsTask extends Task<List<AnnotationButton>> {
      * @param end           The end offset relative to the JsonObject's rew text
      */
     private void addButtons(JsonObject annotation, List<LineNumberedLabel> labels, int begin, int end) {
-        // CASE #1
+        // CASE #1: Button's span is within the same line
         if (labels.size() == 1) {
             LineNumberedLabel label = labels.get(0);
             AnnotationButton newButton = createButton(annotation, label, begin, end);
@@ -118,7 +118,7 @@ public class CreateButtonsTask extends Task<List<AnnotationButton>> {
             previousButton = newButton;
             taskButtons.add(newButton);
         } else {
-            // This button spans at least 2 lines
+            // CASE #2: This button spans at least 2 lines
             List<AnnotationButton> buttons = new ArrayList<>();
 
             labels.forEach(label -> {

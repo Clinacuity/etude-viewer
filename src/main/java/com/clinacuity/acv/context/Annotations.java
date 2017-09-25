@@ -123,4 +123,8 @@ public class Annotations {
 
         return new MetricValues(0, 0, 0);
     }
+
+    public List<String> getMatchTypes() {
+        return metrics == null ? null : new ArrayList<>(metrics.keySet());
+    }
 }

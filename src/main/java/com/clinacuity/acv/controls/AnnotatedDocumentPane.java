@@ -88,7 +88,7 @@ public class AnnotatedDocumentPane extends GridPane {
         anchor.getChildren().removeAll(labelList);
         labelList = labels;
 
-        if (!labelList.isEmpty()) {
+        if (labelList != null && !labelList.isEmpty()) {
             anchor.getChildren().addAll(labelList);
         }
     }
@@ -97,7 +97,7 @@ public class AnnotatedDocumentPane extends GridPane {
         anchor.getChildren().removeAll(buttonList);
         buttonList = buttons;
 
-        if (!buttonList.isEmpty()) {
+        if (buttonList != null && !buttonList.isEmpty()) {
             anchor.getChildren().addAll(buttonList);
         }
     }

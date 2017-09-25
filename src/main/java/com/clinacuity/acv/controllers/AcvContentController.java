@@ -127,16 +127,29 @@ public class AcvContentController implements Initializable {
         createTableRows();
         context.annotationList.addListener((observable, old, newValue) -> createTableRows());
 
-        context.exactMatchesProperty.addListener((obs, old, newValue) -> updateButton(newValue, MatchType.EXACT_MATCH));
-        context.overlappingMatchesProperty.addListener((obs, old, newValue) -> updateButton(newValue, MatchType.PARTIAL_MATCH));
-        context.falsePositivesProperty.addListener((obs, old, newValue) -> updateButton(newValue, MatchType.FALSE_POS, targetPane));
-        context.falseNegativesProperty.addListener((obs, old, newValue) -> updateButton(newValue, MatchType.FALSE_NEG, referencePane));
+        context.truePositivesProperty.addListener((obs, old, newValue) -> {
+            updateButtons(newValue, MatchType.TRUE_POS, targetPane);
+            updateButtons(newValue, MatchType.TRUE_POS, referencePane);
+        });
+        context.falsePositivesProperty.addListener((obs, old, newValue) -> updateButtons(newValue, MatchType.FALSE_POS, targetPane));
+        context.falseNegativesProperty.addListener((obs, old, newValue) -> updateButtons(newValue, MatchType.FALSE_NEG, referencePane));
 
         viewControls.getPreviousButton().setOnAction(event -> changeAnnotationButton(false));
         viewControls.getClearButton().setOnAction(event -> selectedAnnotationButton.setValue(null));
         viewControls.getNextButton().setOnAction(event -> changeAnnotationButton(true));
 
+        targetAnnotationsProperty.addListener((obs, old, newValue) -> {
+            ObservableList<String> list = FXCollections.observableArrayList(newValue.getMatchTypes());
+            context.matchingTypes.setValue(list);
+            viewControls.setMatchTypeToggleButtons(newValue.getMatchTypes());
+
+            if (!list.isEmpty()) {
+                context.selectedMatchTypeProperty.setValue(list.get(0));
+            }
+        });
+
         context.selectedAnnotationTypeProperty.addListener(selectedAnnotationTypeListener);
+        context.selectedMatchTypeProperty.addListener((observable, old, newValue) -> createTableRows());
     }
     
     private void resetLabels(boolean isReference, Annotations newValue) {
@@ -177,8 +190,6 @@ public class AcvContentController implements Initializable {
             List<JsonObject> targetJson = targetAnnotationsProperty.getValue().getAnnotationsByKey(key);
             List<JsonObject> referenceJson = referenceAnnotationsProperty.getValue().getAnnotationsByKey(key);
 
-            // TODO: button actions must include behaviors against their matchingButtons object
-            // TODO: matchingButtons objects must be populated
             targetButtonsTask = new CreateButtonsTask(targetJson, targetPane.getLabelList());
             targetButtonsTask.setOnSucceeded(event -> {
                 targetPane.addButtons(targetButtonsTask.getValue());
@@ -204,7 +215,7 @@ public class AcvContentController implements Initializable {
      * buttons.  Note: This could not be done using the tasks' onDone() method, since both tasks are already completed
      * by the time their onFinished() methods begin processing.
      */
-    private void setupAnnotationButtons() {
+    synchronized private void setupAnnotationButtons() {
         finished++;
         if (finished >= 2) {
             finished = 0;
@@ -219,11 +230,12 @@ public class AcvContentController implements Initializable {
                     int beginRef = refButton.getBegin();
                     int endRef = refButton.getEnd();
 
-                    if ((beginTarget < endRef && beginRef < endTarget) || (beginTarget == beginRef && endTarget == endRef)) {
+                    if (beginTarget == beginRef && endTarget == endRef) {
                         targetButton.matchingButtons.add(refButton);
                         refButton.matchingButtons.add(targetButton);
-                        targetButton.targetTextArea = targetPane.getFeatureTreeText();
                     }
+
+                    targetButton.targetTextArea = targetPane.getFeatureTreeText();
                 }
 
                 targetButton.parent = targetPane.getAnchor();
@@ -238,7 +250,7 @@ public class AcvContentController implements Initializable {
 
             /*
             * This could be faster by using either of the loops above; but for the sake of separating the logic,
-            * we will use a separate for-loop.  The cost to performance is negligible.  This loop determines
+            * we will use a separate for-loop.  The cost to performance is O(n).  This loop determines
             * which color to assign the buttons based on the type of match.
             */
             targetButtons.forEach(button -> button.checkMatchTypes(MatchType.FALSE_POS));
@@ -264,29 +276,7 @@ public class AcvContentController implements Initializable {
         });
     }
 
-    private void updateButton(boolean isChecked, MatchType matchType) {
-        referencePane.getAnnotationButtonList().forEach(button -> {
-            if (button.getMatchType() == matchType) {
-                if (isChecked) {
-                    button.addToParent();
-                } else {
-                    button.removeFromParent();
-                }
-            }
-        });
-
-        targetPane.getAnnotationButtonList().forEach(button -> {
-            if (button.getMatchType() == matchType) {
-                if (isChecked) {
-                    button.addToParent();
-                } else {
-                    button.removeFromParent();
-                }
-            }
-        });
-    }
-
-    private void updateButton(boolean isChecked, MatchType matchType, AnnotatedDocumentPane documentPane) {
+    private void updateButtons(boolean isChecked, MatchType matchType, AnnotatedDocumentPane documentPane) {
         documentPane.getAnnotationButtonList().forEach(button -> {
             if (button.getMatchType() == matchType) {
                 if (isChecked) {
@@ -300,10 +290,8 @@ public class AcvContentController implements Initializable {
 
     private boolean isMatchTypeChecked(AnnotationButton.MatchType matchType) {
         switch (matchType) {
-            case EXACT_MATCH:
-                return context.exactMatchesProperty.getValue();
-            case PARTIAL_MATCH:
-                return context.overlappingMatchesProperty.getValue();
+            case TRUE_POS:
+                return context.truePositivesProperty.getValue();
             case FALSE_POS:
                 return context.falsePositivesProperty.getValue();
             case FALSE_NEG:
@@ -319,6 +307,7 @@ public class AcvContentController implements Initializable {
 
     private void createTableRows() {
         ObservableList<AnnotationType> types = FXCollections.observableArrayList();
+
         context.annotationList.forEach(annotationKey -> {
             Annotations annotation = targetAnnotationsProperty.get();
             MetricValues values = annotation.getMetricValues(annotationKey);
@@ -375,7 +364,6 @@ public class AcvContentController implements Initializable {
      */
     private ChangeListener<String> selectedAnnotationTypeListener = (observable, oldValue, newValue) -> {
         clearFeatureTrees();
-        logger.debug("Selected Annotation Changed: {}", newValue);
         resetAnnotationButtons(newValue);
     };
 
@@ -383,12 +371,16 @@ public class AcvContentController implements Initializable {
      * Updates the Context's annotation type list whenever the Annotations objects are updated.  This usually occurs
      * when new documents are loaded.
      */
-    private ChangeListener<Annotations> annotationPropertiesListener = (observable, oldValue, newValue) ->
-            newValue.getAnnotationKeySet().forEach(key -> {
-                if (!AcvContext.getInstance().annotationList.contains(key)) {
-                    context.annotationList.add(key);
-                }
-            });
+    private ChangeListener<Annotations> annotationPropertiesListener = (observable, oldValue, newValue) -> {
+        List<String> list = FXCollections.observableList(context.annotationList);
+        list.clear();
+        newValue.getAnnotationKeySet().forEach(key -> {
+            if (!list.contains(key)) {
+                list.add(key);
+            }
+        });
+        context.annotationList.setValue(FXCollections.observableArrayList(list));
+    };
 
     private ChangeListener<AnnotationButton> selectedAnnotationButtonListener = ((observable, oldValue, newValue) -> {
         clearFeatureTrees();

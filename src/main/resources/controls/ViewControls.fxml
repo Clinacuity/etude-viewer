@@ -7,7 +7,6 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.control.Tooltip?>
-<?import com.jfoenix.controls.JFXCheckBox?>
 <?import javafx.scene.control.cell.PropertyValueFactory?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TableColumn?>
@@ -19,34 +18,7 @@
          xmlns:fx="http://javafx.com/fxml/1">
 
     <VBox GridPane.columnIndex="0" GridPane.rowIndex="1" spacing="10">
-        <HBox id="ExactMatchBox" alignment="CENTER_LEFT" spacing="3">
-            <JFXCheckBox fx:id="toggleExactMatches" text="Exact Match" selected="true" styleClass="text-medium-normal"
-                         checkedColor="DodgerBlue" unCheckedColor="DodgerBlue"/>
-            <Label styleClass="label-tooltip" maxHeight="Infinity">
-                <tooltip>
-                    <Tooltip text="Toggle display of exact matches, including their features"/>
-                </tooltip>
-                <graphic>
-                    <ImageView fitWidth="12" preserveRatio="true" pickOnBounds="true">
-                        <Image url="/img/icons8/info_button.png"/>
-                    </ImageView>
-                </graphic>
-            </Label>
-        </HBox>
-        <HBox id="PartialMatchBox" alignment="CENTER_LEFT" spacing="3">
-            <JFXCheckBox fx:id="togglePartialMatches" text="Partial Matches" selected="true" styleClass="text-medium-normal"
-                         checkedColor="DarkOrchid" unCheckedColor="DarkOrchid"/>
-            <Label styleClass="label-tooltip" maxHeight="Infinity">
-                <tooltip>
-                    <Tooltip text="Toggle display of annotations which partially match others.&#013;Partial matches consider category, features, and span."/>
-                </tooltip>
-                <graphic>
-                    <ImageView fitWidth="12" preserveRatio="true" pickOnBounds="true">
-                        <Image url="/img/icons8/info_button.png"/>
-                    </ImageView>
-                </graphic>
-            </Label>
-        </HBox>
+        <VBox fx:id="matchingTypeToggles" spacing="10"/>
         <HBox id="AnnotationNavBox" alignment="CENTER_LEFT" spacing="3">
             <JFXButton fx:id="previousButton" styleClass="text-small-normal">
                 <graphic>

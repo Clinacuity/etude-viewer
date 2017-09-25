@@ -50,12 +50,12 @@ public class AcvContext {
     public StringProperty selectedAnnotationTypeProperty = new SimpleStringProperty("");
     public StringProperty selectedMatchTypeProperty = new SimpleStringProperty("exact");
     public StringProperty corpusFilePathProperty = new SimpleStringProperty("");
-    public BooleanProperty exactMatchesProperty = new SimpleBooleanProperty(true);
-    public BooleanProperty overlappingMatchesProperty = new SimpleBooleanProperty(true);
+    public BooleanProperty truePositivesProperty = new SimpleBooleanProperty(true);
     public BooleanProperty falsePositivesProperty = new SimpleBooleanProperty(true);
     public BooleanProperty falseNegativesProperty = new SimpleBooleanProperty(true);
 
     public ListProperty<String> annotationList = new SimpleListProperty<>(FXCollections.observableArrayList());
+    public ListProperty<String> matchingTypes = new SimpleListProperty<>(FXCollections.observableArrayList());
 
     private AcvContext() {
         instance = this;
@@ -66,6 +66,13 @@ public class AcvContext {
         referenceDocumentPathProperty.addListener((observable, oldValue, newValue) -> cleanupAnnotationList());
         targetDocumentPathProperty.addListener((observable, oldValue, newValue) -> cleanupAnnotationList());
         corpusFilePathProperty.addListener((observable, oldValue, newValue) -> loadCorpusDictionary());
+        matchingTypes.addListener((obs, old, newValue) -> {
+            if (newValue != null && !newValue.isEmpty()) {
+                selectedMatchTypeProperty.setValue(newValue.get(0));
+            } else {
+                selectedMatchTypeProperty.setValue("");
+            }
+        });
     }
 
     private void cleanupAnnotationList() {
