@@ -35,8 +35,14 @@ public class CreateButtonsTask extends Task<List<AnnotationButton>> {
             updateProgress(i, size);
         }
 
-        succeeded();
-        return taskButtons;
+        if (taskButtons == null) {
+            logger.error("why is this null....?");
+            failed();
+            return null;
+        } else {
+            succeeded();
+            return taskButtons;
+        }
     }
 
     private void processAnnotation(JsonObject annotation) {
@@ -59,6 +65,8 @@ public class CreateButtonsTask extends Task<List<AnnotationButton>> {
         int currentLineNumber = 1;
 
         boolean beginFound = false;
+//        taskLabels.forEach(label);
+
         for (int i = 0; i < taskLabels.size(); i++) {
             LineNumberedLabel index = taskLabels.get(i);
             int indexTextLength = index.getLineText().length();
@@ -78,8 +86,6 @@ public class CreateButtonsTask extends Task<List<AnnotationButton>> {
             if (beginFound) {
                 if (!spannedLabels.contains(index)) {
                     spannedLabels.add(index);
-                } else {
-                    logger.debug("Label already in List");
                 }
 
                 if (offset <= end && offset + indexTextLength >= end) {

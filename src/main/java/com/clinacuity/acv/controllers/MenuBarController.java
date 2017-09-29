@@ -23,7 +23,9 @@ public class MenuBarController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        menuBar.mouseTransparentProperty().addListener(obs -> {
+            logger.error("Menu Bar became mouse transparent... wtf...");
+        });
     }
 
     @FXML private void reloadMainPage() {

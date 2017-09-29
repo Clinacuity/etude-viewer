@@ -22,14 +22,16 @@ public class ViewControls extends VBox {
     private static final ToggleGroup TOGGLE_GROUP = new ToggleGroup();
 
     @FXML private VBox matchingTypeToggles;
-    @FXML private TableView<AnnotationType> annotationTable;
     @FXML private Button previousButton;
     @FXML private Button clearButton;
     @FXML private Button nextButton;
+    @FXML private TableView<AnnotationType> annotationTable;
     @FXML private TableColumn<AnnotationType, String> annotationNameColumn;
     @FXML private TableColumn<AnnotationType, String> truePosColumn;
     @FXML private TableColumn<AnnotationType, String> falsePosColumn;
     @FXML private TableColumn<AnnotationType, String> falseNegColumn;
+
+    public TableView<AnnotationType> getAnnotationTable() { return annotationTable; }
 
     public ViewControls() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/controls/ViewControls.fxml"));
@@ -42,32 +44,10 @@ public class ViewControls extends VBox {
             logger.throwing(e);
         }
 
-        AcvContext context = AcvContext.getInstance();
-
-        // assign listener events to toggles
-        annotationTable.getSelectionModel().selectedItemProperty().addListener((obs, old, newValue) -> {
-            String value = newValue != null ? newValue.getAnnotationName() : null;
-            context.selectedAnnotationTypeProperty.setValue(value);
-        });
-
-        setTableColumns();
+        initializeTableColumns();
     }
 
-    public void setMatchTypeToggleButtons(List<String> items) {
-        matchingTypeToggles.getChildren().clear();
-        items.forEach(item -> matchingTypeToggles.getChildren().add(addToggleButton(item)));
-        ((JFXRadioButton)matchingTypeToggles.getChildren().get(0)).setSelected(true);
-    }
-
-    public void setTableRows(ObservableList<AnnotationType> types) {
-        annotationTable.setItems(types);
-
-        if (types.size() > 0) {
-            annotationTable.getSelectionModel().select(0);
-        }
-    }
-
-    private void setTableColumns() {
+    private void initializeTableColumns() {
         annotationNameColumn.setCellFactory(param -> new TableCell<AnnotationType, String>() {
             @Override
             public void updateItem(String item, boolean empty) {
@@ -136,8 +116,25 @@ public class ViewControls extends VBox {
     Button getClearButton() { return clearButton; }
     Button getNextButton() { return nextButton; }
 
+    public void setMatchTypeToggleButtons(List<String> items) {
+        matchingTypeToggles.getChildren().clear();
+        items.forEach(item -> matchingTypeToggles.getChildren().add(addToggleButton(item)));
+        ((JFXRadioButton)matchingTypeToggles.getChildren().get(0)).setSelected(true);
+    }
+
+    public void setTableRows(ObservableList<AnnotationType> types) {
+        annotationTable.setItems(types);
+
+        if (types != null) {
+            if (types.size() > 0) {
+                annotationTable.getSelectionModel().select(0);
+            }
+        } else {
+            logger.error("types are null...");
+        }
+    }
+
     private enum ColumnType {
-        NAME,
         TP,
         FP,
         FN

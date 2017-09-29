@@ -40,7 +40,7 @@ public class LoadScreenController implements Initializable {
 
                 checkItemsInDirectory(path);
 
-                if (isValidDirectory) {
+                if (isValidDirectory || path.equals("")) {
                     errorLabel.setVisible(false);
                 } else {
                     errorLabel.setVisible(true);
