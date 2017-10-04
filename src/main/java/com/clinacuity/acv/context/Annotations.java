@@ -126,4 +126,14 @@ public class Annotations {
 
         return new MetricValues(0, 0, 0);
     }
+
+    public List<String> getMatchTypes() {
+        if (hasMetrics()) {
+            List<String> matchTypes = new ArrayList<>();
+            matchTypes.addAll(metrics.keySet());
+            return matchTypes;
+        }
+
+        return null;
+    }
 }

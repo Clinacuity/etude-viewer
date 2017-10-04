@@ -70,9 +70,6 @@ public class AcvContext {
     /** This property contains a list of annotation types available in the corpus file*/
     public ListProperty<String> annotationList = new SimpleListProperty<>(FXCollections.observableArrayList());
 
-    /** This property indicates whether True Positive annotations will be displayed in the Annotated Document Panes */
-    public ListProperty<String> matchingTypes = new SimpleListProperty<>(FXCollections.observableArrayList());
-
     private AcvContext() {
         instance = this;
 
@@ -80,14 +77,6 @@ public class AcvContext {
         addProperty("exactMatch", Boolean.toString(true));
 
         corpusFilePathProperty.addListener((observable, oldValue, newValue) -> loadCorpusDictionary());
-
-        matchingTypes.addListener((obs, old, newValue) -> {
-            if (newValue != null && !newValue.isEmpty()) {
-                selectedMatchTypeProperty.setValue(newValue.get(0));
-            } else {
-                selectedMatchTypeProperty.setValue("");
-            }
-        });
     }
 
     private void loadCorpusDictionary() {

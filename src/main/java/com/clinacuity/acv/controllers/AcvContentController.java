@@ -145,8 +145,10 @@ public class AcvContentController implements Initializable {
             documentsLoaded = 0;
             removeViewControlsListeners();
             cancelEvents();
-
             clearPanes();
+
+            populateMatchTypes();
+
             List<String> list = FXCollections.observableList(context.annotationList);
             list.clear();
 
@@ -155,7 +157,6 @@ public class AcvContentController implements Initializable {
                     list.add(key);
                 }
             });
-
             referenceAnnotations.getAnnotationKeySet().forEach(key -> {
                 if (!list.contains(key)) {
                     list.add(key);
@@ -177,6 +178,15 @@ public class AcvContentController implements Initializable {
                 resetViewControls();
             });
             new Thread(targetLabelsTask).start();
+        }
+    }
+
+    private void populateMatchTypes() {
+        List<String> matchTypes = targetAnnotations.getMatchTypes();
+        viewControls.setMatchTypeToggleButtons(matchTypes);
+
+        if (matchTypes.size() > 0) {
+            context.selectedMatchTypeProperty.setValue(matchTypes.get(0));
         }
     }
 
