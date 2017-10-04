@@ -85,20 +85,44 @@ public class AnnotatedDocumentPane extends GridPane {
     }
 
     public void addLineNumberedLabels(List<LineNumberedLabel> labels) {
-        anchor.getChildren().removeAll(labelList);
+        anchor.getChildren().clear();
         labelList = labels;
+        buttonList = new ArrayList<>();
 
-        if (!labelList.isEmpty()) {
+        if (labelList != null && !labelList.isEmpty()) {
             anchor.getChildren().addAll(labelList);
         }
     }
 
     public void addButtons(List<AnnotationButton> buttons) {
-        anchor.getChildren().removeAll(buttonList);
+        anchor.getChildren().clear();
+        anchor.getChildren().addAll(labelList);
+
         buttonList = buttons;
 
-        if (!buttonList.isEmpty()) {
+        if (buttonList != null && !buttonList.isEmpty()) {
             anchor.getChildren().addAll(buttonList);
         }
+    }
+
+    public void reset() {
+        if (labelList == null) {
+            labelList = new ArrayList<>();
+        } else {
+            labelList.clear();
+        }
+
+        if (buttonList == null) {
+            buttonList = new ArrayList<>();
+        } else {
+            buttonList.clear();
+        }
+
+        anchor.getChildren().clear();
+        clearFeatureTree();
+    }
+
+    public void clearFeatureTree() {
+        featureTree.clear();
     }
 }

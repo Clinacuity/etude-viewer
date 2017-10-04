@@ -32,10 +32,7 @@ public class AnnotationButton extends Button {
     private JsonObject annotation;
     private int begin;
     private int end;
-    private boolean categoryMatch = false;
     private boolean attributesMatch = false;
-    private boolean spanMatch = false;
-    private boolean fullyContained = false;
     private String matchTypeStyle = "";
     private MatchType matchType;
     private Label categoryLabel;
@@ -82,18 +79,10 @@ public class AnnotationButton extends Button {
         if (matchingButtons.size() == 0) {
             setMatchType(noMatchType);
         } else {
+            setMatchType(MatchType.TRUE_POS);
+
             AnnotationButton target = matchingButtons.get(0);
-
-            spanMatch = isSpanMatch(target);
             attributesMatch = isAnnotationEquivalent(target.annotation);
-            categoryMatch = isCategoryMatch();
-            fullyContained = isFullyContainedOverlap(target);
-
-            if (spanMatch && categoryMatch) {
-                setMatchType(MatchType.EXACT_MATCH);
-            } else {
-                setMatchType(MatchType.PARTIAL_MATCH);
-            }
         }
     }
 
@@ -175,47 +164,18 @@ public class AnnotationButton extends Button {
         return true;
     }
 
-    private boolean isCategoryMatch() {
-        return true;
-    }
-
-    private boolean isSpanMatch(AnnotationButton target) {
-        return (getBegin() == target.getBegin() && getEnd() == target.getEnd());
-    }
-
-    private boolean isFullyContainedOverlap(AnnotationButton target) {
-        return ((getBegin() <= target.getBegin() && getEnd() >= target.getEnd())
-                || (getBegin() >= target.getBegin() && getEnd() <= target.getEnd()));
-    }
-
     private void setMatchType(MatchType match) {
         switch(match) {
-            case EXACT_MATCH:
+            case TRUE_POS:
+                // TODO
+//                if (attributesMatch) {
+//                }
                 matchTypeStyle = "-fx-background-color: DodgerBlue;";
-
-                if (attributesMatch) {
-                    // TODO
-                    logger.debug("attributes");
-                }
-
-                break;
-
-            case PARTIAL_MATCH:
-                matchTypeStyle = "-fx-background-color: DarkOrchid;";
-
-                if (attributesMatch) {
-                    // TODO
-                    logger.debug("ok");
-                }
-
-                if (fullyContained) {
-                    // TODO
-                    logger.debug("this is fully contained");
-                }
-
                 break;
 
             case FALSE_POS:
+                matchTypeStyle = "-fx-background-color: DarkOrchid";
+
             case FALSE_NEG:
                 matchTypeStyle = "-fx-background-color: OrangeRed;";
                 break;
@@ -254,9 +214,8 @@ public class AnnotationButton extends Button {
      * No match
      */
     public enum MatchType {
-        EXACT_MATCH,
-        PARTIAL_MATCH,
+        TRUE_POS,
         FALSE_POS,
-        FALSE_NEG
+        FALSE_NEG,
     }
 }

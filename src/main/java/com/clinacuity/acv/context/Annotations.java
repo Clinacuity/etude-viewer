@@ -93,28 +93,31 @@ public class Annotations {
 
         if (metrics != null) {
             String matchType = AcvContext.getInstance().selectedMatchTypeProperty.getValueSafe();
-            if (metrics.has(matchType)) {
-                json = metrics.get(matchType).getAsJsonObject();
-                if (json.has(METRICS_TYPES_KEY)) {
-                    json = json.get(METRICS_TYPES_KEY).getAsJsonObject();
-                    if (json.has(annotationKey)) {
-                        json = json.get(annotationKey).getAsJsonObject();
 
-                        double tp = json.get(TRUE_POS_KEY).getAsDouble();
-                        double fp = json.get(FALSE_POS_KEY).getAsDouble();
-                        double fn = json.get(FALSE_NEG_KEY).getAsDouble();
+            if (matchType.length() > 0) {
+                if (metrics.has(matchType)) {
+                    json = metrics.get(matchType).getAsJsonObject();
+                    if (json.has(METRICS_TYPES_KEY)) {
+                        json = json.get(METRICS_TYPES_KEY).getAsJsonObject();
+                        if (json.has(annotationKey)) {
+                            json = json.get(annotationKey).getAsJsonObject();
 
-                        return new MetricValues(tp, fp, fn);
+                            double tp = json.get(TRUE_POS_KEY).getAsDouble();
+                            double fp = json.get(FALSE_POS_KEY).getAsDouble();
+                            double fn = json.get(FALSE_NEG_KEY).getAsDouble();
+
+                            return new MetricValues(tp, fp, fn);
+                        } else {
+                            logger.warn("The metrics object has no information for key <{}>", annotationKey);
+                            return new MetricValues(0, 0, 0);
+                        }
                     } else {
-                        logger.warn("The metrics object has no information for key <{}>", annotationKey);
+                        logger.throwing(new JsonParseException("Metric type key <" + METRICS_TYPES_KEY + "> does not exist!"));
                         return new MetricValues(0, 0, 0);
                     }
                 } else {
-                    logger.throwing(new JsonParseException("Metric type key <" + METRICS_TYPES_KEY + "> does not exist!"));
-                    return new MetricValues(0, 0, 0);
+                    logger.error(new JsonParseException("Metrics type match <" + matchType + "> does not exist!"));
                 }
-            } else {
-                logger.error(new JsonParseException("Metrics type match <" + matchType + "> does not exist!"));
             }
         } else {
             logger.warn("There is no metrics object; key <{}> begin set to 0.0d.", annotationKey);
@@ -122,5 +125,15 @@ public class Annotations {
         }
 
         return new MetricValues(0, 0, 0);
+    }
+
+    public List<String> getMatchTypes() {
+        if (hasMetrics()) {
+            List<String> matchTypes = new ArrayList<>();
+            matchTypes.addAll(metrics.keySet());
+            return matchTypes;
+        }
+
+        return null;
     }
 }

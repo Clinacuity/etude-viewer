@@ -42,19 +42,32 @@ public class AcvContext {
     private CorpusDictionary corpusDictionary;
     public CorpusDictionary getCorpusDictionary() { return corpusDictionary; }
 
-    // Properties
-    public StringProperty referenceDocumentPathProperty = new SimpleStringProperty("");
-    public StringProperty targetDocumentPathProperty = new SimpleStringProperty("");
+    /** This property is the string value of the Reference directory's path containing all the reference files */
     public StringProperty referenceDirectoryProperty = new SimpleStringProperty("");
+
+    /** This property is the string value of the System directory's path containing all the system output files */
     public StringProperty targetDirectoryProperty = new SimpleStringProperty("");
+
+    /** This property is the string value of the annotation type currently selected in the ViewControl's table */
     public StringProperty selectedAnnotationTypeProperty = new SimpleStringProperty("");
-    public StringProperty selectedMatchTypeProperty = new SimpleStringProperty("exact");
+
+    /** A reference to the match type (i.e. Exact, Partial, etc.) selected for populating the table's metrics */
+    public StringProperty selectedMatchTypeProperty = new SimpleStringProperty("");
+
+    /** This property is the string value of the Corpus file's path, which is used to populate the list of files,
+     *  determining metrics, populating the Radio buttons for the match types, etc. */
     public StringProperty corpusFilePathProperty = new SimpleStringProperty("");
-    public BooleanProperty exactMatchesProperty = new SimpleBooleanProperty(true);
-    public BooleanProperty overlappingMatchesProperty = new SimpleBooleanProperty(true);
+
+    /** This property indicates whether True Positive annotations will be displayed in the Annotated Document Panes */
+    public BooleanProperty truePositivesProperty = new SimpleBooleanProperty(true);
+
+    /** This property indicates whether False Positive annotations will be displayed in the Annotated Document Panes */
     public BooleanProperty falsePositivesProperty = new SimpleBooleanProperty(true);
+
+    /** This property indicates whether False Negative annotations will be displayed in the Annotated Document Panes */
     public BooleanProperty falseNegativesProperty = new SimpleBooleanProperty(true);
 
+    /** This property contains a list of annotation types available in the corpus file*/
     public ListProperty<String> annotationList = new SimpleListProperty<>(FXCollections.observableArrayList());
 
     private AcvContext() {
@@ -63,16 +76,7 @@ public class AcvContext {
         initProperties();
         addProperty("exactMatch", Boolean.toString(true));
 
-        referenceDocumentPathProperty.addListener((observable, oldValue, newValue) -> cleanupAnnotationList());
-        targetDocumentPathProperty.addListener((observable, oldValue, newValue) -> cleanupAnnotationList());
         corpusFilePathProperty.addListener((observable, oldValue, newValue) -> loadCorpusDictionary());
-    }
-
-    private void cleanupAnnotationList() {
-        if (annotationList.size() > 1) {
-            annotationList.remove(1, annotationList.size() - 1);
-            selectedAnnotationTypeProperty.setValue(annotationList.get(0));
-        }
     }
 
     private void loadCorpusDictionary() {

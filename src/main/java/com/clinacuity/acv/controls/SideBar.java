@@ -2,6 +2,9 @@ package com.clinacuity.acv.controls;
 
 import com.clinacuity.acv.context.AcvContext;
 import com.jfoenix.controls.JFXDrawer;
+import javafx.beans.property.ReadOnlyStringProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.HBox;
@@ -22,6 +25,11 @@ public class SideBar extends VBox {
 
     private JFXDrawer parentDrawer;
     public void setDrawer(JFXDrawer drawer) { parentDrawer = drawer; }
+
+    private  StringProperty targetDocProperty = new SimpleStringProperty("");
+    private StringProperty referenceDocProperty = new SimpleStringProperty("");
+    public ReadOnlyStringProperty selectedTargetDocumentProperty() { return targetDocProperty; }
+    public ReadOnlyStringProperty selectedReferenceDocumentProperty() { return referenceDocProperty; }
 
     @FXML private VBox fileList;
 
@@ -59,7 +67,7 @@ public class SideBar extends VBox {
 
     public void getNextDocument() {
         if (selectedBox + 1 >= fileListSize) {
-            logger.warn("Doing nothing -- already at the last document.");
+            logger.debug("Doing nothing -- already at the last document.");
         } else {
             selectedBox++;
             loadDocument();
@@ -68,7 +76,7 @@ public class SideBar extends VBox {
 
     public void getPreviousDocument() {
         if (selectedBox - 1 <= 0) {
-            logger.warn("Doing nothing -- already on the first document.");
+            logger.debug("Doing nothing -- already on the first document.");
         } else {
             selectedBox--;
             loadDocument();
@@ -81,7 +89,7 @@ public class SideBar extends VBox {
         String reference = context.referenceDirectoryProperty.getValueSafe() +
                 context.getCorpusDictionary().getFileMappings().get(id);
 
-        context.targetDocumentPathProperty.setValue(target);
-        context.referenceDocumentPathProperty.setValue(reference);
+        targetDocProperty.setValue(target);
+        referenceDocProperty.setValue(reference);
     }
 }
