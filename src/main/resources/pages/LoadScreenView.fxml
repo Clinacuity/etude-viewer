@@ -7,11 +7,16 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.ColumnConstraints?>
 
-<GridPane alignment="CENTER" minHeight="300" minWidth="400"
-          xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1"
+<GridPane xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="com.clinacuity.acv.controllers.LoadScreenController">
-    <VBox spacing="30" maxWidth="Infinity" minWidth="1000" maxHeight="Infinity" minHeight="1000" alignment="CENTER">
+
+    <columnConstraints>
+        <ColumnConstraints percentWidth="100"/>
+    </columnConstraints>
+
+    <VBox spacing="30">
         <padding>
             <Insets topRightBottomLeft="25"/>
         </padding>
@@ -41,12 +46,12 @@
             </padding>
         </HBox>
 
-        <HBox alignment="CENTER_RIGHT">
-            <JFXButton onAction="#runAcv" text="RUN ACV" buttonType="RAISED"
+        <HBox>
+            <JFXButton onAction="#runAcv" text="RUN VIEWER" buttonType="RAISED"
                        styleClass="button-raised, button-gray, text-medium-normal">
             </JFXButton>
             <padding>
-                <Insets right="250"/>
+                <Insets left="600"/>
             </padding>
         </HBox>
     </VBox>

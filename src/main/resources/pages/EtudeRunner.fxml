@@ -15,8 +15,7 @@
 <?import javafx.scene.control.Tooltip?>
 
 <GridPane xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1"
-          fx:controller="com.clinacuity.acv.controllers.EtudeController"
-          fx:id="grid">
+          fx:controller="com.clinacuity.acv.controllers.EtudeController">
     <GridPane.margin>
         <Insets topRightBottomLeft="10"/>
     </GridPane.margin>
