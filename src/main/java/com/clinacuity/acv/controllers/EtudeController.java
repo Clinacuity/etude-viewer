@@ -117,6 +117,15 @@ public class EtudeController implements Initializable{
 
         etudeTask = new EtudeTask();
 
+        etudeTask.setOnSucceeded(event -> {
+            AcvContext context = AcvContext.getInstance();
+            context.corpusFilePathProperty.setValue(outputDirectoryTextField.getText() + "/" + CORPUS_FILE);
+            context.targetDirectoryProperty.setValue(outputDirectoryTextField.getText() + "/" + SYSTEM_OUT_SUBDIR);
+            context.referenceDirectoryProperty.setValue(outputDirectoryTextField.getText() + "/" + REFERENCE_SUBDIR);
+
+            context.mainController.reloadContent(AcvContext.COMPARISON_VIEW);
+        });
+
         etudeTask.reset();
 
         etudeTask.setReferenceConfigFilePath(referenceConfigInputField.getText());
