@@ -111,7 +111,6 @@ public class Modal {
         Scene scene = new Scene(modalContent, width, height);
         stage.setScene(scene);
         isInitialized = true;
-        logger.error("Initialized");
     }
 
     public void show() {

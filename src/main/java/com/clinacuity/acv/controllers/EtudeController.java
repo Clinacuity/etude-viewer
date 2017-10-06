@@ -25,12 +25,17 @@ import java.util.ResourceBundle;
 
 public class EtudeController implements Initializable{
     private static final Logger logger = LogManager.getLogger();
-    private static EtudeTask etudeTask = null;
-    private static final String ERROR_ID = "errLabel";
 
-    @FXML private JFXTextField goldConfigInputField;
+    public static final String REFERENCE_SUBDIR = "reference/";
+    public static final String SYSTEM_OUT_SUBDIR = "system/";
+    public static final String CORPUS_FILE = "corpus.json";
+
+    private static final String ERROR_ID = "errLabel";
+    private static EtudeTask etudeTask = null;
+
+    @FXML private JFXTextField referenceConfigInputField;
     @FXML private JFXTextField testConfigInputField;
-    @FXML private JFXTextField goldInputTextField;
+    @FXML private JFXTextField referenceInputTextField;
     @FXML private JFXTextField testInputTextField;
     @FXML private JFXTextField outputDirectoryTextField;
     @FXML private JFXTextField scoreKeyTextField;
@@ -68,12 +73,12 @@ public class EtudeController implements Initializable{
         byTypeCheckbox.setSelected(Boolean.valueOf(AppMain.properties.getProperty("BYTYPE")));
         byTypeAndFileCheckbox.setSelected(Boolean.valueOf(AppMain.properties.getProperty("BYTYPEANDFILE")));
         ignoreWhitespaceCheckbox.setSelected(Boolean.valueOf(AppMain.properties.getProperty("IGNOREWHITESPACE")));
-        goldConfigInputField.focusedProperty().addListener(
-                (obs, old, newValue) -> focusChanged(newValue, goldConfigInputField, true));
+        referenceConfigInputField.focusedProperty().addListener(
+                (obs, old, newValue) -> focusChanged(newValue, referenceConfigInputField, true));
         testConfigInputField.focusedProperty().addListener(
                 (obs, old, newValue) -> focusChanged(newValue, testConfigInputField, true));
-        goldInputTextField.focusedProperty().addListener(
-                (obs, old, newValue) -> focusChanged(newValue, goldInputTextField, false));
+        referenceInputTextField.focusedProperty().addListener(
+                (obs, old, newValue) -> focusChanged(newValue, referenceInputTextField, false));
         testInputTextField.focusedProperty().addListener(
                 (obs, old, newValue) -> focusChanged(newValue, testInputTextField, false));
         outputDirectoryTextField.focusedProperty().addListener(
@@ -81,16 +86,6 @@ public class EtudeController implements Initializable{
     }
 
     @FXML private void runEtudeButtonAction() throws IOException {
-        if (etudeTask == null) {
-            etudeTask = new EtudeTask();
-        }
-
-        if (etudeTask.isRunning()) {
-            etudeTask.cancel();
-        }
-
-        etudeTask.reset();
-
         if (checkInputs()) {
             FileOutputStream out = new FileOutputStream("config_en.properties");
             AppMain.properties.setProperty("TP", String.valueOf(metricsTP.isSelected()));
@@ -107,9 +102,6 @@ public class EtudeController implements Initializable{
             AppMain.properties.setProperty("IGNOREWHITESPACE", String.valueOf(ignoreWhitespaceCheckbox.isSelected()));
             AppMain.properties.store(out, null);
 
-
-
-            etudeTask.setGoldConfigFilePath(goldConfigInputField.getText());
             if (checkOutputDirectory()) {
                 runEtude();
             } else {
@@ -118,25 +110,32 @@ public class EtudeController implements Initializable{
         }
     }
 
-    private void runEtude() {etudeTask.setGoldConfigFilePath(goldConfigInputField.getText());
-            etudeTask.setTestConfigFilePath(testConfigInputField.getText());
-            etudeTask.setGoldInputDirPath(goldInputTextField.getText());
-            etudeTask.setTestInputDirPath(testInputTextField.getText());
-//            etudeTask.setGoldOutputDirPath(goldOutputTextField.getText());
-//            etudeTask.setTestOutputDirPath(testOutputTextField.getText());
-//            etudeTask.setCorpusFilePath(corpusOutputTextField.getText());
-            etudeTask.setMetricsTP(Boolean.valueOf(AppMain.properties.getProperty("TP")));
-            etudeTask.setMetricsFP(metricsFP.isSelected());
-            etudeTask.setMetricsFN(metricsFN.isSelected());
-            etudeTask.setMetricsPrecision(metricsPrecision.isSelected());
-            etudeTask.setMetricsRecall(metricsRecall.isSelected());
+    private void runEtude() {
+        if (etudeTask != null && etudeTask.isRunning()) {
+            etudeTask.cancel();
+        }
 
-            etudeTask.setMetricsF1(metricsF1.isSelected());
-            etudeTask.setByFile(byFileCheckbox.isSelected());
-            etudeTask.setByFileAndType(byFileAndTypeCheckbox.isSelected());
-            etudeTask.setByType(byTypeCheckbox.isSelected());
-            etudeTask.setByTypeAndFile(byTypeAndFileCheckbox.isSelected());
-            etudeTask.setIgnoreWhitespace(ignoreWhitespaceCheckbox.isSelected());
+        etudeTask = new EtudeTask();
+
+        etudeTask.reset();
+
+        etudeTask.setReferenceConfigFilePath(referenceConfigInputField.getText());
+        etudeTask.setTestConfigFilePath(testConfigInputField.getText());
+        etudeTask.setReferenceInputDirPath(referenceInputTextField.getText());
+        etudeTask.setTestInputDirPath(testInputTextField.getText());
+        etudeTask.setOutputDirectory(outputDirectoryTextField.getText());
+        etudeTask.setMetricsTP(Boolean.valueOf(AppMain.properties.getProperty("TP")));
+        etudeTask.setMetricsFP(metricsFP.isSelected());
+        etudeTask.setMetricsFN(metricsFN.isSelected());
+        etudeTask.setMetricsPrecision(metricsPrecision.isSelected());
+        etudeTask.setMetricsRecall(metricsRecall.isSelected());
+
+        etudeTask.setMetricsF1(metricsF1.isSelected());
+        etudeTask.setByFile(byFileCheckbox.isSelected());
+        etudeTask.setByFileAndType(byFileAndTypeCheckbox.isSelected());
+        etudeTask.setByType(byTypeCheckbox.isSelected());
+        etudeTask.setByTypeAndFile(byTypeAndFileCheckbox.isSelected());
+        etudeTask.setIgnoreWhitespace(ignoreWhitespaceCheckbox.isSelected());
 
         if (!scoreKeyTextField.getText().equals("") && scoreKeyTextField.getText() != null) {
             etudeTask.setScoreKey(scoreKeyTextField.getText());
@@ -154,7 +153,7 @@ public class EtudeController implements Initializable{
             etudeTask.setFileSuffix(fileSuffixTextField.getText());
         }
 
-//            new Thread(etudeTask).start();
+        new Thread(etudeTask).start();
     }
 
     /**
@@ -180,9 +179,9 @@ public class EtudeController implements Initializable{
     private boolean checkOutputDirectory() {
         File directory = new File(outputDirectoryTextField.getText());
 
-        File testDirectory = new File(directory.getAbsolutePath() + "/test");
-        File referenceDirectory = new File(directory.getAbsolutePath() + "/reference");
-        File corpusFile = new File(directory.getAbsolutePath() + "/corpus.json");
+        File testDirectory = new File(directory.getAbsolutePath() + "/" + SYSTEM_OUT_SUBDIR);
+        File referenceDirectory = new File(directory.getAbsolutePath() + "/" + REFERENCE_SUBDIR);
+        File corpusFile = new File(directory.getAbsolutePath() + "/" + CORPUS_FILE);
 
         boolean isDirectoryClean = true;
 
@@ -286,10 +285,10 @@ public class EtudeController implements Initializable{
         }
     }
 
-    @FXML private void pickGoldConfigFile() {
-        File file = getFile("Gold Standard Configuration File");
+    @FXML private void pickReferenceConfigFile() {
+        File file = getFile("Reference Standard Configuration File");
         if (file != null) {
-            goldConfigInputField.setText(file.getAbsolutePath());
+            referenceConfigInputField.setText(file.getAbsolutePath());
         }
     }
 
@@ -300,10 +299,10 @@ public class EtudeController implements Initializable{
         }
     }
 
-    @FXML private void pickGoldInDirectory() {
-        File directory = getDirectory("Gold Standard input files");
+    @FXML private void pickReferenceInDirectory() {
+        File directory = getDirectory("Reference Standard input files");
         if (directory != null) {
-            goldInputTextField.setText(directory.getAbsolutePath());
+            referenceInputTextField.setText(directory.getAbsolutePath());
         }
     }
 
@@ -314,8 +313,8 @@ public class EtudeController implements Initializable{
         }
     }
 
-    @FXML private void pickGoldOutDirectory() {
-        File directory = getDirectory("Gold Standard Output Directory");
+    @FXML private void pickMainOutputDirectory() {
+        File directory = getDirectory("Reference Standard Output Directory");
         if (directory != null) {
             outputDirectoryTextField.setText(directory.getAbsolutePath());
         }

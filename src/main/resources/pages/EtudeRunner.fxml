@@ -61,15 +61,15 @@
                 </graphic>
             </Label>
         </HBox>
-        <HBox id="goldConfig" spacing="10">
+        <HBox id="referenceConfig" spacing="10">
             <Label text="Reference:" styleClass="text-medium-normal"
                    alignment="BOTTOM_RIGHT" textAlignment="RIGHT" minWidth="100" maxWidth="100" maxHeight="Infinity"/>
-            <JFXTextField fx:id="goldConfigInputField" styleClass="text-medium-normal" minWidth="300" maxWidth="450"/>
-            <JFXButton text="..." onAction="#pickGoldConfigFile" prefWidth="32" maxWidth="Infinity"
+            <JFXTextField fx:id="referenceConfigInputField" styleClass="text-medium-normal" minWidth="300" maxWidth="450"/>
+            <JFXButton text="..." onAction="#pickReferenceConfigFile" prefWidth="32" maxWidth="Infinity"
                        styleClass="button-raised, button-gray, no-focus, text-small-normal" buttonType="RAISED"/>
             <Label styleClass="label-tooltip">
                 <tooltip>
-                    <Tooltip text="Select the configuration file used to parse through the gold standard files."/>
+                    <Tooltip text="Select the configuration file used to parse through the reference standard files."/>
                 </tooltip>
                 <graphic>
                     <ImageView fitWidth="12" preserveRatio="true" pickOnBounds="true">
@@ -101,15 +101,15 @@
                 </graphic>
             </Label>
         </HBox>
-        <HBox id="goldInput" spacing="10">
+        <HBox id="referenceInput" spacing="10">
             <Label text="Reference:" styleClass="text-medium-normal"
                    alignment="BOTTOM_RIGHT" textAlignment="RIGHT" minWidth="100" maxWidth="100" maxHeight="Infinity"/>
-            <JFXTextField fx:id="goldInputTextField" styleClass="text-medium-normal" minWidth="300" maxWidth="450"/>
-            <JFXButton text="..." onAction="#pickGoldInDirectory" prefWidth="32" maxWidth="Infinity"
+            <JFXTextField fx:id="referenceInputTextField" styleClass="text-medium-normal" minWidth="300" maxWidth="450"/>
+            <JFXButton text="..." onAction="#pickReferenceInDirectory" prefWidth="32" maxWidth="Infinity"
                        styleClass="button-raised, button-gray, no-focus, text-small-normal" buttonType="RAISED"/>
             <Label styleClass="label-tooltip">
                 <tooltip>
-                    <Tooltip text="Select a directory containing the Gold Standard files"/>
+                    <Tooltip text="Select a directory containing the Reference Standard files"/>
                 </tooltip>
                 <graphic>
                     <ImageView fitWidth="12" preserveRatio="true" pickOnBounds="true">
@@ -139,7 +139,7 @@
             <JFXTextField fx:id="fileSuffixTextField" styleClass="text-medium-normal" minWidth="300" maxWidth="450"/>
             <Label styleClass="label-tooltip">
                 <tooltip>
-                    <Tooltip text="Comman-separated suffixes to use as filters for the input files"/>
+                    <Tooltip text="Comma-separated suffixes to use as filters for the input files"/>
                 </tooltip>
                 <graphic>
                     <ImageView fitWidth="12" preserveRatio="true" pickOnBounds="true">
@@ -158,11 +158,11 @@
             <Label text="Directory:" styleClass="text-medium-normal"
                    alignment="BOTTOM_RIGHT" textAlignment="RIGHT" minWidth="100" maxWidth="100" maxHeight="Infinity"/>
             <JFXTextField fx:id="outputDirectoryTextField" styleClass="text-medium-normal" minWidth="300" maxWidth="450"/>
-            <JFXButton text="..." onAction="#pickGoldOutDirectory" prefWidth="32" maxWidth="Infinity"
+            <JFXButton text="..." onAction="#pickMainOutputDirectory" prefWidth="32" maxWidth="Infinity"
                        styleClass="button-raised, button-gray, no-focus, text-small-normal" buttonType="RAISED"/>
             <Label styleClass="label-tooltip">
                 <tooltip>
-                    <Tooltip text="Directory to which the Gold Standard json dictionaries will be saved."/>
+                    <Tooltip text="Directory to which the Reference Standard json dictionaries will be saved."/>
                 </tooltip>
                 <graphic>
                     <ImageView fitWidth="12" preserveRatio="true" pickOnBounds="true">
