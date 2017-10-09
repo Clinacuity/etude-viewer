@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.HBox?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Separator?>
+
+<fx:root type="javafx.scene.layout.StackPane"
+         xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1">
+    <StackPane maxWidth="Infinity">
+        <Pane styleClass="card-small"/>
+        <VBox fx:id="mainBox" spacing="20" maxWidth="Infinity">
+            <padding>
+                <Insets topRightBottomLeft="10"/>
+            </padding>
+
+            <HBox spacing="10" maxWidth="Infinity">
+                <JFXTextField fx:id="keyTextField" promptText="Annotation type" styleClass="text-medium-bold"/>
+                <VBox alignment="CENTER_RIGHT" HBox.hgrow="ALWAYS" maxHeight="${keyTextField.height}" minHeight="${keyTextField.height}">
+                    <JFXButton onAction="#deleteCard" alignment="CENTER"
+                               maxHeight="16" minHeight="16" maxWidth="16" minWidth="16"
+                               styleClass="button-raised, button-red, no-focus" buttonType="RAISED">
+                        <graphic>
+                            <ImageView preserveRatio="true" fitHeight="12">
+                                <Image url="/img/icons8/delete.png"/>
+                            </ImageView>
+                        </graphic>
+                    </JFXButton>
+                </VBox>
+            </HBox>
+            <Separator/>
+            <VBox>
+                <JFXButton onAction="#addAttributeRow" alignment="CENTER" text="ADD ROW"
+                           styleClass="button-raised, button-gray, no-focus" buttonType="RAISED">
+                    <graphic>
+                        <ImageView preserveRatio="true" fitHeight="24">
+                            <Image url="/img/icons8/plus.png"/>
+                        </ImageView>
+                    </graphic>
+                </JFXButton>
+                <padding>
+                    <Insets left="15" bottom="10"/>
+                </padding>
+            </VBox>
+        </VBox>
+    </StackPane>
+</fx:root>

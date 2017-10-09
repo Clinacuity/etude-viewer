@@ -25,7 +25,8 @@
         <AnchorPane fx:id="anchor"/>
     </ScrollPane>
 
-    <Label alignment="BOTTOM_CENTER" text="&#9;Features/attributes:" styleClass="label-header-two" GridPane.rowIndex="1"/>
+    <Label alignment="BOTTOM_CENTER" text="&#9;Features/attributes:" styleClass="text-medium-bold" GridPane.rowIndex="1"/>
 
-    <TextArea fx:id="featureTree" minHeight="15" maxHeight="Infinity" styleClass="feature-tree" GridPane.rowIndex="2"/>
+    <TextArea fx:id="featureTree" minHeight="15" maxHeight="Infinity" styleClass="feature-tree, no-focus, no-mouse"
+              GridPane.rowIndex="2"/>
 </fx:root>

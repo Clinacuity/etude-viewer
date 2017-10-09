@@ -7,92 +7,108 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.control.Tooltip?>
-<?import com.jfoenix.controls.JFXCheckBox?>
 <?import javafx.scene.control.cell.PropertyValueFactory?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TableColumn?>
+<?import javafx.geometry.Insets?>
+<?import com.jfoenix.controls.JFXButton?>
 
 <fx:root type="javafx.scene.layout.VBox"
          xmlns="http://javafx.com/javafx/8.0.112"
          xmlns:fx="http://javafx.com/fxml/1">
 
-    <VBox GridPane.columnIndex="0" GridPane.rowIndex="1">
-        <HBox alignment="CENTER_LEFT" spacing="3" styleClass="h-box-checkbox">
-            <JFXCheckBox fx:id="toggleExactMatches" text="Exact Match" selected="true"
-                         checkedColor="DodgerBlue" unCheckedColor="DodgerBlue"/>
-            <Label styleClass="label-tooltip">
+    <VBox GridPane.columnIndex="0" GridPane.rowIndex="1" spacing="10">
+        <VBox fx:id="matchingTypeToggles" spacing="10"/>
+        <HBox id="AnnotationNavBox" alignment="CENTER_LEFT" spacing="3">
+            <JFXButton fx:id="previousButton" styleClass="text-small-normal">
+                <graphic>
+                    <HBox spacing="5">
+                        <ImageView fitHeight="18" preserveRatio="true">
+                            <Image url="/img/icons8/arrow_back.png"/>
+                        </ImageView>
+                        <Label text="PREV" maxHeight="Infinity"/>
+                    </HBox>
+                </graphic>
+            </JFXButton>
+            <JFXButton fx:id="clearButton" styleClass="text-small-normal" maxHeight="Infinity">
+                <graphic>
+                    <Label text="CLEAR" maxHeight="Infinity"/>
+                </graphic>
+            </JFXButton>
+            <JFXButton fx:id="nextButton" styleClass="text-small-normal">
+                <graphic>
+                    <HBox spacing="5">
+                        <Label  text="NEXT" maxHeight="Infinity"/>
+                        <ImageView fitHeight="18" preserveRatio="true">
+                            <Image url="/img/icons8/arrow_forward.png"/>
+                        </ImageView>
+                    </HBox>
+                </graphic>
+            </JFXButton>
+            <Label styleClass="label-tooltip" maxHeight="Infinity">
                 <tooltip>
-                    <Tooltip text="Toggle display of exact matches, including their features"/>
+                    <Tooltip text="Navigate through the displayed annotations of the selected type.&#013;This will only cycle through annotations on the respective panel."/>
                 </tooltip>
                 <graphic>
-                    <ImageView fitHeight="16" fitWidth="16" preserveRatio="true" pickOnBounds="true">
-                        <Image url="/img/ecommerce/16/info.png"/>
+                    <ImageView fitWidth="12" preserveRatio="true" pickOnBounds="true">
+                        <Image url="/img/icons8/info_button.png"/>
                     </ImageView>
                 </graphic>
             </Label>
+            <padding>
+                <Insets topRightBottomLeft="5"/>
+            </padding>
         </HBox>
-        <HBox alignment="CENTER_LEFT" spacing="3" styleClass="h-box-checkbox">
-            <JFXCheckBox fx:id="togglePartialMatches" text="Partial Matches" selected="true"
-                         checkedColor="DarkOrchid" unCheckedColor="DarkOrchid"/>
-            <Label styleClass="label-tooltip">
+        <TableView fx:id="annotationTable" fixedCellSize="35">
+            <columns>
+                <TableColumn text="Name" fx:id="annotationNameColumn" prefWidth="120" styleClass="column-center-align">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="annotationName"/>
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn text="TP" fx:id="truePosColumn" styleClass="column-center-align">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="truePositiveCount"/>
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn text="FP" fx:id="falsePosColumn" styleClass="column-center-align">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="falsePositiveCount"/>
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn text="FN" fx:id="falseNegColumn" styleClass="column-center-align">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="falseNegativeCount"/>
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn text="Recall" styleClass="column-center-align">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="recall"/>
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn text="Precision" styleClass="column-center-align">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="precision"/>
+                    </cellValueFactory>
+                </TableColumn>
+            </columns>
+        </TableView>
+        <HBox id="clearSelectionBox" spacing="3">
+            <JFXButton text="CLEAR SELECTION" styleClass="text-small-normal" onAction="#clearTableSelection">
+            </JFXButton>
+            <Label styleClass="label-tooltip" maxHeight="Infinity">
                 <tooltip>
-                    <Tooltip text="Toggle display of annotations which partially match others.&#013;Partial matches consider category, features, and span."/>
+                    <Tooltip text="Clears the table's selection.  This will also clear the annotations on the right-side panels."/>
                 </tooltip>
                 <graphic>
-                    <ImageView fitHeight="16" fitWidth="16" preserveRatio="true" pickOnBounds="true">
-                        <Image url="/img/ecommerce/16/info.png"/>
+                    <ImageView fitWidth="12" preserveRatio="true" pickOnBounds="true">
+                        <Image url="/img/icons8/info_button.png"/>
                     </ImageView>
                 </graphic>
             </Label>
-        </HBox>
-        <HBox alignment="CENTER_LEFT" spacing="3" styleClass="h-box-checkbox">
-            <JFXCheckBox fx:id="toggleNoMatch" text="No Match" selected="true"
-                         checkedColor="OrangeRed" unCheckedColor="OrangeRed"/>
-            <Label styleClass="label-tooltip">
-                <tooltip>
-                    <Tooltip text="Toggle display of annotations which do not have any match."/>
-                </tooltip>
-                <graphic>
-                    <ImageView fitHeight="16" fitWidth="16" preserveRatio="true" pickOnBounds="true">
-                        <Image url="/img/ecommerce/16/info.png"/>
-                    </ImageView>
-                </graphic>
-            </Label>
+            <VBox.margin>
+                <Insets left="20"/>
+            </VBox.margin>
         </HBox>
     </VBox>
-
-    <TableView fx:id="annotationTable" fixedCellSize="35">
-        <columns>
-            <TableColumn text="Name" fx:id="annotationNameColumn" prefWidth="150" styleClass="column-center-align">
-                <cellValueFactory>
-                    <PropertyValueFactory property="annotationName"/>
-                </cellValueFactory>
-            </TableColumn>
-            <TableColumn text="TP" fx:id="truePosColumn" maxWidth="50" styleClass="column-center-align">
-                <cellValueFactory>
-                    <PropertyValueFactory property="truePositiveCount"/>
-                </cellValueFactory>
-            </TableColumn>
-            <TableColumn text="FP" fx:id="falsePosColumn" maxWidth="50" styleClass="column-center-align">
-                <cellValueFactory>
-                    <PropertyValueFactory property="falsePositiveCount"/>
-                </cellValueFactory>
-            </TableColumn>
-            <TableColumn text="FN" fx:id="falseNegColumn" maxWidth="50" styleClass="column-center-align">
-                <cellValueFactory>
-                    <PropertyValueFactory property="falseNegativeCount"/>
-                </cellValueFactory>
-            </TableColumn>
-            <TableColumn text="Recall" maxWidth="80" styleClass="column-center-align">
-                <cellValueFactory>
-                    <PropertyValueFactory property="recall"/>
-                </cellValueFactory>
-            </TableColumn>
-            <TableColumn text="Precision" maxWidth="80" styleClass="column-center-align">
-                <cellValueFactory>
-                    <PropertyValueFactory property="precision"/>
-                </cellValueFactory>
-            </TableColumn>
-        </columns>
-    </TableView>
 </fx:root>

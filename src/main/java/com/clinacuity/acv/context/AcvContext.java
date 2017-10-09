@@ -1,25 +1,28 @@
 package com.clinacuity.acv.context;
 
 import com.clinacuity.acv.controllers.AppMainController;
-import com.google.gson.JsonObject;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
+import javafx.stage.Window;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import javax.annotation.Resource;
 import java.io.*;
-import java.util.Locale;
 import java.util.Properties;
 import java.util.ResourceBundle;
 
 public class AcvContext {
+    public static final String LOAD_SCREEN = "/pages/LoadScreenView.fxml";
+    public static final String COMPARISON_VIEW = "/pages/AcvContent.fxml";
+    public static final String APP_MAIN_VIEW = "/pages/AppMain.fxml";
+    public static final String MENU_BAR = "/pages/MenuBar.fxml";
+    public static final String ETUDE_RUNNER = "/pages/EtudeRunner.fxml";
+    public static final String CONFIGURATION_BUILDER = "/pages/ConfigurationBuilder.fxml";
+
     private static final Logger logger = LogManager.getLogger();
     private static final String propertiesFileName = "/config_en.properties";
     private static File propertiesFile;
     private static boolean propertiesActive = false;
     private static ResourceBundle resources;
-    public ResourceBundle getResources() { return resources; }
     public void setResources(ResourceBundle bundle) { resources = bundle; }
 
     private static AcvContext instance;
@@ -31,34 +34,53 @@ public class AcvContext {
     }
 
     public AppMainController mainController;
+    public Window mainWindow;
+
     private Properties properties;
     public Properties getProperties() { return properties; }
 
-    // Properties
-    public StringProperty referenceDocumentPathProperty = new SimpleStringProperty("");
-    public StringProperty targetDocumentPathProperty = new SimpleStringProperty("");
-    public StringProperty selectedAnnotationTypeProperty = new SimpleStringProperty("");
-    public BooleanProperty exactMatchesProperty = new SimpleBooleanProperty(true);
-    public BooleanProperty overlappingMatchesProperty = new SimpleBooleanProperty(true);
-    public BooleanProperty noMatchesProperty = new SimpleBooleanProperty(true);
+    private CorpusDictionary corpusDictionary;
+    public CorpusDictionary getCorpusDictionary() { return corpusDictionary; }
 
+    /** This property is the string value of the Reference directory's path containing all the reference files */
+    public StringProperty referenceDirectoryProperty = new SimpleStringProperty("");
+
+    /** This property is the string value of the System directory's path containing all the system output files */
+    public StringProperty targetDirectoryProperty = new SimpleStringProperty("");
+
+    /** This property is the string value of the annotation type currently selected in the ViewControl's table */
+    public StringProperty selectedAnnotationTypeProperty = new SimpleStringProperty("");
+
+    /** A reference to the match type (i.e. Exact, Partial, etc.) selected for populating the table's metrics */
+    public StringProperty selectedMatchTypeProperty = new SimpleStringProperty("");
+
+    /** This property is the string value of the Corpus file's path, which is used to populate the list of files,
+     *  determining metrics, populating the Radio buttons for the match types, etc. */
+    public StringProperty corpusFilePathProperty = new SimpleStringProperty("");
+
+    /** This property indicates whether True Positive annotations will be displayed in the Annotated Document Panes */
+    public BooleanProperty truePositivesProperty = new SimpleBooleanProperty(true);
+
+    /** This property indicates whether False Positive annotations will be displayed in the Annotated Document Panes */
+    public BooleanProperty falsePositivesProperty = new SimpleBooleanProperty(true);
+
+    /** This property indicates whether False Negative annotations will be displayed in the Annotated Document Panes */
+    public BooleanProperty falseNegativesProperty = new SimpleBooleanProperty(true);
+
+    /** This property contains a list of annotation types available in the corpus file*/
     public ListProperty<String> annotationList = new SimpleListProperty<>(FXCollections.observableArrayList());
 
     private AcvContext() {
         instance = this;
 
         initProperties();
-        addProperty("exactMatch", true);
+        addProperty("exactMatch", Boolean.toString(true));
 
-        referenceDocumentPathProperty.addListener((observable, oldValue, newValue) -> cleanupAnnotationList());
-        targetDocumentPathProperty.addListener((observable, oldValue, newValue) -> cleanupAnnotationList());
+        corpusFilePathProperty.addListener((observable, oldValue, newValue) -> loadCorpusDictionary());
     }
 
-    private void cleanupAnnotationList() {
-        if (annotationList.size() > 1) {
-            annotationList.remove(1, annotationList.size() - 1);
-            selectedAnnotationTypeProperty.setValue(annotationList.get(0));
-        }
+    private void loadCorpusDictionary() {
+        corpusDictionary = new CorpusDictionary(corpusFilePathProperty.getValueSafe());
     }
 
     private void initProperties() {
@@ -73,7 +95,7 @@ public class AcvContext {
         }
     }
 
-    private static void addProperty(Object key, Object value) {
+    private void addProperty(String key, String value) {
         instance.properties.put(key, value);
 
         if (propertiesActive) {

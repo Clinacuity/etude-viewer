@@ -8,18 +8,20 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import java.io.File;
 import java.io.IOException;
-import java.util.*;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.HashMap;
+import java.util.ArrayList;
 
 public class Annotations {
     private static final Logger logger = LogManager.getLogger();
 
     private static final String METRICS_KEY = "metrics";
     private static final String METRICS_TYPES_KEY = "by-type";
-    private static final String METRICS_AGGREGATE_KEY = "aggregate";
     private static final String TRUE_POS_KEY = "TP";
     private static final String FALSE_POS_KEY = "FP";
     private static final String FALSE_NEG_KEY = "FN";
-    private static final String TRUE_NEG_KEY = "TN";
     private static final String CONTENT_KEY = "raw_content";
     private static final String OFFSETS_KEY = "offset_mapping";
     private static final String ANNOTATIONS_KEY = "annotations";
@@ -27,7 +29,6 @@ public class Annotations {
 
     private JsonObject root;
     private JsonObject metrics = null;
-    private JsonObject offsets = null;
     private Map<String, List<JsonObject>> annotationMap = new HashMap<>();
     public Map<String, List<JsonObject>> getAnnotationMap() { return annotationMap; }
     public boolean hasOffsetMapping() { return root.has(OFFSETS_KEY); }
@@ -44,7 +45,7 @@ public class Annotations {
         if (f.exists()) {
             try {
                 JsonParser parser = new JsonParser();
-                root = parser.parse(FileUtils.readFileToString(new File(filePath), "UTF-8")).getAsJsonObject();
+                root = parser.parse(FileUtils.readFileToString(f, "UTF-8")).getAsJsonObject();
 
                 if (hasOffsetMapping()) {
                     root.get(OFFSETS_KEY).getAsJsonObject();
@@ -87,68 +88,52 @@ public class Annotations {
         return root.get(CONTENT_KEY).getAsString();
     }
 
-    /**
-     * Returns the True Positive percentage for any given Annotation type.
-     * @param annotationType    The Annotation whose metrics we are collecting
-     * @return                  The value of the metric for the given Annotation
-     */
-    public double getMetricsTruePositive(String annotationType) {
-        return getMetricsItem(annotationType, TRUE_POS_KEY);
-    }
-
-    /**
-     * Returns the False Positive percentage for any given Annotation type
-     * @param annotationType    The Annotation whose metrics we are collecting
-     * @return                  The value of the metric for the given Annotation
-     */
-    public double getMetricsFalsePositive(String annotationType) {
-        return getMetricsItem(annotationType, FALSE_POS_KEY);
-    }
-
-    /**
-     * Returns the False Negative percentage for any given Annotation type
-     * @param annotationType    The Annotation whose metrics we are collecting
-     * @return                  The value of the metric for the given Annotation
-     */
-    public double getMetricsFalseNegative(String annotationType) {
-        return getMetricsItem(annotationType, FALSE_NEG_KEY);
-    }
-
-    /**
-     * True negatives are impossible to determine; this value should always be 0.0d
-     * @param annotationType    The Annotation whose metrics we are collecting
-     * @return                  The value of the metric for the given Annotation
-     */
-    public double getMetricsTrueNegative(String annotationType) {
-        return getMetricsItem(annotationType, TRUE_NEG_KEY);
-    }
-
-    private double getMetricsItem(String annotationKey, String metricKey) {
+    public MetricValues getMetricValues(String annotationKey) {
         JsonObject json;
 
         if (metrics != null) {
-            if (metrics.has(METRICS_TYPES_KEY)) {
-                json = metrics.get(METRICS_TYPES_KEY).getAsJsonObject();
-                if (json.has(annotationKey)) {
-                    json = json.get(annotationKey).getAsJsonObject();
-                    if (json.has(metricKey)) {
-                        return json.get(metricKey).getAsDouble();
+            String matchType = AcvContext.getInstance().selectedMatchTypeProperty.getValueSafe();
+
+            if (matchType.length() > 0) {
+                if (metrics.has(matchType)) {
+                    json = metrics.get(matchType).getAsJsonObject();
+                    if (json.has(METRICS_TYPES_KEY)) {
+                        json = json.get(METRICS_TYPES_KEY).getAsJsonObject();
+                        if (json.has(annotationKey)) {
+                            json = json.get(annotationKey).getAsJsonObject();
+
+                            double tp = json.get(TRUE_POS_KEY).getAsDouble();
+                            double fp = json.get(FALSE_POS_KEY).getAsDouble();
+                            double fn = json.get(FALSE_NEG_KEY).getAsDouble();
+
+                            return new MetricValues(tp, fp, fn);
+                        } else {
+                            logger.warn("The metrics object has no information for key <{}>", annotationKey);
+                            return new MetricValues(0, 0, 0);
+                        }
                     } else {
-                        logger.warn("The metrics object has no information for value <{}> on key <{}>", metricKey, annotationKey);
+                        logger.throwing(new JsonParseException("Metric type key <" + METRICS_TYPES_KEY + "> does not exist!"));
+                        return new MetricValues(0, 0, 0);
                     }
                 } else {
-                    logger.warn("The metrics object has no information for key <{}>", annotationKey);
-                    return 0.0d;
+                    logger.error(new JsonParseException("Metrics type match <" + matchType + "> does not exist!"));
                 }
-            } else {
-                logger.throwing(new JsonParseException("Key <" + METRICS_TYPES_KEY + "> does not exist!"));
-                return 0.0d;
             }
         } else {
-            logger.warn("There is no metrics object; key <{}> begin set to 0.0d.");
-            return 0.0d;
+            logger.warn("There is no metrics object; key <{}> begin set to 0.0d.", annotationKey);
+            return new MetricValues(0, 0, 0);
         }
 
-        return 0.0d;
+        return new MetricValues(0, 0, 0);
+    }
+
+    public List<String> getMatchTypes() {
+        if (hasMetrics()) {
+            List<String> matchTypes = new ArrayList<>();
+            matchTypes.addAll(metrics.keySet());
+            return matchTypes;
+        }
+
+        return null;
     }
 }

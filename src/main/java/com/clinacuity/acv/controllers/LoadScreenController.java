@@ -1,88 +1,90 @@
 package com.clinacuity.acv.controllers;
 
 import com.clinacuity.acv.context.AcvContext;
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXTextField;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.VBox;
-import javafx.stage.FileChooser;
+import javafx.stage.DirectoryChooser;
+import org.apache.commons.io.FilenameUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.core.util.FileUtils;
-
 import java.io.File;
-import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class LoadScreenController implements Initializable {
     private static final Logger logger = LogManager.getLogger();
+    private static final String CORPUS_DICTIONARY_NAME = "/corpus.json";
+    private static final String REFERENCE_DIRECTORY_NAME = "/reference/";
+    private static final String TEST_DIRECTORY_NAME = "/system/";
 
     @FXML private TextField gsInputTextField;
-    @FXML private TextField testInputTextField;
+    @FXML private JFXTextField masterDirectoryTextField;
+    @FXML private Label errorLabel;
+
+    private boolean isValidDirectory = false;
+    private File corpusFile;
+    private File targetDirectory;
+    private File referenceDirectory;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        masterDirectoryTextField.focusedProperty().addListener((obs, old, focusGained) -> {
+            if (focusGained) {
+                errorLabel.setVisible(false);
+            } else {
+                String path = masterDirectoryTextField.getText();
 
+                checkItemsInDirectory(path);
+
+                if (isValidDirectory || path.equals("")) {
+                    errorLabel.setVisible(false);
+                } else {
+                    errorLabel.setVisible(true);
+                }
+            }
+        });
     }
 
-    @FXML private void pickReferenceFile() {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Select Gold Standard Dictionaries Folder");
-        fileChooser.getExtensionFilters().add(getFilter());
-        File file = fileChooser.showOpenDialog(gsInputTextField.getScene().getWindow());
+    @FXML private void pickMasterDirectory() {
+        DirectoryChooser directoryChooser = new DirectoryChooser();
+        directoryChooser.setTitle("Select Test Dictionaries Folder");
+        File directory = directoryChooser.showDialog(masterDirectoryTextField.getScene().getWindow());
 
-        if (file != null) {
-            gsInputTextField.setText(file.getAbsolutePath());
-        }
-    }
-
-    @FXML private void pickTestFile() {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Select Test Dictionaries Folder");
-        fileChooser.getExtensionFilters().add(getFilter());
-        File file = fileChooser.showOpenDialog(testInputTextField.getScene().getWindow());
-
-        if (file != null) {
-            testInputTextField.setText(file.getAbsolutePath());
+        if (directory != null) {
+            masterDirectoryTextField.setText(directory.getAbsolutePath());
         }
     }
 
     @FXML private void runAcv() {
-        // TODO: Activate loading spinner
-        if (checkDocumentPaths()) {
-            // load documents' file paths into context [triggers creating Annotations objects]
+        if (isValidDirectory) {
             AcvContext context = AcvContext.getInstance();
-            context.targetDocumentPathProperty.setValue(testInputTextField.getText());
-            context.referenceDocumentPathProperty.setValue(gsInputTextField.getText());
 
-            // load the Acv main view
-            context.mainController.reloadContent("/pages/AcvContent.fxml");
+            context.corpusFilePathProperty.setValue(corpusFile.getAbsolutePath());
+            context.targetDirectoryProperty.setValue(targetDirectory.getAbsolutePath() + "/");
+            context.referenceDirectoryProperty.setValue(referenceDirectory.getAbsolutePath() + "/");
+
+            context.mainController.reloadContent(AcvContext.COMPARISON_VIEW);
         } else {
             // TODO: deactivate the loading spinner
             logger.debug("loading spinner will deactivate on its own if the content is reloaded");
         }
     }
 
-    private boolean checkDocumentPaths() {
-        String test = testInputTextField.getText().trim();
-        String gold = gsInputTextField.getText().trim();
+    private void checkItemsInDirectory(String path) {
+        corpusFile = new File(path + CORPUS_DICTIONARY_NAME);
+        targetDirectory = new File(path + TEST_DIRECTORY_NAME);
+        referenceDirectory = new File(path + REFERENCE_DIRECTORY_NAME);
 
-        if (test.equals("") || !(new File(test).exists())) {
-            // TODO: logger pop-up window saying this field is required
-            return false;
+        if (!targetDirectory.exists() || targetDirectory.isFile()
+                || !referenceDirectory.exists() || referenceDirectory.isFile()
+                || !corpusFile.exists() || corpusFile.isDirectory()) {
+            isValidDirectory = false;
+        } else {
+            isValidDirectory = true;
         }
-        if (gold.equals("") || !(new File(gold).exists())) {
-            // TODO: logger pop-up window saying this field is required
-            return false;
-        }
-
-        return true;
-    }
-
-    private FileChooser.ExtensionFilter getFilter() {
-        return new FileChooser.ExtensionFilter("(*.json) ETUDE Output Dictionary", "*.json", "*.xml");
     }
 }

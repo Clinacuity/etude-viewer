@@ -1,0 +1,80 @@
+{
+    "offset_mapping": {
+
+    },
+    "metrics": {
+        "aggregate": {
+            "FP": 0.0,
+            "TN": 0.0,
+            "TP": 22.0,
+            "FN": 0.0
+        },
+        "by-type": {
+            "Sentence": {
+                "TP": 75.0,
+                "FP": 20.0,
+                "FN": 1.0,
+                "TN": 0.0
+            },
+            "Word Token": {
+                "TP": 88.0,
+                "FP": 12.0,
+                "FN": 18.0,
+                "TN": 0.0
+            }
+        }
+    },
+    "annotations": {
+        "1": [
+            {
+                "begin_pos": 0,
+                "end_pos": 6,
+                "type": "Sentence"
+            }
+        ],
+        "7": [
+            {
+                "begin_pos": 7,
+                "end_pos": 14,
+                "type": "Sentence"
+            }
+        ],
+        "2": [
+            {
+                "begin_pos": 15,
+                "end_pos": 60,
+                "type": "Sentence"
+            }
+        ],
+        "4": [
+            {
+                "begin_pos": 96,
+                "end_pos": 126,
+                "type": "Sentence"
+            }
+        ],
+        "10": [
+            {
+                "begin_pos": 127,
+                "end_pos": 180,
+                "type": "Sentence",
+                "More information": "I don't want to"
+            }
+        ],
+        "5": [
+            {
+                "begin_pos": 0,
+                "end_pos": 6,
+                "type": "Word Token"
+            }
+        ],
+        "6": [
+            {
+                "begin_pos": 8,
+                "end_pos": 14,
+                "type": "Word Token"
+            }
+        ]
+    },
+    "raw_content": "Record: 123456\nThis guy is pretty cray-cray; we just need some sample sentences.\nSo here you go\nSome sample sentences for you.\nThis last sentence should be the same for both sides."
+}

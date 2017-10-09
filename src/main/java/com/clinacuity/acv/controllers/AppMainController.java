@@ -9,6 +9,7 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.layout.GridPane;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -28,10 +29,10 @@ public class AppMainController implements Initializable {
         resources = resourceBundle;
         AcvContext.getInstance().setResources(resources);
         try {
-            menuBar = FXMLLoader.load(getClass().getResource("/pages/MenuBar.fxml"), resources);
+            menuBar = FXMLLoader.load(getClass().getResource(AcvContext.MENU_BAR), resources);
             masterGrid.getChildren().addAll(menuBar);
 
-            reloadContent("/pages/LoadScreenView.fxml");
+            reloadContent(AcvContext.LOAD_SCREEN);
         } catch (IOException e) {
             logger.throwing(e);
         }

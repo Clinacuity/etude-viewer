@@ -1,66 +1,58 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.ColumnConstraints?>
 
-<GridPane alignment="CENTER" minHeight="300" minWidth="400"
-          xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1"
+<GridPane xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="com.clinacuity.acv.controllers.LoadScreenController">
-    <padding>
-        <Insets bottom="100" top="25" />
-    </padding>
 
     <columnConstraints>
-        <ColumnConstraints percentWidth="15"/>
-        <ColumnConstraints percentWidth="20"/>
-        <ColumnConstraints percentWidth="30"/>
-        <ColumnConstraints percentWidth="2"/>
-        <ColumnConstraints percentWidth="18"/>
-        <ColumnConstraints percentWidth="15"/>
+        <ColumnConstraints percentWidth="100"/>
     </columnConstraints>
 
-    <rowConstraints>
-        <RowConstraints minHeight="10" />
-        <RowConstraints minHeight="10" prefHeight="30" />
-        <RowConstraints minHeight="10" />
-        <RowConstraints minHeight="10" prefHeight="10" />
-        <RowConstraints minHeight="10" />
-        <RowConstraints minHeight="10" prefHeight="30" />
-        <RowConstraints minHeight="10" />
-    </rowConstraints>
-
-    <Label styleClass="label-header-one" text="Welcome" alignment="BOTTOM_CENTER" textAlignment="CENTER" GridPane.halignment="CENTER"
-           GridPane.columnIndex="1" GridPane.columnSpan="2">
+    <VBox spacing="30">
         <padding>
-            <Insets bottom="50" top="50" left="50" right="50"/>
+            <Insets topRightBottomLeft="25"/>
         </padding>
-    </Label>
+        <VBox spacing="10">
+            <Label styleClass="header-one, underlined" text="ETUDE" textAlignment="CENTER"/>
+            <Label styleClass="text-medium-normal"
+                   text="This tool will help you compare files processed by a given system (such as CliniDeid)&#10;against files on a given Gold Standard corpus."/>
+            <padding>
+                <Insets bottom="50" top="50" left="50" right="50"/>
+            </padding>
+        </VBox>
 
-    <Label alignment="CENTER_RIGHT" text="Test (System) File:" textAlignment="RIGHT" GridPane.halignment="RIGHT"
-           GridPane.columnIndex="1" GridPane.rowIndex="2" />
-    <TextField fx:id="testInputTextField" maxHeight="Infinity"
-               GridPane.columnIndex="2" GridPane.rowIndex="2">
-        <GridPane.margin><Insets right="5" left="5"/></GridPane.margin>
-    </TextField>
-    <Button onAction="#pickTestFile" text="..." textAlignment="CENTER" styleClass="button-clickable" GridPane.halignment="LEFT"
-            GridPane.columnIndex="3" GridPane.rowIndex="2" maxHeight="Infinity" maxWidth="Infinity"/>
+        <HBox spacing="10">
+            <Label text="Output Directory:" styleClass="text-medium-normal" alignment="CENTER_RIGHT" textAlignment="RIGHT"/>
+            <VBox spacing="3">
+                <JFXTextField fx:id="masterDirectoryTextField" styleClass="text-medium-normal" minWidth="400"/>
+                <padding>
+                    <Insets right="20" left="15"/>
+                </padding>
+            </VBox>
+            <JFXButton text="..." onAction="#pickMasterDirectory" prefWidth="32" maxWidth="Infinity"
+                       styleClass="button-raised, button-gray, no-focus, text-small-normal" buttonType="RAISED"/>
+            <Label fx:id="errorLabel" text="* Please choose a valid directory" alignment="CENTER"
+                   styleClass="text-medium-normal, error-text"/>
+            <padding>
+                <Insets left="100"/>
+            </padding>
+        </HBox>
 
-    <Label alignment="CENTER_RIGHT" text="Gold Standard (Reference) File:" textAlignment="RIGHT" GridPane.halignment="RIGHT"
-           GridPane.columnIndex="1" GridPane.rowIndex="4" />
-    <TextField fx:id="gsInputTextField" styleClass="text-field" maxHeight="Infinity" alignment="BOTTOM_LEFT"
-               GridPane.columnIndex="2" GridPane.rowIndex="4">
-        <GridPane.margin><Insets right="5" left="5"/></GridPane.margin>
-    </TextField>
-    <Button onAction="#pickReferenceFile" text="..." textAlignment="CENTER" styleClass="button-clickable" GridPane.halignment="LEFT"
-            GridPane.columnIndex="3" GridPane.rowIndex="4" maxHeight="Infinity" maxWidth="Infinity"/>
-
-    <Button onAction="#runAcv" text="Run ACV" styleClass="button-actionable" GridPane.halignment="LEFT"
-            GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.rowIndex="6">
-        <GridPane.margin><Insets topRightBottomLeft="10"/></GridPane.margin>
-    </Button>
+        <HBox>
+            <JFXButton onAction="#runAcv" text="RUN VIEWER" buttonType="RAISED"
+                       styleClass="button-raised, button-gray, text-medium-normal">
+            </JFXButton>
+            <padding>
+                <Insets left="600"/>
+            </padding>
+        </HBox>
+    </VBox>
 </GridPane>

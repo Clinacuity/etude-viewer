@@ -14,5 +14,6 @@
 *.metadata
 *.project
 *.settings
+*.properties
 dependencies.txt
 dependency.txt

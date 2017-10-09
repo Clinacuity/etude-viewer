@@ -17,7 +17,7 @@ public class CreateButtonsTask extends Task<List<AnnotationButton>> {
     private List<JsonObject> taskAnnotations;
     private List<LineNumberedLabel> taskLabels;
     private List<AnnotationButton> taskButtons = new ArrayList<>();
-
+    private AnnotationButton previousButton = null;
     private double characterHeight = -1.0;
 
     public CreateButtonsTask(List<JsonObject> annotations, List<LineNumberedLabel> labels) {
@@ -35,8 +35,14 @@ public class CreateButtonsTask extends Task<List<AnnotationButton>> {
             updateProgress(i, size);
         }
 
-        succeeded();
-        return taskButtons;
+        if (taskButtons == null) {
+            logger.error("why is this null....?");
+            failed();
+            return null;
+        } else {
+            succeeded();
+            return taskButtons;
+        }
     }
 
     private void processAnnotation(JsonObject annotation) {
@@ -52,13 +58,15 @@ public class CreateButtonsTask extends Task<List<AnnotationButton>> {
      * Gets the list of LineNumberedLabels spanned by the JsonObject's annotation based on its begin and end values.
      * @param begin The begin offset relative to the JsonObject's raw text
      * @param end   The end offset relative to the JsonObject's rew text
-     * @return
+     * @return      Returns a list of the labels which are spanned by the given annotation's begin/end values
      */
     private List<LineNumberedLabel> getSpannedLabels(int begin, int end) {
         List<LineNumberedLabel> spannedLabels = new ArrayList<>();
         int currentLineNumber = 1;
 
         boolean beginFound = false;
+//        taskLabels.forEach(label);
+
         for (int i = 0; i < taskLabels.size(); i++) {
             LineNumberedLabel index = taskLabels.get(i);
             int indexTextLength = index.getLineText().length();
@@ -78,8 +86,6 @@ public class CreateButtonsTask extends Task<List<AnnotationButton>> {
             if (beginFound) {
                 if (!spannedLabels.contains(index)) {
                     spannedLabels.add(index);
-                } else {
-                    logger.debug("Label already in List");
                 }
 
                 if (offset <= end && offset + indexTextLength >= end) {
@@ -105,20 +111,27 @@ public class CreateButtonsTask extends Task<List<AnnotationButton>> {
      * @param end           The end offset relative to the JsonObject's rew text
      */
     private void addButtons(JsonObject annotation, List<LineNumberedLabel> labels, int begin, int end) {
-        // CASE #1
+        // CASE #1: Button's span is within the same line
         if (labels.size() == 1) {
             LineNumberedLabel label = labels.get(0);
-            taskButtons.add(createButton(annotation, label, begin, end));
-            updateValue(taskButtons);
+            AnnotationButton newButton = createButton(annotation, label, begin, end);
+
+            if (previousButton != null) {
+                newButton.previousButton = previousButton;
+                previousButton.nextButton = newButton;
+            }
+
+            previousButton = newButton;
+            taskButtons.add(newButton);
         } else {
-            // This button spans at least 2 lines
+            // CASE #2: This button spans at least 2 lines
             List<AnnotationButton> buttons = new ArrayList<>();
 
             labels.forEach(label -> {
                 double charWidth = label.getTextLabel().getWidth() / label.getLineText().length();
                 double topAnchor = characterHeight * taskLabels.indexOf(label) * 2.0d;
 
-                AnnotationButton newButton = null;
+                AnnotationButton newButton;
 
                 // if the offset is less than the begin, this is the starting line
                 if (label.getTextOffset() <= begin) {
@@ -127,6 +140,7 @@ public class CreateButtonsTask extends Task<List<AnnotationButton>> {
 
                     // create button
                     newButton = createButton(annotation, size, leftAnchor, topAnchor);
+                    buttons.add(newButton);
                 } else {
                     // if the offset + length are greater than the end, this is the ending line
                     if (label.getTextOffset() + label.getLineText().length() > end) {
@@ -150,8 +164,17 @@ public class CreateButtonsTask extends Task<List<AnnotationButton>> {
                 }
             });
 
+            if (previousButton != null) {
+                buttons.forEach(button -> button.previousButton = previousButton);
+                previousButton.nextButton = buttons.get(0);
+                previousButton.sameAnnotationButtons.forEach(button -> button.nextButton = buttons.get(0));
+            }
+
+            previousButton = buttons.get(0);
             taskButtons.addAll(buttons);
         }
+
+        updateValue(taskButtons);
     }
 
     /**

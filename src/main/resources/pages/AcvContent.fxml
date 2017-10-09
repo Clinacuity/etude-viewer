@@ -8,50 +8,102 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.control.Label?>
 <?import javafx.geometry.Insets?>
+<?import com.jfoenix.controls.JFXHamburger?>
+<?import javafx.scene.layout.HBox?>
+<?import com.jfoenix.controls.JFXDrawer?>
+<?import com.clinacuity.acv.controls.SideBar?>
 
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.layout.VBox?>
 <GridPane xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="com.clinacuity.acv.controllers.AcvContentController">
-    <columnConstraints>
-        <ColumnConstraints percentWidth="35"/>
-        <ColumnConstraints percentWidth="35"/>
-        <ColumnConstraints />
-        <ColumnConstraints percentWidth="29"/>
-    </columnConstraints>
+    <JFXDrawer fx:id="drawer">
+        <content>
+            <GridPane>
+                <columnConstraints>
+                    <ColumnConstraints percentWidth="35"/>
+                    <ColumnConstraints percentWidth="35"/>
+                    <ColumnConstraints/>
+                    <ColumnConstraints percentWidth="29"/>
+                </columnConstraints>
+                <rowConstraints>
+                    <RowConstraints/>
+                    <RowConstraints/>
+                    <RowConstraints/>
+                    <RowConstraints minHeight="15" maxHeight="15"/>
+                </rowConstraints>
 
-    <rowConstraints>
-        <RowConstraints minHeight="30" maxHeight="30"/>
-        <RowConstraints />
-        <RowConstraints minHeight="15" maxHeight="15"/>
-    </rowConstraints>
+                <HBox spacing="40" GridPane.columnSpan="4" GridPane.rowIndex="0">
+                    <VBox>
+                        <JFXHamburger maxHeight="Infinity"
+                                      onMouseClicked="#collapsePanel"/>
+                    </VBox>
+                    <VBox spacing="20">
+                        <Label text="Annotation Viewer" styleClass="header-one, underlined"/>
+                        <HBox spacing="10">
+                            <JFXButton styleClass="text-medium-normal" focusTraversable="false" onAction="#getPreviousDocument">
+                                <graphic>
+                                    <HBox spacing="5">
+                                        <ImageView fitHeight="18" preserveRatio="true">
+                                            <Image url="/img/icons8/arrow_back.png"/>
+                                        </ImageView>
+                                        <Label text="PREV DOCUMENT" maxHeight="Infinity"/>
+                                    </HBox>
+                                </graphic>
+                            </JFXButton>
+                            <JFXButton styleClass="text-medium-normal" focusTraversable="false" onAction="#getNextDocument">
+                                <graphic>
+                                    <HBox spacing="5">
+                                        <Label text="NEXT DOCUMENT" maxHeight="Infinity"/>
+                                        <ImageView fitHeight="18" preserveRatio="true">
+                                            <Image url="/img/icons8/arrow_forward.png"/>
+                                        </ImageView>
+                                    </HBox>
+                                </graphic>
+                            </JFXButton>
+                        </HBox>
+                    </VBox>
+                    <padding>
+                        <Insets top="5" bottom="10" left="10"/>
+                    </padding>
+                </HBox>
 
-    <Label text="System Output:" GridPane.columnIndex="0" GridPane.rowIndex="0">
-        <padding>
-            <Insets left="10"/>
-        </padding>
-    </Label>
-    <AnnotatedDocumentPane fx:id="targetPane" id="target"
-                           GridPane.columnIndex="0" GridPane.rowIndex="1">
-        <padding>
-            <Insets left="5" right="5"/>
-        </padding>
-    </AnnotatedDocumentPane>
-    <Label text="Reference:" GridPane.columnIndex="1" GridPane.rowIndex="0">
-        <padding>
-            <Insets left="10"/>
-        </padding>
-    </Label>
+                <Label text="System Output:" GridPane.columnIndex="0" GridPane.rowIndex="1" styleClass="text-medium-bold">
+                    <padding>
+                        <Insets left="25"/>
+                    </padding>
+                </Label>
+                <AnnotatedDocumentPane fx:id="targetPane" id="target" GridPane.columnIndex="0" GridPane.rowIndex="2">
+                    <padding>
+                        <Insets left="5" right="5"/>
+                    </padding>
+                </AnnotatedDocumentPane>
 
-    <AnnotatedDocumentPane fx:id="referencePane" id="target"
-                           GridPane.columnIndex="1" GridPane.rowIndex="1">
-        <padding>
-            <Insets right="5"/>
-        </padding>
-    </AnnotatedDocumentPane>
 
-    <Separator orientation="VERTICAL" GridPane.columnIndex="2" GridPane.rowSpan="3"/>
-    <ViewControls fx:id="viewControls" GridPane.columnIndex="3" GridPane.rowIndex="1">
-        <padding>
-            <Insets left="3" right="5"/>
-        </padding>
-    </ViewControls>
+                <Label text="Reference:" GridPane.columnIndex="1" GridPane.rowIndex="1" styleClass="text-medium-bold">
+                    <padding>
+                        <Insets left="25"/>
+                    </padding>
+                </Label>
+
+                <AnnotatedDocumentPane fx:id="referencePane" id="target" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                    <padding>
+                        <Insets right="5"/>
+                    </padding>
+                </AnnotatedDocumentPane>
+
+                <Separator orientation="VERTICAL" GridPane.columnIndex="2" GridPane.rowSpan="3"/>
+                <ViewControls fx:id="viewControls" GridPane.columnIndex="3" GridPane.rowIndex="2">
+                    <padding>
+                        <Insets left="3" right="5"/>
+                    </padding>
+                </ViewControls>
+            </GridPane>
+        </content>
+        <sidePane>
+            <SideBar fx:id="sideBar"/>
+        </sidePane>
+    </JFXDrawer>
 </GridPane>

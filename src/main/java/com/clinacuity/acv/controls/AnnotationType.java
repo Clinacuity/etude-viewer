@@ -15,8 +15,12 @@ public class AnnotationType {
         truePositiveCount.setValue(Integer.toString((int)tpCount));
         falsePositiveCount.setValue(Integer.toString((int)fpCount));
         falseNegativeCount.setValue(Integer.toString((int)fnCount));
-        recall.setValue(String.format("%,.2f%%", recallPercent));
-        precision.setValue(String.format("%,.2f%%", precisionPercent));
+
+        String recallValue = Double.isNaN(recallPercent) ? "N/A" : String.format("%,.2f%%", recallPercent);
+        String precisionValue = Double.isNaN(precisionPercent) ? "N/A" : String.format("%,.2f%%", precisionPercent);
+
+        recall.setValue(recallValue);
+        precision.setValue(precisionValue);
     }
 
     public String getAnnotationName() { return annotationName.getValueSafe(); }
