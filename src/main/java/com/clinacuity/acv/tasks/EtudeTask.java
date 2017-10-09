@@ -16,7 +16,7 @@ import java.util.List;
 
 public class EtudeTask extends Task<Void> {
     private static final Logger logger = LogManager.getLogger();
-    private static final String ETUDE_LOCATION = "./src/etude/etude";
+    private static final String OS = System.getProperty("os.name").toLowerCase();
 
     private Process etudeProcess;
     private boolean killedByUser = false;
@@ -138,8 +138,24 @@ public class EtudeTask extends Task<Void> {
         ignoreWhitespace = false;
     }
 
+    private String getEtudeLocation() {
+        if (OS.contains("mac")) {
+            return "./etude/osx/etude";
+        }
+
+        if (OS.contains("win")) {
+            return "./etude/windows/etude";
+        }
+
+        if (OS.contains("nix") || OS.contains("nux") || OS.contains("aix")) {
+            return "./etude/linux/etude";
+        }
+
+        return "";
+    }
+
     private String getCommand() {
-        String command = ETUDE_LOCATION;
+        String command = getEtudeLocation();
 
         if (referenceConfigFilePath != null) {
             command += " --reference-config " + referenceConfigFilePath;
