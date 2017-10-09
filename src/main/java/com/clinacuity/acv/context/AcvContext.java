@@ -28,7 +28,11 @@ public class AcvContext {
     private static AcvContext instance;
     public static AcvContext getInstance() {
         if (instance == null) {
-            new AcvContext();
+            synchronized (AcvContext.class) {
+                if (instance == null) {
+                    new AcvContext();
+                }
+            }
         }
         return instance;
     }
