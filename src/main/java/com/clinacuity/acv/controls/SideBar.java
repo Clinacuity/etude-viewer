@@ -91,5 +91,11 @@ public class SideBar extends VBox {
 
         targetDocProperty.setValue(target);
         referenceDocProperty.setValue(reference);
+        updateContent();
+    }
+
+    private void updateContent() {
+        fileList.getChildren().forEach(item -> item.getStyleClass().remove("button-annotation-selected"));
+        fileList.getChildren().get(selectedBox).getStyleClass().add("button-annotation-selected");
     }
 }
