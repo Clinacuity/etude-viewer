@@ -140,15 +140,15 @@ public class EtudeTask extends Task<Void> {
 
     private String getEtudeLocation() {
         if (OS.contains("mac")) {
-            return "./etude/osx/etude";
+            return "./data/etude/osx/etude";
         }
 
         if (OS.contains("win")) {
-            return "./etude/windows/etude";
+            return "./data/etude/windows/etude";
         }
 
         if (OS.contains("nix") || OS.contains("nux") || OS.contains("aix")) {
-            return "./etude/linux/etude";
+            return "./data/etude/linux/etude";
         }
 
         return "";
