@@ -39,7 +39,7 @@
             </VBox>
             <JFXButton text="..." onAction="#pickMasterDirectory" prefWidth="32" maxWidth="Infinity"
                        styleClass="button-raised, button-gray, no-focus, text-small-normal" buttonType="RAISED"/>
-            <Label fx:id="errorLabel" text="* Please choose a valid directory" alignment="CENTER"
+            <Label fx:id="errorLabel" text="&#x2022; Please choose a valid directory" alignment="BOTTOM_CENTER"
                    styleClass="text-medium-normal, error-text"/>
             <padding>
                 <Insets left="100"/>
