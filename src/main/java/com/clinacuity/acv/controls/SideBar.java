@@ -7,7 +7,6 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -52,7 +51,7 @@ public class SideBar extends VBox {
         }
     }
 
-    public void setFileList(List<HBox> files) {
+    public void setFileList(List<VBox> files) {
         fileList.getChildren().clear();
         fileList.getChildren().addAll(files);
         fileListSize = files.size();

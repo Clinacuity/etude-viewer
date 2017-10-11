@@ -20,7 +20,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.reactfx.util.FxTimer;
@@ -84,7 +84,7 @@ public class AcvContentController implements Initializable {
         CreateSidebarItemsTask sidebarTask = new CreateSidebarItemsTask();
         sidebarTask.setCorpusDictionary(AcvContext.getInstance().getCorpusDictionary());
         sidebarTask.setOnSucceeded(event -> {
-            List<HBox> results = sidebarTask.getValue();
+            List<VBox> results = sidebarTask.getValue();
 
             if (results != null) {
                 sideBar.setFileList(results);
@@ -395,9 +395,7 @@ public class AcvContentController implements Initializable {
         }
     });
 
-    private ChangeListener<String> onMatchTypeSelectionChanged = ((observable, oldValue, newValue) -> {
-        createTableRows();
-    });
+    private ChangeListener<String> onMatchTypeSelectionChanged = ((observable, oldValue, newValue) -> createTableRows());
 
     private ChangeListener<AnnotationButton> onAnnotationButtonClicked = ((observable, oldValue, newValue) -> {
         targetPane.clearFeatureTree();
