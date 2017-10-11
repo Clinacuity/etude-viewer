@@ -250,27 +250,32 @@ public class EtudeController implements Initializable{
         boolean isValid = true;
         String labelText = null;
         if (!focusGained) {
-            File file = new File(field.getText());
-            if (checkForFile) {
-                if (!file.exists()) {
-                    labelText = "\u2022 File doesn't exist!";
-                    isValid = false;
-                } else {
-                    if (!file.isFile()) {
-                        labelText = "\u2022 Invalid file!";
+            if (!field.getText().equals("")) {
+                File file = new File(field.getText());
+                if (checkForFile) {
+                    if (!file.exists()) {
+                        labelText = "\u2022 File doesn't exist!";
                         isValid = false;
+                    } else {
+                        if (!file.isFile()) {
+                            labelText = "\u2022 Invalid file!";
+                            isValid = false;
+                        }
+                    }
+                } else {
+                    if (!file.exists()) {
+                        labelText = "\u2022 File doesn't exist!";
+                        isValid = false;
+                    } else {
+                        if (!file.isDirectory()) {
+                            labelText = "\u2022 Invalid directory!";
+                            isValid = false;
+                        }
                     }
                 }
             } else {
-                if (!file.exists()) {
-                    labelText = "\u2022 File doesn't exist!";
-                    isValid = false;
-                } else {
-                    if (!file.isDirectory()) {
-                        labelText = "\u2022 Invalid directory!";
-                        isValid = false;
-                    }
-                }
+                isValid = false;
+                labelText = "\u2022 Required field";
             }
         }
 
