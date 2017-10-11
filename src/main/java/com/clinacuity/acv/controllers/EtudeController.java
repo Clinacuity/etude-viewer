@@ -39,6 +39,7 @@ public class EtudeController implements Initializable{
     @FXML private JFXTextField testInputTextField;
     @FXML private JFXTextField outputDirectoryTextField;
     @FXML private JFXTextField scoreKeyTextField;
+    @FXML private Label scoreKeyError;
     @FXML private JFXTextField scoreValuesTextField;
     @FXML private JFXTextField filePrefixTextField;
     @FXML private JFXTextField fileSuffixTextField;
@@ -48,7 +49,6 @@ public class EtudeController implements Initializable{
     @FXML private JFXCheckBox metricsPrecision;
     @FXML private JFXCheckBox metricsRecall;
     @FXML private JFXCheckBox metricsF1;
-
     @FXML private JFXCheckBox fuzzyMatchingCheckbox;
     @FXML private JFXCheckBox byFileCheckbox;
     @FXML private JFXCheckBox byFileAndTypeCheckbox;
@@ -56,7 +56,8 @@ public class EtudeController implements Initializable{
     @FXML private JFXCheckBox byTypeAndFileCheckbox;
     @FXML private JFXCheckBox ignoreWhitespaceCheckbox;
 
-
+    // This could be refactored -- if the Run button is pressed without ever focusing on a required field,
+    // it will "pass" and probably crash
     private List<JFXTextField> failingFields = new ArrayList<>();
 
     @Override
@@ -73,6 +74,7 @@ public class EtudeController implements Initializable{
         byTypeCheckbox.setSelected(Boolean.valueOf(AppMain.properties.getProperty("BYTYPE")));
         byTypeAndFileCheckbox.setSelected(Boolean.valueOf(AppMain.properties.getProperty("BYTYPEANDFILE")));
         ignoreWhitespaceCheckbox.setSelected(Boolean.valueOf(AppMain.properties.getProperty("IGNOREWHITESPACE")));
+
         referenceConfigInputField.focusedProperty().addListener(
                 (obs, old, newValue) -> focusChanged(newValue, referenceConfigInputField, true));
         testConfigInputField.focusedProperty().addListener(
@@ -83,6 +85,18 @@ public class EtudeController implements Initializable{
                 (obs, old, newValue) -> focusChanged(newValue, testInputTextField, false));
         outputDirectoryTextField.focusedProperty().addListener(
                 (obs, old, newValue) -> focusChanged(newValue, outputDirectoryTextField, false));
+
+        scoreKeyTextField.focusedProperty().addListener((obs, old, isFocused) -> {
+            if (isFocused) {
+                scoreKeyError.setVisible(false);
+            } else {
+                if (scoreKeyTextField.getText().equals("")) {
+                    scoreKeyError.setVisible(true);
+                } else {
+                    scoreKeyError.setVisible(false);
+                }
+            }
+        });
     }
 
     @FXML private void runEtudeButtonAction() throws IOException {
@@ -172,7 +186,7 @@ public class EtudeController implements Initializable{
     private boolean checkInputs() {
         boolean passes = true;
 
-        if (failingFields.size() != 0) {
+        if (failingFields.size() != 0 || scoreKeyError.isVisible()) {
             passes = false;
         }
         
