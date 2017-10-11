@@ -19,17 +19,13 @@ public class AppMainController implements Initializable {
 
     @FXML private GridPane masterGrid;
     @FXML private Node targetGridContent;
-    private ResourceBundle resources;
-    private MenuBar menuBar;
 
     @Override
     public void initialize(URL location, ResourceBundle resourceBundle) {
         AcvContext.getInstance().mainController = this;
 
-        resources = resourceBundle;
-        AcvContext.getInstance().setResources(resources);
         try {
-            menuBar = FXMLLoader.load(getClass().getResource(AcvContext.MENU_BAR), resources);
+            MenuBar menuBar = FXMLLoader.load(getClass().getResource(AcvContext.MENU_BAR), null);
             masterGrid.getChildren().addAll(menuBar);
 
             reloadContent(AcvContext.LOAD_SCREEN);
@@ -41,7 +37,7 @@ public class AppMainController implements Initializable {
     void reloadContent(String page) {
         try {
             masterGrid.getChildren().remove(targetGridContent);
-            targetGridContent = FXMLLoader.load(getClass().getResource(page), resources);
+            targetGridContent = FXMLLoader.load(getClass().getResource(page), null);
             masterGrid.add(targetGridContent, 0, 1);
         } catch (IOException e) {
             logger.throwing(e);

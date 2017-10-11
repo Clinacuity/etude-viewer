@@ -7,11 +7,8 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Locale;
-import java.util.Properties;
 import java.util.ResourceBundle;
 
 public class AppMain extends Application{
@@ -19,7 +16,6 @@ public class AppMain extends Application{
     private Scene scene;
 
     private static Application application = null;
-    public static Properties properties;
     public static void getWebPage(String page) { application.getHostServices().showDocument(page); }
 
     @Override
@@ -34,7 +30,6 @@ public class AppMain extends Application{
 
                 scene = new Scene(root, 1600, 900);
                 scene.getStylesheets().clear();
-                loadProperties();
                 prepareCss();
 
                 primaryStage.setTitle("Annotations Comparison Viewer");
@@ -48,11 +43,6 @@ public class AppMain extends Application{
                 logger.throwing(e);
             }
         }
-    }
-
-    private void loadProperties() throws IOException {
-        properties = new Properties();
-        properties.load(new FileInputStream("config_en.properties"));
     }
 
     private void prepareCss() throws IOException {
