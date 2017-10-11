@@ -216,6 +216,18 @@
     -fx-text-fill: Red;
 }
 
+.false-positives-count {
+    -fx-text-fill: DarkOrchid;
+    -fx-font-family: "Open Sans Italic";
+    -fx-font-size: 12;
+}
+
+.false-negatives-count {
+    -fx-text-fill: OrangeRed;
+    -fx-font-family: "Open Sans Italic";
+    -fx-font-size: 12;
+}
+
 .line-number {
     -fx-min-width: 30px;
     -fx-max-width: 30px;
