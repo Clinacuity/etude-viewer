@@ -191,7 +191,7 @@
                     </ImageView>
                 </graphic>
             </Label>
-            <Label fx:id="scoreKeyError" text="&#x2022; This field is required" visible="false"
+            <Label fx:id="scoreKeyError" text="&#x2022; Required required" visible="false"
                    styleClass="text-medium-normal, error-text" alignment="BOTTOM_LEFT"/>
         </HBox>
 
