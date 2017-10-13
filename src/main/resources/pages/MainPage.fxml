@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.Pane?>
+
+<GridPane xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1"
+          fx:controller="com.clinacuity.acv.controllers.MainPageController">
+
+    <columnConstraints>
+        <ColumnConstraints percentWidth="100"/>
+    </columnConstraints>
+
+    <VBox spacing="50" maxWidth="Infinity" GridPane.columnIndex="0">
+        <padding>
+            <Insets topRightBottomLeft="15"/>
+        </padding>
+        <Label text="ETUDE Viewer" styleClass="header-one, underlined"/>
+        <Label text="Using this tool, you will be able to compare the output of an NLP system against the output&#10;of another NLP system.  The tool then allows you to visually compare the annotated files side by side to look at discrepancies and metrics.">
+            <padding>
+                <Insets left="30"/>
+            </padding>
+        </Label>
+        <HBox alignment="CENTER">
+            <StackPane fx:id="runnerCard">
+                <Pane styleClass="card-small">
+                    <StackPane.margin>
+                        <Insets topRightBottomLeft="-3"/>
+                    </StackPane.margin>
+                </Pane>
+                <JFXButton fx:id="runnerButton" onAction="#loadEtudeConfigurationPage" maxWidth="Infinity"
+                           buttonType="RAISED" styleClass="button-raised, button-gray, no-focus" maxHeight="150">
+                    <graphic>
+                        <VBox spacing="5">
+                            <Label text="Run Etude" styleClass="text-large-bold" maxWidth="Infinity" alignment="CENTER" textAlignment="CENTER"/>
+                            <Label text="Choose this option to load the Etude Configuration screen.  This screen allows you to configure the ETUDE engines to compare the annotations of two different NLP systems."
+                                   styleClass="text-medium-italic" wrapText="true" textAlignment="JUSTIFY"/>
+                        </VBox>
+                    </graphic>
+                </JFXButton>
+                <padding>
+                    <Insets right="100" left="250"/>
+                </padding>
+            </StackPane>
+
+            <StackPane fx:id="viewerCard">
+                <Pane styleClass="card-small">
+                    <StackPane.margin>
+                        <Insets topRightBottomLeft="-3"/>
+                    </StackPane.margin>
+                </Pane>
+                <JFXButton fx:id="viewerButton" onAction="#loadComparisonViewerPage" maxWidth="Infinity"
+                           buttonType="RAISED" styleClass="button-raised, button-gray, no-focus" maxHeight="150">
+                    <graphic>
+                        <VBox spacing="5">
+                            <Label text="View Files" styleClass="text-large-bold" maxWidth="Infinity" alignment="CENTER" textAlignment="CENTER"/>
+                            <Label text="Choose this option to simply compare files already processed.  Select a folder with the results of a previous run to reload them into the viewer."
+                                   styleClass="text-medium-italic" wrapText="true" textAlignment="JUSTIFY"/>
+                        </VBox>
+                    </graphic>
+                </JFXButton>
+                <padding>
+                    <Insets left="100" right="250"/>
+                </padding>
+            </StackPane>
+            <padding>
+                <Insets top="50" bottom="50" left="100" right="100"/>
+            </padding>
+        </HBox>
+    </VBox>
+</GridPane>

@@ -22,7 +22,7 @@ public class AppMain extends Application{
             application = this;
 
             try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource(AcvContext.APP_MAIN_VIEW));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource(AcvContext.APP_CONTAINER));
                 Parent root = loader.load();
 
                 scene = new Scene(root, 1600, 900);

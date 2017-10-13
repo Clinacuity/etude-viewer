@@ -11,12 +11,13 @@ import java.nio.file.FileSystemException;
 import java.util.Properties;
 
 public class AcvContext {
-    public static final String LOAD_SCREEN = "/pages/AppMain.fxml";
-    public static final String COMPARISON_VIEW = "/pages/AcvContent.fxml";
-    public static final String APP_MAIN_VIEW = "/pages/AppMain.fxml";
+    public static final String APP_CONTAINER = "/pages/AppMain.fxml";
+    public static final String APP_MAIN_PAGE = "/pages/MainPage.fxml";
     public static final String MENU_BAR = "/pages/MenuBar.fxml";
+    public static final String LOAD_SCREEN = "/pages/LoadScreenView.fxml";
     public static final String ETUDE_RUNNER = "/pages/EtudeRunner.fxml";
     public static final String CONFIGURATION_BUILDER = "/pages/ConfigurationBuilder.fxml";
+    public static final String COMPARISON_VIEW = "/pages/AcvContent.fxml";
 
     private static final Logger logger = LogManager.getLogger();
     private static final String USER_PROPERTIES_DIR = System.getProperty("user.home") + "/.clinacuity/etude/";

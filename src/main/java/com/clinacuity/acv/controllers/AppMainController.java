@@ -32,7 +32,7 @@ public class AppMainController implements Initializable {
             addHeader();
             addFooter();
 
-            reloadContent(AcvContext.LOAD_SCREEN);
+            reloadContent(AcvContext.APP_MAIN_PAGE);
         } catch (IOException e) {
             logger.throwing(e);
         }
