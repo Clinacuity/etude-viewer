@@ -21,20 +21,20 @@
         <padding>
             <Insets topRightBottomLeft="15"/>
         </padding>
-        <Label text="ETUDE Viewer" styleClass="header-one, underlined"/>
+        <Label text="Etude Viewer" styleClass="header-one, underlined"/>
         <Label text="Using this tool, you will be able to compare the output of an NLP system against the output&#10;of another NLP system.  The tool then allows you to visually compare the annotated files side by side to look at discrepancies and metrics.">
             <padding>
                 <Insets left="30"/>
             </padding>
         </Label>
-        <HBox alignment="CENTER">
+        <HBox fx:id="buttonBox" alignment="CENTER">
             <StackPane fx:id="runnerCard">
                 <Pane styleClass="card-small">
                     <StackPane.margin>
                         <Insets topRightBottomLeft="-3"/>
                     </StackPane.margin>
                 </Pane>
-                <JFXButton fx:id="runnerButton" onAction="#loadEtudeConfigurationPage" maxWidth="Infinity"
+                <JFXButton onAction="#loadEtudeConfigurationPage" maxWidth="Infinity"
                            buttonType="RAISED" styleClass="button-raised, button-gray, no-focus" maxHeight="150">
                     <graphic>
                         <VBox spacing="5">
@@ -44,9 +44,6 @@
                         </VBox>
                     </graphic>
                 </JFXButton>
-                <padding>
-                    <Insets right="100" left="250"/>
-                </padding>
             </StackPane>
 
             <StackPane fx:id="viewerCard">
@@ -55,23 +52,17 @@
                         <Insets topRightBottomLeft="-3"/>
                     </StackPane.margin>
                 </Pane>
-                <JFXButton fx:id="viewerButton" onAction="#loadComparisonViewerPage" maxWidth="Infinity"
+                <JFXButton onAction="#loadComparisonViewerPage" maxWidth="Infinity"
                            buttonType="RAISED" styleClass="button-raised, button-gray, no-focus" maxHeight="150">
                     <graphic>
-                        <VBox spacing="5">
+                        <VBox spacing="5" alignment="CENTER">
                             <Label text="View Files" styleClass="text-large-bold" maxWidth="Infinity" alignment="CENTER" textAlignment="CENTER"/>
                             <Label text="Choose this option to simply compare files already processed.  Select a folder with the results of a previous run to reload them into the viewer."
                                    styleClass="text-medium-italic" wrapText="true" textAlignment="JUSTIFY"/>
                         </VBox>
                     </graphic>
                 </JFXButton>
-                <padding>
-                    <Insets left="100" right="250"/>
-                </padding>
             </StackPane>
-            <padding>
-                <Insets top="50" bottom="50" left="100" right="100"/>
-            </padding>
         </HBox>
     </VBox>
 </GridPane>

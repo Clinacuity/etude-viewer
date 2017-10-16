@@ -1,43 +1,29 @@
 package com.clinacuity.acv.controllers;
 
 import com.clinacuity.acv.context.AcvContext;
-import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class MainPageController implements Initializable {
-    private static final Logger logger = LogManager.getLogger();
-
-    @FXML private JFXButton runnerButton;
-    @FXML private JFXButton viewerButton;
     @FXML private JFXTextField viewerTextField;
     @FXML private StackPane runnerCard;
     @FXML private StackPane viewerCard;
+    @FXML private HBox buttonBox;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        // We only care about re-adjusting the widths with the text lengths
-        runnerCard.widthProperty().addListener((obs, old, newValue) -> {
-            if (newValue.doubleValue() > viewerCard.widthProperty().doubleValue()) {
-                viewerCard.setMinWidth(newValue.doubleValue());
-                viewerCard.setMaxWidth(newValue.doubleValue());
-                runnerCard.setMinWidth(newValue.doubleValue());
-                runnerCard.setMaxWidth(newValue.doubleValue());
-            }
-        });
-        viewerCard.widthProperty().addListener((obs, old, newValue) -> {
-            if (newValue.doubleValue() > runnerCard.widthProperty().doubleValue()) {
-                runnerCard.setMinWidth(newValue.doubleValue());
-                runnerCard.setMaxWidth(newValue.doubleValue());
-                runnerButton.setMinWidth(newValue.doubleValue());
-                runnerButton.setMaxWidth(newValue.doubleValue());
-            }
+        buttonBox.widthProperty().addListener((obs, old, newValue) -> {
+            double width = newValue.doubleValue();
+            viewerCard.setMinWidth(width * 0.35d);
+            viewerCard.setMaxWidth(width * 0.35d);
+            runnerCard.setMinWidth(width * 0.35d);
+            runnerCard.setMaxWidth(width * 0.35d);
+            buttonBox.setSpacing(width * 0.10d);
         });
     }
 
@@ -48,6 +34,6 @@ public class MainPageController implements Initializable {
 
     @FXML
     private void loadComparisonViewerPage() {
-        AcvContext.getInstance().mainController.reloadContent(AcvContext.LOAD_SCREEN);
+        AcvContext.getInstance().mainController.reloadContent(AcvContext.ETUDE_RUNNER);
     }
 }
