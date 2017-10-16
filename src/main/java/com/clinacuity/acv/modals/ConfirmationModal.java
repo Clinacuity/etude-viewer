@@ -30,7 +30,7 @@ public class ConfirmationModal {
         box.setMaxHeight(Double.MAX_VALUE);
 
         Label titleLabel = new Label(title);
-        titleLabel.getStyleClass().add("header-two");
+        titleLabel.getStyleClass().add("text-header-two");
         titleLabel.setPadding(new Insets(5.0d, 0.0d, 5.0d, 10.0d));
 
         Label messageLabel = new Label(message);

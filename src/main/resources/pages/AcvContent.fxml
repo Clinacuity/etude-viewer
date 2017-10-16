@@ -41,7 +41,7 @@
                                       onMouseClicked="#collapsePanel"/>
                     </VBox>
                     <VBox spacing="20">
-                        <Label text="Annotation Viewer" styleClass="header-one, underlined"/>
+                        <Label text="Annotation Viewer" styleClass="text-header-one, underlined"/>
                         <HBox spacing="10">
                             <JFXButton styleClass="text-medium-normal" focusTraversable="false" onAction="#getPreviousDocument">
                                 <graphic>

@@ -41,6 +41,9 @@ public class AppMainController implements Initializable {
     private void addHeader() throws IOException {
         MenuBar menuBar = FXMLLoader.load(getClass().getResource(AcvContext.MENU_BAR), null);
         masterGrid.add(menuBar, 0, 0);
+
+//        HBox navBar = FXMLLoader.load(getClass().getResource(AcvContext.NAV_BAR), null);
+//        masterGrid.add(navBar, 0, 0);
     }
 
     private void addFooter() {
@@ -48,6 +51,7 @@ public class AppMainController implements Initializable {
         footerBox.setMaxWidth(Double.MAX_VALUE);
         footerBox.setAlignment(Pos.BOTTOM_RIGHT);
         footerBox.setPadding(new Insets(5.0));
+        footerBox.getStyleClass().add("header");
 
         Label version = new Label();
         version.setText("Version: " + AcvContext.getAppProperty("version"));

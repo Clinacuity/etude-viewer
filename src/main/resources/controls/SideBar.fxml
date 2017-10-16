@@ -13,7 +13,7 @@
          xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1">
     <VBox>
         <HBox spacing="40">
-            <Label text="Documents:" styleClass="header-two, underlined" alignment="CENTER"/>
+            <Label text="Documents:" styleClass="text-header-two, underlined" alignment="CENTER"/>
             <VBox maxWidth="Infinity">
                 <JFXButton onAction="#collapse">
                     <graphic>

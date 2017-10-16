@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.geometry.Insets?>
+
+<HBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.clinacuity.acv.controllers.NavBarController" styleClass="header">
+    <HBox>
+        <ImageView fitHeight="48" preserveRatio="true" pickOnBounds="true">
+            <Image url="/img/clinacuity/logo.png"/>
+        </ImageView>
+        <padding>
+            <Insets topRightBottomLeft="5"/>
+        </padding>
+    </HBox>
+    <HBox alignment="BOTTOM_LEFT">
+        <padding>
+            <Insets topRightBottomLeft="5"/>
+        </padding>
+    </HBox>
+</HBox> 

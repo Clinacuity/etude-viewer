@@ -27,7 +27,7 @@
     </columnConstraints>
 
     <VBox minHeight="100">
-        <Label text="ETUDE Configuration" styleClass="header-one, underlined" alignment="TOP_LEFT">
+        <Label text="ETUDE Configuration" styleClass="text-header-one, underlined" alignment="TOP_LEFT">
             <padding>
                 <Insets left="20"/>
             </padding>

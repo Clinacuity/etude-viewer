@@ -21,7 +21,7 @@
             <Insets topRightBottomLeft="15"/>
         </padding>
         <VBox spacing="10">
-            <Label styleClass="header-one, underlined" text="ETUDE" textAlignment="CENTER"/>
+            <Label styleClass="text-header-one, underlined" text="ETUDE" textAlignment="CENTER"/>
             <Label styleClass="text-medium-normal"
                    text="This tool will help you compare files processed by a given system (such as CliniDeid)&#10;against files on a given Gold Standard corpus."/>
         </VBox>
