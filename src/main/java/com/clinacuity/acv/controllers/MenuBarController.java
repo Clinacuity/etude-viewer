@@ -2,7 +2,6 @@ package com.clinacuity.acv.controllers;
 
 import com.clinacuity.acv.context.AcvContext;
 import com.clinacuity.acv.context.AppMain;
-import com.clinacuity.acv.modals.ConfirmationModal;
 import com.clinacuity.acv.modals.Modal;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -12,7 +11,6 @@ import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -23,13 +21,11 @@ public class MenuBarController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        menuBar.mouseTransparentProperty().addListener(obs -> {
-            logger.error("Menu Bar became mouse transparent... wtf...");
-        });
+
     }
 
     @FXML private void reloadMainPage() {
-        AcvContext.getInstance().mainController.reloadContent("/pages/LoadScreenView.fxml");
+        AcvContext.getInstance().mainController.reloadContent(AcvContext.APP_MAIN_PAGE);
     }
 
     @FXML private void exitApplication() {

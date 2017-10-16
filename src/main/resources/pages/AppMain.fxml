@@ -13,5 +13,6 @@
     <rowConstraints>
         <RowConstraints/>
         <RowConstraints vgrow="ALWAYS"/>
+        <RowConstraints/>
     </rowConstraints>
 </GridPane>

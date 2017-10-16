@@ -4,9 +4,13 @@ import com.clinacuity.acv.context.AcvContext;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.scene.control.MenuBar;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -25,13 +29,32 @@ public class AppMainController implements Initializable {
         AcvContext.getInstance().mainController = this;
 
         try {
-            MenuBar menuBar = FXMLLoader.load(getClass().getResource(AcvContext.MENU_BAR), null);
-            masterGrid.getChildren().addAll(menuBar);
+            addHeader();
+            addFooter();
 
-            reloadContent(AcvContext.LOAD_SCREEN);
+            reloadContent(AcvContext.APP_MAIN_PAGE);
         } catch (IOException e) {
             logger.throwing(e);
         }
+    }
+
+    private void addHeader() throws IOException {
+        MenuBar menuBar = FXMLLoader.load(getClass().getResource(AcvContext.MENU_BAR), null);
+        masterGrid.add(menuBar, 0, 0);
+    }
+
+    private void addFooter() {
+        HBox footerBox = new HBox();
+        footerBox.setMaxWidth(Double.MAX_VALUE);
+        footerBox.setAlignment(Pos.BOTTOM_RIGHT);
+        footerBox.setPadding(new Insets(5.0));
+
+        Label version = new Label();
+        version.setText("Version: " + AcvContext.getAppProperty("version"));
+        version.getStyleClass().add("text-small-normal");
+
+        footerBox.getChildren().add(version);
+        masterGrid.add(footerBox, 0, 2);
     }
 
     void reloadContent(String page) {

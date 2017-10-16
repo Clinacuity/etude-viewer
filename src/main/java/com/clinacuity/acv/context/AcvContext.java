@@ -11,15 +11,18 @@ import java.nio.file.FileSystemException;
 import java.util.Properties;
 
 public class AcvContext {
-    public static final String LOAD_SCREEN = "/pages/LoadScreenView.fxml";
-    public static final String COMPARISON_VIEW = "/pages/AcvContent.fxml";
-    public static final String APP_MAIN_VIEW = "/pages/AppMain.fxml";
+    public static final String APP_CONTAINER = "/pages/AppMain.fxml";
+    public static final String APP_MAIN_PAGE = "/pages/MainPage.fxml";
     public static final String MENU_BAR = "/pages/MenuBar.fxml";
+    public static final String LOAD_SCREEN = "/pages/LoadScreenView.fxml";
     public static final String ETUDE_RUNNER = "/pages/EtudeRunner.fxml";
     public static final String CONFIGURATION_BUILDER = "/pages/ConfigurationBuilder.fxml";
+    public static final String COMPARISON_VIEW = "/pages/AcvContent.fxml";
 
     private static final Logger logger = LogManager.getLogger();
-    private static final String PROPERTIES_FILE_NAME = "./data/config.properties";
+    private static final String USER_PROPERTIES_DIR = System.getProperty("user.home") + "/.clinacuity/etude/";
+    private static final String USER_PROPERTIES_FILE_NAME = "config.properties";
+    private static final String APP_PROPERTIES_FILE_NAME = "/application.properties";
 
     private static AcvContext instance;
     public static AcvContext getInstance() {
@@ -37,6 +40,7 @@ public class AcvContext {
     public Window mainWindow;
 
     private Properties properties;
+    private Properties appProperties;
     private CorpusDictionary corpusDictionary;
     public CorpusDictionary getCorpusDictionary() { return corpusDictionary; }
 
@@ -77,6 +81,10 @@ public class AcvContext {
         corpusFilePathProperty.addListener((observable, oldValue, newValue) -> loadCorpusDictionary());
     }
 
+    public static String getAppProperty(String propertyName) {
+        return getInstance().appProperties.getProperty(propertyName);
+    }
+
     public static String getProperty(String propertyName) {
         return getInstance().properties.getProperty(propertyName);
     }
@@ -89,7 +97,7 @@ public class AcvContext {
         getInstance().properties.setProperty(propertyName, value.toString());
 
         try {
-            getInstance().properties.store(new FileWriter(PROPERTIES_FILE_NAME), "");
+            getInstance().properties.store(new FileWriter(USER_PROPERTIES_FILE_NAME), "");
         } catch (IOException e) {
             logger.throwing(e);
         }
@@ -101,19 +109,24 @@ public class AcvContext {
 
     private void initProperties() {
         properties = new Properties();
-        File propertiesFile = new File(PROPERTIES_FILE_NAME);
+        appProperties = new Properties();
+        File propertiesFile = new File(USER_PROPERTIES_DIR + USER_PROPERTIES_FILE_NAME);
 
-        if (!propertiesFile.exists()) {
-            try {
-                if (!propertiesFile.exists()) {
+        try {
+            if (!propertiesFile.exists()) {
+                File rootDir = new File(USER_PROPERTIES_DIR);
+                if (rootDir.mkdirs()) {
                     if (!propertiesFile.createNewFile()) {
                         throw new FileSystemException("Could not create file in path: " + propertiesFile.getAbsolutePath());
                     }
+                } else {
+                    throw new FileSystemException("Could not create directories in path: " + rootDir.getAbsolutePath());
                 }
-                properties.load(new FileReader(propertiesFile));
-            } catch (IOException e) {
-                logger.throwing(e);
             }
+            properties.load(new FileReader(propertiesFile));
+            appProperties.load(getInstance().getClass().getResourceAsStream(APP_PROPERTIES_FILE_NAME));
+        } catch (IOException e) {
+            logger.throwing(e);
         }
     }
 }

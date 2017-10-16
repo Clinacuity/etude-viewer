@@ -8,8 +8,6 @@ import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import java.io.IOException;
-import java.util.Locale;
-import java.util.ResourceBundle;
 
 public class AppMain extends Application{
     private static final Logger logger = LogManager.getLogger();
@@ -24,8 +22,7 @@ public class AppMain extends Application{
             application = this;
 
             try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource(AcvContext.APP_MAIN_VIEW));
-                loader.setResources(ResourceBundle.getBundle("config_en", new Locale("en")));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource(AcvContext.APP_CONTAINER));
                 Parent root = loader.load();
 
                 scene = new Scene(root, 1600, 900);
