@@ -30,8 +30,6 @@ public class AppMainController implements Initializable {
         try {
             addHeader();
             addFooter();
-
-            reloadContent(AcvContext.APP_MAIN_PAGE);
         } catch (IOException e) {
             logger.throwing(e);
         }
@@ -57,7 +55,7 @@ public class AppMainController implements Initializable {
         masterGrid.add(footerBox, 0, 2);
     }
 
-    void reloadContent(String page) {
+    public void reloadContent(String page) {
         try {
             masterGrid.getChildren().remove(targetGridContent);
             targetGridContent = FXMLLoader.load(getClass().getResource(page), null);

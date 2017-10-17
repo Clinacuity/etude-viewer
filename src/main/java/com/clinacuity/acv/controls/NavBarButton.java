@@ -1,5 +1,6 @@
 package com.clinacuity.acv.controls;
 
+import com.clinacuity.acv.context.AcvContext;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -20,11 +21,13 @@ import java.io.IOException;
 public class NavBarButton extends StackPane {
     private static final Logger logger = LogManager.getLogger();
     private static final double ANIMATION_DURATION = 200.0d;
+    private static final String SELECTED_STYLE = "nav-button-selected";
 
     @FXML private Label label;
     @FXML private Rectangle hoverBox;
     private Timeline onEnterTimeline = new Timeline();
     private Timeline onExitTimeline = new Timeline();
+    private String targetPage = AcvContext.APP_MAIN_PAGE;
 
     public NavBarButton() {
         this("");
@@ -48,6 +51,22 @@ public class NavBarButton extends StackPane {
     private void initialize() {
         setOnMouseEntered(onMouseEntered);
         setOnMouseExited(onMouseExited);
+    }
+
+    public void setSelected(boolean selected) {
+        if (selected) {
+            label.getStyleClass().add(SELECTED_STYLE);
+        } else {
+            label.getStyleClass().remove(SELECTED_STYLE);
+        }
+    }
+
+    public void setTargetPage(String page) {
+        targetPage = page;
+    }
+
+    public void loadPage() {
+        AcvContext.getMainController().reloadContent(targetPage);
     }
 
     private EventHandler<ActionEvent> onTimelineFinished = event -> {
