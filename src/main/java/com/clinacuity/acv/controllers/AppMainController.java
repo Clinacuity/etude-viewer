@@ -25,7 +25,7 @@ public class AppMainController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resourceBundle) {
-        AcvContext.getInstance().mainController = this;
+        AcvContext.setMainController(this);
 
         try {
             addHeader();

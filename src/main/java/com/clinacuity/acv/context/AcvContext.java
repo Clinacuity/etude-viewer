@@ -37,8 +37,10 @@ public class AcvContext {
         return instance;
     }
 
-    public AppMainController mainController;
+    private AppMainController mainController;
     public Window mainWindow;
+    public static AppMainController getMainController() { return getInstance().mainController; }
+    public static void setMainController(AppMainController controller) { getInstance().mainController = controller; }
 
     private Properties properties;
     private Properties appProperties;

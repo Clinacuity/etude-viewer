@@ -67,7 +67,7 @@ public class LoadScreenController implements Initializable {
             context.targetDirectoryProperty.setValue(targetDirectory.getAbsolutePath() + "/");
             context.referenceDirectoryProperty.setValue(referenceDirectory.getAbsolutePath() + "/");
 
-            context.mainController.reloadContent(AcvContext.COMPARISON_VIEW);
+            AcvContext.getMainController().reloadContent(AcvContext.COMPARISON_VIEW);
         } else {
             // TODO: deactivate the loading spinner
             logger.debug("loading spinner will deactivate on its own if the content is reloaded");
