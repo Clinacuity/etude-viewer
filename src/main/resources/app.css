@@ -30,6 +30,21 @@
     -fx-border-color: White;
 }
 
+.nav-button {
+    -fx-background-color: rgb(151, 178, 215);
+    -fx-text-fill: White;
+    -fx-border-color: rgb(121, 148, 185);
+    -fx-border-width: 5 2 0 2;
+}
+
+.nav-button-selected {
+    -fx-background-color: rgb(0, 0, 0);
+}
+
+.nav-button:hover {
+    -fx-background-color: rgb(121, 148, 185);
+}
+
 .no-focus {
     -fx-focus-traversable: false;
 }
@@ -109,10 +124,6 @@
 .button-raised {
     -jfx-button-type: RAISED;
     -fx-background-color: rgb(77,102,204);
-}
-
-.button:hover {
-    -fx-background-color: LightGray;
 }
 
 .button-gray {

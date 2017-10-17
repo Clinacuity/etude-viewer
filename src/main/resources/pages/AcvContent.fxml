@@ -2,7 +2,7 @@
 
 <?import javafx.scene.control.Separator?>
 <?import com.clinacuity.acv.controls.AnnotatedDocumentPane?>
-<?import com.clinacuity.acv.controllers.ViewControls?>
+<?import com.clinacuity.acv.controls.ViewControls?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.RowConstraints?>

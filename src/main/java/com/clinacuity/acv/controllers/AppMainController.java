@@ -8,7 +8,6 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
-import javafx.scene.control.MenuBar;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import org.apache.logging.log4j.LogManager;
@@ -39,11 +38,8 @@ public class AppMainController implements Initializable {
     }
 
     private void addHeader() throws IOException {
-        MenuBar menuBar = FXMLLoader.load(getClass().getResource(AcvContext.MENU_BAR), null);
-        masterGrid.add(menuBar, 0, 0);
-
-//        HBox navBar = FXMLLoader.load(getClass().getResource(AcvContext.NAV_BAR), null);
-//        masterGrid.add(navBar, 0, 0);
+        HBox navBar = FXMLLoader.load(getClass().getResource(AcvContext.NAV_BAR), null);
+        masterGrid.add(navBar, 0, 0);
     }
 
     private void addFooter() {

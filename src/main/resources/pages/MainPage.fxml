@@ -37,7 +37,7 @@
                 <JFXButton onAction="#loadEtudeConfigurationPage" maxWidth="Infinity"
                            buttonType="RAISED" styleClass="button-raised, button-gray, no-focus" maxHeight="150">
                     <graphic>
-                        <VBox spacing="5">
+                        <VBox spacing="5" alignment="CENTER">
                             <Label text="Run Etude" styleClass="text-large-bold" maxWidth="Infinity" alignment="CENTER" textAlignment="CENTER"/>
                             <Label text="Choose this option to load the Etude Configuration screen.  This screen allows you to configure the ETUDE engines to compare the annotations of two different NLP systems."
                                    styleClass="text-medium-italic" wrapText="true" textAlignment="JUSTIFY"/>

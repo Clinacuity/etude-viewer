@@ -34,6 +34,6 @@ public class MainPageController implements Initializable {
 
     @FXML
     private void loadComparisonViewerPage() {
-        AcvContext.getInstance().mainController.reloadContent(AcvContext.ETUDE_RUNNER);
+        AcvContext.getInstance().mainController.reloadContent(AcvContext.LOAD_SCREEN);
     }
 }
