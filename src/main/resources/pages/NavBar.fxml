@@ -4,6 +4,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.image.Image?>
 <?import javafx.geometry.Insets?>
+<?import com.clinacuity.acv.controls.NavBarButton?>
 
 <HBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
@@ -17,8 +18,13 @@
         </padding>
     </HBox>
     <HBox alignment="BOTTOM_LEFT">
+        <NavBarButton fx:id="mainPageButton" text="Main Page"/>
+        <NavBarButton fx:id="etudeRunnerButton" text="Etude&#10;Configuration"/>
+        <NavBarButton fx:id="loadScreenButton" text="Load&#10;Configuration"/>
+        <NavBarButton fx:id="configBuilderButton" text="Configuration&#10;Builder"/>
+        <NavBarButton fx:id="compareViewerButton" text="Comparison&#10;View"/>
         <padding>
-            <Insets topRightBottomLeft="5"/>
+            <Insets left="25"/>
         </padding>
     </HBox>
-</HBox> 
+</HBox>

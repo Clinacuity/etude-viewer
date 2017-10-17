@@ -30,19 +30,26 @@
     -fx-border-color: White;
 }
 
+.header-hover-box {
+    -fx-border-radius: 3;
+    -fx-border-width: 0 3 0 3;
+    -fx-border-color: DarkGray;
+    -fx-fill: rgba(51, 78, 115, 0.5);
+}
+
 .nav-button {
-    -fx-background-color: rgb(151, 178, 215);
     -fx-text-fill: White;
-    -fx-border-color: rgb(121, 148, 185);
-    -fx-border-width: 5 2 0 2;
+    -fx-font-size: 12px;
+    -fx-font-family: "Fira Mono Regular";
+}
+
+.nav-button:hover {
+    -fx-font-size: 12px;
+    -fx-font-family: "Fira Mono Bold";
 }
 
 .nav-button-selected {
     -fx-background-color: rgb(0, 0, 0);
-}
-
-.nav-button:hover {
-    -fx-background-color: rgb(121, 148, 185);
 }
 
 .no-focus {
