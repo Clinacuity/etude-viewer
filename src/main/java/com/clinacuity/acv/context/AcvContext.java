@@ -14,7 +14,6 @@ public class AcvContext {
     public static final String APP_CONTAINER = "/pages/AppMain.fxml";
     public static final String APP_MAIN_PAGE = "/pages/MainPage.fxml";
     public static final String NAV_BAR = "/pages/NavBar.fxml";
-    public static final String MENU_BAR = "/pages/MenuBar.fxml";
     public static final String LOAD_SCREEN = "/pages/LoadScreenView.fxml";
     public static final String ETUDE_RUNNER = "/pages/EtudeRunner.fxml";
     public static final String CONFIGURATION_BUILDER = "/pages/ConfigurationBuilder.fxml";
@@ -38,9 +37,12 @@ public class AcvContext {
     }
 
     private AppMainController mainController;
-    public Window mainWindow;
     public static AppMainController getMainController() { return getInstance().mainController; }
     public static void setMainController(AppMainController controller) { getInstance().mainController = controller; }
+
+    private Window mainWindow;
+    public static Window getMainWindow() { return getInstance().mainWindow; }
+    public static void setMainWindow(Window window) { getInstance().mainWindow = window; }
 
     private Properties properties;
     private Properties appProperties;

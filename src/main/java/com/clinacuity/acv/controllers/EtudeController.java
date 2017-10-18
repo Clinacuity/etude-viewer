@@ -360,12 +360,12 @@ public class EtudeController implements Initializable{
     private File getFile(String title) {
         FileChooser chooser = new FileChooser();
         chooser.setTitle(title);
-        return chooser.showOpenDialog(context.mainWindow);
+        return chooser.showOpenDialog(AcvContext.getMainWindow());
     }
 
     private File getDirectory(String title) {
         DirectoryChooser chooser = new DirectoryChooser();
         chooser.setTitle(title);
-        return chooser.showDialog(context.mainWindow);
+        return chooser.showDialog(AcvContext.getMainWindow());
     }
 }

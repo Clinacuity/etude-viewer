@@ -9,7 +9,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import java.io.IOException;
 
-public class AppMain extends Application{
+public class AppMain extends Application {
     private static final Logger logger = LogManager.getLogger();
     private Scene scene;
 
@@ -35,7 +35,7 @@ public class AppMain extends Application{
                 primaryStage.setMinHeight(800.0d);
                 primaryStage.show();
 
-                AcvContext.getInstance().mainWindow = scene.getWindow();
+                AcvContext.setMainWindow(scene.getWindow());
             } catch (IOException e) {
                 logger.throwing(e);
             }
