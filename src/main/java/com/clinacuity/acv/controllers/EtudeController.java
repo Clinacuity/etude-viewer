@@ -110,6 +110,7 @@ public class EtudeController implements Initializable{
             context.referenceDirectoryProperty.setValue(outputDirectoryTextField.getText() + "/" + REFERENCE_SUBDIR);
 
             AcvContext.getMainController().reloadContent(AcvContext.COMPARISON_VIEW);
+            AcvContext.getInstance().contentLoading.setValue(false);
         });
 
         etudeTask.reset();
@@ -148,6 +149,7 @@ public class EtudeController implements Initializable{
             etudeTask.setFileSuffix(fileSuffixTextField.getText());
         }
 
+        AcvContext.getInstance().contentLoading.setValue(true);
         new Thread(etudeTask).start();
     }
 
