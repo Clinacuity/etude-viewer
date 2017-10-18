@@ -1,11 +1,13 @@
 package com.clinacuity.acv.controllers;
 
 import com.clinacuity.acv.context.AcvContext;
+import com.clinacuity.acv.context.AppMain;
 import com.clinacuity.acv.controls.NavBarButton;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Cursor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import java.net.URL;
@@ -45,5 +47,17 @@ public class NavBarController implements Initializable {
         compareViewerButton.setOnMouseClicked(event -> selectedNavBarButton.setValue(compareViewerButton));
 
         selectedNavBarButton.setValue(mainPageButton);
+    }
+
+    @FXML private void clickedLogo() {
+        AppMain.getWebPage("https://www.clinacuity.com");
+    }
+    
+    @FXML private void mouseEnteredLogo() {
+        AcvContext.getMainWindow().getScene().setCursor(Cursor.HAND);
+    }
+
+    @FXML private void mouseExitedLogo() {
+        AcvContext.getMainWindow().getScene().setCursor(Cursor.DEFAULT);
     }
 }
