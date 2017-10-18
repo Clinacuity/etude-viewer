@@ -21,7 +21,7 @@
             <Insets topRightBottomLeft="15"/>
         </padding>
         <VBox spacing="10">
-            <Label styleClass="header-one, underlined" text="ETUDE" textAlignment="CENTER"/>
+            <Label styleClass="text-header-one, underlined" text="ETUDE" textAlignment="CENTER"/>
             <Label styleClass="text-medium-normal"
                    text="This tool will help you compare files processed by a given system (such as CliniDeid)&#10;against files on a given Gold Standard corpus."/>
         </VBox>
@@ -37,7 +37,7 @@
                 <JFXButton text="..." onAction="#pickMasterDirectory" prefWidth="32" maxWidth="Infinity"
                            styleClass="button-raised, button-gray, no-focus, text-small-normal" buttonType="RAISED"/>
                 <Label fx:id="errorLabel" text="&#x2022; Please choose a valid directory" alignment="BOTTOM_CENTER"
-                       styleClass="text-medium-normal, error-text"/>
+                       styleClass="text-medium-normal, error-text" visible="false"/>
             </HBox>
             <HBox alignment="CENTER_RIGHT">
                 <JFXButton onAction="#runAcv" text="RUN VIEWER" buttonType="RAISED"

@@ -29,11 +29,11 @@ public class MainPageController implements Initializable {
 
     @FXML
     private void loadEtudeConfigurationPage() {
-        AcvContext.getInstance().mainController.reloadContent(AcvContext.ETUDE_RUNNER);
+        AcvContext.getMainController().reloadContent(AcvContext.ETUDE_RUNNER);
     }
 
     @FXML
     private void loadComparisonViewerPage() {
-        AcvContext.getInstance().mainController.reloadContent(AcvContext.ETUDE_RUNNER);
+        AcvContext.getMainController().reloadContent(AcvContext.LOAD_SCREEN);
     }
 }

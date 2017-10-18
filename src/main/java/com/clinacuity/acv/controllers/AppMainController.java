@@ -8,7 +8,6 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
-import javafx.scene.control.MenuBar;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import org.apache.logging.log4j.LogManager;
@@ -26,21 +25,19 @@ public class AppMainController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resourceBundle) {
-        AcvContext.getInstance().mainController = this;
+        AcvContext.setMainController(this);
 
         try {
             addHeader();
             addFooter();
-
-            reloadContent(AcvContext.APP_MAIN_PAGE);
         } catch (IOException e) {
             logger.throwing(e);
         }
     }
 
     private void addHeader() throws IOException {
-        MenuBar menuBar = FXMLLoader.load(getClass().getResource(AcvContext.MENU_BAR), null);
-        masterGrid.add(menuBar, 0, 0);
+        HBox navBar = FXMLLoader.load(getClass().getResource(AcvContext.NAV_BAR), null);
+        masterGrid.add(navBar, 0, 0);
     }
 
     private void addFooter() {
@@ -48,6 +45,7 @@ public class AppMainController implements Initializable {
         footerBox.setMaxWidth(Double.MAX_VALUE);
         footerBox.setAlignment(Pos.BOTTOM_RIGHT);
         footerBox.setPadding(new Insets(5.0));
+        footerBox.getStyleClass().add("header");
 
         Label version = new Label();
         version.setText("Version: " + AcvContext.getAppProperty("version"));
@@ -57,7 +55,7 @@ public class AppMainController implements Initializable {
         masterGrid.add(footerBox, 0, 2);
     }
 
-    void reloadContent(String page) {
+    public void reloadContent(String page) {
         try {
             masterGrid.getChildren().remove(targetGridContent);
             targetGridContent = FXMLLoader.load(getClass().getResource(page), null);

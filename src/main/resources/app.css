@@ -24,6 +24,34 @@
 
 
 /*    MISC        */
+.header {
+    -fx-background-color: rgb(151, 178, 215);
+    -fx-border-width: 1;
+    -fx-border-color: White;
+}
+
+.header-hover-box {
+    -fx-border-radius: 3;
+    -fx-border-width: 0 3 0 3;
+    -fx-border-color: DarkGray;
+    -fx-fill: rgba(51, 78, 115, 0.5);
+}
+
+.nav-button {
+    -fx-text-fill: White;
+    -fx-font-size: 12px;
+    -fx-font-family: "Fira Mono Regular";
+}
+
+.nav-button:hover {
+    -fx-font-size: 12px;
+    -fx-font-family: "Fira Mono Bold";
+}
+
+.nav-button-selected {
+    -fx-background-color: rgb(0, 56, 145);
+}
+
 .no-focus {
     -fx-focus-traversable: false;
 }
@@ -105,10 +133,6 @@
     -fx-background-color: rgb(77,102,204);
 }
 
-.button:hover {
-    -fx-background-color: LightGray;
-}
-
 .button-gray {
     -fx-background-color: LightGray;
 }
@@ -182,14 +206,16 @@
     -fx-opacity: 0.8;
 }
 
-.header-one {
+.text-header-one {
     -fx-font-family: "Open Sans Bold Italic";
-    -fx-font-size: 36;
+    -fx-font-size: 32;
+    -fx-text-fill: rgb(0, 56, 145);
 }
 
-.header-two {
+.text-header-two {
     -fx-font-family: "Open Sans Bold Italic";
     -fx-font-size: 18;
+    -fx-text-fill: rgb(0, 120, 220);
 }
 
 .label-annotation-category {

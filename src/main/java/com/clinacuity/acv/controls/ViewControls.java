@@ -1,4 +1,4 @@
-package com.clinacuity.acv.controllers;
+package com.clinacuity.acv.controls;
 
 import com.clinacuity.acv.context.AcvContext;
 import com.clinacuity.acv.controls.AnnotationType;
@@ -112,9 +112,9 @@ public class ViewControls extends VBox {
         annotationTable.getSelectionModel().clearSelection();
     }
 
-    Button getPreviousButton() { return previousButton; }
-    Button getClearButton() { return clearButton; }
-    Button getNextButton() { return nextButton; }
+    public Button getPreviousButton() { return previousButton; }
+    public Button getClearButton() { return clearButton; }
+    public Button getNextButton() { return nextButton; }
 
     public void setMatchTypeToggleButtons(List<String> items) {
         matchingTypeToggles.getChildren().clear();

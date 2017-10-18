@@ -18,7 +18,7 @@
         <Insets topRightBottomLeft="5"/>
     </padding>
     <VBox spacing="50" maxWidth="Infinity">
-        <Label text="Configuration Builder" styleClass="header-one, underlined">
+        <Label text="Configuration Builder" styleClass="text-header-one, underlined">
             <VBox.margin>
                 <Insets left="20"/>
             </VBox.margin>

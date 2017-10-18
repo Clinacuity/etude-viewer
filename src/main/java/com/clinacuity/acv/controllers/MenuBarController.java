@@ -9,14 +9,10 @@ import javafx.scene.control.Label;
 import javafx.scene.control.MenuBar;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class MenuBarController implements Initializable {
-    private static final Logger logger = LogManager.getLogger();
-
     @FXML private MenuBar menuBar;
 
     @Override
@@ -25,7 +21,7 @@ public class MenuBarController implements Initializable {
     }
 
     @FXML private void reloadMainPage() {
-        AcvContext.getInstance().mainController.reloadContent(AcvContext.APP_MAIN_PAGE);
+        AcvContext.getMainController().reloadContent(AcvContext.APP_MAIN_PAGE);
     }
 
     @FXML private void exitApplication() {
@@ -33,11 +29,11 @@ public class MenuBarController implements Initializable {
     }
 
     @FXML private void showEtudeRunner() {
-        AcvContext.getInstance().mainController.reloadContent(AcvContext.ETUDE_RUNNER);
+        AcvContext.getMainController().reloadContent(AcvContext.ETUDE_RUNNER);
     }
 
     @FXML private void showConfigurationCreator() {
-        AcvContext.getInstance().mainController.reloadContent(AcvContext.CONFIGURATION_BUILDER);
+        AcvContext.getMainController().reloadContent(AcvContext.CONFIGURATION_BUILDER);
     }
 
     @FXML private void showHowToUse() {

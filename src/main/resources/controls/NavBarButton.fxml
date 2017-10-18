@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.shape.Rectangle?>
+
+<fx:root type="javafx.scene.layout.StackPane"
+         xmlns="http://javafx.com/javafx/8.0.112"
+         xmlns:fx="http://javafx.com/fxml/1" alignment="BOTTOM_CENTER">
+    <Rectangle fx:id="hoverBox" width="20" height="10" fill="gray" styleClass="header-hover-box" visible="false"/>
+    <Label fx:id="label" styleClass="nav-button" alignment="CENTER" textAlignment="CENTER" maxHeight="Infinity">
+        <padding>
+            <Insets bottom="10" left="10" right="10" top="5"/>
+        </padding>
+    </Label>
+    <padding>
+        <Insets top="15"/>
+    </padding>
+</fx:root>

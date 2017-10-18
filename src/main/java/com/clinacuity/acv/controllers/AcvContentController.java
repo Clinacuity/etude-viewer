@@ -7,6 +7,7 @@ import com.clinacuity.acv.controls.AnnotatedDocumentPane;
 import com.clinacuity.acv.controls.AnnotationButton;
 import com.clinacuity.acv.controls.AnnotationType;
 import com.clinacuity.acv.controls.SideBar;
+import com.clinacuity.acv.controls.ViewControls;
 import com.clinacuity.acv.tasks.CreateButtonsTask;
 import com.clinacuity.acv.tasks.CreateLabelsFromDocumentTask;
 import com.clinacuity.acv.controls.AnnotationButton.MatchType;

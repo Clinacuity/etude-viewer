@@ -13,6 +13,7 @@ import java.util.Properties;
 public class AcvContext {
     public static final String APP_CONTAINER = "/pages/AppMain.fxml";
     public static final String APP_MAIN_PAGE = "/pages/MainPage.fxml";
+    public static final String NAV_BAR = "/pages/NavBar.fxml";
     public static final String MENU_BAR = "/pages/MenuBar.fxml";
     public static final String LOAD_SCREEN = "/pages/LoadScreenView.fxml";
     public static final String ETUDE_RUNNER = "/pages/EtudeRunner.fxml";
@@ -36,8 +37,10 @@ public class AcvContext {
         return instance;
     }
 
-    public AppMainController mainController;
+    private AppMainController mainController;
     public Window mainWindow;
+    public static AppMainController getMainController() { return getInstance().mainController; }
+    public static void setMainController(AppMainController controller) { getInstance().mainController = controller; }
 
     private Properties properties;
     private Properties appProperties;
