@@ -10,7 +10,8 @@
       xmlns:fx="http://javafx.com/fxml"
       fx:controller="com.clinacuity.acv.controllers.NavBarController" styleClass="header">
     <HBox>
-        <ImageView fitHeight="48" preserveRatio="true" pickOnBounds="true">
+        <ImageView fitHeight="48" preserveRatio="true" pickOnBounds="true"
+                   onMouseEntered="#mouseEnteredLogo" onMouseExited="#mouseExitedLogo" onMouseClicked="#clickedLogo">
             <Image url="/img/clinacuity/logo.png"/>
         </ImageView>
         <padding>

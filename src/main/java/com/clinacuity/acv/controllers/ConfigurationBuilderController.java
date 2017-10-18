@@ -51,7 +51,7 @@ public class ConfigurationBuilderController implements Initializable {
     private void saveConfigurationDialog() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Save the configuration file");
-        File file = fileChooser.showSaveDialog(AcvContext.getInstance().mainWindow);
+        File file = fileChooser.showSaveDialog(AcvContext.getMainWindow());
 
         saveFile(file, testBlocks);
     }
@@ -59,7 +59,7 @@ public class ConfigurationBuilderController implements Initializable {
     @FXML private void saveConfigurationDialogReference() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Save reference configuration");
-        File file = fileChooser.showSaveDialog(AcvContext.getInstance().mainWindow);
+        File file = fileChooser.showSaveDialog(AcvContext.getMainWindow());
 
         saveFile(file, referenceBlocks);
     }
