@@ -74,6 +74,9 @@ public class AcvContext {
     /** This property indicates whether False Negative annotations will be displayed in the Annotated Document Panes */
     public BooleanProperty falseNegativesProperty = new SimpleBooleanProperty(true);
 
+    /** This property indicates the content is loading; used for Tasks, when True, a spinner will display over the Content */
+    public BooleanProperty contentLoading = new SimpleBooleanProperty(false);
+
     /** This property contains a list of annotation types available in the corpus file*/
     public ListProperty<String> annotationList = new SimpleListProperty<>(FXCollections.observableArrayList());
 

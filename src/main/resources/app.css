@@ -52,6 +52,10 @@
     -fx-background-color: rgb(0, 56, 145);
 }
 
+.spinner-pane {
+    -fx-background-color: rgba(55, 55, 55, 0.3);
+}
+
 .no-focus {
     -fx-focus-traversable: false;
 }
