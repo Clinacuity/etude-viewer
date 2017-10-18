@@ -10,11 +10,13 @@ import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
+import org.reactfx.util.FxTimer;
 import java.io.IOException;
 import java.net.URL;
+import java.time.Duration;
 import java.util.ResourceBundle;
 
 public class AppMainController implements Initializable {
@@ -22,6 +24,8 @@ public class AppMainController implements Initializable {
 
     @FXML private GridPane masterGrid;
     @FXML private Node targetGridContent;
+    @FXML private StackPane contentPane;
+    @FXML private StackPane spinnerPane;
 
     @Override
     public void initialize(URL location, ResourceBundle resourceBundle) {
@@ -33,6 +37,9 @@ public class AppMainController implements Initializable {
         } catch (IOException e) {
             logger.throwing(e);
         }
+
+        AcvContext.getInstance().contentLoading.
+                addListener((obs, old, newValue) -> spinnerPane.setVisible(newValue));
     }
 
     private void addHeader() throws IOException {
@@ -57,9 +64,11 @@ public class AppMainController implements Initializable {
 
     public void reloadContent(String page) {
         try {
-            masterGrid.getChildren().remove(targetGridContent);
+            AcvContext.getInstance().contentLoading.setValue(false);
+            contentPane.getChildren().remove(targetGridContent);
             targetGridContent = FXMLLoader.load(getClass().getResource(page), null);
-            masterGrid.add(targetGridContent, 0, 1);
+            contentPane.getChildren().add(targetGridContent);
+            spinnerPane.toFront();
         } catch (IOException e) {
             logger.throwing(e);
         }
