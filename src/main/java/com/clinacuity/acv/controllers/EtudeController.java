@@ -109,7 +109,7 @@ public class EtudeController implements Initializable{
             context.targetDirectoryProperty.setValue(outputDirectoryTextField.getText() + "/" + SYSTEM_OUT_SUBDIR);
             context.referenceDirectoryProperty.setValue(outputDirectoryTextField.getText() + "/" + REFERENCE_SUBDIR);
 
-            AcvContext.getMainController().reloadContent(AcvContext.COMPARISON_VIEW);
+            AcvContext.loadPage(NavBarController.NavBarPages.COMPARISON_VIEW);
             AcvContext.getInstance().contentLoading.setValue(false);
         });
 
