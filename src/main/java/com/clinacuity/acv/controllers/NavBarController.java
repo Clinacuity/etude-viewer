@@ -45,6 +45,8 @@ public class NavBarController implements Initializable {
         compareViewerButton.setOnMouseClicked(event -> selectedNavBarButton.setValue(compareViewerButton));
 
         selectedNavBarButton.setValue(mainPageButton);
+
+        AcvContext.setNavBar(this);
     }
 
     @FXML private void clickedLogo() {
@@ -57,5 +59,33 @@ public class NavBarController implements Initializable {
 
     @FXML private void mouseExitedLogo() {
         AcvContext.getMainWindow().getScene().setCursor(Cursor.DEFAULT);
+    }
+
+    public void loadPage(NavBarPages page) {
+        switch(page) {
+            case MAIN_PAGE:
+                selectedNavBarButton.setValue(mainPageButton);
+                break;
+            case ETUDE_RUNNER:
+                selectedNavBarButton.setValue(etudeRunnerButton);
+                break;
+            case LOAD_SCREEN:
+                selectedNavBarButton.setValue(loadScreenButton);
+                break;
+            case CONFIGURATION_BUILDER:
+                selectedNavBarButton.setValue(configBuilderButton);
+                break;
+            case COMPARISON_VIEW:
+                selectedNavBarButton.setValue(compareViewerButton);
+                break;
+        }
+    }
+
+    public enum NavBarPages {
+        MAIN_PAGE,
+        ETUDE_RUNNER,
+        LOAD_SCREEN,
+        CONFIGURATION_BUILDER,
+        COMPARISON_VIEW
     }
 }
