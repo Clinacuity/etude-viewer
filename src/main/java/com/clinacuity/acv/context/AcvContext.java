@@ -1,6 +1,7 @@
 package com.clinacuity.acv.context;
 
 import com.clinacuity.acv.controllers.AppMainController;
+import com.clinacuity.acv.controllers.NavBarController;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.stage.Window;
@@ -40,6 +41,10 @@ public class AcvContext {
     private AppMainController mainController;
     public static AppMainController getMainController() { return getInstance().mainController; }
     public static void setMainController(AppMainController controller) { getInstance().mainController = controller; }
+
+    private NavBarController navBarController;
+    public static NavBarController getNavBarController() { return getInstance().navBarController; }
+    public static void setNavBar(NavBarController controller) { getInstance().navBarController = controller; }
 
     private Window mainWindow;
     public static Window getMainWindow() { return getInstance().mainWindow; }
@@ -110,6 +115,10 @@ public class AcvContext {
         } catch (IOException e) {
             logger.throwing(e);
         }
+    }
+
+    public static void loadPage(NavBarController.NavBarPages page) {
+        getInstance().navBarController.loadPage(page);
     }
 
     private void loadCorpusDictionary() {
