@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.geometry.Insets?>
+
+<HBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.clinacuity.acv.controllers.FooterController"
+      styleClass="header" maxWidth="Infinity" alignment="CENTER">
+    <padding>
+        <Insets topRightBottomLeft="5"/>
+    </padding>
+    <HBox alignment="CENTER_LEFT" maxWidth="Infinity">
+        <Label fx:id="selectedDirectory" styleClass="text-medium-normal"/>
+    </HBox>
+    <HBox alignment="CENTER_RIGHT" HBox.hgrow="ALWAYS">
+        <Label fx:id="version" styleClass="text-small-normal" alignment="CENTER_RIGHT"/>
+    </HBox>
+</HBox>
