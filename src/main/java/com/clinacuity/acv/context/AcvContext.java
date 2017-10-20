@@ -14,6 +14,7 @@ public class AcvContext {
     public static final String APP_CONTAINER = "/pages/AppMain.fxml";
     public static final String APP_MAIN_PAGE = "/pages/MainPage.fxml";
     public static final String NAV_BAR = "/pages/NavBar.fxml";
+    public static final String FOOTER = "/pages/Footer.fxml";
     public static final String LOAD_SCREEN = "/pages/LoadScreenView.fxml";
     public static final String ETUDE_RUNNER = "/pages/EtudeRunner.fxml";
     public static final String CONFIGURATION_BUILDER = "/pages/ConfigurationBuilder.fxml";

@@ -11,12 +11,12 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.TextAlignment;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.reactfx.util.FxTimer;
 import java.io.IOException;
 import java.net.URL;
-import java.time.Duration;
 import java.util.ResourceBundle;
 
 public class AppMainController implements Initializable {
@@ -47,19 +47,9 @@ public class AppMainController implements Initializable {
         masterGrid.add(navBar, 0, 0);
     }
 
-    private void addFooter() {
-        HBox footerBox = new HBox();
-        footerBox.setMaxWidth(Double.MAX_VALUE);
-        footerBox.setAlignment(Pos.BOTTOM_RIGHT);
-        footerBox.setPadding(new Insets(5.0));
-        footerBox.getStyleClass().add("header");
-
-        Label version = new Label();
-        version.setText("Version: " + AcvContext.getAppProperty("version"));
-        version.getStyleClass().add("text-small-normal");
-
-        footerBox.getChildren().add(version);
-        masterGrid.add(footerBox, 0, 2);
+    private void addFooter() throws IOException {
+        HBox navBar = FXMLLoader.load(getClass().getResource(AcvContext.FOOTER), null);
+        masterGrid.add(navBar, 0, 2);
     }
 
     public void reloadContent(String page) {
