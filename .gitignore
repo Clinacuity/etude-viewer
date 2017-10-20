@@ -15,5 +15,6 @@
 *.project
 *.settings
 *.properties
+!application.properties
 dependencies.txt
 dependency.txt

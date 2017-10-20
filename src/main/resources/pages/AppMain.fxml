@@ -3,6 +3,8 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.control.ProgressIndicator?>
 <GridPane xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1"
           fx:id="masterGrid" fx:controller="com.clinacuity.acv.controllers.AppMainController"
           alignment="TOP_CENTER"
@@ -13,5 +15,12 @@
     <rowConstraints>
         <RowConstraints/>
         <RowConstraints vgrow="ALWAYS"/>
+        <RowConstraints/>
     </rowConstraints>
+
+    <StackPane fx:id="contentPane" GridPane.rowIndex="1">
+        <StackPane fx:id="spinnerPane" maxWidth="Infinity" maxHeight="Infinity" styleClass="spinner-pane" visible="false">
+            <ProgressIndicator maxWidth="100" maxHeight="100"/>
+        </StackPane>
+    </StackPane>
 </GridPane>

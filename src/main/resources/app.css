@@ -24,6 +24,38 @@
 
 
 /*    MISC        */
+.header {
+    -fx-background-color: rgb(151, 178, 215);
+    -fx-border-width: 1;
+    -fx-border-color: White;
+}
+
+.header-hover-box {
+    -fx-border-radius: 3;
+    -fx-border-width: 0 3 0 3;
+    -fx-border-color: DarkGray;
+    -fx-fill: rgba(51, 78, 115, 0.5);
+}
+
+.nav-button {
+    -fx-text-fill: White;
+    -fx-font-size: 12px;
+    -fx-font-family: "Fira Mono Regular";
+}
+
+.nav-button:hover {
+    -fx-font-size: 12px;
+    -fx-font-family: "Fira Mono Bold";
+}
+
+.nav-button-selected {
+    -fx-background-color: rgb(0, 56, 145);
+}
+
+.spinner-pane {
+    -fx-background-color: rgba(55, 55, 55, 0.3);
+}
+
 .no-focus {
     -fx-focus-traversable: false;
 }
@@ -67,6 +99,10 @@
     -fx-font-family: "Open Sans Bold";
 }
 
+.text-white {
+    -fx-text-fill: White;
+}
+
 .card-small {
     -fx-border-color: SlateGray;
     -fx-border-radius: 5px;
@@ -101,19 +137,6 @@
     -fx-background-color: rgb(77,102,204);
 }
 
-.button-blue {
-    -fx-background-color: rgb(77, 102, 204);
-    -fx-text-fill: Azure;
-}
-
-.button:hover {
-    -fx-background-color: LightGray;
-}
-
-.button-blue:hover {
-    -fx-background-color: rgb(27, 52, 154);
-}
-
 .button-gray {
     -fx-background-color: LightGray;
 }
@@ -122,12 +145,15 @@
     -fx-background-color: DarkGray;
 }
 
+
 .button-blue {
     -fx-background-color: rgba(50, 105, 255, 1);
+    -fx-text-fill: Azure;
 }
 
+
 .button-blue:hover {
-    -fx-background-color: rgba(0, 0, 255, 1);
+    -fx-background-color: rgb(77, 102, 204);
 }
 
 .button-red {
@@ -184,14 +210,16 @@
     -fx-opacity: 0.8;
 }
 
-.header-one {
+.text-header-one {
     -fx-font-family: "Open Sans Bold Italic";
-    -fx-font-size: 36;
+    -fx-font-size: 32;
+    -fx-text-fill: rgb(0, 56, 145);
 }
 
-.header-two {
+.text-header-two {
     -fx-font-family: "Open Sans Bold Italic";
     -fx-font-size: 18;
+    -fx-text-fill: rgb(0, 120, 220);
 }
 
 .label-annotation-category {
@@ -214,6 +242,18 @@
 
 .error-text {
     -fx-text-fill: Red;
+}
+
+.false-positives-count {
+    -fx-text-fill: DarkOrchid;
+    -fx-font-family: "Open Sans Italic";
+    -fx-font-size: 12;
+}
+
+.false-negatives-count {
+    -fx-text-fill: OrangeRed;
+    -fx-font-family: "Open Sans Italic";
+    -fx-font-size: 12;
 }
 
 .line-number {

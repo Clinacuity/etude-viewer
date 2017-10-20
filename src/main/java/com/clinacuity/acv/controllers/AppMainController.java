@@ -5,11 +5,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.control.MenuBar;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -19,30 +19,41 @@ public class AppMainController implements Initializable {
 
     @FXML private GridPane masterGrid;
     @FXML private Node targetGridContent;
-    private ResourceBundle resources;
-    private MenuBar menuBar;
+    @FXML private StackPane contentPane;
+    @FXML private StackPane spinnerPane;
 
     @Override
     public void initialize(URL location, ResourceBundle resourceBundle) {
-        AcvContext.getInstance().mainController = this;
+        AcvContext.setMainController(this);
 
-        resources = resourceBundle;
-        AcvContext.getInstance().setResources(resources);
         try {
-            menuBar = FXMLLoader.load(getClass().getResource(AcvContext.MENU_BAR), resources);
-            masterGrid.getChildren().addAll(menuBar);
-
-            reloadContent(AcvContext.LOAD_SCREEN);
+            addHeader();
+            addFooter();
         } catch (IOException e) {
             logger.throwing(e);
         }
+
+        AcvContext.getInstance().contentLoading.
+                addListener((obs, old, newValue) -> spinnerPane.setVisible(newValue));
     }
 
-    void reloadContent(String page) {
+    private void addHeader() throws IOException {
+        HBox navBar = FXMLLoader.load(getClass().getResource(AcvContext.NAV_BAR), null);
+        masterGrid.add(navBar, 0, 0);
+    }
+
+    private void addFooter() throws IOException {
+        HBox navBar = FXMLLoader.load(getClass().getResource(AcvContext.FOOTER), null);
+        masterGrid.add(navBar, 0, 2);
+    }
+
+    public void reloadContent(String page) {
         try {
-            masterGrid.getChildren().remove(targetGridContent);
-            targetGridContent = FXMLLoader.load(getClass().getResource(page), resources);
-            masterGrid.add(targetGridContent, 0, 1);
+            AcvContext.getInstance().contentLoading.setValue(false);
+            contentPane.getChildren().remove(targetGridContent);
+            targetGridContent = FXMLLoader.load(getClass().getResource(page), null);
+            contentPane.getChildren().add(targetGridContent);
+            spinnerPane.toFront();
         } catch (IOException e) {
             logger.throwing(e);
         }
