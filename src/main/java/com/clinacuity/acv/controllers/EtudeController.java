@@ -9,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import org.apache.logging.log4j.LogManager;
@@ -32,12 +33,16 @@ public class EtudeController implements Initializable{
     private static EtudeTask etudeTask = null;
     private AcvContext context = AcvContext.getInstance();
 
+    @FXML private HBox cardHBox;
+    @FXML private StackPane leftSideCard;
+    @FXML private StackPane rightSideCard;
     @FXML private JFXTextField referenceConfigInputField;
     @FXML private JFXTextField testConfigInputField;
     @FXML private JFXTextField referenceInputTextField;
     @FXML private JFXTextField testInputTextField;
     @FXML private JFXTextField outputDirectoryTextField;
     @FXML private JFXTextField scoreKeyTextField;
+    @FXML private JFXTextField punctuationTextField;
     @FXML private Label scoreKeyError;
     @FXML private JFXTextField scoreValuesTextField;
     @FXML private JFXTextField filePrefixTextField;
@@ -54,6 +59,7 @@ public class EtudeController implements Initializable{
     @FXML private JFXCheckBox byTypeCheckbox;
     @FXML private JFXCheckBox byTypeAndFileCheckbox;
     @FXML private JFXCheckBox ignoreWhitespaceCheckbox;
+    @FXML private JFXCheckBox ignorePunctuationCheckbox;
 
     // This could be refactored -- if the Run button is pressed without ever focusing on a required field,
     // it will "pass" and probably crash
@@ -61,6 +67,15 @@ public class EtudeController implements Initializable{
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        cardHBox.widthProperty().addListener((obs, old, newValue) -> {
+            double width = newValue.doubleValue();
+            rightSideCard.setMinWidth(width * 0.45d);
+            rightSideCard.setMaxWidth(width * 0.45d);
+            leftSideCard.setMinWidth(width * 0.45d);
+            leftSideCard.setMaxWidth(width * 0.45d);
+            cardHBox.setSpacing(width * 0.05d);
+        });
+
         bindElementsToProperties();
 
         referenceConfigInputField.focusedProperty().addListener(
@@ -132,6 +147,7 @@ public class EtudeController implements Initializable{
         etudeTask.setByType(byTypeCheckbox.isSelected());
         etudeTask.setByTypeAndFile(byTypeAndFileCheckbox.isSelected());
         etudeTask.setIgnoreWhitespace(ignoreWhitespaceCheckbox.isSelected());
+        etudeTask.setIgnorePunctuation(ignorePunctuationCheckbox.isSelected());
 
         if (!scoreKeyTextField.getText().equals("") && scoreKeyTextField.getText() != null) {
             etudeTask.setScoreKey(scoreKeyTextField.getText());
@@ -147,6 +163,10 @@ public class EtudeController implements Initializable{
 
         if (!fileSuffixTextField.getText().equals("") && fileSuffixTextField.getText() != null) {
             etudeTask.setFileSuffix(fileSuffixTextField.getText());
+        }
+
+        if (!punctuationTextField.getText().equals("") && punctuationTextField.getText() != null) {
+            etudeTask.setIgnorePunctuationRegex(punctuationTextField.getText());
         }
 
         AcvContext.getInstance().contentLoading.setValue(true);
@@ -322,6 +342,9 @@ public class EtudeController implements Initializable{
 
         ignoreWhitespaceCheckbox.setSelected(Boolean.parseBoolean(AcvContext.getProperty("IGNORE_WHITESPACE", ignoreWhitespaceCheckbox.isSelected())));
         ignoreWhitespaceCheckbox.selectedProperty().addListener((obs, old, newValue) -> AcvContext.setProperty("IGNORE_WHITESPACE", newValue));
+
+        ignorePunctuationCheckbox.setSelected(Boolean.parseBoolean(AcvContext.getProperty("IGNORE_PUNCTUATION", ignorePunctuationCheckbox.isSelected())));
+        ignorePunctuationCheckbox.selectedProperty().addListener((obs, old, newValue) -> AcvContext.setProperty("IGNORE_PUNCTUATION", newValue));
     }
     
     @FXML private void pickReferenceConfigFile() {
