@@ -42,6 +42,7 @@ public class EtudeController implements Initializable{
     @FXML private JFXTextField testInputTextField;
     @FXML private JFXTextField outputDirectoryTextField;
     @FXML private JFXTextField scoreKeyTextField;
+    @FXML private JFXTextField punctuationTextField;
     @FXML private Label scoreKeyError;
     @FXML private JFXTextField scoreValuesTextField;
     @FXML private JFXTextField filePrefixTextField;
@@ -58,6 +59,7 @@ public class EtudeController implements Initializable{
     @FXML private JFXCheckBox byTypeCheckbox;
     @FXML private JFXCheckBox byTypeAndFileCheckbox;
     @FXML private JFXCheckBox ignoreWhitespaceCheckbox;
+    @FXML private JFXCheckBox ignorePunctuationCheckbox;
 
     // This could be refactored -- if the Run button is pressed without ever focusing on a required field,
     // it will "pass" and probably crash
@@ -145,6 +147,7 @@ public class EtudeController implements Initializable{
         etudeTask.setByType(byTypeCheckbox.isSelected());
         etudeTask.setByTypeAndFile(byTypeAndFileCheckbox.isSelected());
         etudeTask.setIgnoreWhitespace(ignoreWhitespaceCheckbox.isSelected());
+        etudeTask.setIgnorePunctuation(ignorePunctuationCheckbox.isSelected());
 
         if (!scoreKeyTextField.getText().equals("") && scoreKeyTextField.getText() != null) {
             etudeTask.setScoreKey(scoreKeyTextField.getText());
@@ -160,6 +163,10 @@ public class EtudeController implements Initializable{
 
         if (!fileSuffixTextField.getText().equals("") && fileSuffixTextField.getText() != null) {
             etudeTask.setFileSuffix(fileSuffixTextField.getText());
+        }
+
+        if (!punctuationTextField.getText().equals("") && punctuationTextField.getText() != null) {
+            etudeTask.setIgnorePunctuationRegex(punctuationTextField.getText());
         }
 
         AcvContext.getInstance().contentLoading.setValue(true);
@@ -335,6 +342,9 @@ public class EtudeController implements Initializable{
 
         ignoreWhitespaceCheckbox.setSelected(Boolean.parseBoolean(AcvContext.getProperty("IGNORE_WHITESPACE", ignoreWhitespaceCheckbox.isSelected())));
         ignoreWhitespaceCheckbox.selectedProperty().addListener((obs, old, newValue) -> AcvContext.setProperty("IGNORE_WHITESPACE", newValue));
+
+        ignorePunctuationCheckbox.setSelected(Boolean.parseBoolean(AcvContext.getProperty("IGNORE_PUNCTUATION", ignorePunctuationCheckbox.isSelected())));
+        ignorePunctuationCheckbox.selectedProperty().addListener((obs, old, newValue) -> AcvContext.setProperty("IGNORE_PUNCTUATION", newValue));
     }
     
     @FXML private void pickReferenceConfigFile() {
