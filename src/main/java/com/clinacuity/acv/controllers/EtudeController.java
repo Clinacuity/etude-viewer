@@ -9,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import org.apache.logging.log4j.LogManager;
@@ -32,6 +33,9 @@ public class EtudeController implements Initializable{
     private static EtudeTask etudeTask = null;
     private AcvContext context = AcvContext.getInstance();
 
+    @FXML private HBox cardHBox;
+    @FXML private StackPane leftSideCard;
+    @FXML private StackPane rightSideCard;
     @FXML private JFXTextField referenceConfigInputField;
     @FXML private JFXTextField testConfigInputField;
     @FXML private JFXTextField referenceInputTextField;
@@ -61,6 +65,15 @@ public class EtudeController implements Initializable{
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        cardHBox.widthProperty().addListener((obs, old, newValue) -> {
+            double width = newValue.doubleValue();
+            rightSideCard.setMinWidth(width * 0.45d);
+            rightSideCard.setMaxWidth(width * 0.45d);
+            leftSideCard.setMinWidth(width * 0.45d);
+            leftSideCard.setMaxWidth(width * 0.45d);
+            cardHBox.setSpacing(width * 0.05d);
+        });
+
         bindElementsToProperties();
 
         referenceConfigInputField.focusedProperty().addListener(
