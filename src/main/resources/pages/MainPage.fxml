@@ -35,11 +35,11 @@
                     </StackPane.margin>
                 </Pane>
                 <JFXButton onAction="#loadEtudeConfigurationPage" maxWidth="Infinity"
-                           buttonType="RAISED" styleClass="button-raised, button-gray, no-focus" maxHeight="150">
+                           buttonType="RAISED" styleClass="button-raised, button-gray, no-focus" maxHeight="200">
                     <graphic>
                         <VBox spacing="5" alignment="CENTER">
-                            <Label text="Run Etude" styleClass="text-large-bold" maxWidth="Infinity" alignment="CENTER" textAlignment="CENTER"/>
-                            <Label text="Choose this option to load the Etude Configuration screen.  This screen allows you to configure the ETUDE engines to compare the annotations of two different NLP systems."
+                            <Label text="Run ETUDE Engines" styleClass="text-large-bold" maxWidth="Infinity" alignment="CENTER" textAlignment="CENTER"/>
+                            <Label text="Choose this option to load the ETUDE Configuration screen.  This screen allows you to configure the ETUDE engines to compare the annotations of an NLP system against a reference standard.  It also allows you to compare the outputs of two NLP systems to measure agreement and other metrics."
                                    styleClass="text-medium-italic" wrapText="true" textAlignment="JUSTIFY"/>
                         </VBox>
                     </graphic>
@@ -53,11 +53,11 @@
                     </StackPane.margin>
                 </Pane>
                 <JFXButton onAction="#loadConfigurationBuilderPage" maxWidth="Infinity"
-                           buttonType="RAISED" styleClass="button-raised, button-gray, no-focus" maxHeight="150">
+                           buttonType="RAISED" styleClass="button-raised, button-gray, no-focus" maxHeight="200">
                     <graphic>
                         <VBox spacing="5" alignment="CENTER">
                             <Label text="Build Configuration Files" styleClass="text-large-bold" maxWidth="Infinity" alignment="CENTER" textAlignment="CENTER"/>
-                            <Label text="Choose this option to load a page where you can build configuration files which are used to run the ETUDE engines."
+                            <Label text="Choose this option to load a page where you can build configuration files which are used to run the ETUDE engines.  These files will determine which files the ETUDE engines will compare, as well as how the metrics will be generated."
                                    styleClass="text-medium-italic" wrapText="true" textAlignment="JUSTIFY"/>
                         </VBox>
                     </graphic>
@@ -71,11 +71,11 @@
                     </StackPane.margin>
                 </Pane>
                 <JFXButton onAction="#loadComparisonViewerPage" maxWidth="Infinity"
-                           buttonType="RAISED" styleClass="button-raised, button-gray, no-focus" maxHeight="150">
+                           buttonType="RAISED" styleClass="button-raised, button-gray, no-focus" maxHeight="200">
                     <graphic>
                         <VBox spacing="5" alignment="CENTER">
-                            <Label text="View Files" styleClass="text-large-bold" maxWidth="Infinity" alignment="CENTER" textAlignment="CENTER"/>
-                            <Label text="Choose this option to simply compare files already processed.  Select a folder with the results of a previous run to reload them into the viewer."
+                            <Label text="View ETUDE Analysis" styleClass="text-large-bold" maxWidth="Infinity" alignment="CENTER" textAlignment="CENTER"/>
+                            <Label text="Choose this option to simply compare files already analyzed.  Select a folder with the results of a previous run to reload them into the viewer."
                                    styleClass="text-medium-italic" wrapText="true" textAlignment="JUSTIFY"/>
                         </VBox>
                     </graphic>
