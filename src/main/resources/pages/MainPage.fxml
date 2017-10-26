@@ -46,6 +46,24 @@
                 </JFXButton>
             </StackPane>
 
+            <StackPane fx:id="builderCard">
+                <Pane styleClass="card-small">
+                    <StackPane.margin>
+                        <Insets topRightBottomLeft="-3"/>
+                    </StackPane.margin>
+                </Pane>
+                <JFXButton onAction="#loadConfigurationBuilderPage" maxWidth="Infinity"
+                           buttonType="RAISED" styleClass="button-raised, button-gray, no-focus" maxHeight="150">
+                    <graphic>
+                        <VBox spacing="5" alignment="CENTER">
+                            <Label text="Build Configuration Files" styleClass="text-large-bold" maxWidth="Infinity" alignment="CENTER" textAlignment="CENTER"/>
+                            <Label text="Choose this option to load a page where you can build configuration files which are used to run the ETUDE engines."
+                                   styleClass="text-medium-italic" wrapText="true" textAlignment="JUSTIFY"/>
+                        </VBox>
+                    </graphic>
+                </JFXButton>
+            </StackPane>
+
             <StackPane fx:id="viewerCard">
                 <Pane styleClass="card-small">
                     <StackPane.margin>
