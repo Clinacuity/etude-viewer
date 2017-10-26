@@ -401,10 +401,10 @@
                         </HBox>
                         <VBox>
                             <HBox spacing="3">
-                                <JFXCheckBox fx:id="ignorePunctuationCheckbox" text="Ignore whitespace" styleClass="text-medium-normal"/>
+                                <JFXCheckBox fx:id="ignorePunctuationCheckbox" text="Ignore characters" styleClass="text-medium-normal"/>
                                 <Label styleClass="label-tooltip">
                                     <tooltip>
-                                        <Tooltip text="This will ignore whitespace when comparing annotations.&#10;The new begin/end values are saved under the key 'offset_mapping'"/>
+                                        <Tooltip text="This will ignore the characters caught by the regular expression when&#10;comparing annotations. The default value is to ignore punctuation."/>
                                     </tooltip>
                                     <graphic>
                                         <ImageView fitWidth="12" preserveRatio="true" pickOnBounds="true">
@@ -414,10 +414,10 @@
                                 </Label>
                             </HBox>
                             <HBox spacing="3">
-                                <Label text="Regex:" styleClass="text-medium-normal" alignment="BOTTOM_RIGHT"
+                                <Label text="RegEx:" styleClass="text-medium-normal" alignment="BOTTOM_RIGHT"
                                        textAlignment="RIGHT" minWidth="100" maxWidth="100" maxHeight="Infinity"/>
                                 <JFXTextField fx:id="punctuationTextField" styleClass="text-medium-normal"
-                                              promptText="Default value is [\s]" minWidth="200" maxWidth="350"/>
+                                              promptText="By default ignores punctuation" minWidth="200" maxWidth="350"/>
                                 <padding>
                                     <Insets left="5"/>
                                 </padding>
