@@ -87,7 +87,7 @@ public class Modal {
      * @param isResizable   Whether the modal can be resized by the user or its content
      */
     public Modal(Window window, Parent modalContent, double width, double height, boolean isResizable) {
-        logger.error("Here about to set initialized");
+        logger.debug("Initialized modal");
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.initOwner(window.getScene().getWindow());
         stage.setResizable(isResizable);
@@ -99,7 +99,7 @@ public class Modal {
 
     public void show() {
         if (isInitialized) {
-            logger.error("Showing");
+            logger.debug("Showing modal");
             stage.show();
         } else {
             logger.error("Not initialized...?");

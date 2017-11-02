@@ -84,9 +84,8 @@ public class SideBar extends VBox {
 
     private void loadDocument() {
         String id = fileList.getChildren().get(selectedBox).getId();
-        String target = context.targetDirectoryProperty.getValueSafe() + id;
-        String reference = context.referenceDirectoryProperty.getValueSafe() +
-                context.getCorpusDictionary().getFileMappings().get(id);
+        String target = context.targetDirectoryProperty.getValueSafe() + context.getCorpusDictionary().getFileMappings().get(id);
+        String reference = context.referenceDirectoryProperty.getValueSafe() + id;
 
         targetDocProperty.setValue(target);
         referenceDocProperty.setValue(reference);
