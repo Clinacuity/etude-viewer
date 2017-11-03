@@ -34,6 +34,7 @@ public class EtudeTask extends Task<Void> {
     private String filePrefix = null;
     private String fileSuffix = null;
     private String fuzzyMatchFlags = null;
+    private String ignorePunctuationRegex = null;
     private boolean metricsTP = false;
     private boolean metricsFP = false;
     private boolean metricsFN = false;
@@ -45,6 +46,7 @@ public class EtudeTask extends Task<Void> {
     private boolean byType = false;
     private boolean byTypeAndFile = false;
     private boolean ignoreWhitespace = false;
+    private boolean ignorePunctuation = false;
 
     public void setReferenceConfigFilePath(String value) { referenceConfigFilePath = value; }
     public void setTestConfigFilePath(String value) { testConfigFilePath = value; }
@@ -55,6 +57,7 @@ public class EtudeTask extends Task<Void> {
     public void setScoreValues(String value) { scoreValues = value; }
     public void setFilePrefix(String value) { filePrefix = value; }
     public void setFileSuffix(String value) { fileSuffix = value; }
+    public void setIgnorePunctuationRegex(String value) { ignorePunctuationRegex = value; }
     public void setMetricsTP(boolean value) { metricsTP = value; }
     public void setMetricsFP(boolean value) { metricsFP = value; }
     public void setMetricsFN(boolean value) { metricsFN = value; }
@@ -66,6 +69,7 @@ public class EtudeTask extends Task<Void> {
     public void setByType(boolean value) { byType = value; }
     public void setByTypeAndFile(boolean value) { byTypeAndFile = value; }
     public void setIgnoreWhitespace(boolean value) { ignoreWhitespace = value; }
+    public void setIgnorePunctuation(boolean value) { ignorePunctuation = value; }
 
     public EtudeTask() {
         setOnCancelled(event -> {
@@ -131,11 +135,13 @@ public class EtudeTask extends Task<Void> {
         filePrefix = null;
         fileSuffix = null;
         fuzzyMatchFlags = null;
+        ignorePunctuationRegex = null;
         byFile = false;
         byFileAndType = false;
         byType = false;
         byTypeAndFile = false;
         ignoreWhitespace = false;
+        ignorePunctuation = false;
     }
 
     private String getEtudeLocation() {
@@ -176,7 +182,7 @@ public class EtudeTask extends Task<Void> {
         }
 
         if (testInputDirPath != null) {
-            command += " --test-input " + referenceInputDirPath;
+            command += " --test-input " + testInputDirPath;
         } else {
             setFailing(new MissingArgumentException("--test-input"));
         }
@@ -237,6 +243,14 @@ public class EtudeTask extends Task<Void> {
             command += " --ignore-whitespace";
         } else {
             command += " --heed-whitespace";
+        }
+
+        if (ignorePunctuation) {
+            if (ignorePunctuationRegex != null) {
+                command += " --skip-chars " + ignorePunctuationRegex;
+            } else {
+                command += " --skip-chars";
+            }
         }
 
         command += getMetricsValues();
