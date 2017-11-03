@@ -308,43 +308,43 @@ public class EtudeController implements Initializable{
     
     private void bindElementsToProperties() {
         metricsTP.setSelected(Boolean.parseBoolean(AcvContext.getProperty("TP", metricsTP.isSelected())));
-        metricsTP.selectedProperty().addListener((obs, old, newValue) -> AcvContext.setProperty("TP", newValue));
+        metricsTP.selectedProperty().addListener((obs, old, newValue) -> AcvContext.setProperty("TP", newValue.toString()));
 
         metricsFP.setSelected(Boolean.parseBoolean(AcvContext.getProperty("FP", metricsFP.isSelected())));
-        metricsFP.selectedProperty().addListener((obs, old, newValue) -> AcvContext.setProperty("FP", newValue));
+        metricsFP.selectedProperty().addListener((obs, old, newValue) -> AcvContext.setProperty("FP", newValue.toString()));
 
         metricsFN.setSelected(Boolean.parseBoolean(AcvContext.getProperty("FN", metricsFN.isSelected())));
-        metricsFN.selectedProperty().addListener((obs, old, newValue) -> AcvContext.setProperty("FN", newValue));
+        metricsFN.selectedProperty().addListener((obs, old, newValue) -> AcvContext.setProperty("FN", newValue.toString()));
 
         metricsPrecision.setSelected(Boolean.parseBoolean(AcvContext.getProperty("PRECISION", metricsPrecision.isSelected())));
-        metricsPrecision.selectedProperty().addListener((obs, old, newValue) -> AcvContext.setProperty("PRECISION", newValue));
+        metricsPrecision.selectedProperty().addListener((obs, old, newValue) -> AcvContext.setProperty("PRECISION", newValue.toString()));
 
         metricsRecall.setSelected(Boolean.parseBoolean(AcvContext.getProperty("RECALL", metricsRecall.isSelected())));
-        metricsRecall.selectedProperty().addListener((obs, old, newValue) -> AcvContext.setProperty("RECALL", newValue));
+        metricsRecall.selectedProperty().addListener((obs, old, newValue) -> AcvContext.setProperty("RECALL", newValue.toString()));
 
         metricsF1.setSelected(Boolean.parseBoolean(AcvContext.getProperty("F1", metricsF1.isSelected())));
-        metricsF1.selectedProperty().addListener((obs, old, newValue) -> AcvContext.setProperty("F1", newValue));
+        metricsF1.selectedProperty().addListener((obs, old, newValue) -> AcvContext.setProperty("F1", newValue.toString()));
 
         fuzzyMatchingCheckbox.setSelected(Boolean.parseBoolean(AcvContext.getProperty("FUZZY_MATCHING", fuzzyMatchingCheckbox.isSelected())));
-        fuzzyMatchingCheckbox.selectedProperty().addListener((obs, old, newValue) -> AcvContext.setProperty("FUZZY_MATCHING", newValue));
+        fuzzyMatchingCheckbox.selectedProperty().addListener((obs, old, newValue) -> AcvContext.setProperty("FUZZY_MATCHING", newValue.toString()));
 
         byFileCheckbox.setSelected(Boolean.parseBoolean(AcvContext.getProperty("BY_FILE", byFileCheckbox.isSelected())));
-        byFileCheckbox.selectedProperty().addListener((obs, old, newValue) -> AcvContext.setProperty("BY_FILE", newValue));
+        byFileCheckbox.selectedProperty().addListener((obs, old, newValue) -> AcvContext.setProperty("BY_FILE", newValue.toString()));
 
         byFileAndTypeCheckbox.setSelected(Boolean.parseBoolean(AcvContext.getProperty("BY_FILE_AND_TYPE", byFileAndTypeCheckbox.isSelected())));
-        byFileAndTypeCheckbox.selectedProperty().addListener((obs, old, newValue) -> AcvContext.setProperty("BY_FILE_AND_TYPE", newValue));
+        byFileAndTypeCheckbox.selectedProperty().addListener((obs, old, newValue) -> AcvContext.setProperty("BY_FILE_AND_TYPE", newValue.toString()));
 
         byTypeCheckbox.setSelected(Boolean.parseBoolean(AcvContext.getProperty("BY_TYPE", byTypeCheckbox.isSelected())));
-        byTypeCheckbox.selectedProperty().addListener((obs, old, newValue) -> AcvContext.setProperty("BY_TYPE", newValue));
+        byTypeCheckbox.selectedProperty().addListener((obs, old, newValue) -> AcvContext.setProperty("BY_TYPE", newValue.toString()));
 
         byTypeAndFileCheckbox.setSelected(Boolean.parseBoolean(AcvContext.getProperty("BY_TYPE_AND_FILE", byTypeAndFileCheckbox.isSelected())));
-        byTypeAndFileCheckbox.selectedProperty().addListener((obs, old, newValue) -> AcvContext.setProperty("BY_TYPE_AND_FILE", newValue));
+        byTypeAndFileCheckbox.selectedProperty().addListener((obs, old, newValue) -> AcvContext.setProperty("BY_TYPE_AND_FILE", newValue.toString()));
 
         ignoreWhitespaceCheckbox.setSelected(Boolean.parseBoolean(AcvContext.getProperty("IGNORE_WHITESPACE", ignoreWhitespaceCheckbox.isSelected())));
-        ignoreWhitespaceCheckbox.selectedProperty().addListener((obs, old, newValue) -> AcvContext.setProperty("IGNORE_WHITESPACE", newValue));
+        ignoreWhitespaceCheckbox.selectedProperty().addListener((obs, old, newValue) -> AcvContext.setProperty("IGNORE_WHITESPACE", newValue.toString()));
 
         ignorePunctuationCheckbox.setSelected(Boolean.parseBoolean(AcvContext.getProperty("IGNORE_PUNCTUATION", ignorePunctuationCheckbox.isSelected())));
-        ignorePunctuationCheckbox.selectedProperty().addListener((obs, old, newValue) -> AcvContext.setProperty("IGNORE_PUNCTUATION", newValue));
+        ignorePunctuationCheckbox.selectedProperty().addListener((obs, old, newValue) -> AcvContext.setProperty("IGNORE_PUNCTUATION", newValue.toString()));
     }
     
     @FXML private void pickReferenceConfigFile() {
