@@ -73,7 +73,7 @@ public class CorpusDictionary {
         if (root.has(METRICS_KEY)) {
             metrics = root.get(METRICS_KEY).getAsJsonObject();
         } else {
-            logger.throwing(new JsonParseException(""));
+            logger.throwing(new JsonParseException("No \"metrics\" object found on this object"));
         }
     }
 

@@ -182,7 +182,7 @@ public class EtudeTask extends Task<Void> {
         }
 
         if (testInputDirPath != null) {
-            command += " --test-input " + referenceInputDirPath;
+            command += " --test-input " + testInputDirPath;
         } else {
             setFailing(new MissingArgumentException("--test-input"));
         }
