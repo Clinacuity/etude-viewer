@@ -53,7 +53,7 @@
 }
 
 .spinner-pane {
-    -fx-background-color: rgba(55, 55, 55, 0.3);
+    -fx-background-color: rgba(55, 55, 55, 0.15);
 }
 
 .no-focus {
@@ -103,7 +103,7 @@
     -fx-text-fill: White;
 }
 
-.card-small {
+.card-small, .draggable {
     -fx-border-color: SlateGray;
     -fx-border-radius: 5px;
     -fx-border-width: 1px;
@@ -145,23 +145,21 @@
     -fx-background-color: DarkGray;
 }
 
-
 .button-blue {
     -fx-background-color: rgba(50, 105, 255, 1);
     -fx-text-fill: Azure;
 }
-
 
 .button-blue:hover {
     -fx-background-color: rgb(77, 102, 204);
 }
 
 .button-red {
-    -fx-background-color: rgba(255, 0, 0 , 0);
+    -fx-background-color: LightCoral;
 }
 
 .button-red:hover {
-    -fx-background-color: rgba(255, 0, 0 , 0.3);
+    -fx-background-color: Red;
 }
 
 .button-annotation {
@@ -183,6 +181,10 @@
     -fx-border-insets: -3;
     -fx-border-width: 3;
 }
+
+.draggable {
+    -fx-background-color: rgba(176,196,222, 0.2);
+}
 /*  END BUTTONS   */
 
 
@@ -193,7 +195,7 @@
 
 .feature-tree {
     -fx-font-family: "Fira Mono Bold";
-    -fx-background-color: rgba(220, 220, 220, 0);
+    -fx-background-color: rgba(220, 220, 220, 1);
 }
 
 .tooltip {
