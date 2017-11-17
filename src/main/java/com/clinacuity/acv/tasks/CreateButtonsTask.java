@@ -36,7 +36,6 @@ public class CreateButtonsTask extends Task<List<AnnotationButton>> {
         }
 
         if (taskButtons == null) {
-            logger.error("why is this null....?");
             failed();
             return null;
         } else {

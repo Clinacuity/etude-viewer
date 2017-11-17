@@ -74,7 +74,6 @@ public class AnnotationTypeDraggable extends StackPane {
     private void setEvents() {
         setOnDragDetected(event -> {
             if (!isSelected) {
-                logger.debug("Drag started");
                 ConfigurationController.draggableAnnotationCorpus = corpusType;
                 ConfigurationController.draggedAnnotation = this;
 
