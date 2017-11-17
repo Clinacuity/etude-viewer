@@ -33,7 +33,6 @@ public class ConfigurationController implements Initializable {
     @FXML private VBox annotationDropBox;
     @FXML private VBox systemDraggableBox;
     @FXML private VBox referenceDraggableBox;
-    @FXML private StackPane annotationSpinner;
     @FXML private StackPane systemSpinner;
     @FXML private StackPane referenceSpinner;
     @FXML private JFXTextField systemDirectoryTextField;
@@ -77,6 +76,11 @@ public class ConfigurationController implements Initializable {
             systemDirectoryTextField.setText(systemCorpusDirectory.getAbsolutePath());
 
             systemDraggableTask = new CreateAnnotationDraggableTask(systemDirectoryTextField.getText(), "system");
+            systemDraggableTask.setOnFailed(event -> {
+                logger.throwing(systemDraggableTask.getException());
+                systemSpinner.setVisible(false);
+            });
+            systemDraggableTask.setOnCancelled(event -> systemSpinner.setVisible(false));
             systemDraggableTask.setOnSucceeded(event -> {
                 systemSpinner.setVisible(false);
                 systemDraggableBox.getChildren().clear();
@@ -100,6 +104,7 @@ public class ConfigurationController implements Initializable {
             referenceDirectoryTextField.setText(referenceCorpusDirectory.getAbsolutePath());
 
             referenceDraggableTask = new CreateAnnotationDraggableTask(referenceDirectoryTextField.getText(), "reference");
+            referenceDraggableTask.setOnCancelled(event -> referenceSpinner.setVisible(false));
             referenceDraggableTask.setOnSucceeded(event -> {
                 referenceSpinner.setVisible(false);
                 referenceDraggableBox.getChildren().clear();

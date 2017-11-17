@@ -17,21 +17,25 @@ import javafx.scene.layout.VBox;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class AnnotationTypeDraggable extends StackPane {
     private static final Logger logger = LogManager.getLogger();
 
     @FXML private VBox targetBox;
-    private Map<String, String> annotationMap = new HashMap<>();
+    @FXML private Label annotationLabel;
+    private String annotationName;
+    private List<String> attributes = new ArrayList<>();
 
     private String corpusType = "";
     public String getCorpusType() { return corpusType; }
 
     private boolean isSelected = false;
 
-    public AnnotationTypeDraggable(@NamedArg("corpus") String corpus) {
+    public AnnotationTypeDraggable(String corpus, String name, List<String> attributeList) {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/controls/AnnotationTypeDraggable.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
@@ -43,12 +47,31 @@ public class AnnotationTypeDraggable extends StackPane {
         }
 
         corpusType = corpus;
+        annotationName = name;
+        attributes = attributeList;
 
-        addAttribute();
-        addAttribute();
-        addAttribute();
+        initialize();
+    }
 
-        logger.error("Ok.");
+    private void initialize() {
+        setLabelName();
+
+        setAttributes();
+
+        setEvents();
+    }
+
+    private void setLabelName() {
+        annotationLabel.setText(annotationName);
+    }
+
+    private void setAttributes() {
+        for (String attribute: attributes) {
+            addAttribute(attribute);
+        }
+    }
+
+    private void setEvents() {
         setOnDragDetected(event -> {
             if (!isSelected) {
                 logger.debug("Drag started");
@@ -67,19 +90,16 @@ public class AnnotationTypeDraggable extends StackPane {
         });
     }
 
-    public void addAttribute() {
+    public void addAttribute(String attribute) {
         HBox attributeBox = new HBox();
         attributeBox.setSpacing(10.d);
         attributeBox.setPadding(new Insets(0, 5, 0, 5));
         attributeBox.setAlignment(Pos.TOP_CENTER);
 
-        Label attributeName = new Label("My Name");
+        Label attributeName = new Label(attribute);
         attributeName.getStyleClass().add("text-small-normal");
 
-        Label attributeValue = new Label("Value");
-        attributeValue.getStyleClass().add("text-small-normal");
-
-        attributeBox.getChildren().addAll(attributeName, attributeValue);
+        attributeBox.getChildren().addAll(attributeName);
 
         targetBox.getChildren().add(attributeBox);
     }

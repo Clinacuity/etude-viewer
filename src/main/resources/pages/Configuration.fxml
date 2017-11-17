@@ -36,7 +36,7 @@
                             <Insets left="10"/>
                         </padding>
                     </Label>
-                    <JFXTextField fx:id="systemDirectoryTextField" styleClass="text-medium-normal" minWidth="200" maxWidth="350"/>
+                    <JFXTextField fx:id="systemDirectoryTextField" styleClass="text-medium-normal" minWidth="200" maxWidth="350" editable="false"/>
                     <JFXButton text="..." onAction="#pickSystemCorpus" prefWidth="32" buttonType="RAISED"
                                styleClass="button-raised, button-gray, no-focus, text-small-normal"/>
                     <Label styleClass="label-tooltip">
@@ -108,16 +108,16 @@
                             </padding>
                         </VBox>
                     </ScrollPane>
-                    <StackPane fx:id="annotationSpinner" maxHeight="Infinity" styleClass="spinner-pane" visible="false">
-                        <ProgressIndicator maxWidth="100" maxHeight="100"/>
-                        <HBox maxHeight="Infinity" alignment="BOTTOM_CENTER">
-                            <JFXButton text="CANCEL" onAction="#cancelSystemTask" buttonType="RAISED"
-                                       styleClass="button-raised, button-red, no-focus, text-medium-normal"/>
-                            <padding>
-                                <Insets topRightBottomLeft="30"/>
-                            </padding>
-                        </HBox>
-                    </StackPane>
+                    <!--<StackPane fx:id="annotationSpinner" maxHeight="Infinity" styleClass="spinner-pane" visible="false">-->
+                        <!--<ProgressIndicator maxWidth="100" maxHeight="100"/>-->
+                        <!--<HBox maxHeight="Infinity" alignment="BOTTOM_CENTER">-->
+                            <!--<JFXButton text="CANCEL" onAction="#cancelSystemTask" buttonType="RAISED"-->
+                                       <!--styleClass="button-raised, button-red, no-focus, text-medium-normal"/>-->
+                            <!--<padding>-->
+                                <!--<Insets topRightBottomLeft="30"/>-->
+                            <!--</padding>-->
+                        <!--</HBox>-->
+                    <!--</StackPane>-->
                 </StackPane>
             </VBox>
             <VBox spacing="40" alignment="CENTER">
