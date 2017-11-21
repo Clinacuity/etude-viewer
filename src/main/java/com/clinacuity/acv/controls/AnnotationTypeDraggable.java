@@ -1,7 +1,6 @@
 package com.clinacuity.acv.controls;
 
 import com.clinacuity.acv.controllers.ConfigurationController;
-import javafx.beans.NamedArg;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -18,9 +17,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class AnnotationTypeDraggable extends StackPane {
     private static final Logger logger = LogManager.getLogger();
@@ -31,7 +28,7 @@ public class AnnotationTypeDraggable extends StackPane {
     private List<String> attributes = new ArrayList<>();
 
     private String corpusType = "";
-    public String getCorpusType() { return corpusType; }
+    String getCorpusType() { return corpusType; }
 
     private boolean isSelected = false;
 
@@ -89,7 +86,7 @@ public class AnnotationTypeDraggable extends StackPane {
         });
     }
 
-    public void addAttribute(String attribute) {
+    private void addAttribute(String attribute) {
         HBox attributeBox = new HBox();
         attributeBox.setSpacing(10.d);
         attributeBox.setPadding(new Insets(0, 5, 0, 5));
@@ -103,12 +100,16 @@ public class AnnotationTypeDraggable extends StackPane {
         targetBox.getChildren().add(attributeBox);
     }
 
-    public void hide() {
+    List<String> getAttributes() {
+        return attributes;
+    }
+
+    void hide() {
         setOpacity(0.25d);
         isSelected = true;
     }
 
-    public void show() {
+    void show() {
         setOpacity(1.0d);
         isSelected = false;
     }

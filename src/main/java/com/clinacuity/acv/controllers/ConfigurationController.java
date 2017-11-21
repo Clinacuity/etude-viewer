@@ -44,14 +44,15 @@ public class ConfigurationController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         mainBox.widthProperty().addListener((obs, old, newValue) -> {
-            double width = newValue.doubleValue() / 4.0d - 80.d;
+            double dragBoxWidth = (newValue.doubleValue() - 60.0d) / 5.0d;
+            double dropBoxWidth = dragBoxWidth * 2.0d;
 
-            systemDraggableBox.setMinWidth(width);
-            systemDraggableBox.setMaxWidth(width);
-            annotationDropBox.setMinWidth(width * 1.75d);
-            annotationDropBox.setMaxWidth(width * 1.75d);
-            referenceDraggableBox.setMinWidth(width);
-            referenceDraggableBox.setMaxWidth(width);
+            systemDraggableBox.setMinWidth(dragBoxWidth);
+            systemDraggableBox.setMaxWidth(dragBoxWidth);
+            annotationDropBox.setMinWidth(dropBoxWidth);
+            annotationDropBox.setMaxWidth(dropBoxWidth);
+            referenceDraggableBox.setMinWidth(dragBoxWidth);
+            referenceDraggableBox.setMaxWidth(dragBoxWidth);
         });
 
         setDragOverEvents();
