@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+
+<fx:root type="javafx.scene.layout.StackPane"
+         xmlns="http://javafx.com/javafx/8.0.112"
+         xmlns:fx="http://javafx.com/fxml/1">
+    <Pane styleClass="draggable"/>
+    <VBox fx:id="targetBox" spacing="3" alignment="TOP_CENTER">
+        <Label fx:id="annotationLabel" styleClass="text-medium-normal"/>
+        <Separator/>
+        <padding>
+            <Insets topRightBottomLeft="10"/>
+        </padding>
+    </VBox>
+    <padding>
+        <Insets topRightBottomLeft="10"/>
+    </padding>
+</fx:root>
