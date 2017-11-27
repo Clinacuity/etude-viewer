@@ -162,6 +162,28 @@
     -fx-background-color: Red;
 }
 
+.button-lock:hover {
+    -fx-background-radius: 4px;
+    -fx-background-color: rgb(77, 102, 204);
+    -fx-background-insets: -5;
+}
+
+.button-locked {
+    -fx-border-radius: 4px;
+    -fx-border-width: 2px;
+    -fx-border-insets: -4;
+    -fx-border-color: rgb(55, 55, 110);
+    -fx-background-color: rgba(77, 102, 204, 0.5);
+    -fx-background-radius: 5px;
+    -fx-background-insets: -4;
+}
+
+.button-delete:hover {
+    -fx-background-radius: 3px;
+    -fx-background-color: LightCoral;
+    -fx-background-insets: -5;
+}
+
 .button-annotation {
     -fx-opacity: 0.25;
 }

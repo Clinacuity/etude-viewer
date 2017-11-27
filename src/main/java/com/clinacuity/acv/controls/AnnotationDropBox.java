@@ -9,10 +9,18 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.TransferMode;
-import javafx.scene.layout.*;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -34,6 +42,8 @@ public class AnnotationDropBox extends StackPane {
 
     private List<String> systemOptions = new ArrayList<>();
     private List<String> referenceOptions = new ArrayList<>();
+    private List<String> lockedRows = new ArrayList<>();
+
     private int rowCount = 0;
     private double expandedHeight = 0.0d;
     private boolean isCollapsed = false;
@@ -94,12 +104,66 @@ public class AnnotationDropBox extends StackPane {
         }
     }
 
+    private Label getRemoveButton() {
+        Label button = new Label();
+        button.setText("");
+        button.getStyleClass().add("button-delete");
+
+        ImageView view = new ImageView(new Image("/img/icons8/delete.png"));
+        view.setFitHeight(16.0d);
+        view.setPreserveRatio(true);
+        view.setPickOnBounds(true);
+        button.setGraphic(view);
+
+        button.setId(Integer.toString(rowCount));
+        return button;
+    }
+
+    private Label getLockButton() {
+        Label button = new Label();
+        button.setText("");
+        button.getStyleClass().add("button-lock");
+
+        ImageView view = new ImageView(new Image("/img/icons8/lock.png"));
+        view.setFitHeight(16.0d);
+        view.setPreserveRatio(true);
+        view.setPickOnBounds(true);
+        button.setGraphic(view);
+
+        button.setId(Integer.toString(rowCount));
+        button.setOnMouseClicked(event -> {
+            // toggle lock
+            if (lockedRows.contains(button.getId())) {
+                lockedRows.remove(button.getId());
+                button.getStyleClass().remove("button-locked");
+            } else {
+                lockedRows.add(button.getId());
+                button.getStyleClass().add("button-locked");
+            }
+        });
+
+        return button;
+    }
+
     @FXML private void addRow() {
         JFXTextField attributeName = new JFXTextField();
         JFXTextField systemField = new JFXTextField();
         JFXTextField referenceField = new JFXTextField();
         HBox separatorBox = new HBox(new Separator(Orientation.VERTICAL));
         separatorBox.setPadding(new Insets(0, 6, 0, 9));
+
+        HBox buttonsBox = new HBox();
+        buttonsBox.setAlignment(Pos.CENTER_RIGHT);
+        buttonsBox.setSpacing(10.0d);
+
+        Label removeButton = getRemoveButton();
+        removeButton.setOnMouseClicked(event -> {
+            annotationGrid.getChildren().removeAll(attributeName, systemField, separatorBox, referenceField, buttonsBox);
+            if (lockedRows.contains(removeButton.getId())) {
+                lockedRows.remove(removeButton.getId());
+            }
+        });
+        buttonsBox.getChildren().addAll(getLockButton(), removeButton);
 
         attributeName.getStyleClass().add("text-medium-normal");
         systemField.getStyleClass().add("text-medium-normal");
@@ -114,6 +178,7 @@ public class AnnotationDropBox extends StackPane {
         annotationGrid.add(systemField, 1, rowCount);
         annotationGrid.add(separatorBox, 2, rowCount);
         annotationGrid.add(referenceField, 3, rowCount);
+        annotationGrid.add(buttonsBox, 4, rowCount);
     }
 
     @FXML private void collapseBox() {

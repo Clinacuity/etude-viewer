@@ -31,7 +31,7 @@
         </HBox>
         <VBox fx:id="contentBox" spacing="10">
             <Separator maxWidth="Infinity"/>
-            <GridPane fx:id="annotationGrid" vgap="13" hgap="10">
+            <GridPane fx:id="annotationGrid" vgap="18" hgap="10">
                 <columnConstraints>
                     <ColumnConstraints percentWidth="18"/>
                     <ColumnConstraints percentWidth="34"/>
@@ -89,6 +89,9 @@
                         </ImageView>
                     </graphic>
                 </JFXButton>
+                <padding>
+                    <Insets top="25" right="15"/>
+                </padding>
             </HBox>
             <HBox spacing="5" fx:id="referencesBox">
                 <Label text="Sources:" styleClass="text-small-normal"/>
