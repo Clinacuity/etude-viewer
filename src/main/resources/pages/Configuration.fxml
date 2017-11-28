@@ -14,7 +14,6 @@
 <?import javafx.scene.control.Tooltip?>
 <?import com.jfoenix.controls.JFXButton?>
 <?import javafx.scene.control.ProgressIndicator?>
-<?import com.clinacuity.acv.controls.AnnotationDropBox?>
 
 <GridPane alignment="TOP_CENTER"
           xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1"
@@ -90,9 +89,7 @@
                 <StackPane>
                     <ScrollPane fx:id="annotationScrollPane" styleClass="card-small" minHeight="300" hbarPolicy="NEVER">
                         <VBox spacing="15">
-                            <VBox fx:id="annotationDropBox" spacing="8">
-                                <AnnotationDropBox/>
-                            </VBox>
+                            <VBox fx:id="annotationDropBox" spacing="8"/>
                             <HBox alignment="BOTTOM_RIGHT">
                                 <JFXButton onAction="#addAnnotationDropBox" text="ADD MATCH"
                                            styleClass="button-raised, button-gray, no-focus" buttonType="RAISED">
@@ -161,6 +158,10 @@
                     </StackPane>
                 </StackPane>
             </VBox>
+        </HBox>
+        <HBox maxWidth="Infinity" alignment="CENTER">
+            <JFXButton text="SAVE CONFIGURATIONS" onAction="#saveConfigurations" buttonType="RAISED"
+                       styleClass="button-raised, button-gray, no-focus, text-small-medium"/>
         </HBox>
     </VBox>
 </GridPane>

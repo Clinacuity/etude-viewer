@@ -7,6 +7,7 @@ import com.clinacuity.acv.tasks.CreateAnnotationDraggableTask;
 import com.jfoenix.controls.JFXTextField;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
@@ -19,6 +20,8 @@ import org.reactfx.util.FxTimer;
 import java.io.File;
 import java.net.URL;
 import java.time.Duration;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class ConfigurationController implements Initializable {
@@ -40,9 +43,11 @@ public class ConfigurationController implements Initializable {
 
     private CreateAnnotationDraggableTask systemDraggableTask;
     private CreateAnnotationDraggableTask referenceDraggableTask;
+    private List<AnnotationDropBox> dropBoxesList = new ArrayList<>();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        addAnnotationDropBox();
         mainBox.widthProperty().addListener((obs, old, newValue) -> {
             double dragBoxWidth = (newValue.doubleValue() - 60.0d) / 5.0d;
             double dropBoxWidth = dragBoxWidth * 2.0d;
@@ -54,15 +59,6 @@ public class ConfigurationController implements Initializable {
             referenceDraggableBox.setMinWidth(dragBoxWidth);
             referenceDraggableBox.setMaxWidth(dragBoxWidth);
         });
-
-        setDragOverEvents();
-        setDragDroppedEvents();
-    }
-
-    private void setDragOverEvents() {
-    }
-
-    private void setDragDroppedEvents() {
     }
 
     @FXML private void pickSystemCorpus() {
@@ -126,8 +122,20 @@ public class ConfigurationController implements Initializable {
     }
 
     @FXML private void addAnnotationDropBox() {
-        annotationDropBox.getChildren().add(new AnnotationDropBox());
+        AnnotationDropBox dropBox = new AnnotationDropBox();
+        annotationDropBox.getChildren().add(dropBox);
+        dropBoxesList.add(dropBox);
         FxTimer.runLater(Duration.ofMillis(100), () -> annotationScrollPane.setVvalue(1.0d));
+    }
+
+    @FXML private void saveConfigurations() {
+        for (Node child: annotationDropBox.getChildren()) {
+            AnnotationDropBox box = (AnnotationDropBox)child;
+            List<AnnotationDropBox.Attribute> attributes = box.getAttributes();
+            logger.error("size {}", attributes.size());
+
+
+        }
     }
 
     private File getDirectory(String title) {
