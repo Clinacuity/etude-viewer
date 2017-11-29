@@ -131,28 +131,36 @@ public class ConfigurationController implements Initializable {
             saveTask.cancel();
         }
 
-        File directory = getSaveDirectory();
-
-        if (directory != null) {
-            Map<String, List<AnnotationDropBox.Attribute>> annotationList = new HashMap<>();
-            for (Node child : annotationDropBox.getChildren()) {
-                AnnotationDropBox box = (AnnotationDropBox) child;
+        boolean validInputs = true;
+        Map<String, List<AnnotationDropBox.Attribute>> annotationList = new HashMap<>();
+        for (Node child : annotationDropBox.getChildren()) {
+            AnnotationDropBox box = (AnnotationDropBox) child;
+            if (box.isValid()) {
                 annotationList.put(box.getName(), box.getAttributes());
+            } else {
+                validInputs = false;
             }
+        }
 
-            saveTask = new SaveConfigurationTask(annotationList, directory);
-            saveTask.setOnSucceeded(event -> {
-                logger.error("succeeded");
-                AcvContext.getInstance().contentLoading.setValue(false);
-            });
-            saveTask.setOnFailed(event -> {
-                logger.error("FAILED");
-                AcvContext.getInstance().contentLoading.setValue(false);
-            });
-            AcvContext.getInstance().contentLoading.setValue(true);
-            new Thread(saveTask).start();
+        if (validInputs) {
+            File directory = getSaveDirectory();
+            if (directory != null) {
+                saveTask = new SaveConfigurationTask(annotationList, directory);
+                saveTask.setOnSucceeded(event -> {
+                    logger.error("succeeded");
+                    AcvContext.getInstance().contentLoading.setValue(false);
+                });
+                saveTask.setOnFailed(event -> {
+                    logger.error("FAILED");
+                    AcvContext.getInstance().contentLoading.setValue(false);
+                });
+                AcvContext.getInstance().contentLoading.setValue(true);
+                new Thread(saveTask).start();
+            } else {
+                logger.warn("No valid directory chosen -- cancelling task.");
+            }
         } else {
-            logger.warn("No valid directory chosen -- cancelling task.");
+            logger.warn("Something went wrong with empty names or unique naming");
         }
     }
 

@@ -29,7 +29,11 @@ public class AnnotationDropBox extends StackPane {
     @FXML private HBox sourcesBox;
     @FXML private VBox collapsibleBox;
     @FXML private Pane collapsiblePane;
+    @FXML private VBox collapsibleContentBox;
     @FXML private JFXTextField matchNameTextField;
+    AnnotationDropBoxRow shortNameRow = new AnnotationDropBoxRow("Short Name");
+    AnnotationDropBoxRow beginAttrRow = new AnnotationDropBoxRow("Begin Attr");
+    AnnotationDropBoxRow endAttrRow = new AnnotationDropBoxRow("End Attr");
 
     private List<String> systemOptions = new ArrayList<>();
     private List<String> referenceOptions = new ArrayList<>();
@@ -82,9 +86,21 @@ public class AnnotationDropBox extends StackPane {
             }
         });
 
-        contentBox.getChildren().add(new AnnotationDropBoxRow("Short Name"));
-        contentBox.getChildren().add(new AnnotationDropBoxRow("Begin Attr"));
-        contentBox.getChildren().add(new AnnotationDropBoxRow("End Attr"));
+        contentBox.getChildren().add(shortNameRow);
+        contentBox.getChildren().add(beginAttrRow);
+        contentBox.getChildren().add(endAttrRow);
+    }
+
+    /**
+     * An annotation drop box is valid if it has a Parent Name.  Its attributes are valid if they are unique, but
+     * these are checked whenever each value is input.
+     * @return Returns true if the Parent Name is not empty
+     */
+    public boolean isValid() {
+        return !(matchNameTextField.getText().equals("") ||
+                shortNameRow.getAttributeRow().systemValue.equals("") ||
+                beginAttrRow.getAttributeRow().systemValue.equals("") ||
+                endAttrRow.getAttributeRow().systemValue.equals(""));
     }
 
     public List<Attribute> getAttributes() {
@@ -124,11 +140,11 @@ public class AnnotationDropBox extends StackPane {
             minHeightKeysBox = new KeyValue(collapsibleBox.minHeightProperty(), expandedHeight);
             maxHeightKeysBox = new KeyValue(collapsibleBox.maxHeightProperty(), expandedHeight);
             collapseTimeline.setOnFinished(event -> {
-                contentBox.setVisible(true);
+                collapsibleContentBox.setVisible(true);
                 matchNameTextField.setEditable(true);
             });
         } else {
-            contentBox.setVisible(false);
+            collapsibleContentBox.setVisible(false);
             matchNameTextField.setEditable(false);
             expandedHeight = getHeight();
             minHeightKeysPane = new KeyValue(collapsiblePane.minHeightProperty(), annotationBox.getHeight() * 2.0d);

@@ -27,7 +27,7 @@
                 </graphic>
             </Label>
         </HBox>
-        <VBox spacing="10">
+        <VBox fx:id="collapsibleContentBox" spacing="10">
             <VBox fx:id="contentBox" spacing="10"/>
             <Separator maxWidth="Infinity" valignment="BOTTOM">
                 <padding>
