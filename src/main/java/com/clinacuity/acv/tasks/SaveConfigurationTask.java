@@ -2,20 +2,22 @@ package com.clinacuity.acv.tasks;
 
 import com.clinacuity.acv.controls.AnnotationDropBox;
 import javafx.concurrent.Task;
+import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 public class SaveConfigurationTask extends Task<Void> {
     private static final Logger logger = LogManager.getLogger();
 
-    private List<AnnotationDropBox.Attribute> attributeList;
+    private Map<String, List<AnnotationDropBox.Attribute>> annotationList;
     private File targetDirectory;
 
-    public SaveConfigurationTask(List<AnnotationDropBox.Attribute> attributes, File directory) {
-        attributeList = attributes;
+    public SaveConfigurationTask(Map<String, List<AnnotationDropBox.Attribute>> annotations, File directory) {
+        annotationList = annotations;
         targetDirectory = directory;
     }
 
@@ -23,11 +25,32 @@ public class SaveConfigurationTask extends Task<Void> {
     public Void call() {
         File systemFile = getFile("/system.conf");
         File referenceFile = getFile("/reference.conf");
+        StringBuilder systemText = new StringBuilder();
+        StringBuilder referenceText = new StringBuilder();
 
-        for (AnnotationDropBox.Attribute attribute: attributeList) {
-            logger.error("{}, {}, {}, {}", attribute.name, attribute.systemValue, attribute.referenceValue, attribute.isLocked);
+        annotationList.forEach((key, value) -> {
+            String name = "\n[ " + key + "] \n";
+            name += "Parent Name: " + key + "\n";
+
+            systemText.append(name);
+            referenceText.append(name);
+
+            value.forEach(attributeRow -> {
+                String system = attributeRow.name + ": " + attributeRow.systemValue + "\n";
+                String reference = attributeRow.name + ": " + attributeRow.referenceValue + "\n";
+
+                systemText.append(system);
+                referenceText.append(reference);
+            });
+        });
+
+        try {
+            FileUtils.writeStringToFile(systemFile, systemText.toString());
+            FileUtils.writeStringToFile(referenceFile, referenceText.toString());
+        } catch (IOException e) {
+            logger.error(e);
+            failed();
         }
-
 
         succeeded();
         return null;

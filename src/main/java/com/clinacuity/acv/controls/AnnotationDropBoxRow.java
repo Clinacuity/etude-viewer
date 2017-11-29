@@ -10,7 +10,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import java.io.IOException;
 
-public class AnnotationDropBoxRow extends HBox {
+class AnnotationDropBoxRow extends HBox {
     private static Logger logger = LogManager.getLogger();
 
     @FXML private Label attributeLabel;
@@ -65,7 +65,6 @@ public class AnnotationDropBoxRow extends HBox {
 
     AnnotationDropBox.Attribute getAttributeRow() {
         String name = attributeName.isVisible() ? attributeName.getText() : attributeLabel.getText();
-
         return new AnnotationDropBox.Attribute(name, sysValue.getText(), refValue.getText(), locked);
     }
 }

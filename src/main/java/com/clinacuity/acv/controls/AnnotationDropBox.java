@@ -62,6 +62,7 @@ public class AnnotationDropBox extends StackPane {
         setOnDragDropped(event -> {
             if (ConfigurationController.draggedAnnotation != null) {
                 AnnotationTypeDraggable draggable = ConfigurationController.draggedAnnotation;
+
                 sourcesBox.getChildren().add(new ReferencedDocument(sourcesBox, draggable));
                 draggable.hide();
 
@@ -95,6 +96,10 @@ public class AnnotationDropBox extends StackPane {
             }
         }
         return attributes;
+    }
+
+    public String getName() {
+        return matchNameTextField.getText();
     }
 
     @FXML private void addRow() {

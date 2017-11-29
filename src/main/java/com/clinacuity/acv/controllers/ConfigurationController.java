@@ -4,6 +4,7 @@ import com.clinacuity.acv.context.AcvContext;
 import com.clinacuity.acv.controls.AnnotationDropBox;
 import com.clinacuity.acv.controls.AnnotationTypeDraggable;
 import com.clinacuity.acv.tasks.CreateAnnotationDraggableTask;
+import com.clinacuity.acv.tasks.SaveConfigurationTask;
 import com.jfoenix.controls.JFXTextField;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -20,9 +21,7 @@ import org.reactfx.util.FxTimer;
 import java.io.File;
 import java.net.URL;
 import java.time.Duration;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class ConfigurationController implements Initializable {
     private static final Logger logger = LogManager.getLogger();
@@ -43,7 +42,7 @@ public class ConfigurationController implements Initializable {
 
     private CreateAnnotationDraggableTask systemDraggableTask;
     private CreateAnnotationDraggableTask referenceDraggableTask;
-    private List<AnnotationDropBox> dropBoxesList = new ArrayList<>();
+    private SaveConfigurationTask saveTask;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -124,17 +123,36 @@ public class ConfigurationController implements Initializable {
     @FXML private void addAnnotationDropBox() {
         AnnotationDropBox dropBox = new AnnotationDropBox();
         annotationDropBox.getChildren().add(dropBox);
-        dropBoxesList.add(dropBox);
         FxTimer.runLater(Duration.ofMillis(100), () -> annotationScrollPane.setVvalue(1.0d));
     }
 
     @FXML private void saveConfigurations() {
-        for (Node child: annotationDropBox.getChildren()) {
-            AnnotationDropBox box = (AnnotationDropBox)child;
-            List<AnnotationDropBox.Attribute> attributes = box.getAttributes();
-            logger.error("size {}", attributes.size());
+        if (saveTask != null && saveTask.isRunning()) {
+            saveTask.cancel();
+        }
 
+        File directory = getSaveDirectory();
 
+        if (directory != null) {
+            Map<String, List<AnnotationDropBox.Attribute>> annotationList = new HashMap<>();
+            for (Node child : annotationDropBox.getChildren()) {
+                AnnotationDropBox box = (AnnotationDropBox) child;
+                annotationList.put(box.getName(), box.getAttributes());
+            }
+
+            saveTask = new SaveConfigurationTask(annotationList, directory);
+            saveTask.setOnSucceeded(event -> {
+                logger.error("succeeded");
+                AcvContext.getInstance().contentLoading.setValue(false);
+            });
+            saveTask.setOnFailed(event -> {
+                logger.error("FAILED");
+                AcvContext.getInstance().contentLoading.setValue(false);
+            });
+            AcvContext.getInstance().contentLoading.setValue(true);
+            new Thread(saveTask).start();
+        } else {
+            logger.warn("No valid directory chosen -- cancelling task.");
         }
     }
 
@@ -142,5 +160,11 @@ public class ConfigurationController implements Initializable {
         DirectoryChooser chooser = new DirectoryChooser();
         chooser.setTitle(title);
         return chooser.showDialog(AcvContext.getMainWindow());
+    }
+
+    private File getSaveDirectory() {
+        DirectoryChooser directoryChooser = new DirectoryChooser();
+        directoryChooser.setTitle("Select Test Dictionaries Folder");
+        return directoryChooser.showDialog(AcvContext.getMainWindow());
     }
 }
