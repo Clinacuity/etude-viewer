@@ -1,6 +1,7 @@
 package com.clinacuity.acv.controls;
 
 import com.clinacuity.acv.controllers.ConfigurationController;
+import com.clinacuity.acv.modals.WarningModal;
 import com.jfoenix.controls.JFXTextField;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -18,7 +19,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class AnnotationDropBox extends StackPane {
     private static Logger logger = LogManager.getLogger();
@@ -31,13 +34,12 @@ public class AnnotationDropBox extends StackPane {
     @FXML private Pane collapsiblePane;
     @FXML private VBox collapsibleContentBox;
     @FXML private JFXTextField matchNameTextField;
-    AnnotationDropBoxRow shortNameRow = new AnnotationDropBoxRow("Short Name");
-    AnnotationDropBoxRow beginAttrRow = new AnnotationDropBoxRow("Begin Attr");
-    AnnotationDropBoxRow endAttrRow = new AnnotationDropBoxRow("End Attr");
 
+    private AnnotationDropBoxRow shortNameRow = new AnnotationDropBoxRow("Short Name");
+    private AnnotationDropBoxRow beginAttrRow = new AnnotationDropBoxRow("Begin Attr");
+    private AnnotationDropBoxRow endAttrRow = new AnnotationDropBoxRow("End Attr");
     private List<String> systemOptions = new ArrayList<>();
     private List<String> referenceOptions = new ArrayList<>();
-
     private double expandedHeight = 0.0d;
     private boolean isCollapsed = false;
 
@@ -97,10 +99,58 @@ public class AnnotationDropBox extends StackPane {
      * @return Returns true if the Parent Name is not empty
      */
     public boolean isValid() {
-        return !(matchNameTextField.getText().equals("") ||
-                shortNameRow.getAttributeRow().systemValue.equals("") ||
-                beginAttrRow.getAttributeRow().systemValue.equals("") ||
-                endAttrRow.getAttributeRow().systemValue.equals(""));
+        Set<String> attributes = new HashSet<>();
+        for (Node child: contentBox.getChildren()) {
+            AnnotationDropBoxRow row = (AnnotationDropBoxRow)child;
+            if (row != null) {
+                if (attributes.contains(row.getAttributeRow().name)) {
+                    logger.warn("Attribute names are not unique.  <{}> is repeated", row.getAttributeRow().name);
+                    WarningModal.createModal("Error in names",
+                            "The names of attributes have to be unique, but the name \""
+                                    + row.getAttributeRow().name
+                                    + "\" was repeated.");
+                    WarningModal.show();
+                    return false;
+                } else {
+                    attributes.add(row.getAttributeRow().name);
+                }
+            }
+        }
+
+        if (matchNameTextField.getText().equals("")) {
+            WarningModal.createModal("Annotation Name is empty",
+                    "The Annotation Name (Parent) of a box was left empty; please specify a name for the annotation match.");
+            WarningModal.show();
+            return false;
+        }
+
+        if (!hasSystemAttributes()) {
+            WarningModal.createModal("Missing attributes",
+                    "Some of the required attributes are missing on the System Output input fields.");
+            WarningModal.show();
+            return false;
+        }
+
+        if (!hasReferenceAttributes()) {
+            WarningModal.createModal("Missing attributes",
+                    "Some of the required attributes are missing on the Reference input fields.");
+            WarningModal.show();
+            return false;
+        }
+
+        return true;
+    }
+
+    public boolean hasSystemAttributes() {
+        return (shortNameRow.getAttributeRow().systemValue.length() > 0
+                && beginAttrRow.getAttributeRow().systemValue.length() > 0
+                && endAttrRow.getAttributeRow().systemValue.length() > 0);
+    }
+
+    public boolean hasReferenceAttributes() {
+        return (shortNameRow.getAttributeRow().referenceValue.length() > 0
+                && beginAttrRow.getAttributeRow().referenceValue.length() > 0
+                && endAttrRow.getAttributeRow().referenceValue.length() > 0);
     }
 
     public List<Attribute> getAttributes() {

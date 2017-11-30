@@ -13,11 +13,14 @@ import java.util.Map;
 public class SaveConfigurationTask extends Task<Void> {
     private static final Logger logger = LogManager.getLogger();
 
-    private Map<String, List<AnnotationDropBox.Attribute>> annotationList;
+    private Map<String, List<AnnotationDropBox.Attribute>> systemAnnotationList;
+    private Map<String, List<AnnotationDropBox.Attribute>> referenceAnnotationList;
     private File targetDirectory;
 
-    public SaveConfigurationTask(Map<String, List<AnnotationDropBox.Attribute>> annotations, File directory) {
-        annotationList = annotations;
+    public SaveConfigurationTask(Map<String, List<AnnotationDropBox.Attribute>> sysList,
+                                 Map<String, List<AnnotationDropBox.Attribute>> refList, File directory) {
+        systemAnnotationList = sysList;
+        referenceAnnotationList = refList;
         targetDirectory = directory;
     }
 
@@ -28,18 +31,24 @@ public class SaveConfigurationTask extends Task<Void> {
         StringBuilder systemText = new StringBuilder();
         StringBuilder referenceText = new StringBuilder();
 
-        annotationList.forEach((key, value) -> {
+        systemAnnotationList.forEach((key, value) -> {
             String name = "\n[ " + key + "] \n";
             name += "Parent Name: " + key + "\n";
-
             systemText.append(name);
-            referenceText.append(name);
 
             value.forEach(attributeRow -> {
                 String system = attributeRow.name + ": " + attributeRow.systemValue + "\n";
-                String reference = attributeRow.name + ": " + attributeRow.referenceValue + "\n";
-
                 systemText.append(system);
+            });
+        });
+
+        referenceAnnotationList.forEach((key, value) -> {
+            String name = "\n[ " + key + "] \n";
+            name += "Parent Name: " + key + "\n";
+            referenceText.append(name);
+
+            value.forEach(attributeRow -> {
+                String reference = attributeRow.name + ": " + attributeRow.referenceValue + "\n";
                 referenceText.append(reference);
             });
         });
