@@ -16,16 +16,25 @@
          xmlns:fx="http://javafx.com/fxml/1" alignment="TOP_CENTER">
     <Pane fx:id="collapsiblePane" styleClass="draggable"/>
     <VBox fx:id="collapsibleBox" spacing="10" alignment="TOP_CENTER">
-        <HBox fx:id="annotationBox" spacing="15">
+        <HBox fx:id="annotationNameBox" spacing="15" maxWidth="Infinity">
             <Label text="Annotation Name (Parent):" styleClass="text-medium-bold" alignment="CENTER_RIGHT" maxHeight="Infinity"/>
             <JFXTextField fx:id="matchNameTextField" promptText="name" styleClass="text-medium-normal"/>
-            <Label onMouseClicked="#collapseBox" alignment="CENTER_RIGHT">
-                <graphic>
-                    <ImageView fitHeight="12" fitWidth="12" preserveRatio="true" pickOnBounds="true">
-                        <Image url="/img/icons8/back.png"/>
-                    </ImageView>
-                </graphic>
-            </Label>
+            <HBox spacing="15" maxWidth="Infinity" alignment="CENTER_RIGHT">
+                <Label onMouseClicked="#collapseBox" alignment="CENTER_RIGHT" styleClass="button-lock">
+                    <graphic>
+                        <ImageView fitHeight="12" fitWidth="12" preserveRatio="true" pickOnBounds="true">
+                            <Image url="/img/icons8/back.png"/>
+                        </ImageView>
+                    </graphic>
+                </Label>
+                <Label onMouseClicked="#removeBox" alignment="CENTER_RIGHT" styleClass="button-delete">
+                    <graphic>
+                        <ImageView fitHeight="12" preserveRatio="true" pickOnBounds="true">
+                            <Image url="/img/icons8/delete.png"/>
+                        </ImageView>
+                    </graphic>
+                </Label>
+            </HBox>
         </HBox>
         <VBox fx:id="collapsibleContentBox" spacing="10">
             <VBox fx:id="contentBox" spacing="10"/>

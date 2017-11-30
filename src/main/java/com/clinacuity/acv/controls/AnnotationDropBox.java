@@ -24,7 +24,7 @@ public class AnnotationDropBox extends StackPane {
     private static Logger logger = LogManager.getLogger();
     private static final double ANIMATION_DURATION = 200.0d;
 
-    @FXML private HBox annotationBox;
+    @FXML private HBox annotationNameBox;
     @FXML private VBox contentBox;
     @FXML private HBox sourcesBox;
     @FXML private VBox collapsibleBox;
@@ -147,10 +147,10 @@ public class AnnotationDropBox extends StackPane {
             collapsibleContentBox.setVisible(false);
             matchNameTextField.setEditable(false);
             expandedHeight = getHeight();
-            minHeightKeysPane = new KeyValue(collapsiblePane.minHeightProperty(), annotationBox.getHeight() * 2.0d);
-            maxHeightKeysPane = new KeyValue(collapsiblePane.maxHeightProperty(), annotationBox.getHeight() * 2.0d);
-            minHeightKeysBox = new KeyValue(collapsibleBox.minHeightProperty(), annotationBox.getHeight() * 2.0d);
-            maxHeightKeysBox = new KeyValue(collapsibleBox.maxHeightProperty(), annotationBox.getHeight() * 2.0d);
+            minHeightKeysPane = new KeyValue(collapsiblePane.minHeightProperty(), annotationNameBox.getHeight() * 2.0d);
+            maxHeightKeysPane = new KeyValue(collapsiblePane.maxHeightProperty(), annotationNameBox.getHeight() * 2.0d);
+            minHeightKeysBox = new KeyValue(collapsibleBox.minHeightProperty(), annotationNameBox.getHeight() * 2.0d);
+            maxHeightKeysBox = new KeyValue(collapsibleBox.maxHeightProperty(), annotationNameBox.getHeight() * 2.0d);
         }
 
         KeyFrame heightFrame = new KeyFrame(Duration.millis(ANIMATION_DURATION),
@@ -159,6 +159,11 @@ public class AnnotationDropBox extends StackPane {
         collapseTimeline.getKeyFrames().add(heightFrame);
         collapseTimeline.play();
         isCollapsed = !isCollapsed;
+    }
+
+    @FXML private void removeBox() {
+        VBox parent = (VBox)getParent();
+        parent.getChildren().remove(this);
     }
 
     public static class Attribute {
