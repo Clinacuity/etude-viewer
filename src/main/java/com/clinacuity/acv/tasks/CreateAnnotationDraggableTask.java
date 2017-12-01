@@ -23,8 +23,9 @@ public class CreateAnnotationDraggableTask extends Task<List<AnnotationTypeDragg
 
     private String corpusType;
     private String directoryPath;
-    private Map<String, List<String>> annotationMap = new HashMap<>();
+//    private List<XmlParsedAnnotation> annotationMap = new ArrayList<>();
     private List<AnnotationTypeDraggable> annotations = new ArrayList<>();
+    private Map<String, XmlParsedAnnotation> annotationMap = new HashMap<>();
 
     public CreateAnnotationDraggableTask(String directory, String corpus) {
         corpusType = corpus;
@@ -48,8 +49,8 @@ public class CreateAnnotationDraggableTask extends Task<List<AnnotationTypeDragg
             }
         }
 
-        for (String key: annotationMap.keySet()) {
-            annotations.add(new AnnotationTypeDraggable(corpusType, key, annotationMap.get(key)));
+        for (XmlParsedAnnotation key: annotationMap.values()) {
+            annotations.add(new AnnotationTypeDraggable(corpusType, key));
         }
 
         succeeded();
@@ -96,7 +97,20 @@ public class CreateAnnotationDraggableTask extends Task<List<AnnotationTypeDragg
                 attributeNames.add(attributes.item(attributeIndex).getNodeName());
             }
 
-            annotationMap.put(element.getTagName(), attributeNames);
+            String xpath = ".//" + element.getTagName();
+            annotationMap.put(element.getTagName(), new XmlParsedAnnotation(element.getTagName(), xpath, attributeNames));
+        }
+    }
+
+    public class XmlParsedAnnotation {
+        public String name;
+        public String xpath;
+        public List<String> attributes =  new ArrayList<>();
+
+        XmlParsedAnnotation(String annotationName, String path, List<String> attributeList) {
+            name = annotationName;
+            xpath = path;
+            attributes = attributeList;
         }
     }
 }

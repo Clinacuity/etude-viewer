@@ -85,6 +85,8 @@ public class AnnotationDropBox extends StackPane {
                         }
                     }
                 }
+
+                logger.error(ConfigurationController.draggedAnnotation.getXPath());
             }
         });
 
