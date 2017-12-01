@@ -64,25 +64,39 @@ public class CreateAnnotationDraggableTask extends Task<List<AnnotationTypeDragg
             document.getDocumentElement().normalize();
 
             Element root = document.getDocumentElement();
-            if (root != null && root.hasChildNodes()) {
-                NodeList nodes = root.getChildNodes();
+            collectElements(root);
 
-                for (int i = 0; i < nodes.getLength(); i++) {
-                    Node node = nodes.item(i);
-                    if (!annotationMap.containsKey(node.getNodeName()) && !node.getNodeName().equals("#text")) {
-                        List<String> attributeNames = new ArrayList<>();
-                        NamedNodeMap attributes = node.getAttributes();
-                        if (attributes != null) {
-                            for (int attributeIndex = 0; attributeIndex < attributes.getLength(); attributeIndex++) {
-                                attributeNames.add(attributes.item(attributeIndex).getNodeName());
-                            }
-                        }
-                        annotationMap.put(node.getNodeName(), attributeNames);
-                    }
-                }
-            }
         } catch (ParserConfigurationException | SAXException | IOException e) {
             logger.throwing(e);
+        }
+    }
+
+    private void collectElements(Element element) {
+        if (element.hasAttributes() && !annotationMap.containsKey(element.getNodeName())) {
+            addAttributes(element);
+        }
+
+        if (element.hasChildNodes()) {
+            NodeList children = element.getChildNodes();
+
+            for (int child = 0; child < children.getLength(); child++) {
+                if (children.item(child) instanceof Element) {
+                    collectElements((Element)children.item(child));
+                }
+            }
+        }
+    }
+
+    private void addAttributes(Element element) {
+        NamedNodeMap attributes = element.getAttributes();
+
+        if (attributes != null) {
+            List<String> attributeNames = new ArrayList<>();
+            for (int attributeIndex = 0; attributeIndex < attributes.getLength(); attributeIndex++) {
+                attributeNames.add(attributes.item(attributeIndex).getNodeName());
+            }
+
+            annotationMap.put(element.getTagName(), attributeNames);
         }
     }
 }
