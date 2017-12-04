@@ -1,5 +1,6 @@
 package com.clinacuity.acv.controls;
 
+import com.clinacuity.acv.controllers.ConfigurationController;
 import com.jfoenix.controls.JFXTextField;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -55,7 +56,7 @@ class ReferencedDocument extends HBox {
         style += "-fx-background-radius: 2 6 2 2;";
 
         // TODO: change to better colors
-        if (sourceAnnotation.getCorpusType().equals("system")) {
+        if (sourceAnnotation.getCorpusType() == ConfigurationController.CorpusType.SYSTEM) {
             style += "-fx-background-color: Red; ";
         } else {
             style += "-fx-background-color: Green; ";
@@ -73,6 +74,10 @@ class ReferencedDocument extends HBox {
     }
 
     public String getXpath() {
-        return "";
+        return xpathTextField.getText();
+    }
+
+    public ConfigurationController.CorpusType getCorpus() {
+        return sourceAnnotation.getCorpusType();
     }
 }

@@ -25,7 +25,7 @@ import java.util.*;
 
 public class ConfigurationController implements Initializable {
     private static final Logger logger = LogManager.getLogger();
-    public static String draggableAnnotationCorpus = "";
+    public static CorpusType draggableAnnotationCorpus;
     public static AnnotationTypeDraggable draggedAnnotation = null;
 
     @FXML private HBox mainBox;
@@ -71,7 +71,7 @@ public class ConfigurationController implements Initializable {
         if (systemCorpusDirectory != null && systemCorpusDirectory.exists()) {
             systemDirectoryTextField.setText(systemCorpusDirectory.getAbsolutePath());
 
-            systemDraggableTask = new CreateAnnotationDraggableTask(systemDirectoryTextField.getText(), "system");
+            systemDraggableTask = new CreateAnnotationDraggableTask(systemDirectoryTextField.getText(), CorpusType.SYSTEM);
             systemDraggableTask.setOnFailed(event -> {
                 logger.throwing(systemDraggableTask.getException());
                 systemSpinner.setVisible(false);
@@ -99,7 +99,7 @@ public class ConfigurationController implements Initializable {
         if (referenceCorpusDirectory != null && referenceCorpusDirectory.exists()) {
             referenceDirectoryTextField.setText(referenceCorpusDirectory.getAbsolutePath());
 
-            referenceDraggableTask = new CreateAnnotationDraggableTask(referenceDirectoryTextField.getText(), "reference");
+            referenceDraggableTask = new CreateAnnotationDraggableTask(referenceDirectoryTextField.getText(), CorpusType.REFERENCE);
             referenceDraggableTask.setOnCancelled(event -> referenceSpinner.setVisible(false));
             referenceDraggableTask.setOnSucceeded(event -> {
                 referenceSpinner.setVisible(false);
@@ -180,5 +180,10 @@ public class ConfigurationController implements Initializable {
         DirectoryChooser directoryChooser = new DirectoryChooser();
         directoryChooser.setTitle("Select Test Dictionaries Folder");
         return directoryChooser.showDialog(AcvContext.getMainWindow());
+    }
+
+    public enum CorpusType {
+        SYSTEM,
+        REFERENCE
     }
 }

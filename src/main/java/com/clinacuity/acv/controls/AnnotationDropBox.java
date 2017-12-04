@@ -72,7 +72,7 @@ public class AnnotationDropBox extends StackPane {
                 sourcesBox.getChildren().add(new ReferencedDocument(sourcesBox, draggable));
                 draggable.hide();
 
-                if (ConfigurationController.draggableAnnotationCorpus.equals("system")) {
+                if (ConfigurationController.draggableAnnotationCorpus.equals(ConfigurationController.CorpusType.SYSTEM)) {
                     for(String attribute: ConfigurationController.draggedAnnotation.getAttributes()) {
                         if (!systemOptions.contains(attribute)) {
                             systemOptions.add(attribute);

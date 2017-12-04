@@ -1,5 +1,6 @@
 package com.clinacuity.acv.tasks;
 
+import com.clinacuity.acv.controllers.ConfigurationController;
 import com.clinacuity.acv.controls.AnnotationTypeDraggable;
 import javafx.concurrent.Task;
 import org.apache.logging.log4j.LogManager;
@@ -21,13 +22,13 @@ import java.util.Map;
 public class CreateAnnotationDraggableTask extends Task<List<AnnotationTypeDraggable>> {
     private static final Logger logger = LogManager.getLogger();
 
-    private String corpusType;
+    private ConfigurationController.CorpusType corpusType;
     private String directoryPath;
 //    private List<XmlParsedAnnotation> annotationMap = new ArrayList<>();
     private List<AnnotationTypeDraggable> annotations = new ArrayList<>();
     private Map<String, XmlParsedAnnotation> annotationMap = new HashMap<>();
 
-    public CreateAnnotationDraggableTask(String directory, String corpus) {
+    public CreateAnnotationDraggableTask(String directory, ConfigurationController.CorpusType corpus) {
         corpusType = corpus;
         directoryPath = directory;
     }

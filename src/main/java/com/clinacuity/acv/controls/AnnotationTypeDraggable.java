@@ -31,12 +31,12 @@ public class AnnotationTypeDraggable extends StackPane {
     private String xpath;
     String getXPath() { return xpath; }
 
-    private String corpusType;
-    String getCorpusType() { return corpusType; }
+    private ConfigurationController.CorpusType corpusType;
+    ConfigurationController.CorpusType getCorpusType() { return corpusType; }
 
     private boolean isSelected = false;
 
-    public AnnotationTypeDraggable(String corpus, CreateAnnotationDraggableTask.XmlParsedAnnotation parsedAnnotation) {
+    public AnnotationTypeDraggable(ConfigurationController.CorpusType corpus, CreateAnnotationDraggableTask.XmlParsedAnnotation parsedAnnotation) {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/controls/AnnotationTypeDraggable.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
