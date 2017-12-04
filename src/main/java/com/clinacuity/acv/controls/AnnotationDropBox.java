@@ -29,7 +29,7 @@ public class AnnotationDropBox extends StackPane {
 
     @FXML private HBox annotationNameBox;
     @FXML private VBox contentBox;
-    @FXML private HBox sourcesBox;
+    @FXML private VBox sourcesBox;
     @FXML private VBox collapsibleBox;
     @FXML private Pane collapsiblePane;
     @FXML private VBox collapsibleContentBox;

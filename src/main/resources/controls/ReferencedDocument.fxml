@@ -2,20 +2,22 @@
 
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.image.Image?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.control.Label?>
+<?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.geometry.Insets?>
 
-<fx:root type="javafx.scene.layout.StackPane"
-         xmlns="http://javafx.com/javafx/8.0.112"
-         xmlns:fx="http://javafx.com/fxml/1">
-    <Pane styleClass="card-small"/>
+<fx:root type="javafx.scene.layout.HBox"
+         xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1"
+         spacing="20">
     <VBox fx:id="image">
-        <ImageView preserveRatio="true" fitHeight="32" pickOnBounds="true">
+        <ImageView fitHeight="24" preserveRatio="true" pickOnBounds="true">
             <Image url="/img/icons8/checklist.png"/>
         </ImageView>
     </VBox>
-    <Label fx:id="removeButton" onMouseClicked="#remove" styleClass="button-red" alignment="TOP_RIGHT" visible="false"
+    <JFXTextField fx:id="xpathTextField" promptText="Annotation XPath" styleClass="text-medium-normal"
+                  minWidth="400" maxWidth="Infinity"/>
+    <Label fx:id="removeButton" onMouseClicked="#remove" styleClass="button-delete" alignment="CENTER_RIGHT"
            maxWidth="12" maxHeight="12" textAlignment="CENTER">
         <graphic>
             <ImageView fitHeight="12" fitWidth="12" preserveRatio="true">
@@ -23,4 +25,7 @@
             </ImageView>
         </graphic>
     </Label>
+    <padding>
+        <Insets left="5" bottom="5"/>
+    </padding>
 </fx:root>
