@@ -1,6 +1,6 @@
 package com.clinacuity.acv.controls;
 
-import com.clinacuity.acv.controllers.ConfigurationController;
+import com.clinacuity.acv.controllers.ConfigurationBuilderController;
 import com.clinacuity.acv.modals.WarningModal;
 import com.jfoenix.controls.JFXTextField;
 import javafx.animation.KeyFrame;
@@ -59,27 +59,27 @@ public class AnnotationDropBox extends StackPane {
 
     private void initialize() {
         setOnDragOver(event -> {
-            if (ConfigurationController.draggedAnnotation != null) {
+            if (ConfigurationBuilderController.draggedAnnotation != null) {
                 event.acceptTransferModes(TransferMode.ANY);
             }
             event.consume();
         });
 
         setOnDragDropped(event -> {
-            if (ConfigurationController.draggedAnnotation != null) {
-                AnnotationTypeDraggable draggable = ConfigurationController.draggedAnnotation;
+            if (ConfigurationBuilderController.draggedAnnotation != null) {
+                AnnotationTypeDraggable draggable = ConfigurationBuilderController.draggedAnnotation;
 
                 sourcesBox.getChildren().add(new ReferencedDocument(sourcesBox, draggable));
                 draggable.hide();
 
-                if (ConfigurationController.draggableAnnotationCorpus.equals(ConfigurationController.CorpusType.SYSTEM)) {
-                    for(String attribute: ConfigurationController.draggedAnnotation.getAttributes()) {
+                if (ConfigurationBuilderController.draggableAnnotationCorpus.equals(ConfigurationBuilderController.CorpusType.SYSTEM)) {
+                    for(String attribute: ConfigurationBuilderController.draggedAnnotation.getAttributes()) {
                         if (!systemOptions.contains(attribute)) {
                             systemOptions.add(attribute);
                         }
                     }
                 } else {
-                    for (String attribute: ConfigurationController.draggedAnnotation.getAttributes()) {
+                    for (String attribute: ConfigurationBuilderController.draggedAnnotation.getAttributes()) {
                         if (!referenceOptions.contains(attribute)) {
                             referenceOptions.add(attribute);
                         }
@@ -154,11 +154,11 @@ public class AnnotationDropBox extends StackPane {
     }
 
     public List<String> getSystemXPaths() {
-        return getXpathList(ConfigurationController.CorpusType.SYSTEM);
+        return getXpathList(ConfigurationBuilderController.CorpusType.SYSTEM);
     }
 
     public List<String> getReferenceXPaths() {
-        return getXpathList(ConfigurationController.CorpusType.REFERENCE);
+        return getXpathList(ConfigurationBuilderController.CorpusType.REFERENCE);
     }
 
     public List<Attribute> getAttributes() {
@@ -176,7 +176,7 @@ public class AnnotationDropBox extends StackPane {
         return matchNameTextField.getText();
     }
 
-    private List<String> getXpathList(ConfigurationController.CorpusType corpus) {
+    private List<String> getXpathList(ConfigurationBuilderController.CorpusType corpus) {
         List<String> xpathList = new ArrayList<>();
 
         int childCount = sourcesBox.getChildren().size();
@@ -243,9 +243,9 @@ public class AnnotationDropBox extends StackPane {
 
     public static class Attribute {
         public String name;
-        public String systemValue;
-        public String referenceValue;
-        public boolean isLocked;
+        boolean isLocked;
+        private String systemValue;
+        private String referenceValue;
 
         Attribute(String attributeName, String system, String reference, boolean locked) {
             name = attributeName;
@@ -255,8 +255,8 @@ public class AnnotationDropBox extends StackPane {
             isLocked = locked;
         }
 
-        public String getValue(ConfigurationController.CorpusType corpus) {
-            if (corpus == ConfigurationController.CorpusType.SYSTEM) {
+        public String getValue(ConfigurationBuilderController.CorpusType corpus) {
+            if (corpus == ConfigurationBuilderController.CorpusType.SYSTEM) {
                 return systemValue;
             }
             return referenceValue;

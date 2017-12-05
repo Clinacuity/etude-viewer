@@ -34,7 +34,7 @@ public class NavBarController implements Initializable {
         
         mainPageButton.setTargetPage(AcvContext.APP_MAIN_PAGE);
         etudeRunnerButton.setTargetPage(AcvContext.ETUDE_RUNNER);
-        loadScreenButton.setTargetPage("/pages/Configuration.fxml");
+        loadScreenButton.setTargetPage(AcvContext.LOAD_SCREEN);
         configBuilderButton.setTargetPage(AcvContext.CONFIGURATION_BUILDER);
         compareViewerButton.setTargetPage(AcvContext.COMPARISON_VIEW);
 
