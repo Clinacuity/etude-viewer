@@ -3,12 +3,14 @@ package com.clinacuity.acv.controls;
 import com.clinacuity.acv.controllers.ConfigurationBuilderController;
 import com.clinacuity.acv.modals.WarningModal;
 import com.jfoenix.controls.JFXTextField;
+import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.HBox;
@@ -25,7 +27,9 @@ import java.util.Set;
 
 public class AnnotationDropBox extends StackPane {
     private static Logger logger = LogManager.getLogger();
-    private static final double ANIMATION_DURATION = 200.0d;
+    private static final Duration ANIMATION_DURATION = Duration.millis(200.0d);
+    private static final double START_ROTATION = 0.0d;
+    private static final double END_ROTATION = -90.0d;
 
     @FXML private HBox annotationNameBox;
     @FXML private VBox contentBox;
@@ -34,6 +38,7 @@ public class AnnotationDropBox extends StackPane {
     @FXML private Pane collapsiblePane;
     @FXML private VBox collapsibleContentBox;
     @FXML private JFXTextField matchNameTextField;
+    @FXML private Label collapseButton;
 
     private AnnotationDropBoxRow shortNameRow = new AnnotationDropBoxRow("Short Name");
     private AnnotationDropBoxRow beginAttrRow = new AnnotationDropBoxRow("Begin Attr");
@@ -42,6 +47,7 @@ public class AnnotationDropBox extends StackPane {
     private List<String> referenceOptions = new ArrayList<>();
     private double expandedHeight = 0.0d;
     private boolean isCollapsed = false;
+    private Timeline collapsingTimeline = new Timeline();
 
     public AnnotationDropBox() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/controls/AnnotationDropBox.fxml"));
@@ -198,42 +204,50 @@ public class AnnotationDropBox extends StackPane {
     }
 
     @FXML private void collapseBox() {
-        collapsiblePane.setMinHeight(collapsiblePane.getHeight());
-        collapsiblePane.setMaxHeight(collapsiblePane.getHeight());
-        collapsibleBox.setMinHeight(collapsibleBox.getHeight());
-        collapsibleBox.setMaxHeight(collapsibleBox.getHeight());
+        if (!collapsingTimeline.getStatus().equals(Animation.Status.RUNNING)) {
+            collapsiblePane.setMinHeight(collapsiblePane.getHeight());
+            collapsiblePane.setMaxHeight(collapsiblePane.getHeight());
+            collapsibleBox.setMinHeight(collapsibleBox.getHeight());
+            collapsibleBox.setMaxHeight(collapsibleBox.getHeight());
 
-        Timeline collapseTimeline = new Timeline();
-        KeyValue minHeightKeysPane;
-        KeyValue maxHeightKeysPane;
-        KeyValue minHeightKeysBox;
-        KeyValue maxHeightKeysBox;
+            KeyValue minHeightKeysPane;
+            KeyValue maxHeightKeysPane;
+            KeyValue minHeightKeysBox;
+            KeyValue maxHeightKeysBox;
+            KeyValue rotationTarget;
 
-        if (isCollapsed) {
-            minHeightKeysPane = new KeyValue(collapsiblePane.minHeightProperty(), expandedHeight);
-            maxHeightKeysPane = new KeyValue(collapsiblePane.maxHeightProperty(), expandedHeight);
-            minHeightKeysBox = new KeyValue(collapsibleBox.minHeightProperty(), expandedHeight);
-            maxHeightKeysBox = new KeyValue(collapsibleBox.maxHeightProperty(), expandedHeight);
-            collapseTimeline.setOnFinished(event -> {
-                collapsibleContentBox.setVisible(true);
-                matchNameTextField.setEditable(true);
-            });
-        } else {
-            collapsibleContentBox.setVisible(false);
-            matchNameTextField.setEditable(false);
-            expandedHeight = getHeight();
-            minHeightKeysPane = new KeyValue(collapsiblePane.minHeightProperty(), annotationNameBox.getHeight() * 2.0d);
-            maxHeightKeysPane = new KeyValue(collapsiblePane.maxHeightProperty(), annotationNameBox.getHeight() * 2.0d);
-            minHeightKeysBox = new KeyValue(collapsibleBox.minHeightProperty(), annotationNameBox.getHeight() * 2.0d);
-            maxHeightKeysBox = new KeyValue(collapsibleBox.maxHeightProperty(), annotationNameBox.getHeight() * 2.0d);
+            if (isCollapsed) {
+                minHeightKeysPane = new KeyValue(collapsiblePane.minHeightProperty(), expandedHeight);
+                maxHeightKeysPane = new KeyValue(collapsiblePane.maxHeightProperty(), expandedHeight);
+                minHeightKeysBox = new KeyValue(collapsibleBox.minHeightProperty(), expandedHeight);
+                maxHeightKeysBox = new KeyValue(collapsibleBox.maxHeightProperty(), expandedHeight);
+                rotationTarget = new KeyValue(collapseButton.rotateProperty(), START_ROTATION);
+                collapsingTimeline.setOnFinished(event -> {
+                    collapsibleContentBox.setVisible(true);
+                    matchNameTextField.setEditable(true);
+                });
+            } else {
+                collapsibleContentBox.setVisible(false);
+                matchNameTextField.setEditable(false);
+                expandedHeight = getHeight();
+
+                minHeightKeysPane = new KeyValue(collapsiblePane.minHeightProperty(), annotationNameBox.getHeight() * 2.0d);
+                maxHeightKeysPane = new KeyValue(collapsiblePane.maxHeightProperty(), annotationNameBox.getHeight() * 2.0d);
+                minHeightKeysBox = new KeyValue(collapsibleBox.minHeightProperty(), annotationNameBox.getHeight() * 2.0d);
+                maxHeightKeysBox = new KeyValue(collapsibleBox.maxHeightProperty(), annotationNameBox.getHeight() * 2.0d);
+                rotationTarget = new KeyValue(collapseButton.rotateProperty(), END_ROTATION);
+                collapsingTimeline.setOnFinished(null);
+            }
+
+            KeyFrame heightFrame = new KeyFrame(ANIMATION_DURATION,
+                    minHeightKeysPane, maxHeightKeysPane, minHeightKeysBox, maxHeightKeysBox, rotationTarget);
+
+            collapsingTimeline.stop();
+            collapsingTimeline.getKeyFrames().clear();
+            collapsingTimeline.getKeyFrames().add(heightFrame);
+            collapsingTimeline.play();
+            isCollapsed = !isCollapsed;
         }
-
-        KeyFrame heightFrame = new KeyFrame(Duration.millis(ANIMATION_DURATION),
-                minHeightKeysPane, maxHeightKeysPane, minHeightKeysBox, maxHeightKeysBox);
-
-        collapseTimeline.getKeyFrames().add(heightFrame);
-        collapseTimeline.play();
-        isCollapsed = !isCollapsed;
     }
 
     @FXML private void removeBox() {

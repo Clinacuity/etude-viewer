@@ -10,19 +10,20 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.image.Image?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.StackPane?>
 
 <fx:root type="javafx.scene.layout.StackPane"
          xmlns="http://javafx.com/javafx/8.0.112"
          xmlns:fx="http://javafx.com/fxml/1" alignment="TOP_CENTER">
     <Pane fx:id="collapsiblePane" styleClass="draggable"/>
     <VBox fx:id="collapsibleBox" spacing="10" alignment="TOP_CENTER">
-        <HBox fx:id="annotationNameBox" spacing="15" maxWidth="Infinity">
-            <Label text="Annotation Name (Parent):" styleClass="text-medium-bold" alignment="CENTER_RIGHT" maxHeight="Infinity"/>
-            <JFXTextField fx:id="matchNameTextField" promptText="name" styleClass="text-medium-normal"/>
-            <HBox spacing="15" maxWidth="Infinity" alignment="CENTER_RIGHT">
-                <Label onMouseClicked="#collapseBox" alignment="CENTER_RIGHT" styleClass="button-lock">
+        <StackPane>
+            <HBox fx:id="annotationNameBox" spacing="15" maxWidth="Infinity">
+                <Label text="Annotation Name (Parent):" styleClass="text-medium-bold" alignment="CENTER_RIGHT" maxHeight="Infinity"/>
+                <JFXTextField fx:id="matchNameTextField" promptText="name" styleClass="text-medium-normal"/>
+            </HBox>
+            <HBox spacing="10" alignment="CENTER_RIGHT">
+                <Label fx:id="collapseButton" onMouseClicked="#collapseBox" alignment="CENTER_RIGHT" styleClass="button-lock">
                     <graphic>
                         <ImageView fitHeight="12" fitWidth="12" preserveRatio="true" pickOnBounds="true">
                             <Image url="/img/icons8/back.png"/>
@@ -37,7 +38,8 @@
                     </graphic>
                 </Label>
             </HBox>
-        </HBox>
+        </StackPane>
+        <Separator maxWidth="Infinity"/>
         <VBox fx:id="collapsibleContentBox" spacing="10">
             <VBox fx:id="contentBox" spacing="10"/>
             <HBox alignment="CENTER_RIGHT">
