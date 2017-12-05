@@ -133,7 +133,10 @@ public class ConfigurationController implements Initializable {
 
         boolean validInputs = true;
         Map<String, List<AnnotationDropBox.Attribute>> systemAnnotationList = new HashMap<>();
+        Map<String, List<String>> systemXPathsPerMatch = new HashMap<>();
         Map<String, List<AnnotationDropBox.Attribute>> referenceAnnotationList = new HashMap<>();
+        Map<String, List<String>> referenceXPathsPerMatch = new HashMap<>();
+
         for (Node child : annotationDropBox.getChildren()) {
             AnnotationDropBox box = (AnnotationDropBox) child;
             if (box.isValid()) {
@@ -143,6 +146,8 @@ public class ConfigurationController implements Initializable {
                 if (box.hasReferenceAttributes()) {
                     referenceAnnotationList.put(box.getName(), box.getAttributes());
                 }
+
+                systemXPathsPerMatch.put(box.getName(), box.getSystemXPaths());
             } else {
                 validInputs = false;
             }
@@ -151,7 +156,12 @@ public class ConfigurationController implements Initializable {
         if (validInputs) {
             File directory = getSaveDirectory();
             if (directory != null) {
-                saveTask = new SaveConfigurationTask(systemAnnotationList, referenceAnnotationList, directory);
+                saveTask = new SaveConfigurationTask(
+                        systemAnnotationList,
+                        systemXPathsPerMatch,
+                        referenceAnnotationList,
+                        referenceXPathsPerMatch,
+                        directory);
                 saveTask.setOnSucceeded(event -> {
                     logger.error("succeeded");
                     AcvContext.getInstance().contentLoading.setValue(false);

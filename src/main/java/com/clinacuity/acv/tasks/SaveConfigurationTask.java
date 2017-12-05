@@ -1,5 +1,6 @@
 package com.clinacuity.acv.tasks;
 
+import com.clinacuity.acv.controllers.ConfigurationController;
 import com.clinacuity.acv.controls.AnnotationDropBox;
 import javafx.concurrent.Task;
 import org.apache.commons.io.FileUtils;
@@ -13,54 +14,33 @@ import java.util.Map;
 public class SaveConfigurationTask extends Task<Void> {
     private static final Logger logger = LogManager.getLogger();
 
-    private Map<String, List<AnnotationDropBox.Attribute>> systemAnnotationList;
-    private Map<String, List<AnnotationDropBox.Attribute>> referenceAnnotationList;
+    private Map<String, List<AnnotationDropBox.Attribute>> sysAnnotationMatchMap;
+    private Map<String, List<AnnotationDropBox.Attribute>> refAnnotationMatchMap;
+    private Map<String, List<String>> systemXpathList;
+    private Map<String, List<String>> referenceXpathList;
     private File targetDirectory;
 
     public SaveConfigurationTask(Map<String, List<AnnotationDropBox.Attribute>> sysList,
-                                 Map<String, List<AnnotationDropBox.Attribute>> refList, File directory) {
-        systemAnnotationList = sysList;
-        referenceAnnotationList = refList;
+                                 Map<String, List<String>> sysXPaths,
+                                 Map<String, List<AnnotationDropBox.Attribute>> refList,
+                                 Map<String, List<String>> refXPaths,
+                                 File directory) {
+        sysAnnotationMatchMap = sysList;
+        refAnnotationMatchMap = refList;
         targetDirectory = directory;
+        systemXpathList = sysXPaths;
+        referenceXpathList = refXPaths;
     }
 
     @Override
     public Void call() {
         File systemFile = getFile("/system.conf");
         File referenceFile = getFile("/reference.conf");
-        StringBuilder systemText = new StringBuilder();
-        StringBuilder referenceText = new StringBuilder();
 
-        systemAnnotationList.forEach((key, value) -> {
-            String name = "\n[ " + key + "] \n";
-            name += "Parent Name: " + key + "\n";
-            systemText.append(name);
+        saveXPaths(systemFile, ConfigurationController.CorpusType.SYSTEM, sysAnnotationMatchMap, systemXpathList);
+        saveXPaths(referenceFile, ConfigurationController.CorpusType.REFERENCE, refAnnotationMatchMap, referenceXpathList);
 
-            value.forEach(attributeRow -> {
-                String system = attributeRow.name + ": " + attributeRow.systemValue + "\n";
-                systemText.append(system);
-            });
-        });
-
-        referenceAnnotationList.forEach((key, value) -> {
-            String name = "\n[ " + key + "] \n";
-            name += "Parent Name: " + key + "\n";
-            referenceText.append(name);
-
-            value.forEach(attributeRow -> {
-                String reference = attributeRow.name + ": " + attributeRow.referenceValue + "\n";
-                referenceText.append(reference);
-            });
-        });
-
-        try {
-            FileUtils.writeStringToFile(systemFile, systemText.toString());
-            FileUtils.writeStringToFile(referenceFile, referenceText.toString());
-        } catch (IOException e) {
-            logger.error(e);
-            failed();
-        }
-
+//        logger.error(getState());
         succeeded();
         return null;
     }
@@ -72,5 +52,65 @@ public class SaveConfigurationTask extends Task<Void> {
             logger.warn("A file already exists and will be overwritten in path: {}", file.getAbsoluteFile());
         }
         return file;
+    }
+
+    private void saveXPaths(File file,
+                            ConfigurationController.CorpusType corpusType,
+                            Map<String, List<AnnotationDropBox.Attribute>> annotationMatchMap,
+                            Map<String, List<String>> xpathMap) {
+        StringBuilder text = new StringBuilder();
+
+        // missing raw attribute list if it contains XPath
+        xpathMap.forEach((annotationMatch, xpathList) -> {
+            List<AnnotationDropBox.Attribute> attributes = annotationMatchMap.get(annotationMatch);
+            xpathList.forEach(xpath -> {
+                text.append("[ ");
+                text.append(annotationMatch);
+                text.append(" ]\nXPath: ");
+                text.append(xpath);
+                text.append("\n");
+
+                attributes.forEach(attribute -> {
+                    if (!attribute.name.equals("XPath")) {
+                        text.append(attribute.name);
+                        text.append(": ");
+                        text.append(attribute.getValue(corpusType));
+                        text.append("\n");
+                    }
+                });
+
+                text.append("\n");
+            });
+        });
+
+        annotationMatchMap.forEach((annotationMatch, attributes) -> {
+            boolean hasXPath = false;
+            for (AnnotationDropBox.Attribute attribute: attributes) {
+                if (attribute.name.equals("XPath") && attribute.getValue(corpusType).length() > 0) {
+                    hasXPath = true;
+                }
+            }
+            if (hasXPath) {
+                text.append("[ ");
+                text.append(annotationMatch);
+                text.append(" ]\n");
+
+                attributes.forEach(attribute -> {
+                    text.append(attribute.name);
+                    text.append(": ");
+                    text.append(attribute.getValue(corpusType));
+                    text.append("\n");
+                });
+
+                text.append("\n");
+            }
+        });
+
+        try {
+            FileUtils.writeStringToFile(file, text.toString());
+        } catch (IOException e) {
+            logger.error(e);
+            failed();
+        }
     }
 }

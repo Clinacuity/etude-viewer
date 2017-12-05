@@ -85,8 +85,6 @@ public class AnnotationDropBox extends StackPane {
                         }
                     }
                 }
-
-                logger.error(ConfigurationController.draggedAnnotation.getXPath());
             }
         });
 
@@ -155,6 +153,14 @@ public class AnnotationDropBox extends StackPane {
                 && endAttrRow.getAttributeRow().referenceValue.length() > 0);
     }
 
+    public List<String> getSystemXPaths() {
+        return getXpathList(ConfigurationController.CorpusType.SYSTEM);
+    }
+
+    public List<String> getReferenceXPaths() {
+        return getXpathList(ConfigurationController.CorpusType.REFERENCE);
+    }
+
     public List<Attribute> getAttributes() {
         List<Attribute> attributes = new ArrayList<>();
         for (Node child: contentBox.getChildren()) {
@@ -168,6 +174,23 @@ public class AnnotationDropBox extends StackPane {
 
     public String getName() {
         return matchNameTextField.getText();
+    }
+
+    private List<String> getXpathList(ConfigurationController.CorpusType corpus) {
+        List<String> xpathList = new ArrayList<>();
+
+        int childCount = sourcesBox.getChildren().size();
+        for (int i = 0; i < childCount; i++) {
+            Node child = sourcesBox.getChildren().get(i);
+            if (child instanceof ReferencedDocument) {
+                ReferencedDocument document = (ReferencedDocument)child;
+                if (document.getCorpus() == corpus && !document.getXpath().equals("")) {
+                    xpathList.add(document.getXpath());
+                }
+            }
+        }
+
+        return xpathList;
     }
 
     @FXML private void addRow() {
@@ -230,6 +253,13 @@ public class AnnotationDropBox extends StackPane {
             referenceValue = reference;
 
             isLocked = locked;
+        }
+
+        public String getValue(ConfigurationController.CorpusType corpus) {
+            if (corpus == ConfigurationController.CorpusType.SYSTEM) {
+                return systemValue;
+            }
+            return referenceValue;
         }
     }
 }
