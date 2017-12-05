@@ -10,6 +10,8 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.image.Image?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
 
 <fx:root type="javafx.scene.layout.StackPane"
          xmlns="http://javafx.com/javafx/8.0.112"
@@ -38,11 +40,6 @@
         </HBox>
         <VBox fx:id="collapsibleContentBox" spacing="10">
             <VBox fx:id="contentBox" spacing="10"/>
-            <Separator maxWidth="Infinity" valignment="BOTTOM">
-                <padding>
-                    <Insets top="15" bottom="-15"/>
-                </padding>
-            </Separator>
             <HBox alignment="CENTER_RIGHT">
                 <JFXButton onAction="#addRow" styleClass="button-raised, button-gray, no-focus" buttonType="RAISED">
                     <graphic>
@@ -52,12 +49,25 @@
                     </graphic>
                 </JFXButton>
                 <padding>
-                    <Insets top="25" right="15"/>
+                    <Insets top="10" right="30"/>
                 </padding>
             </HBox>
-            <HBox spacing="5" fx:id="sourcesBox">
-                <Label text="Sources:" styleClass="text-small-normal"/>
-            </HBox>
+            <Separator maxWidth="Infinity" valignment="BOTTOM">
+                <padding>
+                    <Insets top="15" bottom="-15"/>
+                </padding>
+            </Separator>
+            <VBox spacing="15">
+                <Label text="Sources:" styleClass="text-small-normal">
+                    <padding>
+                        <Insets left="10"/>
+                    </padding>
+                </Label>
+                <VBox spacing="10" fx:id="sourcesBox"/>
+                <padding>
+                    <Insets topRightBottomLeft="15"/>
+                </padding>
+            </VBox>
         </VBox>
         <padding>
             <Insets topRightBottomLeft="10"/>

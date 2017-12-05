@@ -1,6 +1,7 @@
 package com.clinacuity.acv.controls;
 
 import com.clinacuity.acv.controllers.ConfigurationController;
+import com.clinacuity.acv.tasks.CreateAnnotationDraggableTask;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -26,14 +27,16 @@ public class AnnotationTypeDraggable extends StackPane {
     @FXML private Label annotationLabel;
     private String annotationName;
     private List<String> attributes = new ArrayList<>();
-    private String xpath;
 
-    private String corpusType = "";
-    String getCorpusType() { return corpusType; }
+    private String xpath;
+    String getXPath() { return xpath; }
+
+    private ConfigurationController.CorpusType corpusType;
+    ConfigurationController.CorpusType getCorpusType() { return corpusType; }
 
     private boolean isSelected = false;
 
-    public AnnotationTypeDraggable(String corpus, String name, List<String> attributeList) {
+    public AnnotationTypeDraggable(ConfigurationController.CorpusType corpus, CreateAnnotationDraggableTask.XmlParsedAnnotation parsedAnnotation) {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/controls/AnnotationTypeDraggable.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
@@ -45,8 +48,9 @@ public class AnnotationTypeDraggable extends StackPane {
         }
 
         corpusType = corpus;
-        annotationName = name;
-        attributes = attributeList;
+        annotationName = parsedAnnotation.name;
+        xpath = parsedAnnotation.xpath;
+        attributes = parsedAnnotation.attributes;
 
         initialize();
     }
