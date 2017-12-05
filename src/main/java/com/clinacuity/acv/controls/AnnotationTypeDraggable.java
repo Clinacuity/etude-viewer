@@ -22,6 +22,7 @@ import java.util.List;
 
 public class AnnotationTypeDraggable extends StackPane {
     private static final Logger logger = LogManager.getLogger();
+    private static final String HIGHLIGHT_CLASS = "draggable-highlight";
 
     @FXML private VBox targetBox;
     @FXML private Label annotationLabel;
@@ -107,6 +108,14 @@ public class AnnotationTypeDraggable extends StackPane {
 
     List<String> getAttributes() {
         return attributes;
+    }
+
+    void setHighlight(boolean set) {
+        if (set) {
+            targetBox.getStyleClass().add(HIGHLIGHT_CLASS);
+        } else {
+            targetBox.getStyleClass().remove(HIGHLIGHT_CLASS);
+        }
     }
 
     void hide() {

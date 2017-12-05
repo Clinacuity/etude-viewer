@@ -47,9 +47,14 @@
                 </HBox>
                 <StackPane>
                     <ScrollPane fx:id="systemDragScrollPane" styleClass="card-small" minHeight="300" hbarPolicy="NEVER">
-                        <VBox>
-                            <VBox fx:id="systemDraggableBox" spacing="8"/>
-                        </VBox>
+                        <StackPane maxWidth="Infinity">
+                            <VBox>
+                                <VBox fx:id="systemDraggableBox" spacing="8"/>
+                            </VBox>
+                            <padding>
+                                <Insets topRightBottomLeft="15"/>
+                            </padding>
+                        </StackPane>
                     </ScrollPane>
                     <StackPane fx:id="systemSpinner" styleClass="spinner-pane" visible="false">
                         <ProgressIndicator maxWidth="100" maxHeight="100"/>
@@ -133,10 +138,14 @@
                 </HBox>
                 <StackPane>
                     <ScrollPane fx:id="referenceDragScrollPane" styleClass="card-small" minHeight="300" hbarPolicy="NEVER">
-                        <VBox>
-
-                            <VBox fx:id="referenceDraggableBox" spacing="8"/>
-                        </VBox>
+                        <StackPane maxWidth="Infinity">
+                            <VBox>
+                                <VBox fx:id="referenceDraggableBox" spacing="8"/>
+                            </VBox>
+                            <padding>
+                                <Insets topRightBottomLeft="15"/>
+                            </padding>
+                        </StackPane>
                     </ScrollPane>
                     <StackPane fx:id="referenceSpinner" styleClass="spinner-pane" visible="false">
                         <ProgressIndicator maxWidth="100" maxHeight="100"/>

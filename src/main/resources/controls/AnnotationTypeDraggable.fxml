@@ -15,10 +15,7 @@
         <Label fx:id="annotationLabel" styleClass="text-medium-normal"/>
         <Separator/>
         <padding>
-            <Insets topRightBottomLeft="10"/>
+            <Insets topRightBottomLeft="6"/>
         </padding>
     </VBox>
-    <padding>
-        <Insets topRightBottomLeft="10"/>
-    </padding>
 </fx:root>
