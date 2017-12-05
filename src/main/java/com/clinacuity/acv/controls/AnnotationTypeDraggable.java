@@ -1,6 +1,6 @@
 package com.clinacuity.acv.controls;
 
-import com.clinacuity.acv.controllers.ConfigurationController;
+import com.clinacuity.acv.controllers.ConfigurationBuilderController;
 import com.clinacuity.acv.tasks.CreateAnnotationDraggableTask;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -31,12 +31,12 @@ public class AnnotationTypeDraggable extends StackPane {
     private String xpath;
     String getXPath() { return xpath; }
 
-    private ConfigurationController.CorpusType corpusType;
-    ConfigurationController.CorpusType getCorpusType() { return corpusType; }
+    private ConfigurationBuilderController.CorpusType corpusType;
+    ConfigurationBuilderController.CorpusType getCorpusType() { return corpusType; }
 
     private boolean isSelected = false;
 
-    public AnnotationTypeDraggable(ConfigurationController.CorpusType corpus, CreateAnnotationDraggableTask.XmlParsedAnnotation parsedAnnotation) {
+    public AnnotationTypeDraggable(ConfigurationBuilderController.CorpusType corpus, CreateAnnotationDraggableTask.XmlParsedAnnotation parsedAnnotation) {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/controls/AnnotationTypeDraggable.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
@@ -76,8 +76,8 @@ public class AnnotationTypeDraggable extends StackPane {
     private void setEvents() {
         setOnDragDetected(event -> {
             if (!isSelected) {
-                ConfigurationController.draggableAnnotationCorpus = corpusType;
-                ConfigurationController.draggedAnnotation = this;
+                ConfigurationBuilderController.draggableAnnotationCorpus = corpusType;
+                ConfigurationBuilderController.draggedAnnotation = this;
 
                 Dragboard dragboard = this.startDragAndDrop(TransferMode.ANY);
                 ClipboardContent content = new ClipboardContent();

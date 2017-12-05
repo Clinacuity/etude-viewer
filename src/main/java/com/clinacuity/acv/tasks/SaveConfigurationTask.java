@@ -1,6 +1,6 @@
 package com.clinacuity.acv.tasks;
 
-import com.clinacuity.acv.controllers.ConfigurationController;
+import com.clinacuity.acv.controllers.ConfigurationBuilderController;
 import com.clinacuity.acv.controls.AnnotationDropBox;
 import javafx.concurrent.Task;
 import org.apache.commons.io.FileUtils;
@@ -37,8 +37,8 @@ public class SaveConfigurationTask extends Task<Void> {
         File systemFile = getFile("/system.conf");
         File referenceFile = getFile("/reference.conf");
 
-        saveXPaths(systemFile, ConfigurationController.CorpusType.SYSTEM, sysAnnotationMatchMap, systemXpathList);
-        saveXPaths(referenceFile, ConfigurationController.CorpusType.REFERENCE, refAnnotationMatchMap, referenceXpathList);
+        saveXPaths(systemFile, ConfigurationBuilderController.CorpusType.SYSTEM, sysAnnotationMatchMap, systemXpathList);
+        saveXPaths(referenceFile, ConfigurationBuilderController.CorpusType.REFERENCE, refAnnotationMatchMap, referenceXpathList);
 
 //        logger.error(getState());
         succeeded();
@@ -55,7 +55,7 @@ public class SaveConfigurationTask extends Task<Void> {
     }
 
     private void saveXPaths(File file,
-                            ConfigurationController.CorpusType corpusType,
+                            ConfigurationBuilderController.CorpusType corpusType,
                             Map<String, List<AnnotationDropBox.Attribute>> annotationMatchMap,
                             Map<String, List<String>> xpathMap) {
         StringBuilder text = new StringBuilder();
