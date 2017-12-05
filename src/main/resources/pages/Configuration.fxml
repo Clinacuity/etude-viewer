@@ -14,7 +14,6 @@
 <?import javafx.scene.control.Tooltip?>
 <?import com.jfoenix.controls.JFXButton?>
 <?import javafx.scene.control.ProgressIndicator?>
-<?import com.clinacuity.acv.controls.AnnotationDropBox?>
 
 <GridPane alignment="TOP_CENTER"
           xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1"
@@ -31,12 +30,8 @@
         <HBox fx:id="mainBox" spacing="20" alignment="TOP_CENTER" maxHeight="Infinity">
             <VBox spacing="10" alignment="TOP_CENTER">
                 <HBox spacing="10">
-                    <Label text="System Corpus:" styleClass="text-medium-normal" alignment="BOTTOM_CENTER" maxHeight="Infinity">
-                        <padding>
-                            <Insets left="10"/>
-                        </padding>
-                    </Label>
-                    <JFXTextField fx:id="systemDirectoryTextField" styleClass="text-medium-normal" minWidth="200" maxWidth="350" editable="false"/>
+                    <JFXTextField fx:id="systemDirectoryTextField" styleClass="text-medium-normal" focusTraversable="false"
+                                  promptText="System Corpus Directory" minWidth="300" maxWidth="350" editable="false"/>
                     <JFXButton text="..." onAction="#pickSystemCorpus" prefWidth="32" buttonType="RAISED"
                                styleClass="button-raised, button-gray, no-focus, text-small-normal"/>
                     <Label styleClass="label-tooltip">
@@ -90,9 +85,7 @@
                 <StackPane>
                     <ScrollPane fx:id="annotationScrollPane" styleClass="card-small" minHeight="300" hbarPolicy="NEVER">
                         <VBox spacing="15">
-                            <VBox fx:id="annotationDropBox" spacing="8">
-                                <AnnotationDropBox/>
-                            </VBox>
+                            <VBox fx:id="annotationDropBox" spacing="8"/>
                             <HBox alignment="BOTTOM_RIGHT">
                                 <JFXButton onAction="#addAnnotationDropBox" text="ADD MATCH"
                                            styleClass="button-raised, button-gray, no-focus" buttonType="RAISED">
@@ -123,12 +116,8 @@
             </VBox>
             <VBox spacing="10" alignment="TOP_CENTER">
                 <HBox spacing="10">
-                    <Label text="Reference Corpus:" styleClass="text-medium-normal" alignment="BOTTOM_CENTER" maxHeight="Infinity">
-                        <padding>
-                            <Insets left="10"/>
-                        </padding>
-                    </Label>
-                    <JFXTextField fx:id="referenceDirectoryTextField" styleClass="text-medium-normal" minWidth="200" maxWidth="350"/>
+                    <JFXTextField fx:id="referenceDirectoryTextField" styleClass="text-medium-normal" focusTraversable="false"
+                                  promptText="Reference Corpus Directory" minWidth="300" maxWidth="450" editable="false"/>
                     <JFXButton text="..." onAction="#pickReferenceCorpus" prefWidth="32" buttonType="RAISED"
                                styleClass="button-raised, button-gray, no-focus, text-small-normal"/>
                     <Label styleClass="label-tooltip">
@@ -161,6 +150,10 @@
                     </StackPane>
                 </StackPane>
             </VBox>
+        </HBox>
+        <HBox maxWidth="Infinity" alignment="CENTER">
+            <JFXButton text="SAVE CONFIGURATIONS" onAction="#saveConfigurations" buttonType="RAISED"
+                       styleClass="button-raised, button-gray, no-focus, text-small-mediumr"/>
         </HBox>
     </VBox>
 </GridPane>

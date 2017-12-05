@@ -7,17 +7,9 @@ import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
-import javafx.geometry.Orientation;
-import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.control.Label;
-import javafx.scene.control.Separator;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.StackPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.Pane;
@@ -32,19 +24,20 @@ public class AnnotationDropBox extends StackPane {
     private static Logger logger = LogManager.getLogger();
     private static final double ANIMATION_DURATION = 200.0d;
 
-    @FXML private GridPane annotationGrid;
-    @FXML private HBox targetBox;
+    @FXML private HBox annotationNameBox;
     @FXML private VBox contentBox;
-    @FXML private HBox referencesBox;
+    @FXML private HBox sourcesBox;
     @FXML private VBox collapsibleBox;
     @FXML private Pane collapsiblePane;
+    @FXML private VBox collapsibleContentBox;
     @FXML private JFXTextField matchNameTextField;
+    AnnotationDropBoxRow shortNameRow = new AnnotationDropBoxRow("Short Name");
+    AnnotationDropBoxRow beginAttrRow = new AnnotationDropBoxRow("Begin Attr");
+    AnnotationDropBoxRow endAttrRow = new AnnotationDropBoxRow("End Attr");
 
     private List<String> systemOptions = new ArrayList<>();
     private List<String> referenceOptions = new ArrayList<>();
-    private List<String> lockedRows = new ArrayList<>();
 
-    private int rowCount = 0;
     private double expandedHeight = 0.0d;
     private boolean isCollapsed = false;
 
@@ -73,7 +66,8 @@ public class AnnotationDropBox extends StackPane {
         setOnDragDropped(event -> {
             if (ConfigurationController.draggedAnnotation != null) {
                 AnnotationTypeDraggable draggable = ConfigurationController.draggedAnnotation;
-                referencesBox.getChildren().add(new ReferencedDocument(referencesBox, draggable));
+
+                sourcesBox.getChildren().add(new ReferencedDocument(sourcesBox, draggable));
                 draggable.hide();
 
                 if (ConfigurationController.draggableAnnotationCorpus.equals("system")) {
@@ -92,93 +86,40 @@ public class AnnotationDropBox extends StackPane {
             }
         });
 
-        setRowCount();
+        contentBox.getChildren().add(shortNameRow);
+        contentBox.getChildren().add(beginAttrRow);
+        contentBox.getChildren().add(endAttrRow);
     }
 
-    private void setRowCount() {
-        for (Node node: annotationGrid.getChildren()) {
-            int row = GridPane.getRowIndex(node);
-            if (row > rowCount) {
-                rowCount = row;
+    /**
+     * An annotation drop box is valid if it has a Parent Name.  Its attributes are valid if they are unique, but
+     * these are checked whenever each value is input.
+     * @return Returns true if the Parent Name is not empty
+     */
+    public boolean isValid() {
+        return !(matchNameTextField.getText().equals("") ||
+                shortNameRow.getAttributeRow().systemValue.equals("") ||
+                beginAttrRow.getAttributeRow().systemValue.equals("") ||
+                endAttrRow.getAttributeRow().systemValue.equals(""));
+    }
+
+    public List<Attribute> getAttributes() {
+        List<Attribute> attributes = new ArrayList<>();
+        for (Node child: contentBox.getChildren()) {
+            AnnotationDropBoxRow row = (AnnotationDropBoxRow)child;
+            if (row != null) {
+                attributes.add(row.getAttributeRow());
             }
         }
+        return attributes;
     }
 
-    private Label getRemoveButton() {
-        Label button = new Label();
-        button.setText("");
-        button.getStyleClass().add("button-delete");
-
-        ImageView view = new ImageView(new Image("/img/icons8/delete.png"));
-        view.setFitHeight(16.0d);
-        view.setPreserveRatio(true);
-        view.setPickOnBounds(true);
-        button.setGraphic(view);
-
-        button.setId(Integer.toString(rowCount));
-        return button;
-    }
-
-    private Label getLockButton() {
-        Label button = new Label();
-        button.setText("");
-        button.getStyleClass().add("button-lock");
-
-        ImageView view = new ImageView(new Image("/img/icons8/lock.png"));
-        view.setFitHeight(16.0d);
-        view.setPreserveRatio(true);
-        view.setPickOnBounds(true);
-        button.setGraphic(view);
-
-        button.setId(Integer.toString(rowCount));
-        button.setOnMouseClicked(event -> {
-            // toggle lock
-            if (lockedRows.contains(button.getId())) {
-                lockedRows.remove(button.getId());
-                button.getStyleClass().remove("button-locked");
-            } else {
-                lockedRows.add(button.getId());
-                button.getStyleClass().add("button-locked");
-            }
-        });
-
-        return button;
+    public String getName() {
+        return matchNameTextField.getText();
     }
 
     @FXML private void addRow() {
-        JFXTextField attributeName = new JFXTextField();
-        JFXTextField systemField = new JFXTextField();
-        JFXTextField referenceField = new JFXTextField();
-        HBox separatorBox = new HBox(new Separator(Orientation.VERTICAL));
-        separatorBox.setPadding(new Insets(0, 6, 0, 9));
-
-        HBox buttonsBox = new HBox();
-        buttonsBox.setAlignment(Pos.CENTER_RIGHT);
-        buttonsBox.setSpacing(10.0d);
-
-        Label removeButton = getRemoveButton();
-        removeButton.setOnMouseClicked(event -> {
-            annotationGrid.getChildren().removeAll(attributeName, systemField, separatorBox, referenceField, buttonsBox);
-            if (lockedRows.contains(removeButton.getId())) {
-                lockedRows.remove(removeButton.getId());
-            }
-        });
-        buttonsBox.getChildren().addAll(getLockButton(), removeButton);
-
-        attributeName.getStyleClass().add("text-medium-normal");
-        systemField.getStyleClass().add("text-medium-normal");
-        referenceField.getStyleClass().add("text-medium-normal");
-
-        attributeName.setPromptText("Attribute Name");
-        systemField.setPromptText("attribute value (sys)");
-        referenceField.setPromptText("attribute value (ref)");
-
-        rowCount++;
-        annotationGrid.add(attributeName, 0, rowCount);
-        annotationGrid.add(systemField, 1, rowCount);
-        annotationGrid.add(separatorBox, 2, rowCount);
-        annotationGrid.add(referenceField, 3, rowCount);
-        annotationGrid.add(buttonsBox, 4, rowCount);
+        contentBox.getChildren().add(new AnnotationDropBoxRow());
     }
 
     @FXML private void collapseBox() {
@@ -199,17 +140,17 @@ public class AnnotationDropBox extends StackPane {
             minHeightKeysBox = new KeyValue(collapsibleBox.minHeightProperty(), expandedHeight);
             maxHeightKeysBox = new KeyValue(collapsibleBox.maxHeightProperty(), expandedHeight);
             collapseTimeline.setOnFinished(event -> {
-                contentBox.setVisible(true);
+                collapsibleContentBox.setVisible(true);
                 matchNameTextField.setEditable(true);
             });
         } else {
-            contentBox.setVisible(false);
+            collapsibleContentBox.setVisible(false);
             matchNameTextField.setEditable(false);
             expandedHeight = getHeight();
-            minHeightKeysPane = new KeyValue(collapsiblePane.minHeightProperty(), targetBox.getHeight() * 2.0d);
-            maxHeightKeysPane = new KeyValue(collapsiblePane.maxHeightProperty(), targetBox.getHeight() * 2.0d);
-            minHeightKeysBox = new KeyValue(collapsibleBox.minHeightProperty(), targetBox.getHeight() * 2.0d);
-            maxHeightKeysBox = new KeyValue(collapsibleBox.maxHeightProperty(), targetBox.getHeight() * 2.0d);
+            minHeightKeysPane = new KeyValue(collapsiblePane.minHeightProperty(), annotationNameBox.getHeight() * 2.0d);
+            maxHeightKeysPane = new KeyValue(collapsiblePane.maxHeightProperty(), annotationNameBox.getHeight() * 2.0d);
+            minHeightKeysBox = new KeyValue(collapsibleBox.minHeightProperty(), annotationNameBox.getHeight() * 2.0d);
+            maxHeightKeysBox = new KeyValue(collapsibleBox.maxHeightProperty(), annotationNameBox.getHeight() * 2.0d);
         }
 
         KeyFrame heightFrame = new KeyFrame(Duration.millis(ANIMATION_DURATION),
@@ -218,5 +159,25 @@ public class AnnotationDropBox extends StackPane {
         collapseTimeline.getKeyFrames().add(heightFrame);
         collapseTimeline.play();
         isCollapsed = !isCollapsed;
+    }
+
+    @FXML private void removeBox() {
+        VBox parent = (VBox)getParent();
+        parent.getChildren().remove(this);
+    }
+
+    public static class Attribute {
+        public String name;
+        public String systemValue;
+        public String referenceValue;
+        public boolean isLocked;
+
+        Attribute(String attributeName, String system, String reference, boolean locked) {
+            name = attributeName;
+            systemValue = system;
+            referenceValue = reference;
+
+            isLocked = locked;
+        }
     }
 }

@@ -7,8 +7,6 @@
 <?import javafx.scene.layout.HBox?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.scene.control.Separator?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
 <?import com.jfoenix.controls.JFXButton?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.image.Image?>
@@ -18,69 +16,33 @@
          xmlns:fx="http://javafx.com/fxml/1" alignment="TOP_CENTER">
     <Pane fx:id="collapsiblePane" styleClass="draggable"/>
     <VBox fx:id="collapsibleBox" spacing="10" alignment="TOP_CENTER">
-        <HBox fx:id="targetBox" spacing="15">
+        <HBox fx:id="annotationNameBox" spacing="15" maxWidth="Infinity">
             <Label text="Annotation Name (Parent):" styleClass="text-medium-bold" alignment="CENTER_RIGHT" maxHeight="Infinity"/>
             <JFXTextField fx:id="matchNameTextField" promptText="name" styleClass="text-medium-normal"/>
-            <Label onMouseClicked="#collapseBox" alignment="CENTER_RIGHT">
-                <graphic>
-                    <ImageView fitHeight="12" fitWidth="12" preserveRatio="true" pickOnBounds="true">
-                        <Image url="/img/icons8/back.png"/>
-                    </ImageView>
-                </graphic>
-            </Label>
+            <HBox spacing="15" maxWidth="Infinity" alignment="CENTER_RIGHT">
+                <Label onMouseClicked="#collapseBox" alignment="CENTER_RIGHT" styleClass="button-lock">
+                    <graphic>
+                        <ImageView fitHeight="12" fitWidth="12" preserveRatio="true" pickOnBounds="true">
+                            <Image url="/img/icons8/back.png"/>
+                        </ImageView>
+                    </graphic>
+                </Label>
+                <Label onMouseClicked="#removeBox" alignment="CENTER_RIGHT" styleClass="button-delete">
+                    <graphic>
+                        <ImageView fitHeight="12" preserveRatio="true" pickOnBounds="true">
+                            <Image url="/img/icons8/delete.png"/>
+                        </ImageView>
+                    </graphic>
+                </Label>
+            </HBox>
         </HBox>
-        <VBox fx:id="contentBox" spacing="10">
-            <Separator maxWidth="Infinity"/>
-            <GridPane fx:id="annotationGrid" vgap="18" hgap="10">
-                <columnConstraints>
-                    <ColumnConstraints percentWidth="18"/>
-                    <ColumnConstraints percentWidth="34"/>
-                    <ColumnConstraints/>
-                    <ColumnConstraints percentWidth="34"/>
-                    <ColumnConstraints/>
-                </columnConstraints>
-
-                <!-- Follow this "template" (but not really a template) when adding rows -->
-                <Label text="Short Name:" styleClass="text-medium-normal" alignment="CENTER_RIGHT"
-                       GridPane.rowIndex="0" GridPane.columnIndex="0" maxHeight="Infinity"/>
-                <JFXTextField promptText="parent name (sys)" styleClass="text-medium-normal"
-                              GridPane.rowIndex="0" GridPane.columnIndex="1"/>
-                <HBox GridPane.rowIndex="0" GridPane.columnIndex="2" alignment="CENTER">
-                    <Separator orientation="VERTICAL"/>
-                    <padding>
-                        <Insets left="9" right="6"/>
-                    </padding>
-                </HBox>
-                <JFXTextField promptText="parent name (ref)" styleClass="text-medium-normal"
-                              GridPane.rowIndex="0" GridPane.columnIndex="3"/>
-                <!-- end "template" -->
-
-                <Label text="Begin Attr:" styleClass="text-medium-normal" alignment="CENTER_RIGHT"
-                       GridPane.rowIndex="1" GridPane.columnIndex="0" maxHeight="Infinity"/>
-                <JFXTextField promptText="begin (sys)" styleClass="text-medium-normal"
-                              GridPane.rowIndex="1" GridPane.columnIndex="1"/>
-                <HBox GridPane.rowIndex="1" GridPane.columnIndex="2" alignment="CENTER">
-                    <Separator orientation="VERTICAL"/>
-                    <padding>
-                        <Insets left="9" right="6"/>
-                    </padding>
-                </HBox>
-                <JFXTextField promptText="begin (ref)" styleClass="text-medium-normal"
-                              GridPane.rowIndex="1" GridPane.columnIndex="3"/>
-
-                <Label text="End Attr:" styleClass="text-medium-normal" alignment="CENTER_RIGHT"
-                       GridPane.rowIndex="2" GridPane.columnIndex="0" maxHeight="Infinity"/>
-                <JFXTextField promptText="end (sys)" styleClass="text-medium-normal"
-                              GridPane.rowIndex="2" GridPane.columnIndex="1"/>
-                <HBox GridPane.rowIndex="2" GridPane.columnIndex="2" alignment="CENTER">
-                    <Separator orientation="VERTICAL"/>
-                    <padding>
-                        <Insets left="9" right="6"/>
-                    </padding>
-                </HBox>
-                <JFXTextField promptText="end (ref)" styleClass="text-medium-normal"
-                              GridPane.rowIndex="2" GridPane.columnIndex="3"/>
-            </GridPane>
+        <VBox fx:id="collapsibleContentBox" spacing="10">
+            <VBox fx:id="contentBox" spacing="10"/>
+            <Separator maxWidth="Infinity" valignment="BOTTOM">
+                <padding>
+                    <Insets top="15" bottom="-15"/>
+                </padding>
+            </Separator>
             <HBox alignment="CENTER_RIGHT">
                 <JFXButton onAction="#addRow" styleClass="button-raised, button-gray, no-focus" buttonType="RAISED">
                     <graphic>
@@ -93,7 +55,7 @@
                     <Insets top="25" right="15"/>
                 </padding>
             </HBox>
-            <HBox spacing="5" fx:id="referencesBox">
+            <HBox spacing="5" fx:id="sourcesBox">
                 <Label text="Sources:" styleClass="text-small-normal"/>
             </HBox>
         </VBox>

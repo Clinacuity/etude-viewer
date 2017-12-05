@@ -26,6 +26,7 @@ public class AnnotationTypeDraggable extends StackPane {
     @FXML private Label annotationLabel;
     private String annotationName;
     private List<String> attributes = new ArrayList<>();
+    private String xpath;
 
     private String corpusType = "";
     String getCorpusType() { return corpusType; }
