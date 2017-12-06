@@ -38,6 +38,9 @@ public class AnnotationDropBox extends StackPane {
     private AnnotationDropBoxRow shortNameRow = new AnnotationDropBoxRow("Short Name");
     private AnnotationDropBoxRow beginAttrRow = new AnnotationDropBoxRow("Begin Attr");
     private AnnotationDropBoxRow endAttrRow = new AnnotationDropBoxRow("End Attr");
+    private List<AnnotationDropBoxRow> attributeRowsList = new ArrayList<>();
+    private List<ReferencedDocument> systemSources = new ArrayList<>();
+    private List<ReferencedDocument> referenceSources = new ArrayList<>();
     private List<String> systemOptions = new ArrayList<>();
     private List<String> referenceOptions = new ArrayList<>();
     private double expandedHeight = 0.0d;
@@ -69,7 +72,14 @@ public class AnnotationDropBox extends StackPane {
             if (ConfigurationBuilderController.draggedAnnotation != null) {
                 AnnotationTypeDraggable draggable = ConfigurationBuilderController.draggedAnnotation;
 
-                sourcesBox.getChildren().add(new ReferencedDocument(sourcesBox, draggable));
+                ReferencedDocument source = new ReferencedDocument(this, draggable);
+                if (source.getCorpus() == ConfigurationBuilderController.CorpusType.SYSTEM) {
+                    systemSources.add(source);
+                } else {
+                    referenceSources.add(source);
+                }
+
+                sourcesBox.getChildren().add(source);
                 draggable.hide();
 
                 if (ConfigurationBuilderController.draggableAnnotationCorpus.equals(ConfigurationBuilderController.CorpusType.SYSTEM)) {
@@ -85,12 +95,20 @@ public class AnnotationDropBox extends StackPane {
                         }
                     }
                 }
+
+                attributeRowsList.forEach(row -> {
+                    row.updateOptions(systemOptions, referenceOptions);
+                    logger.error(row.getAttribute().name);
+                });
             }
         });
 
         contentBox.getChildren().add(shortNameRow);
         contentBox.getChildren().add(beginAttrRow);
         contentBox.getChildren().add(endAttrRow);
+
+        systemOptions.add("");
+        referenceOptions.add("");
     }
 
     /**
@@ -103,16 +121,16 @@ public class AnnotationDropBox extends StackPane {
         for (Node child: contentBox.getChildren()) {
             AnnotationDropBoxRow row = (AnnotationDropBoxRow)child;
             if (row != null) {
-                if (attributes.contains(row.getAttributeRow().name)) {
-                    logger.warn("Attribute names are not unique.  <{}> is repeated", row.getAttributeRow().name);
+                if (attributes.contains(row.getAttribute().name)) {
+                    logger.warn("Attribute names are not unique.  <{}> is repeated", row.getAttribute().name);
                     WarningModal.createModal("Error in names",
                             "The names of attributes have to be unique, but the name \""
-                                    + row.getAttributeRow().name
+                                    + row.getAttribute().name
                                     + "\" was repeated.");
                     WarningModal.show();
                     return false;
                 } else {
-                    attributes.add(row.getAttributeRow().name);
+                    attributes.add(row.getAttribute().name);
                 }
             }
         }
@@ -142,15 +160,15 @@ public class AnnotationDropBox extends StackPane {
     }
 
     public boolean hasSystemAttributes() {
-        return (shortNameRow.getAttributeRow().systemValue.length() > 0
-                && beginAttrRow.getAttributeRow().systemValue.length() > 0
-                && endAttrRow.getAttributeRow().systemValue.length() > 0);
+        return (shortNameRow.getAttribute().systemValue.length() > 0
+                && beginAttrRow.getAttribute().systemValue.length() > 0
+                && endAttrRow.getAttribute().systemValue.length() > 0);
     }
 
     public boolean hasReferenceAttributes() {
-        return (shortNameRow.getAttributeRow().referenceValue.length() > 0
-                && beginAttrRow.getAttributeRow().referenceValue.length() > 0
-                && endAttrRow.getAttributeRow().referenceValue.length() > 0);
+        return (shortNameRow.getAttribute().referenceValue.length() > 0
+                && beginAttrRow.getAttribute().referenceValue.length() > 0
+                && endAttrRow.getAttribute().referenceValue.length() > 0);
     }
 
     public List<String> getSystemXPaths() {
@@ -166,7 +184,7 @@ public class AnnotationDropBox extends StackPane {
         for (Node child: contentBox.getChildren()) {
             AnnotationDropBoxRow row = (AnnotationDropBoxRow)child;
             if (row != null) {
-                attributes.add(row.getAttributeRow());
+                attributes.add(row.getAttribute());
             }
         }
         return attributes;
@@ -174,6 +192,31 @@ public class AnnotationDropBox extends StackPane {
 
     public String getName() {
         return matchNameTextField.getText();
+    }
+
+    void removeSource(ReferencedDocument sourceToRemove) {
+        if (sourceToRemove.getCorpus() == ConfigurationBuilderController.CorpusType.SYSTEM) {
+            systemSources.remove(sourceToRemove);
+            systemOptions.clear();
+
+            systemSources.forEach(source -> source.getSourceAttributes().forEach(attribute -> {
+                if (!systemOptions.contains(attribute)) {
+                    systemOptions.add(attribute);
+                }
+            }));
+        } else {
+            referenceSources.remove(sourceToRemove);
+            referenceOptions.clear();
+
+            referenceSources.forEach(source -> source.getSourceAttributes().forEach(attribute -> {
+                if (!referenceOptions.contains(attribute)) {
+                    referenceOptions.add(attribute);
+                }
+            }));
+        }
+
+        attributeRowsList.forEach(row -> row.updateOptions(systemOptions, referenceOptions));
+        sourcesBox.getChildren().remove(sourceToRemove);
     }
 
     private List<String> getXpathList(ConfigurationBuilderController.CorpusType corpus) {
@@ -194,7 +237,10 @@ public class AnnotationDropBox extends StackPane {
     }
 
     @FXML private void addRow() {
-        contentBox.getChildren().add(new AnnotationDropBoxRow());
+        AnnotationDropBoxRow newRow = new AnnotationDropBoxRow();
+        attributeRowsList.add(newRow);
+        newRow.updateOptions(systemOptions, referenceOptions);
+        contentBox.getChildren().add(newRow);
     }
 
     @FXML private void collapseBox() {

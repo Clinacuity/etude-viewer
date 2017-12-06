@@ -10,17 +10,18 @@ import javafx.scene.layout.VBox;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import java.io.IOException;
+import java.util.List;
 
 class ReferencedDocument extends HBox {
     private static Logger logger = LogManager.getLogger();
 
-    private VBox parent;
+    private AnnotationDropBox parent;
     private AnnotationTypeDraggable sourceAnnotation;
     @FXML private Label removeButton;
     @FXML private VBox image;
     @FXML private JFXTextField xpathTextField;
 
-    ReferencedDocument(VBox targetBox, AnnotationTypeDraggable source) {
+    ReferencedDocument(AnnotationDropBox targetBox, AnnotationTypeDraggable source) {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/controls/ReferencedDocument.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
@@ -33,7 +34,7 @@ class ReferencedDocument extends HBox {
         initialize(targetBox, source);
     }
 
-    private void initialize(VBox targetBox, AnnotationTypeDraggable source) {
+    private void initialize(AnnotationDropBox targetBox, AnnotationTypeDraggable source) {
         sourceAnnotation = source;
         parent = targetBox;
 
@@ -70,12 +71,15 @@ class ReferencedDocument extends HBox {
 
     @FXML private void remove() {
         sourceAnnotation.show();
+        parent.removeSource(this);
         parent.getChildren().remove(this);
     }
 
     String getXpath() {
         return xpathTextField.getText();
     }
+
+    List<String> getSourceAttributes() { return sourceAnnotation.getAttributes(); }
 
     public ConfigurationBuilderController.CorpusType getCorpus() {
         return sourceAnnotation.getCorpusType();
