@@ -9,6 +9,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.image.Image?>
+<?import com.jfoenix.controls.JFXComboBox?>
 <fx:root type="javafx.scene.layout.HBox"
          xmlns="http://javafx.com/javafx/8.0.112"
          xmlns:fx="http://javafx.com/fxml/1"
@@ -20,11 +21,17 @@
             <Insets right="10"/>
         </padding>
     </StackPane>
-    <JFXTextField fx:id="sysValue" promptText="parent name (sys)" styleClass="text-medium-normal" minWidth="175"/>
+    <StackPane>
+        <JFXComboBox fx:id="sysValuesCombo" styleClass="text-medium-normal" minWidth="175"/>
+        <JFXTextField fx:id="sysValue" promptText="parent name (sys)" styleClass="text-medium-normal" minWidth="175"/>
+    </StackPane>
     <HBox alignment="CENTER">
         <Separator orientation="VERTICAL"/>
     </HBox>
-    <JFXTextField fx:id="refValue" promptText="parent name (ref)" styleClass="text-medium-normal" minWidth="175"/>
+    <StackPane>
+        <JFXComboBox fx:id="refValuesCombo" styleClass="text-medium-normal" minWidth="175"/>
+        <JFXTextField fx:id="refValue" promptText="parent name (ref)" styleClass="text-medium-normal" minWidth="175"/>
+    </StackPane>
     <HBox spacing="10" alignment="CENTER">
         <Label fx:id="lockButton" styleClass="button-lock" onMouseClicked="#toggleLock">
             <graphic>
