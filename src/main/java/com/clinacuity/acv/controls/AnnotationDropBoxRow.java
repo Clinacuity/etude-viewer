@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -25,6 +26,7 @@ class AnnotationDropBoxRow extends HBox {
     @FXML private Label lockButton;
     @FXML private Label removeButton;
     private boolean locked = false;
+    private boolean requiredAttribute = true;
 
     AnnotationDropBoxRow() {
         this("");
@@ -49,6 +51,7 @@ class AnnotationDropBoxRow extends HBox {
             attributeLabel.setVisible(false);
             sysValue.setVisible(false);
             refValue.setVisible(false);
+            requiredAttribute = false;
         } else {
             attributeLabel.setText(name);
             attributeName.setVisible(false);
@@ -73,12 +76,41 @@ class AnnotationDropBoxRow extends HBox {
     }
 
     AnnotationDropBox.Attribute getAttribute() {
-        String name = attributeName.isVisible() ? attributeName.getText() : attributeLabel.getText();
+        String name;
+        String system;
+        String reference;
 
-        return new AnnotationDropBox.Attribute(name,
-                sysValuesCombo.getSelectionModel().getSelectedItem(),
-                refValuesCombo.getSelectionModel().getSelectedItem(),
-                locked);
+        if (requiredAttribute) {
+            name = attributeLabel.getText();
+            system = sysValue.getText();
+            reference = refValue.getText();
+        } else {
+            name = attributeName.getText();
+            system = sysValuesCombo.getSelectionModel().getSelectedItem();
+            reference = refValuesCombo.getSelectionModel().getSelectedItem();
+        }
+
+        return new AnnotationDropBox.Attribute(name, system, reference, locked);
+    }
+
+    void updateSystemValue(String value) {
+        if (requiredAttribute) {
+            sysValue.setText(value);
+        } else {
+            if (sysValuesCombo.getItems().contains(value)) {
+                sysValuesCombo.getSelectionModel().select(value);
+            }
+        }
+    }
+
+    void updateReferenceValue(String value) {
+        if (requiredAttribute) {
+            refValue.setText(value);
+        } else {
+            if (refValuesCombo.getItems().contains(value)) {
+                refValuesCombo.getSelectionModel().select(value);
+            }
+        }
     }
 
     void updateOptions(List<String> sysOptions, List<String> refOptions) {

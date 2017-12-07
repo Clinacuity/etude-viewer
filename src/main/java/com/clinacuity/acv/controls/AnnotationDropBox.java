@@ -18,10 +18,7 @@ import javafx.util.Duration;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class AnnotationDropBox extends StackPane {
     private static Logger logger = LogManager.getLogger();
@@ -68,40 +65,7 @@ public class AnnotationDropBox extends StackPane {
             event.consume();
         });
 
-        setOnDragDropped(event -> {
-            if (ConfigurationBuilderController.draggedAnnotation != null) {
-                AnnotationTypeDraggable draggable = ConfigurationBuilderController.draggedAnnotation;
-
-                ReferencedDocument source = new ReferencedDocument(this, draggable);
-                if (source.getCorpus() == ConfigurationBuilderController.CorpusType.SYSTEM) {
-                    systemSources.add(source);
-                } else {
-                    referenceSources.add(source);
-                }
-
-                sourcesBox.getChildren().add(source);
-                draggable.hide();
-
-                if (ConfigurationBuilderController.draggableAnnotationCorpus.equals(ConfigurationBuilderController.CorpusType.SYSTEM)) {
-                    for(String attribute: ConfigurationBuilderController.draggedAnnotation.getAttributes()) {
-                        if (!systemOptions.contains(attribute)) {
-                            systemOptions.add(attribute);
-                        }
-                    }
-                } else {
-                    for (String attribute: ConfigurationBuilderController.draggedAnnotation.getAttributes()) {
-                        if (!referenceOptions.contains(attribute)) {
-                            referenceOptions.add(attribute);
-                        }
-                    }
-                }
-
-                attributeRowsList.forEach(row -> {
-                    row.updateOptions(systemOptions, referenceOptions);
-                    logger.error(row.getAttribute().name);
-                });
-            }
-        });
+        setOnDragDropped(event -> addSource());
 
         contentBox.getChildren().add(shortNameRow);
         contentBox.getChildren().add(beginAttrRow);
@@ -194,6 +158,38 @@ public class AnnotationDropBox extends StackPane {
         return matchNameTextField.getText();
     }
 
+    private void addSource() {
+        if (ConfigurationBuilderController.draggedAnnotation != null) {
+            AnnotationTypeDraggable draggable = ConfigurationBuilderController.draggedAnnotation;
+
+            ReferencedDocument source = new ReferencedDocument(this, draggable);
+            if (source.getCorpus() == ConfigurationBuilderController.CorpusType.SYSTEM) {
+                systemSources.add(source);
+            } else {
+                referenceSources.add(source);
+            }
+
+            sourcesBox.getChildren().add(source);
+            draggable.hide();
+
+            if (ConfigurationBuilderController.draggableAnnotationCorpus.equals(ConfigurationBuilderController.CorpusType.SYSTEM)) {
+                for (String attribute : ConfigurationBuilderController.draggedAnnotation.getAttributes()) {
+                    if (!systemOptions.contains(attribute)) {
+                        systemOptions.add(attribute);
+                    }
+                }
+            } else {
+                for (String attribute : ConfigurationBuilderController.draggedAnnotation.getAttributes()) {
+                    if (!referenceOptions.contains(attribute)) {
+                        referenceOptions.add(attribute);
+                    }
+                }
+            }
+
+            updateRows();
+        }
+    }
+
     void removeSource(ReferencedDocument sourceToRemove) {
         if (sourceToRemove.getCorpus() == ConfigurationBuilderController.CorpusType.SYSTEM) {
             systemSources.remove(sourceToRemove);
@@ -215,8 +211,37 @@ public class AnnotationDropBox extends StackPane {
             }));
         }
 
-        attributeRowsList.forEach(row -> row.updateOptions(systemOptions, referenceOptions));
+        updateRows();
         sourcesBox.getChildren().remove(sourceToRemove);
+    }
+
+    private void updateRows() {
+        attributeRowsList.forEach(row -> row.updateOptions(systemOptions, referenceOptions));
+
+        // auto-fill begin and end rows
+        checkAutofill(beginAttrRow, Arrays.asList("begin", "start"));
+        checkAutofill(endAttrRow, Arrays.asList("end"));
+    }
+
+    private void checkAutofill(AnnotationDropBoxRow row, List<String> autofillValues) {
+        Attribute attribute = row.getAttribute();
+        if (attribute.systemValue.equals("")) {
+            for (int i = 0; i < autofillValues.size(); i++) {
+                if (systemOptions.contains(autofillValues.get(i))) {
+                    row.updateSystemValue(autofillValues.get(i));
+                    break;
+                }
+            }
+        }
+
+        if (attribute.referenceValue.equals("")) {
+            for (int i = 0; i < autofillValues.size(); i++) {
+                if (referenceOptions.contains(autofillValues.get(i))) {
+                    row.updateReferenceValue(autofillValues.get(i));
+                    break;
+                }
+            }
+        }
     }
 
     private List<String> getXpathList(ConfigurationBuilderController.CorpusType corpus) {
@@ -288,16 +313,15 @@ public class AnnotationDropBox extends StackPane {
     }
 
     public static class Attribute {
-        public String name;
+        public String name = "";
         boolean isLocked;
-        private String systemValue;
-        private String referenceValue;
+        private String systemValue = "";
+        private String referenceValue = "";
 
         Attribute(String attributeName, String system, String reference, boolean locked) {
             name = attributeName;
             systemValue = system;
             referenceValue = reference;
-
             isLocked = locked;
         }
 
