@@ -27,7 +27,7 @@
             <Insets topRightBottomLeft="15"/>
         </padding>
         <Label text="Configuration Builder" styleClass="text-header-one, underlined"/>
-        <HBox fx:id="mainBox" spacing="20" alignment="TOP_CENTER" maxHeight="Infinity">
+        <HBox spacing="20" alignment="TOP_CENTER" maxHeight="Infinity">
             <VBox spacing="10" alignment="TOP_CENTER">
                 <HBox spacing="10">
                     <JFXTextField fx:id="systemDirectoryTextField" styleClass="text-medium-normal" focusTraversable="false"
@@ -47,9 +47,14 @@
                 </HBox>
                 <StackPane>
                     <ScrollPane fx:id="systemDragScrollPane" styleClass="card-small" minHeight="300" hbarPolicy="NEVER">
-                        <VBox>
-                            <VBox fx:id="systemDraggableBox" spacing="8"/>
-                        </VBox>
+                        <StackPane maxWidth="Infinity">
+                            <VBox>
+                                <VBox fx:id="systemDraggableBox" spacing="8"/>
+                            </VBox>
+                            <padding>
+                                <Insets topRightBottomLeft="15"/>
+                            </padding>
+                        </StackPane>
                     </ScrollPane>
                     <StackPane fx:id="systemSpinner" styleClass="spinner-pane" visible="false">
                         <ProgressIndicator maxWidth="100" maxHeight="100"/>
@@ -84,22 +89,24 @@
                 </HBox>
                 <StackPane>
                     <ScrollPane fx:id="annotationScrollPane" styleClass="card-small" minHeight="300" hbarPolicy="NEVER">
-                        <VBox spacing="15">
-                            <VBox fx:id="annotationDropBox" spacing="8"/>
-                            <HBox alignment="BOTTOM_RIGHT">
-                                <JFXButton onAction="#addAnnotationDropBox" text="ADD MATCH"
-                                           styleClass="button-raised, button-gray, no-focus" buttonType="RAISED">
-                                    <graphic>
-                                        <ImageView fitHeight="24" preserveRatio="true" pickOnBounds="true">
-                                            <Image url="/img/icons8/plus.png"/>
-                                        </ImageView>
-                                    </graphic>
-                                </JFXButton>
-                            </HBox>
-                            <padding>
-                                <Insets topRightBottomLeft="20"/>
-                            </padding>
-                        </VBox>
+                        <StackPane>
+                            <VBox spacing="15">
+                                <VBox fx:id="annotationDropBox" spacing="8"/>
+                                <HBox alignment="BOTTOM_RIGHT">
+                                    <JFXButton onAction="#addAnnotationDropBox" text="ADD MATCH"
+                                               styleClass="button-raised, button-gray, no-focus" buttonType="RAISED">
+                                        <graphic>
+                                            <ImageView fitHeight="24" preserveRatio="true" pickOnBounds="true">
+                                                <Image url="/img/icons8/plus.png"/>
+                                            </ImageView>
+                                        </graphic>
+                                    </JFXButton>
+                                </HBox>
+                                <padding>
+                                    <Insets topRightBottomLeft="20"/>
+                                </padding>
+                            </VBox>
+                        </StackPane>
                     </ScrollPane>
                 </StackPane>
             </VBox>
@@ -133,10 +140,14 @@
                 </HBox>
                 <StackPane>
                     <ScrollPane fx:id="referenceDragScrollPane" styleClass="card-small" minHeight="300" hbarPolicy="NEVER">
-                        <VBox>
-
-                            <VBox fx:id="referenceDraggableBox" spacing="8"/>
-                        </VBox>
+                        <StackPane maxWidth="Infinity">
+                            <VBox>
+                                <VBox fx:id="referenceDraggableBox" spacing="8"/>
+                            </VBox>
+                            <padding>
+                                <Insets topRightBottomLeft="15"/>
+                            </padding>
+                        </StackPane>
                     </ScrollPane>
                     <StackPane fx:id="referenceSpinner" styleClass="spinner-pane" visible="false">
                         <ProgressIndicator maxWidth="100" maxHeight="100"/>
@@ -153,7 +164,7 @@
         </HBox>
         <HBox maxWidth="Infinity" alignment="CENTER">
             <JFXButton text="SAVE CONFIGURATIONS" onAction="#saveConfigurations" buttonType="RAISED"
-                       styleClass="button-raised, button-gray, no-focus, text-small-mediumr"/>
+                       styleClass="button-raised, button-gray, no-focus, text-small-medium"/>
         </HBox>
     </VBox>
 </GridPane>

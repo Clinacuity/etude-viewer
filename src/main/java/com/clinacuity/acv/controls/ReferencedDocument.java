@@ -43,12 +43,8 @@ class ReferencedDocument extends HBox {
     }
 
     private void setMouseEvents() {
-        setOnMouseEntered(event -> {
-            // highlight source
-        });
-        setOnMouseExited(event -> {
-            /// unhighlight source
-        });
+        setOnMouseEntered(event -> sourceAnnotation.setHighlight(true));
+        setOnMouseExited(event -> sourceAnnotation.setHighlight(false));
     }
 
     private void setSourceImageStyling() {

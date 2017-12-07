@@ -10,14 +10,12 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.DirectoryChooser;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.reactfx.util.FxTimer;
-
 import java.io.File;
 import java.net.URL;
 import java.time.Duration;
@@ -28,7 +26,6 @@ public class ConfigurationBuilderController implements Initializable {
     public static CorpusType draggableAnnotationCorpus;
     public static AnnotationTypeDraggable draggedAnnotation = null;
 
-    @FXML private HBox mainBox;
     @FXML private ScrollPane annotationScrollPane;
     @FXML private ScrollPane systemDragScrollPane;
     @FXML private ScrollPane referenceDragScrollPane;
@@ -47,17 +44,6 @@ public class ConfigurationBuilderController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         addAnnotationDropBox();
-        mainBox.widthProperty().addListener((obs, old, newValue) -> {
-            double dragBoxWidth = (newValue.doubleValue() - 60.0d) / 5.0d;
-            double dropBoxWidth = dragBoxWidth * 2.0d;
-
-            systemDraggableBox.setMinWidth(dragBoxWidth);
-            systemDraggableBox.setMaxWidth(dragBoxWidth);
-            annotationDropBox.setMinWidth(dropBoxWidth);
-            annotationDropBox.setMaxWidth(dropBoxWidth);
-            referenceDraggableBox.setMinWidth(dragBoxWidth);
-            referenceDraggableBox.setMaxWidth(dragBoxWidth);
-        });
     }
 
     @FXML private void pickSystemCorpus() {
