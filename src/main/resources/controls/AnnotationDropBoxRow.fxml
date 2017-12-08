@@ -16,22 +16,16 @@
          alignment="TOP_CENTER" spacing="15">
     <StackPane>
         <Label fx:id="attributeLabel" styleClass="text-medium-normal" maxWidth="120"/>
-        <JFXTextField fx:id="attributeName" promptText="parent name (sys)" styleClass="text-medium-normal" maxWidth="120"/>
+        <JFXComboBox fx:id="attributeDropdown" styleClass="text-medium-normal" minWidth="175"/>
         <padding>
             <Insets right="10"/>
         </padding>
     </StackPane>
-    <StackPane>
-        <JFXComboBox fx:id="sysValuesCombo" styleClass="text-medium-normal" minWidth="175"/>
-        <JFXTextField fx:id="sysValue" promptText="parent name (sys)" styleClass="text-medium-normal" minWidth="175"/>
-    </StackPane>
+    <JFXTextField fx:id="sysValue" promptText="parent name (sys)" styleClass="text-medium-normal" minWidth="175"/>
     <HBox alignment="CENTER">
         <Separator orientation="VERTICAL"/>
     </HBox>
-    <StackPane>
-        <JFXComboBox fx:id="refValuesCombo" styleClass="text-medium-normal" minWidth="175"/>
-        <JFXTextField fx:id="refValue" promptText="parent name (ref)" styleClass="text-medium-normal" minWidth="175"/>
-    </StackPane>
+    <JFXTextField fx:id="refValue" promptText="parent name (ref)" styleClass="text-medium-normal" minWidth="175"/>
     <HBox spacing="10" alignment="CENTER">
         <Label fx:id="lockButton" styleClass="button-lock" onMouseClicked="#toggleLock">
             <graphic>

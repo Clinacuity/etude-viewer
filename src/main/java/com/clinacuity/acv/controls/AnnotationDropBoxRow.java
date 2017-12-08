@@ -7,20 +7,18 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 class AnnotationDropBoxRow extends HBox {
     private static Logger logger = LogManager.getLogger();
 
     @FXML private Label attributeLabel;
-    @FXML private JFXTextField attributeName;
-    @FXML private JFXComboBox<String> sysValuesCombo;
-    @FXML private JFXComboBox<String> refValuesCombo;
+    @FXML private JFXComboBox<String> attributeDropdown;
     @FXML private JFXTextField sysValue;
     @FXML private JFXTextField refValue;
     @FXML private Label lockButton;
@@ -49,14 +47,10 @@ class AnnotationDropBoxRow extends HBox {
     private void initialize(String name) {
         if (name.equals("")) {
             attributeLabel.setVisible(false);
-            sysValue.setVisible(false);
-            refValue.setVisible(false);
             requiredAttribute = false;
         } else {
             attributeLabel.setText(name);
-            attributeName.setVisible(false);
-            sysValuesCombo.setVisible(false);
-            refValuesCombo.setVisible(false);
+            attributeDropdown.setVisible(false);
             lockButton.setVisible(false);
             removeButton.setVisible(false);
         }
@@ -76,19 +70,9 @@ class AnnotationDropBoxRow extends HBox {
     }
 
     AnnotationDropBox.Attribute getAttribute() {
-        String name;
-        String system;
-        String reference;
-
-        if (requiredAttribute) {
-            name = attributeLabel.getText();
-            system = sysValue.getText();
-            reference = refValue.getText();
-        } else {
-            name = attributeName.getText();
-            system = sysValuesCombo.getSelectionModel().getSelectedItem();
-            reference = refValuesCombo.getSelectionModel().getSelectedItem();
-        }
+        String name = requiredAttribute ? attributeLabel.getText() : attributeDropdown.getSelectionModel().getSelectedItem();
+        String system = sysValue.getText();
+        String reference = refValue.getText();
 
         return new AnnotationDropBox.Attribute(name, system, reference, locked);
     }
@@ -97,8 +81,8 @@ class AnnotationDropBoxRow extends HBox {
         if (requiredAttribute) {
             sysValue.setText(value);
         } else {
-            if (sysValuesCombo.getItems().contains(value)) {
-                sysValuesCombo.getSelectionModel().select(value);
+            if (sysValue.getText().equals("")) {
+                sysValue.setText(value);
             }
         }
     }
@@ -107,25 +91,29 @@ class AnnotationDropBoxRow extends HBox {
         if (requiredAttribute) {
             refValue.setText(value);
         } else {
-            if (refValuesCombo.getItems().contains(value)) {
-                refValuesCombo.getSelectionModel().select(value);
+            if (refValue.getText().equals("")) {
+                refValue.setText(value);
             }
         }
     }
 
     void updateOptions(List<String> sysOptions, List<String> refOptions) {
-        String selectedSystem = sysValuesCombo.getSelectionModel().getSelectedItem();
-        String selectedReference = sysValuesCombo.getSelectionModel().getSelectedItem();
+        List<String> values = new ArrayList<>();
+        sysOptions.forEach(option -> {
+            if (!values.contains(option)) {
+                values.add(option);
+            }
+        });
+        refOptions.forEach(option -> {
+            if (!values.contains(option)) {
+                values.add(option);
+            }
+        });
 
-        sysValuesCombo.setItems(FXCollections.observableList(sysOptions));
-        refValuesCombo.setItems(FXCollections.observableList(refOptions));
-
-        if (sysOptions.contains(selectedSystem)) {
-            sysValuesCombo.getSelectionModel().select(selectedSystem);
-        }
-
-        if (refOptions.contains(selectedReference)) {
-            refValuesCombo.getSelectionModel().select(selectedReference);
+        String selectedAttributeName = attributeDropdown.getSelectionModel().getSelectedItem();
+        attributeDropdown.setItems(FXCollections.observableList(values));
+        if (values.contains(selectedAttributeName)) {
+            attributeDropdown.getSelectionModel().select(selectedAttributeName);
         }
     }
 }
