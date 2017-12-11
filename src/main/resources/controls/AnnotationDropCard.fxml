@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+
+<fx:root type="javafx.scene.layout.StackPane"
+         xmlns="http://javafx.com/javafx/8.0.112"
+         xmlns:fx="http://javafx.com/fxml/1"
+         alignment="TOP_CENTER">
+    <VBox fx:id="targetBox" spacing="15">
+        <padding>
+            <Insets topRightBottomLeft="5"/>
+        </padding>
+    </VBox>
+    <Pane styleClass="card-small"/>
+</fx:root>
