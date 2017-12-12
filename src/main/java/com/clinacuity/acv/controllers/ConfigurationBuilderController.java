@@ -43,7 +43,7 @@ public class ConfigurationBuilderController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        addAnnotationDropBox();
+        FxTimer.runLater(Duration.ofMillis(250), this::addAnnotationDropBox);
     }
 
     @FXML private void pickSystemCorpus() {
@@ -108,8 +108,9 @@ public class ConfigurationBuilderController implements Initializable {
 
     @FXML private void addAnnotationDropBox() {
         AnnotationDropBox dropBox = new AnnotationDropBox();
+        annotationDropBox.setMinWidth(annotationScrollPane.getWidth() - 50.0d);
+        annotationDropBox.setMaxWidth(annotationScrollPane.getWidth() - 50.0d);
         annotationDropBox.getChildren().add(dropBox);
-        FxTimer.runLater(Duration.ofMillis(100), () -> annotationScrollPane.setVvalue(1.0d));
     }
 
     @FXML private void saveConfigurations() {

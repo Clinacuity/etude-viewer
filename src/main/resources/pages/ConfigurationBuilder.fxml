@@ -48,9 +48,7 @@
                 <StackPane>
                     <ScrollPane fx:id="systemDragScrollPane" styleClass="card-small" minHeight="300" hbarPolicy="NEVER">
                         <StackPane maxWidth="Infinity">
-                            <VBox>
-                                <VBox fx:id="systemDraggableBox" spacing="8"/>
-                            </VBox>
+                            <VBox fx:id="systemDraggableBox" spacing="8"/>
                             <padding>
                                 <Insets topRightBottomLeft="15"/>
                             </padding>
@@ -79,7 +77,7 @@
                     <Image url="/img/icons8/arrow_forward.png"/>
                 </ImageView>
             </VBox>
-            <VBox spacing="10">
+            <VBox spacing="10" alignment="TOP_CENTER" HBox.hgrow="ALWAYS">
                 <HBox spacing="10">
                     <Label text="Annotation Matches:" styleClass="text-medium-normal" alignment="BOTTOM_CENTER" maxHeight="Infinity">
                         <padding>
@@ -102,10 +100,10 @@
                                         </graphic>
                                     </JFXButton>
                                 </HBox>
-                                <padding>
-                                    <Insets topRightBottomLeft="20"/>
-                                </padding>
                             </VBox>
+                            <padding>
+                                <Insets topRightBottomLeft="20"/>
+                            </padding>
                         </StackPane>
                     </ScrollPane>
                 </StackPane>
@@ -141,9 +139,7 @@
                 <StackPane>
                     <ScrollPane fx:id="referenceDragScrollPane" styleClass="card-small" minHeight="300" hbarPolicy="NEVER">
                         <StackPane maxWidth="Infinity">
-                            <VBox>
-                                <VBox fx:id="referenceDraggableBox" spacing="8"/>
-                            </VBox>
+                            <VBox fx:id="referenceDraggableBox" spacing="8"/>
                             <padding>
                                 <Insets topRightBottomLeft="15"/>
                             </padding>
