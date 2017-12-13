@@ -31,7 +31,7 @@
             <VBox spacing="10" alignment="TOP_CENTER">
                 <HBox spacing="10">
                     <JFXTextField fx:id="systemDirectoryTextField" styleClass="text-medium-normal" focusTraversable="false"
-                                  promptText="System Corpus Directory" minWidth="300" maxWidth="350" editable="false"/>
+                                  promptText="System Corpus Directory" minWidth="250" maxWidth="375" editable="false"/>
                     <JFXButton text="..." onAction="#pickSystemCorpus" prefWidth="32" buttonType="RAISED"
                                styleClass="button-raised, button-gray, no-focus, text-small-normal"/>
                     <Label styleClass="label-tooltip">
@@ -44,6 +44,9 @@
                             </ImageView>
                         </graphic>
                     </Label>
+                    <padding>
+                        <Insets top="5" left="15" bottom="5"/>
+                    </padding>
                 </HBox>
                 <StackPane>
                     <ScrollPane fx:id="systemDragScrollPane" styleClass="card-small" minHeight="300" hbarPolicy="NEVER">
@@ -67,13 +70,13 @@
                 </StackPane>
             </VBox>
             <VBox spacing="40" alignment="CENTER">
-                <ImageView preserveRatio="true" fitHeight="32">
+                <ImageView preserveRatio="true" fitHeight="24">
                     <Image url="/img/icons8/arrow_forward.png"/>
                 </ImageView>
-                <ImageView preserveRatio="true" fitHeight="32">
+                <ImageView preserveRatio="true" fitHeight="24">
                     <Image url="/img/icons8/arrow_forward.png"/>
                 </ImageView>
-                <ImageView preserveRatio="true" fitHeight="32">
+                <ImageView preserveRatio="true" fitHeight="24">
                     <Image url="/img/icons8/arrow_forward.png"/>
                 </ImageView>
             </VBox>
@@ -109,20 +112,20 @@
                 </StackPane>
             </VBox>
             <VBox spacing="40" alignment="CENTER">
-                <ImageView preserveRatio="true" fitHeight="32">
+                <ImageView preserveRatio="true" fitHeight="24">
                     <Image url="/img/icons8/arrow_back.png"/>
                 </ImageView>
-                <ImageView preserveRatio="true" fitHeight="32">
+                <ImageView preserveRatio="true" fitHeight="24">
                     <Image url="/img/icons8/arrow_back.png"/>
                 </ImageView>
-                <ImageView preserveRatio="true" fitHeight="32">
+                <ImageView preserveRatio="true" fitHeight="24">
                     <Image url="/img/icons8/arrow_back.png"/>
                 </ImageView>
             </VBox>
             <VBox spacing="10" alignment="TOP_CENTER">
                 <HBox spacing="10">
                     <JFXTextField fx:id="referenceDirectoryTextField" styleClass="text-medium-normal" focusTraversable="false"
-                                  promptText="Reference Corpus Directory" minWidth="300" maxWidth="450" editable="false"/>
+                                  promptText="Reference Corpus Directory" minWidth="250" maxWidth="375" editable="false"/>
                     <JFXButton text="..." onAction="#pickReferenceCorpus" prefWidth="32" buttonType="RAISED"
                                styleClass="button-raised, button-gray, no-focus, text-small-normal"/>
                     <Label styleClass="label-tooltip">
@@ -135,6 +138,9 @@
                             </ImageView>
                         </graphic>
                     </Label>
+                    <padding>
+                        <Insets top="5" left="15" bottom="5"/>
+                    </padding>
                 </HBox>
                 <StackPane>
                     <ScrollPane fx:id="referenceDragScrollPane" styleClass="card-small" minHeight="300" hbarPolicy="NEVER">
