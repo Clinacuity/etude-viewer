@@ -64,6 +64,13 @@ public class ConfigurationBuilderController implements Initializable {
             });
             systemDraggableTask.setOnCancelled(event -> systemSpinner.setVisible(false));
             systemDraggableTask.setOnSucceeded(event -> {
+                double width = referenceDragScrollPane.getWidth() - 40.0d;
+                List<AnnotationTypeDraggable> items = systemDraggableTask.getValue();
+                items.forEach(item -> {
+                    item.setMinWidth(width);
+                    item.setMaxWidth(width);
+                });
+
                 systemSpinner.setVisible(false);
                 systemDraggableBox.getChildren().clear();
                 systemDraggableBox.getChildren().addAll(systemDraggableTask.getValue());
@@ -88,9 +95,16 @@ public class ConfigurationBuilderController implements Initializable {
             referenceDraggableTask = new CreateAnnotationDraggableTask(referenceDirectoryTextField.getText(), CorpusType.REFERENCE);
             referenceDraggableTask.setOnCancelled(event -> referenceSpinner.setVisible(false));
             referenceDraggableTask.setOnSucceeded(event -> {
+                double width = referenceDragScrollPane.getWidth() - 40.0d;
+                List<AnnotationTypeDraggable> items = referenceDraggableTask.getValue();
+                items.forEach(item -> {
+                    item.setMinWidth(width);
+                    item.setMaxWidth(width);
+                });
+
                 referenceSpinner.setVisible(false);
                 referenceDraggableBox.getChildren().clear();
-                referenceDraggableBox.getChildren().addAll(referenceDraggableTask.getValue());
+                referenceDraggableBox.getChildren().addAll(items);
             });
 
             new Thread(referenceDraggableTask).start();

@@ -31,7 +31,7 @@
             <VBox spacing="10" alignment="TOP_CENTER">
                 <HBox spacing="10">
                     <JFXTextField fx:id="systemDirectoryTextField" styleClass="text-medium-normal" focusTraversable="false"
-                                  promptText="System Corpus Directory" minWidth="250" maxWidth="375" editable="false"/>
+                                  promptText="System Corpus Directory" minWidth="250" editable="false"/>
                     <JFXButton text="..." onAction="#pickSystemCorpus" prefWidth="32" buttonType="RAISED"
                                styleClass="button-raised, button-gray, no-focus, text-small-normal"/>
                     <Label styleClass="label-tooltip">
@@ -53,7 +53,7 @@
                         <StackPane maxWidth="Infinity">
                             <VBox fx:id="systemDraggableBox" spacing="8"/>
                             <padding>
-                                <Insets topRightBottomLeft="15"/>
+                                <Insets topRightBottomLeft="5"/>
                             </padding>
                         </StackPane>
                     </ScrollPane>
@@ -125,7 +125,7 @@
             <VBox spacing="10" alignment="TOP_CENTER">
                 <HBox spacing="10">
                     <JFXTextField fx:id="referenceDirectoryTextField" styleClass="text-medium-normal" focusTraversable="false"
-                                  promptText="Reference Corpus Directory" minWidth="250" maxWidth="375" editable="false"/>
+                                  promptText="Reference Corpus Directory" minWidth="250" editable="false"/>
                     <JFXButton text="..." onAction="#pickReferenceCorpus" prefWidth="32" buttonType="RAISED"
                                styleClass="button-raised, button-gray, no-focus, text-small-normal"/>
                     <Label styleClass="label-tooltip">
@@ -144,10 +144,10 @@
                 </HBox>
                 <StackPane>
                     <ScrollPane fx:id="referenceDragScrollPane" styleClass="card-small" minHeight="300" hbarPolicy="NEVER">
-                        <StackPane maxWidth="Infinity">
+                        <StackPane maxWidth="Infinity" >
                             <VBox fx:id="referenceDraggableBox" spacing="8"/>
                             <padding>
-                                <Insets topRightBottomLeft="15"/>
+                                <Insets topRightBottomLeft="5"/>
                             </padding>
                         </StackPane>
                     </ScrollPane>

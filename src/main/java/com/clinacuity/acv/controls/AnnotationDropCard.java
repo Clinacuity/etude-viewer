@@ -17,6 +17,7 @@ import javafx.util.Duration;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import java.io.IOException;
+import java.util.List;
 
 public class AnnotationDropCard extends StackPane {
     private static Logger logger = LogManager.getLogger();
@@ -27,6 +28,7 @@ public class AnnotationDropCard extends StackPane {
     @FXML private Label cardLabel;
     @FXML private VBox targetBox;
     private AnnotationTypeDraggable source;
+    private List<String> attributes;
 
     public AnnotationDropCard(AnnotationTypeDraggable draggableSource) {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/controls/AnnotationDropCard.fxml"));
@@ -46,7 +48,11 @@ public class AnnotationDropCard extends StackPane {
     private void initialize() {
         cardLabel.setText(source.getLabelName());
 
-        source.getAttributes().forEach(attribute -> targetBox.getChildren().add(createAttributeRow(attribute)));
+        attributes = source.getAttributes();
+
+        checkBeginEndAttribtues();
+
+        source.getAttributes().forEach(attribute -> createAttributeRow(attribute, "", true));
 
         // TODO
         if (getCorpusType() == ConfigurationBuilderController.CorpusType.SYSTEM) {
@@ -56,7 +62,32 @@ public class AnnotationDropCard extends StackPane {
         }
     }
 
-    private VBox createAttributeRow(String attribute) {
+    private void checkBeginEndAttribtues() {
+        if (attributes.contains("begin")) {
+            attributes.remove("begin");
+            createAttributeRow("begin", "Begin Attr", false);
+        } else {
+            if (attributes.contains("start")) {
+                attributes.remove("start");
+                createAttributeRow("start", "Begin Attr", false);
+            }
+        }
+
+        if (attributes.contains("end")) {
+            attributes.remove("end");
+            createAttributeRow("end", "End Attr", false);
+        } else {
+            attributes.remove("finish");
+            createAttributeRow("finish", "End Attr", false);
+        }
+
+        if (attributes.contains("XPath")) {
+            attributes.remove("XPath");
+            createAttributeRow("XPath", "XPath", false);
+        }
+    }
+
+    private void createAttributeRow(String attribute, String initialValue, boolean includeButtons) {
         /*
         VBox
             StackPane
@@ -86,7 +117,7 @@ public class AnnotationDropCard extends StackPane {
         hideLabel.setGraphic(hideView);
         hideLabel.setOnMouseClicked(event -> logger.error("OK HIDE CLICKED"));
 
-        JFXTextField attributeValue = new JFXTextField();
+        JFXTextField attributeValue = new JFXTextField(initialValue);
         attributeValue.setPromptText("attribute value");
         attributeValue.getStyleClass().add("text-medium-normal");
 
@@ -97,8 +128,12 @@ public class AnnotationDropCard extends StackPane {
         buttonBox.setPadding(new Insets(3.0d, 3.0d, 0.0d, 0.0d));
 
         StackPane stack = new StackPane();
-        stack.getChildren().addAll(attributeLabel, buttonBox);
         stack.setAlignment(Pos.CENTER_LEFT);
+        if (includeButtons) {
+            stack.getChildren().addAll(attributeLabel, buttonBox);
+        } else {
+            stack.getChildren().add(attributeLabel);
+        }
 
         VBox attributeRow = new VBox();
         attributeRow.setSpacing(3.0d);
@@ -107,7 +142,7 @@ public class AnnotationDropCard extends StackPane {
 
         hideLabel.setOnMouseClicked(event -> targetBox.getChildren().remove(attributeRow));
 
-        return attributeRow;
+        targetBox.getChildren().add(attributeRow);
     }
 
     ConfigurationBuilderController.CorpusType getCorpusType() { return source.getCorpusType(); }
