@@ -77,8 +77,10 @@ public class AnnotationDropCard extends StackPane {
             attributes.remove("end");
             createAttributeRow("end", "End Attr", false);
         } else {
-            attributes.remove("finish");
-            createAttributeRow("finish", "End Attr", false);
+            if (attributes.contains("finish")) {
+                attributes.remove("finish");
+                createAttributeRow("finish", "End Attr", false);
+            }
         }
 
         if (attributes.contains("XPath")) {
@@ -146,4 +148,8 @@ public class AnnotationDropCard extends StackPane {
     }
 
     ConfigurationBuilderController.CorpusType getCorpusType() { return source.getCorpusType(); }
+
+    @FXML private void removeBox() {
+        ((VBox)getParent()).getChildren().remove(this);
+    }
 }

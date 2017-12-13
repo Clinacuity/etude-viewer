@@ -40,7 +40,6 @@ public class AnnotationDropBox extends StackPane {
     @FXML private JFXTextField matchNameTextField;
     @FXML private Label collapseButton;
 
-    private List<AnnotationDropBoxRow> attributeRowsList = new ArrayList<>();
     private List<AnnotationDropCard> systemSources = new ArrayList<>();
     private List<AnnotationDropCard> referenceSources = new ArrayList<>();
     private List<String> systemOptions = new ArrayList<>();
@@ -226,33 +225,31 @@ public class AnnotationDropBox extends StackPane {
     }
 
     private void updateRows() {
-        attributeRowsList.forEach(row -> row.updateOptions(systemOptions, referenceOptions));
-
         // auto-fill begin and end rows
 //        checkAutofill(beginAttrRow, Arrays.asList("begin", "start"));
 //        checkAutofill(endAttrRow, Arrays.asList("end"));
     }
 
-    private void checkAutofill(AnnotationDropBoxRow row, List<String> autofillValues) {
-        Attribute attribute = row.getAttribute();
-        if (attribute.systemValue.equals("")) {
-            for (int i = 0; i < autofillValues.size(); i++) {
-                if (systemOptions.contains(autofillValues.get(i))) {
-                    row.updateSystemValue(autofillValues.get(i));
-                    break;
-                }
-            }
-        }
-
-        if (attribute.referenceValue.equals("")) {
-            for (int i = 0; i < autofillValues.size(); i++) {
-                if (referenceOptions.contains(autofillValues.get(i))) {
-                    row.updateReferenceValue(autofillValues.get(i));
-                    break;
-                }
-            }
-        }
-    }
+//    private void checkAutofill(AnnotationDropBoxRow row, List<String> autofillValues) {
+//        Attribute attribute = row.getAttribute();
+//        if (attribute.systemValue.equals("")) {
+//            for (int i = 0; i < autofillValues.size(); i++) {
+//                if (systemOptions.contains(autofillValues.get(i))) {
+//                    row.updateSystemValue(autofillValues.get(i));
+//                    break;
+//                }
+//            }
+//        }
+//
+//        if (attribute.referenceValue.equals("")) {
+//            for (int i = 0; i < autofillValues.size(); i++) {
+//                if (referenceOptions.contains(autofillValues.get(i))) {
+//                    row.updateReferenceValue(autofillValues.get(i));
+//                    break;
+//                }
+//            }
+//        }
+//    }
 
     private List<String> getXpathList(ConfigurationBuilderController.CorpusType corpus) {
         List<String> xpathList = new ArrayList<>();
@@ -272,9 +269,9 @@ public class AnnotationDropBox extends StackPane {
     }
 
     @FXML private void addRow() {
-        AnnotationDropBoxRow newRow = new AnnotationDropBoxRow();
-        attributeRowsList.add(newRow);
-        newRow.updateOptions(systemOptions, referenceOptions);
+//        AnnotationDropBoxRow newRow = new AnnotationDropBoxRow();
+//        attributeRowsList.add(newRow);
+//        newRow.updateOptions(systemOptions, referenceOptions);
 //        contentBox.getChildren().add(newRow);
     }
 
