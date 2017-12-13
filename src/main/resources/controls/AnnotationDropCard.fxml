@@ -1,18 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.layout.StackPane?>
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.geometry.Insets?>
 
+<?import javafx.scene.layout.HBox?>
 <fx:root type="javafx.scene.layout.StackPane"
          xmlns="http://javafx.com/javafx/8.0.112"
          xmlns:fx="http://javafx.com/fxml/1"
          alignment="TOP_CENTER">
-    <VBox fx:id="targetBox" spacing="15">
-        <padding>
-            <Insets topRightBottomLeft="5"/>
-        </padding>
-    </VBox>
     <Pane styleClass="card-small"/>
+    <VBox spacing="10">
+        <HBox alignment="TOP_CENTER">
+            <Label fx:id="cardLabel" styleClass="text-medium-bold" alignment="TOP_CENTER">
+                <padding>
+                    <Insets topRightBottomLeft="3"/>
+                </padding>
+            </Label>
+        </HBox>
+        <Separator maxWidth="Infinity"/>
+        <VBox fx:id="targetBox" spacing="5"/>
+    </VBox>
 </fx:root>

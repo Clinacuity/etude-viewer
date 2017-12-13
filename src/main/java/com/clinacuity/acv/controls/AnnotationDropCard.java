@@ -4,6 +4,7 @@ import com.clinacuity.acv.controllers.ConfigurationBuilderController;
 import com.jfoenix.controls.JFXTextField;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
@@ -23,6 +24,7 @@ public class AnnotationDropCard extends StackPane {
     private static final double START_ROTATION = 0.0d;
     private static final double END_ROTATION = -90.0d;
 
+    @FXML private Label cardLabel;
     @FXML private VBox targetBox;
     private AnnotationTypeDraggable source;
 
@@ -42,14 +44,15 @@ public class AnnotationDropCard extends StackPane {
     }
 
     private void initialize() {
-        source.getAttributes().forEach(
-                attribute -> targetBox.getChildren().addAll(createAttributeRow(attribute), new Separator()));
+        cardLabel.setText(source.getLabelName());
+
+        source.getAttributes().forEach(attribute -> targetBox.getChildren().add(createAttributeRow(attribute)));
 
         // TODO
         if (getCorpusType() == ConfigurationBuilderController.CorpusType.SYSTEM) {
-            // add system card background
+            setStyle("-fx-background-color: rgba(70, 130, 180, 0.2);");
         } else {
-            // add reference card background
+            setStyle("-fx-background-color: rgba(255, 140, 0, 0.2);");
         }
     }
 
@@ -63,15 +66,9 @@ public class AnnotationDropCard extends StackPane {
                     Label -- hide
             JFXTextField -- attribute value
          */
-
-        VBox attributeRow = new VBox();
-        attributeRow.setSpacing(5.0d);
-
         Label attributeLabel = new Label(attribute);
         attributeLabel.getStyleClass().add("text-medium-normal");
-
-        HBox stackBox = new HBox();
-        stackBox.setAlignment(Pos.CENTER_RIGHT);
+        attributeLabel.setAlignment(Pos.CENTER_LEFT);
 
         Label lockLabel = new Label();
         lockLabel.getStyleClass().add("button-lock");
@@ -79,6 +76,7 @@ public class AnnotationDropCard extends StackPane {
         lockView.setPreserveRatio(true);
         lockView.setFitHeight(16.0d);
         lockLabel.setGraphic(lockView);
+        lockLabel.setOnMouseClicked(event -> logger.error("OK LOCK CLICKED"));
 
         Label hideLabel = new Label();
         hideLabel.getStyleClass().add("button-delete");
@@ -86,15 +84,29 @@ public class AnnotationDropCard extends StackPane {
         hideView.setPreserveRatio(true);
         hideView.setFitHeight(16.0d);
         hideLabel.setGraphic(hideView);
-
-        StackPane stack = new StackPane();
-        stack.getChildren().addAll(attributeLabel, stackBox);
+        hideLabel.setOnMouseClicked(event -> logger.error("OK HIDE CLICKED"));
 
         JFXTextField attributeValue = new JFXTextField();
         attributeValue.setPromptText("attribute value");
         attributeValue.getStyleClass().add("text-medium-normal");
 
+        HBox buttonBox = new HBox();
+        buttonBox.setSpacing(3.0d);
+        buttonBox.setAlignment(Pos.CENTER_RIGHT);
+        buttonBox.getChildren().addAll(lockLabel, hideLabel);
+        buttonBox.setPadding(new Insets(3.0d, 3.0d, 0.0d, 0.0d));
+
+        StackPane stack = new StackPane();
+        stack.getChildren().addAll(attributeLabel, buttonBox);
+        stack.setAlignment(Pos.CENTER_LEFT);
+
+        VBox attributeRow = new VBox();
+        attributeRow.setSpacing(3.0d);
+        attributeRow.setPadding(new Insets(5.0d));
         attributeRow.getChildren().addAll(stack, attributeValue);
+
+        hideLabel.setOnMouseClicked(event -> targetBox.getChildren().remove(attributeRow));
+
         return attributeRow;
     }
 

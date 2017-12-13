@@ -120,6 +120,8 @@ public class AnnotationTypeDraggable extends StackPane {
         collapsibleContentBox.getChildren().add(attributeBox);
     }
 
+    String getLabelName() { return annotationName; }
+
     List<String> getAttributes() {
         return attributes;
     }
