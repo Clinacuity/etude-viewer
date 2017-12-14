@@ -150,6 +150,7 @@ public class AnnotationDropCard extends StackPane {
     ConfigurationBuilderController.CorpusType getCorpusType() { return source.getCorpusType(); }
 
     @FXML private void removeBox() {
+        source.show();
         ((VBox)getParent()).getChildren().remove(this);
     }
 }
