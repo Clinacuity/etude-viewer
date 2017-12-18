@@ -1,7 +1,5 @@
 package com.clinacuity.acv.tasks;
 
-import com.clinacuity.acv.controllers.ConfigurationBuilderController;
-import com.clinacuity.acv.controls.AnnotationDropBox;
 import javafx.concurrent.Task;
 import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.LogManager;
@@ -14,22 +12,16 @@ import java.util.Map;
 public class SaveConfigurationTask extends Task<Void> {
     private static final Logger logger = LogManager.getLogger();
 
-    private Map<String, List<AnnotationDropBox.Attribute>> sysAnnotationMatchMap;
-    private Map<String, List<AnnotationDropBox.Attribute>> refAnnotationMatchMap;
-    private Map<String, List<String>> systemXpathList;
-    private Map<String, List<String>> referenceXpathList;
+    private Map<String, List<Map<String, String>>> sysAnnotationMatchMap;
+    private Map<String, List<Map<String, String>>> refAnnotationMatchMap;
     private File targetDirectory;
 
-    public SaveConfigurationTask(Map<String, List<AnnotationDropBox.Attribute>> sysList,
-                                 Map<String, List<String>> sysXPaths,
-                                 Map<String, List<AnnotationDropBox.Attribute>> refList,
-                                 Map<String, List<String>> refXPaths,
+    public SaveConfigurationTask(Map<String, List<Map<String, String>>> systemAnnotationMatches,
+                                 Map<String, List<Map<String, String>>> referenceAnnotationMatches,
                                  File directory) {
-        sysAnnotationMatchMap = sysList;
-        refAnnotationMatchMap = refList;
+        sysAnnotationMatchMap = systemAnnotationMatches;
+        refAnnotationMatchMap = referenceAnnotationMatches;
         targetDirectory = directory;
-        systemXpathList = sysXPaths;
-        referenceXpathList = refXPaths;
     }
 
     @Override
@@ -37,10 +29,9 @@ public class SaveConfigurationTask extends Task<Void> {
         File systemFile = getFile("/system.conf");
         File referenceFile = getFile("/reference.conf");
 
-        saveXPaths(systemFile, ConfigurationBuilderController.CorpusType.SYSTEM, sysAnnotationMatchMap, systemXpathList);
-        saveXPaths(referenceFile, ConfigurationBuilderController.CorpusType.REFERENCE, refAnnotationMatchMap, referenceXpathList);
+        saveConfiguration(systemFile, sysAnnotationMatchMap);
+        saveConfiguration(referenceFile, refAnnotationMatchMap);
 
-//        logger.error(getState());
         succeeded();
         return null;
     }
@@ -54,54 +45,23 @@ public class SaveConfigurationTask extends Task<Void> {
         return file;
     }
 
-    private void saveXPaths(File file,
-                            ConfigurationBuilderController.CorpusType corpusType,
-                            Map<String, List<AnnotationDropBox.Attribute>> annotationMatchMap,
-                            Map<String, List<String>> xpathMap) {
+    private void saveConfiguration(File file, Map<String, List<Map<String, String>>> annotationMatchMap) {
         StringBuilder text = new StringBuilder();
 
-        // missing raw attribute list if it contains XPath
-        xpathMap.forEach((annotationMatch, xpathList) -> {
-            List<AnnotationDropBox.Attribute> attributes = annotationMatchMap.get(annotationMatch);
-            xpathList.forEach(xpath -> {
-                text.append("[ ");
+        annotationMatchMap.forEach((annotationMatch, cards) -> {
+            for (int i = 0; i < cards.size(); i++) {
+                text.append("[ Item");
+                text.append(Integer.toString(i));
+                text.append(" ]\nParent Name: ");
                 text.append(annotationMatch);
-                text.append(" ]\nXPath: ");
-                text.append(xpath);
                 text.append("\n");
 
-                attributes.forEach(attribute -> {
-                    if (!attribute.name.equals("XPath")) {
-                        text.append(attribute.name);
-                        text.append(": ");
-                        text.append(attribute.getValue(corpusType));
-                        text.append("\n");
-                    }
-                });
-
-                text.append("\n");
-            });
-        });
-
-        annotationMatchMap.forEach((annotationMatch, attributes) -> {
-            boolean hasXPath = false;
-            for (AnnotationDropBox.Attribute attribute: attributes) {
-                if (attribute.name.equals("XPath") && attribute.getValue(corpusType).length() > 0) {
-                    hasXPath = true;
-                }
-            }
-            if (hasXPath) {
-                text.append("[ ");
-                text.append(annotationMatch);
-                text.append(" ]\n");
-
-                attributes.forEach(attribute -> {
-                    text.append(attribute.name);
+                cards.get(i).forEach((attribute, value) -> {
+                    text.append(attribute);
                     text.append(": ");
-                    text.append(attribute.getValue(corpusType));
+                    text.append(value);
                     text.append("\n");
                 });
-
                 text.append("\n");
             }
         });
