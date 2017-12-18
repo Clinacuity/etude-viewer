@@ -43,7 +43,7 @@ public class ConfigurationBuilderController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        addAnnotationDropBox();
+        FxTimer.runLater(Duration.ofMillis(250), this::addAnnotationDropBox);
     }
 
     @FXML private void pickSystemCorpus() {
@@ -64,6 +64,13 @@ public class ConfigurationBuilderController implements Initializable {
             });
             systemDraggableTask.setOnCancelled(event -> systemSpinner.setVisible(false));
             systemDraggableTask.setOnSucceeded(event -> {
+                double width = referenceDragScrollPane.getWidth() - 40.0d;
+                List<AnnotationTypeDraggable> items = systemDraggableTask.getValue();
+                items.forEach(item -> {
+                    item.setMinWidth(width);
+                    item.setMaxWidth(width);
+                });
+
                 systemSpinner.setVisible(false);
                 systemDraggableBox.getChildren().clear();
                 systemDraggableBox.getChildren().addAll(systemDraggableTask.getValue());
@@ -88,9 +95,16 @@ public class ConfigurationBuilderController implements Initializable {
             referenceDraggableTask = new CreateAnnotationDraggableTask(referenceDirectoryTextField.getText(), CorpusType.REFERENCE);
             referenceDraggableTask.setOnCancelled(event -> referenceSpinner.setVisible(false));
             referenceDraggableTask.setOnSucceeded(event -> {
+                double width = referenceDragScrollPane.getWidth() - 40.0d;
+                List<AnnotationTypeDraggable> items = referenceDraggableTask.getValue();
+                items.forEach(item -> {
+                    item.setMinWidth(width);
+                    item.setMaxWidth(width);
+                });
+
                 referenceSpinner.setVisible(false);
                 referenceDraggableBox.getChildren().clear();
-                referenceDraggableBox.getChildren().addAll(referenceDraggableTask.getValue());
+                referenceDraggableBox.getChildren().addAll(items);
             });
 
             new Thread(referenceDraggableTask).start();
@@ -108,8 +122,9 @@ public class ConfigurationBuilderController implements Initializable {
 
     @FXML private void addAnnotationDropBox() {
         AnnotationDropBox dropBox = new AnnotationDropBox();
+        annotationDropBox.setMinWidth(annotationScrollPane.getWidth() - 50.0d);
+        annotationDropBox.setMaxWidth(annotationScrollPane.getWidth() - 50.0d);
         annotationDropBox.getChildren().add(dropBox);
-        FxTimer.runLater(Duration.ofMillis(100), () -> annotationScrollPane.setVvalue(1.0d));
     }
 
     @FXML private void saveConfigurations() {

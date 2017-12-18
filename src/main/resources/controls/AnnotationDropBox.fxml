@@ -7,7 +7,6 @@
 <?import javafx.scene.layout.HBox?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.scene.control.Separator?>
-<?import com.jfoenix.controls.JFXButton?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.layout.StackPane?>
@@ -15,7 +14,7 @@
 <fx:root type="javafx.scene.layout.StackPane"
          xmlns="http://javafx.com/javafx/8.0.112"
          xmlns:fx="http://javafx.com/fxml/1" alignment="TOP_CENTER">
-    <Pane fx:id="collapsiblePane" styleClass="draggable"/>
+    <Pane fx:id="collapsiblePane" styleClass="draggable" />
     <VBox fx:id="collapsibleBox" spacing="10" alignment="TOP_CENTER">
         <StackPane>
             <HBox fx:id="annotationNameBox" spacing="15" maxWidth="Infinity">
@@ -40,37 +39,11 @@
             </HBox>
         </StackPane>
         <Separator maxWidth="Infinity"/>
-        <VBox fx:id="collapsibleContentBox" spacing="10">
-            <VBox fx:id="contentBox" spacing="10"/>
-            <HBox alignment="CENTER_RIGHT">
-                <JFXButton onAction="#addRow" styleClass="button-raised, button-gray, no-focus" buttonType="RAISED">
-                    <graphic>
-                        <ImageView fitHeight="24" preserveRatio="true" pickOnBounds="true">
-                            <Image url="/img/icons8/plus.png"/>
-                        </ImageView>
-                    </graphic>
-                </JFXButton>
-                <padding>
-                    <Insets top="10" right="30"/>
-                </padding>
-            </HBox>
-            <Separator maxWidth="Infinity" valignment="BOTTOM">
-                <padding>
-                    <Insets top="15" bottom="-15"/>
-                </padding>
-            </Separator>
-            <VBox spacing="15">
-                <Label text="Sources:" styleClass="text-small-normal">
-                    <padding>
-                        <Insets left="10"/>
-                    </padding>
-                </Label>
-                <VBox spacing="10" fx:id="sourcesBox"/>
-                <padding>
-                    <Insets topRightBottomLeft="15"/>
-                </padding>
-            </VBox>
-        </VBox>
+        <HBox fx:id="collapsibleContentBox" spacing="10">
+            <VBox fx:id="systemDropCards" alignment="TOP_CENTER"/>
+            <Separator orientation="VERTICAL" maxHeight="Infinity" maxWidth="Infinity"/>
+            <VBox fx:id="referenceDropCards" alignment="TOP_CENTER"/>
+        </HBox>
         <padding>
             <Insets topRightBottomLeft="10"/>
         </padding>
