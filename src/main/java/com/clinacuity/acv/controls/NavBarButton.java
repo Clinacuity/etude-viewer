@@ -29,10 +29,6 @@ public class NavBarButton extends StackPane {
     private Timeline onExitTimeline = new Timeline();
     private String targetPage = AcvContext.APP_MAIN_PAGE;
 
-    public NavBarButton() {
-        this("");
-    }
-
     public NavBarButton(@NamedArg("text") String text) {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/controls/NavBarButton.fxml"));
         fxmlLoader.setRoot(this);

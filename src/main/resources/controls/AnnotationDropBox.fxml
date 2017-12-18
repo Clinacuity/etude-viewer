@@ -17,10 +17,6 @@
     <Pane fx:id="collapsiblePane" styleClass="draggable" />
     <VBox fx:id="collapsibleBox" spacing="10" alignment="TOP_CENTER">
         <StackPane>
-            <HBox fx:id="annotationNameBox" spacing="15" maxWidth="Infinity">
-                <Label text="Annotation Name (Parent):" styleClass="text-medium-bold" alignment="CENTER_RIGHT" maxHeight="Infinity"/>
-                <JFXTextField fx:id="matchNameTextField" promptText="name" styleClass="text-medium-normal"/>
-            </HBox>
             <HBox spacing="10" alignment="CENTER_RIGHT">
                 <Label fx:id="collapseButton" onMouseClicked="#collapseBox" alignment="CENTER_RIGHT" styleClass="button-lock">
                     <graphic>
@@ -37,12 +33,16 @@
                     </graphic>
                 </Label>
             </HBox>
+            <HBox fx:id="annotationNameBox" spacing="15" maxWidth="Infinity" pickOnBounds="false">
+                <Label text="Annotation Name (Parent):" styleClass="text-medium-bold" alignment="CENTER_RIGHT" maxHeight="Infinity"/>
+                <JFXTextField fx:id="matchNameTextField" promptText="name" styleClass="text-medium-normal"/>
+            </HBox>
         </StackPane>
         <Separator maxWidth="Infinity"/>
         <HBox fx:id="collapsibleContentBox" spacing="10">
-            <VBox fx:id="systemDropCards" alignment="TOP_CENTER"/>
+            <VBox fx:id="systemDropCards" alignment="TOP_CENTER" spacing="10"/>
             <Separator orientation="VERTICAL" maxHeight="Infinity" maxWidth="Infinity"/>
-            <VBox fx:id="referenceDropCards" alignment="TOP_CENTER"/>
+            <VBox fx:id="referenceDropCards" alignment="TOP_CENTER" spacing="10"/>
         </HBox>
         <padding>
             <Insets topRightBottomLeft="10"/>

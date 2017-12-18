@@ -132,54 +132,59 @@ public class ConfigurationBuilderController implements Initializable {
             saveTask.cancel();
         }
 
-        boolean validInputs = true;
-        Map<String, List<AnnotationDropBox.Attribute>> systemAnnotationList = new HashMap<>();
-        Map<String, List<String>> systemXPathsPerMatch = new HashMap<>();
-        Map<String, List<AnnotationDropBox.Attribute>> referenceAnnotationList = new HashMap<>();
-        Map<String, List<String>> referenceXPathsPerMatch = new HashMap<>();
-
-        for (Node child : annotationDropBox.getChildren()) {
-            AnnotationDropBox box = (AnnotationDropBox) child;
-            if (box.isValid()) {
-                if (box.hasSystemAttributes()) {
-                    systemAnnotationList.put(box.getName(), box.getAttributes());
-                }
-                if (box.hasReferenceAttributes()) {
-                    referenceAnnotationList.put(box.getName(), box.getAttributes());
-                }
-
-                systemXPathsPerMatch.put(box.getName(), box.getSystemXPaths());
-                referenceXPathsPerMatch.put(box.getName(), box.getReferenceXPaths());
-            } else {
-                validInputs = false;
-            }
-        }
-
-        if (validInputs) {
+        if (areAnnotationMatchesValid()) {
             File directory = getSaveDirectory();
+
             if (directory != null) {
-                saveTask = new SaveConfigurationTask(
-                        systemAnnotationList,
-                        systemXPathsPerMatch,
-                        referenceAnnotationList,
-                        referenceXPathsPerMatch,
-                        directory);
-                saveTask.setOnSucceeded(event -> {
-                    logger.error("succeeded");
-                    AcvContext.getInstance().contentLoading.setValue(false);
-                });
-                saveTask.setOnFailed(event -> {
-                    logger.error("FAILED");
-                    AcvContext.getInstance().contentLoading.setValue(false);
-                });
-                AcvContext.getInstance().contentLoading.setValue(true);
-                new Thread(saveTask).start();
-            } else {
-                logger.warn("No valid directory chosen -- cancelling task.");
+                startSaveTask(directory);
             }
         } else {
-            logger.warn("Something went wrong with empty names or unique naming");
+            logger.error("Invalid stuff -- display a message window here");
         }
+    }
+
+    private boolean areAnnotationMatchesValid() {
+        for (Node child: annotationDropBox.getChildren()) {
+            if (child instanceof AnnotationDropBox) {
+                AnnotationDropBox box = (AnnotationDropBox)child;
+                // TODO: there are no child cards here .. there are child BOXES
+                if (!box.hasValidCards()) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    private void startSaveTask(File directory) {
+        /*
+        These structures represent the following:
+        Annotation Parent Name (String)
+            List of Map < Attribute Key , Attribute Value >
+         */
+        Map<String, List<Map<String, String>>> systemAnnotationMatches = new HashMap<>();
+        Map<String, List<Map<String, String>>> referenceAnnotationMatches = new HashMap<>();
+
+        for (Node child : annotationDropBox.getChildren()) {
+            if (child instanceof AnnotationDropBox) {
+                AnnotationDropBox box = (AnnotationDropBox)child;
+                systemAnnotationMatches.put(box.getName(), box.getSystemCards());
+                referenceAnnotationMatches.put(box.getName(), box.getReferenceCards());
+            }
+        }
+
+        saveTask = new SaveConfigurationTask(systemAnnotationMatches, referenceAnnotationMatches, directory);
+        saveTask.setOnSucceeded(event -> {
+            logger.error("succeeded");
+            AcvContext.getInstance().contentLoading.setValue(false);
+        });
+        saveTask.setOnFailed(event -> {
+            logger.error("FAILED");
+            AcvContext.getInstance().contentLoading.setValue(false);
+        });
+        AcvContext.getInstance().contentLoading.setValue(true);
+        new Thread(saveTask).start();
     }
 
     private File getDirectory(String title) {

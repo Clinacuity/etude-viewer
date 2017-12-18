@@ -21,8 +21,7 @@ import org.apache.logging.log4j.Logger;
 import java.io.IOException;
 import java.util.List;
 import java.util.ArrayList;
-import java.util.Set;
-import java.util.HashSet;
+import java.util.Map;
 
 public class AnnotationDropBox extends StackPane {
     private static Logger logger = LogManager.getLogger();
@@ -48,20 +47,6 @@ public class AnnotationDropBox extends StackPane {
     private boolean isCollapsed = false;
     private Timeline collapsingTimeline = new Timeline();
 
-    public AnnotationDropBox() {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/controls/AnnotationDropBox.fxml"));
-        fxmlLoader.setRoot(this);
-        fxmlLoader.setController(this);
-
-        try {
-            fxmlLoader.load();
-        } catch (IOException e) {
-            logger.throwing(e);
-        }
-
-        initialize();
-    }
-
     private void initialize() {
         setOnDragOver(event -> {
             if (ConfigurationBuilderController.draggedAnnotation != null) {
@@ -84,96 +69,11 @@ public class AnnotationDropBox extends StackPane {
         referenceOptions.add("");
     }
 
-    /**
-     * An annotation drop box is valid if it has a Parent Name.  Its attributes are valid if they are unique, but
-     * these are checked whenever each value is input.
-     * @return Returns true if the Parent Name is not empty
-     */
-    public boolean isValid() {
-        Set<String> attributes = new HashSet<>();
-//        for (Node child: contentBox.getChildren()) {
-//            AnnotationDropBoxRow row = (AnnotationDropBoxRow)child;
-//            if (row != null) {
-//                if (attributes.contains(row.getAttribute().name)) {
-//                    logger.warn("Attribute names are not unique.  <{}> is repeated", row.getAttribute().name);
-//                    WarningModal.createModal("Error in names",
-//                            "The names of attributes have to be unique, but the name \""
-//                                    + row.getAttribute().name
-//                                    + "\" was repeated.");
-//                    WarningModal.show();
-//                    return false;
-//                } else {
-//                    attributes.add(row.getAttribute().name);
-//                }
-//            }
-//        }
-
-        if (matchNameTextField.getText().equals("")) {
-            WarningModal.createModal("Annotation Name is empty",
-                    "The Annotation Name (Parent) of a box was left empty; please specify a name for the annotation match.");
-            WarningModal.show();
-            return false;
-        }
-
-        if (!hasSystemAttributes()) {
-            WarningModal.createModal("Missing attributes",
-                    "Some of the required attributes are missing on the System Output input fields.");
-            WarningModal.show();
-            return false;
-        }
-
-        if (!hasReferenceAttributes()) {
-            WarningModal.createModal("Missing attributes",
-                    "Some of the required attributes are missing on the Reference input fields.");
-            WarningModal.show();
-            return false;
-        }
-
-        return true;
-    }
-
-    public boolean hasSystemAttributes() {
-        return false;
-//        return (shortNameRow.getAttribute().systemValue.length() > 0
-//                && beginAttrRow.getAttribute().systemValue.length() > 0
-//                && endAttrRow.getAttribute().systemValue.length() > 0);
-    }
-
-    public boolean hasReferenceAttributes() {
-        return false;
-//        return (shortNameRow.getAttribute().referenceValue.length() > 0
-//                && beginAttrRow.getAttribute().referenceValue.length() > 0
-//                && endAttrRow.getAttribute().referenceValue.length() > 0);
-    }
-
-    public List<String> getSystemXPaths() {
-        return getXpathList(ConfigurationBuilderController.CorpusType.SYSTEM);
-    }
-
-    public List<String> getReferenceXPaths() {
-        return getXpathList(ConfigurationBuilderController.CorpusType.REFERENCE);
-    }
-
-    public List<Attribute> getAttributes() {
-        List<Attribute> attributes = new ArrayList<>();
-//        for (Node child: contentBox.getChildren()) {
-//            AnnotationDropBoxRow row = (AnnotationDropBoxRow)child;
-//            if (row != null) {
-//                attributes.add(row.getAttribute());
-//            }
-//        }
-        return attributes;
-    }
-
-    public String getName() {
-        return matchNameTextField.getText();
-    }
-
     private void addSource() {
         if (ConfigurationBuilderController.draggedAnnotation != null) {
             AnnotationTypeDraggable draggable = ConfigurationBuilderController.draggedAnnotation;
 
-            AnnotationDropCard card = new AnnotationDropCard(draggable);
+            AnnotationDropCard card = new AnnotationDropCard(draggable, this);
             if (card.getCorpusType() == ConfigurationBuilderController.CorpusType.SYSTEM) {
                 systemSources.add(card);
                 for (String attribute : ConfigurationBuilderController.draggedAnnotation.getAttributes()) {
@@ -191,88 +91,7 @@ public class AnnotationDropBox extends StackPane {
                 }
                 referenceDropCards.getChildren().add(card);
             }
-
-//            sourcesBox.getChildren().add(card);
-            draggable.hide();
-
-            updateRows();
         }
-    }
-
-    void removeSource(ReferencedDocument sourceToRemove) {
-//        if (sourceToRemove.getCorpus() == ConfigurationBuilderController.CorpusType.SYSTEM) {
-//            systemSources.remove(sourceToRemove);
-//            systemOptions.clear();
-//
-//            systemSources.forEach(source -> source.getSourceAttributes().forEach(attribute -> {
-//                if (!systemOptions.contains(attribute)) {
-//                    systemOptions.add(attribute);
-//                }
-//            }));
-//        } else {
-//            referenceSources.remove(sourceToRemove);
-//            referenceOptions.clear();
-//
-//            referenceSources.forEach(source -> source.getSourceAttributes().forEach(attribute -> {
-//                if (!referenceOptions.contains(attribute)) {
-//                    referenceOptions.add(attribute);
-//                }
-//            }));
-//        }
-//
-//        updateRows();
-//        sourcesBox.getChildren().remove(sourceToRemove);
-    }
-
-    private void updateRows() {
-        // auto-fill begin and end rows
-//        checkAutofill(beginAttrRow, Arrays.asList("begin", "start"));
-//        checkAutofill(endAttrRow, Arrays.asList("end"));
-    }
-
-//    private void checkAutofill(AnnotationDropBoxRow row, List<String> autofillValues) {
-//        Attribute attribute = row.getAttribute();
-//        if (attribute.systemValue.equals("")) {
-//            for (int i = 0; i < autofillValues.size(); i++) {
-//                if (systemOptions.contains(autofillValues.get(i))) {
-//                    row.updateSystemValue(autofillValues.get(i));
-//                    break;
-//                }
-//            }
-//        }
-//
-//        if (attribute.referenceValue.equals("")) {
-//            for (int i = 0; i < autofillValues.size(); i++) {
-//                if (referenceOptions.contains(autofillValues.get(i))) {
-//                    row.updateReferenceValue(autofillValues.get(i));
-//                    break;
-//                }
-//            }
-//        }
-//    }
-
-    private List<String> getXpathList(ConfigurationBuilderController.CorpusType corpus) {
-        List<String> xpathList = new ArrayList<>();
-
-//        int childCount = sourcesBox.getChildren().size();
-//        for (int i = 0; i < childCount; i++) {
-//            Node child = sourcesBox.getChildren().get(i);
-//            if (child instanceof ReferencedDocument) {
-//                ReferencedDocument document = (ReferencedDocument)child;
-//                if (document.getCorpus() == corpus && !document.getXpath().equals("")) {
-//                    xpathList.add(document.getXpath());
-//                }
-//            }
-//        }
-
-        return xpathList;
-    }
-
-    @FXML private void addRow() {
-//        AnnotationDropBoxRow newRow = new AnnotationDropBoxRow();
-//        attributeRowsList.add(newRow);
-//        newRow.updateOptions(systemOptions, referenceOptions);
-//        contentBox.getChildren().add(newRow);
     }
 
     @FXML private void collapseBox() {
@@ -327,24 +146,79 @@ public class AnnotationDropBox extends StackPane {
         parent.getChildren().remove(this);
     }
 
-    public static class Attribute {
-        public String name = "";
-        boolean isLocked;
-        private String systemValue = "";
-        private String referenceValue = "";
+    void removeCard(AnnotationDropCard card) {
+        if (systemSources.contains(card)) {
+            systemSources.remove(card);
+            systemDropCards.getChildren().remove(card);
+        } else if (referenceSources.contains(card)) {
+            referenceSources.remove(card);
+            referenceDropCards.getChildren().remove(card);
+        }
+    }
 
-        Attribute(String attributeName, String system, String reference, boolean locked) {
-            name = attributeName;
-            systemValue = system;
-            referenceValue = reference;
-            isLocked = locked;
+    public AnnotationDropBox() {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/controls/AnnotationDropBox.fxml"));
+        fxmlLoader.setRoot(this);
+        fxmlLoader.setController(this);
+
+        try {
+            fxmlLoader.load();
+        } catch (IOException e) {
+            logger.throwing(e);
         }
 
-        public String getValue(ConfigurationBuilderController.CorpusType corpus) {
-            if (corpus == ConfigurationBuilderController.CorpusType.SYSTEM) {
-                return systemValue;
+        initialize();
+    }
+
+    public String getName() {
+        return matchNameTextField.getText();
+    }
+
+    public boolean hasValidCards() {
+        if (matchNameTextField.getText().equals("")) {
+            WarningModal.createModal("Invalid Parent Name", "A Match Card has a blank Parent Name; please fill in a parent name and try again.");
+            WarningModal.show();
+            return false;
+        }
+
+        for (AnnotationDropCard card: systemSources) {
+            if (!card.hasValidAttributes()) {
+                return false;
             }
-            return referenceValue;
         }
+
+        for (AnnotationDropCard card: referenceSources) {
+            if (!card.hasValidAttributes()) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public List<Map<String, String>> getSystemCards() {
+        List<Map<String, String>> systemCards = new ArrayList<>();
+
+        systemSources.forEach(card -> {
+            if (card.hasValidAttributes()) {
+                systemCards.add(card.getAttributes());
+            }
+        });
+
+        return systemCards;
+    }
+
+    public List<Map<String, String>> getReferenceCards() {
+        List<Map<String, String>> referenceCards = new ArrayList<>();
+
+        referenceSources.forEach(card -> {
+            if (card.hasValidAttributes()) {
+                Map<String, String> rowAttributes = card.getAttributes();
+                rowAttributes.forEach((key, value) -> logger.error("{} : {}", key, value));
+                referenceCards.add(rowAttributes);
+            }
+        });
+
+        return referenceCards;
     }
 }
