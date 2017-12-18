@@ -28,7 +28,6 @@ import java.util.List;
 
 public class AnnotationTypeDraggable extends StackPane {
     private static final Logger logger = LogManager.getLogger();
-    private static final String HIGHLIGHT_CLASS = "draggable-highlight";
     private static final Duration ANIMATION_DURATION = Duration.millis(200.0d);
     private static final double START_ROTATION = 0.0d;
     private static final double END_ROTATION = -90.0d;
@@ -124,24 +123,6 @@ public class AnnotationTypeDraggable extends StackPane {
 
     List<String> getAttributes() {
         return attributes;
-    }
-
-    void setHighlight(boolean set) {
-        if (set) {
-            targetBox.getStyleClass().add(HIGHLIGHT_CLASS);
-        } else {
-            targetBox.getStyleClass().remove(HIGHLIGHT_CLASS);
-        }
-    }
-
-    void hide() {
-        setOpacity(0.25d);
-        isSelected = true;
-    }
-
-    void show() {
-        setOpacity(1.0d);
-        isSelected = false;
     }
 
     @FXML private void hideCard() {
