@@ -22,7 +22,7 @@
         <ColumnConstraints percentWidth="100"/>
     </columnConstraints>
 
-    <VBox spacing="50" GridPane.columnIndex="0">
+    <VBox spacing="25" GridPane.columnIndex="0">
         <padding>
             <Insets topRightBottomLeft="15"/>
         </padding>
