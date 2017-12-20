@@ -335,7 +335,7 @@
                             </Label>
                         </HBox>
                         <HBox spacing="3">
-                            <JFXCheckBox fx:id="byFileCheckbox" text="By-File metrics" styleClass="text-medium-normal"/>
+                            <JFXCheckBox fx:id="byFileCheckbox" text="By-file metrics" styleClass="text-medium-normal"/>
                             <Label styleClass="label-tooltip">
                                 <tooltip>
                                     <Tooltip text="Generate metrics by file"/>
