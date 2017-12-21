@@ -74,6 +74,11 @@
     -fx-font-family: "Open Sans Bold";
 }
 
+.text-small-italic {
+    -fx-font-size: 10px;
+    -fx-font-family: "Open Sans Italic";
+}
+
 .text-medium-normal {
     -fx-font-size: 14px;
     -fx-font-family: "Open Sans Light";
@@ -101,6 +106,10 @@
 
 .text-white {
     -fx-text-fill: White;
+}
+
+.text-gray {
+    -fx-text-fill: DimGray;
 }
 
 .card-small, .draggable {

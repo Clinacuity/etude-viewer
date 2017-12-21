@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.control.Label?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<fx:root type="javafx.scene.layout.HBox"
+         xmlns="http://javafx.com/javafx/8.0.112"
+         xmlns:fx="http://javafx.com/fxml/1" spacing="5">
+    <VBox spacing="3" HBox.hgrow="ALWAYS">
+        <JFXTextField fx:id="attributeTextField" promptText="attribute name" styleClass="text-medium-normal"/>
+        <Label fx:id="attributeLabel" styleClass="text-medium-italic">
+            <padding>
+                <Insets left="10"/>
+            </padding>
+        </Label>
+    </VBox>
+    <HBox spacing="8" alignment="CENTER">
+        <Label fx:id="lockLabel" styleClass="button-lock" onMouseClicked="#toggleLock">
+            <graphic>
+                <ImageView fitHeight="16" preserveRatio="true" pickOnBounds="true">
+                    <Image url="/img/icons8/lock.png"/>
+                </ImageView>
+            </graphic>
+        </Label>
+        <Label fx:id="removeLabel" styleClass="button-delete" onMouseClicked="#removeRow">
+            <graphic>
+                <ImageView fitHeight="16" preserveRatio="true" pickOnBounds="true">
+                    <Image url="/img/icons8/delete.png"/>
+                </ImageView>
+            </graphic>
+        </Label>
+    </HBox>
+    <padding>
+        <Insets left="10" right="10"/>
+    </padding>
+</fx:root>
