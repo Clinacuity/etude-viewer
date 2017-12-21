@@ -10,29 +10,16 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import java.util.ArrayList;
 import java.util.List;
 
-/*
- TODO: refactor annotation buttons
- The data structure of the annotation buttons could be triangular: the controller refers to the Annot object,
- which houses the JSON, begin and end values, and the matching buttons versus the source buttons; the controller would
- also need the buttons themselves in order to add them to their respective annotated document panes.  This would reduce
- the amount of memory each instance occupies, since there would only be a single reference to the JSON object, regardless
- of how many buttons are related to each other.
-  */
 public class AnnotationButton extends Button {
-    private static final Logger logger = LogManager.getLogger();
     private static final String NORMAL_STYLE = "button-annotation";
     private static final String HIGHLIGHTED_STYLE = "button-annotation-selected";
 
     private JsonObject annotation;
     private int begin;
     private int end;
-    private boolean attributesMatch = false;
     private String matchTypeStyle = "";
     private MatchType matchType;
     private Label categoryLabel;
@@ -80,9 +67,6 @@ public class AnnotationButton extends Button {
             setMatchType(noMatchType);
         } else {
             setMatchType(MatchType.TRUE_POS);
-
-            AnnotationButton target = matchingButtons.get(0);
-            attributesMatch = isAnnotationEquivalent(target.annotation);
         }
     }
 
@@ -143,25 +127,6 @@ public class AnnotationButton extends Button {
         }
 
         return buffer.toString();
-    }
-
-    private boolean isAnnotationEquivalent(JsonObject target) {
-        for (String key: target.keySet()) {
-            if (!annotation.keySet().contains(key)) {
-                return false;
-            }
-        }
-
-        for(String key: annotation.keySet()) {
-            if (!target.keySet().contains(key)) {
-                return false;
-            } else {
-                if (!target.get(key).equals(annotation.get(key))) {
-                    return false;
-                }
-            }
-        }
-        return true;
     }
 
     private void setMatchType(MatchType match) {
