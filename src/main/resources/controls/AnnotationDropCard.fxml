@@ -45,6 +45,14 @@
             </HBox>
         </StackPane>
         <Separator maxWidth="Infinity"/>
-        <VBox fx:id="targetBox" spacing="5"/>
+        <VBox fx:id="targetBox" spacing="5">
+            <VBox fx:id="xPathRow" spacing="3">
+                <VBox fx:id="lockedRowsBox" spacing="3">
+                    <padding>
+                        <Insets left="10"/>
+                    </padding>
+                </VBox>
+            </VBox>
+        </VBox>
     </VBox>
 </fx:root>

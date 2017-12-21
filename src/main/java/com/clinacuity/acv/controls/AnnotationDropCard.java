@@ -9,26 +9,21 @@ import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.reactfx.util.FxTimer;
-
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Map;
+import java.util.HashMap;
 
 class AnnotationDropCard extends StackPane {
     private static Logger logger = LogManager.getLogger();
@@ -39,12 +34,17 @@ class AnnotationDropCard extends StackPane {
     @FXML private Label cardLabel;
     @FXML private VBox targetBox;
     @FXML private VBox collapsibleBox;
+    @FXML private VBox xPathRow;
+    @FXML private VBox lockedRowsBox;
     @FXML private Pane collapsiblePane;
     @FXML private Label collapseButton;
+
     private AnnotationTypeDraggable source;
     private AnnotationDropBox parent;
-    private List<String> sourceAttributes;
-    private Map<JFXTextField, Label> attributeRows = new HashMap<>();
+    private List<String> sourceAttributesCopy = new ArrayList<>();
+    private Map<JFXTextField, String> attributeRows = new HashMap<>();
+    private Map<String, HBox> lockedRowsMap = new HashMap<>();
+
     private Timeline collapsingTimeline = new Timeline();
     private double expandedHeight = 0.0d;
     private boolean isCollapsed = false;
@@ -69,11 +69,14 @@ class AnnotationDropCard extends StackPane {
     private void initialize() {
         cardLabel.setText(source.getLabelName());
 
-        sourceAttributes = source.getAttributes();
+        sourceAttributesCopy.clear();
+        sourceAttributesCopy.addAll(source.getAttributes());
 
-        checkBeginEndAttribtues();
+        setXPathAttributeRow();
 
-        source.getAttributes().forEach(attribute -> createAttributeRow(attribute, "", true));
+        setBeginEndAttributes();
+
+        sourceAttributesCopy.forEach(attribute -> targetBox.getChildren().add(getAttributeRow(attribute, "", true)));
 
         // TODO
         if (getCorpusType() == ConfigurationBuilderController.CorpusType.SYSTEM) {
@@ -83,115 +86,80 @@ class AnnotationDropCard extends StackPane {
         }
     }
 
-    private void checkBeginEndAttribtues() {
-        if (sourceAttributes.contains("begin")) {
-            sourceAttributes.remove("begin");
-            createAttributeRow("begin", "Begin Attr", false);
+    private void setXPathAttributeRow() {
+        if (sourceAttributesCopy.contains("XPath")) {
+            sourceAttributesCopy.remove("XPath");
+            xPathRow.getChildren().add(0, getAttributeRow("XPath", "XPath", false));
         } else {
-            if (sourceAttributes.contains("start")) {
-                sourceAttributes.remove("start");
-                createAttributeRow("start", "Begin Attr", false);
-            }
-        }
-
-        if (sourceAttributes.contains("end")) {
-            sourceAttributes.remove("end");
-            createAttributeRow("end", "End Attr", false);
-        } else {
-            if (sourceAttributes.contains("finish")) {
-                sourceAttributes.remove("finish");
-                createAttributeRow("finish", "End Attr", false);
-            }
-        }
-
-        if (sourceAttributes.contains("XPath")) {
-            sourceAttributes.remove("XPath");
-            createAttributeRow("XPath", "XPath", false);
-        } else {
-            createAttributeRow(source.getXPath(), "XPath", false);
+            xPathRow.getChildren().add(0, getAttributeRow(source.getXPath(), "XPath", false));
         }
     }
 
-    private void createAttributeRow(String attribute, String initialValue, boolean includeButtons) {
-        /*
-        This creates the "Row" elements; the structure looks as follows:
-        HBox
-            VBox
-                JFXTextField -- attribute Key
-                Label -- attribtue Value
-            HBox
-                Label -- hide
-                Label -- remove
-         */
-        JFXTextField attributeValueField = new JFXTextField(initialValue);
-        attributeValueField.setPromptText("attribute value");
-        attributeValueField.getStyleClass().add("text-medium-normal");
-        attributeValueField.setMinWidth(getWidth() - 50.0d);
-        attributeValueField.setMaxWidth(getWidth() - 50.0d);
-
-        Label attributeLabel = new Label(attribute);
-        attributeLabel.getStyleClass().add("text-medium-italic");
-        attributeLabel.setPadding(new Insets(0.0d, 0.0d, 0.0d, 10.0d));
-
-        Label lockLabel = new Label();
-        lockLabel.getStyleClass().add("button-lock");
-        ImageView lockView = new ImageView(new Image("/img/icons8/lock.png"));
-        lockView.setPreserveRatio(true);
-        lockView.setFitHeight(16.0d);
-        lockLabel.setGraphic(lockView);
-        lockLabel.setOnMouseClicked(event -> logger.error("Lock not implemented"));
-
-        Label removeLabel = new Label();
-        removeLabel.getStyleClass().add("button-delete");
-        ImageView hideView = new ImageView(new Image("/img/icons8/delete.png"));
-        hideView.setPreserveRatio(true);
-        hideView.setFitHeight(16.0d);
-        removeLabel.setGraphic(hideView);
-
-        VBox keyValueBox = new VBox();
-        keyValueBox.setSpacing(3.0d);
-        keyValueBox.setPadding(new Insets(5.0d));
-        keyValueBox.getChildren().addAll(attributeValueField, attributeLabel);
-
-        HBox buttonBox = new HBox();
-        buttonBox.setSpacing(3.0d);
-        buttonBox.setAlignment(Pos.CENTER_RIGHT);
-        buttonBox.setPadding(new Insets(3.0d, 3.0d, 0.0d, 0.0d));
-        buttonBox.getChildren().addAll(lockLabel, removeLabel);
-
-        HBox mainBox = new HBox();
-        mainBox.setSpacing(5.0d);
-        mainBox.setAlignment(Pos.CENTER);
-        mainBox.getChildren().addAll(keyValueBox, buttonBox);
-
-        if (includeButtons) {
-            buttonBox.setVisible(true);
+    private void setBeginEndAttributes() {
+        if (sourceAttributesCopy.contains("begin")) {
+            sourceAttributesCopy.remove("begin");
+            targetBox.getChildren().add(getAttributeRow("begin", "Begin Attr", false));
         } else {
-            buttonBox.setVisible(false);
+            if (sourceAttributesCopy.contains("start")) {
+                sourceAttributesCopy.remove("start");
+                targetBox.getChildren().add(getAttributeRow("start", "Begin Attr", false));
+            }
         }
 
-        /*
-        This creates the button actions and adds the items to the appropriate lists
-         */
-        attributeRows.put(attributeValueField, attributeLabel);
-        lockLabel.setOnMouseClicked(event -> {
-            logger.error("OK LOCK CLICKED");
-            // toggle lock
-        });
+        if (sourceAttributesCopy.contains("end")) {
+            sourceAttributesCopy.remove("end");
+            targetBox.getChildren().add(getAttributeRow("end", "End Attr", false));
+        } else {
+            if (sourceAttributesCopy.contains("finish")) {
+                sourceAttributesCopy.remove("finish");
+                targetBox.getChildren().add(getAttributeRow("finish", "End Attr", false));
+            }
+        }
+    }
 
-        removeLabel.setOnMouseClicked(event -> {
-            targetBox.getChildren().remove(mainBox);
-            attributeRows.remove(attributeValueField);
-        });
+    private HBox getAttributeRow(String attribute, String initialValue, boolean includeButtons) {
+        AnnotationDropCardRow row = new AnnotationDropCardRow(attribute, initialValue, includeButtons, this);
 
-        targetBox.getChildren().add(mainBox);
+        attributeRows.put(row.getAttributeTextField(), row.getName());
+
+        return row;
+    }
+
+    private HBox getLockedRow(String attributeName) {
+        HBox locked = new HBox();
+        locked.setSpacing(5.0d);
+        locked.setAlignment(Pos.CENTER);
+
+        Label lockedAttribute = new Label("@" + attributeName + "=");
+        lockedAttribute.getStyleClass().add("text-small-bold");
+        lockedAttribute.getStyleClass().add("text-gray");
+
+        JFXTextField attributeValue = new JFXTextField();
+        attributeValue.getStyleClass().add("text-medium-normal");
+
+        locked.getChildren().addAll(lockedAttribute, attributeValue);
+        return locked;
     }
 
     ConfigurationBuilderController.CorpusType getCorpusType() { return source.getCorpusType(); }
 
     Map<String, String> getAttributes() {
         Map<String, String> attributes = new HashMap<>();
-        attributeRows.forEach((key, value) -> attributes.put(key.getText(), value.getText()));
+        attributeRows.forEach((key, value) -> attributes.put(key.getText(), value));
+
+        String xpath = attributes.get("XPath");
+        StringBuilder xpathCombined = new StringBuilder();
+        xpathCombined.append(xpath);
+
+        lockedRowsMap.forEach((key, value) -> {
+            xpathCombined.append("[@");
+            xpathCombined.append(key);
+            xpathCombined.append("='");
+            xpathCombined.append(((JFXTextField)value.getChildren().get(1)).getText());
+            xpathCombined.append("']");
+        });
+
+        attributes.put("XPath", xpathCombined.toString());
 
         return attributes;
     }
@@ -239,6 +207,23 @@ class AnnotationDropCard extends StackPane {
         return true;
     }
 
+    void toggleLock(AnnotationDropCardRow row) {
+        if (row.isLocked()) {
+            String name = row.getName();
+            HBox lockedRow = getLockedRow(name);
+
+            lockedRowsMap.put(name, lockedRow);
+            lockedRowsBox.getChildren().add(lockedRow);
+        } else {
+            lockedRowsBox.getChildren().remove(lockedRowsMap.get(row.getName()));
+        }
+    }
+
+    void removeRow(AnnotationDropCardRow row) {
+        targetBox.getChildren().remove(row);
+        attributeRows.remove(row.getAttributeTextField());
+    }
+
     @FXML private void removeBox() {
         parent.removeCard(this);
     }
@@ -262,7 +247,11 @@ class AnnotationDropCard extends StackPane {
                 minHeightKeysBox = new KeyValue(collapsibleBox.minHeightProperty(), expandedHeight);
                 maxHeightKeysBox = new KeyValue(collapsibleBox.maxHeightProperty(), expandedHeight);
                 rotationTarget = new KeyValue(collapseButton.rotateProperty(), START_ROTATION);
-                collapsingTimeline.setOnFinished(event -> targetBox.setVisible(true));
+                collapsingTimeline.setOnFinished(event -> {
+                    targetBox.setVisible(true);
+                    collapsiblePane.setMaxHeight(Double.MAX_VALUE);
+                    collapsibleBox.setMaxHeight(Double.MAX_VALUE);
+                });
             } else {
                 targetBox.setVisible(false);
                 expandedHeight = getHeight();
