@@ -102,9 +102,6 @@ public class AcvContentController implements Initializable {
      * Sets up the children AnnotatedDocumentPanes by calling their initialize method. It also binds their scrollbars
      */
     private void initDocumentPanes() {
-        targetPane.maxHeightProperty().bind(referencePane.heightProperty());
-        targetPane.maxHeightProperty().bind(referencePane.heightProperty());
-
         referencePane.getScrollPane().vvalueProperty().bindBidirectional(targetPane.getScrollPane().vvalueProperty());
         referencePane.getScrollPane().hvalueProperty().bindBidirectional(targetPane.getScrollPane().hvalueProperty());
     }
@@ -290,6 +287,7 @@ public class AcvContentController implements Initializable {
                 }
 
                 targetButton.parent = targetPane.getAnchor();
+                //targetButton.targetTextArea = targetPane.getFeatureTreeText();
                 targetButton.setOnMouseClicked(event -> selectedAnnotationButton.setValue(targetButton));
             }
 
@@ -414,7 +412,7 @@ public class AcvContentController implements Initializable {
             newValue.sameAnnotationButtons.forEach(AnnotationButton::setSelected);
 
             newValue.fire();
-            if (newValue.matchingButtons.size() != 1) {
+            if (newValue.matchingButtons.size() == 1) {
                 newValue.matchingButtons.forEach(AnnotationButton::fire);
             }
         }

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+
+<fx:root type="javafx.scene.layout.StackPane"
+         xmlns="http://javafx.com/javafx/8.0.112"
+         xmlns:fx="http://javafx.com/fxml/1"
+         alignment="TOP_CENTER">
+    <Pane fx:id="collapsiblePane" styleClass="card-small"/>
+    <VBox fx:id="collapsibleBox" spacing="10">
+        <StackPane>
+            <HBox alignment="TOP_CENTER">
+                <Label fx:id="cardLabel" styleClass="text-medium-bold" alignment="TOP_CENTER">
+                    <padding>
+                        <Insets topRightBottomLeft="8"/>
+                    </padding>
+                </Label>
+            </HBox>
+            <HBox spacing="10" alignment="TOP_RIGHT">
+                <Label fx:id="collapseButton" onMouseClicked="#collapseCard" alignment="CENTER_RIGHT" styleClass="button-lock">
+                    <graphic>
+                        <ImageView fitHeight="12" fitWidth="12" preserveRatio="true" pickOnBounds="true">
+                            <Image url="/img/icons8/back.png"/>
+                        </ImageView>
+                    </graphic>
+                </Label>
+                <Label onMouseClicked="#removeBox" alignment="CENTER_RIGHT" styleClass="button-delete">
+                    <graphic>
+                        <ImageView fitHeight="12" preserveRatio="true" pickOnBounds="true">
+                            <Image url="/img/icons8/delete.png"/>
+                        </ImageView>
+                    </graphic>
+                </Label>
+                <padding>
+                    <Insets top="5" right="5"/>
+                </padding>
+            </HBox>
+        </StackPane>
+        <Separator maxWidth="Infinity"/>
+        <VBox fx:id="targetBox" spacing="5">
+            <VBox fx:id="xPathRow" spacing="3">
+                <VBox fx:id="lockedRowsBox" spacing="3">
+                    <padding>
+                        <Insets left="10"/>
+                    </padding>
+                </VBox>
+            </VBox>
+        </VBox>
+    </VBox>
+</fx:root>

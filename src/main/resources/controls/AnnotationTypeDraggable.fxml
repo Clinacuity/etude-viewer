@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+
+<fx:root type="javafx.scene.layout.StackPane"
+         xmlns="http://javafx.com/javafx/8.0.112"
+         xmlns:fx="http://javafx.com/fxml/1">
+    <Pane fx:id="collapsiblePane" styleClass="draggable"/>
+    <VBox fx:id="targetBox" spacing="5" alignment="TOP_CENTER">
+        <StackPane>
+            <Label fx:id="annotationLabel" styleClass="text-medium-normal"/>
+            <HBox alignment="CENTER_RIGHT">
+                <Label fx:id="collapseButton" styleClass="button-lock" onMouseClicked="#hideCard">
+                    <graphic>
+                        <ImageView fitHeight="12" fitWidth="12" preserveRatio="true" pickOnBounds="true">
+                            <Image url="/img/icons8/back.png"/>
+                        </ImageView>
+                    </graphic>
+                    <padding>
+                        <Insets right="5"/>
+                    </padding>
+                </Label>
+            </HBox>
+        </StackPane>
+        <Separator/>
+        <VBox fx:id="collapsibleContentBox" spacing="3"/>
+        <padding>
+            <Insets topRightBottomLeft="6"/>
+        </padding>
+    </VBox>
+</fx:root>

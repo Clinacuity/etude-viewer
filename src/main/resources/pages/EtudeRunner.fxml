@@ -20,7 +20,7 @@
     <columnConstraints>
         <ColumnConstraints percentWidth="100"/>
     </columnConstraints>
-    <VBox spacing="50" maxWidth="Infinity" GridPane.columnIndex="0">
+    <VBox spacing="25" maxWidth="Infinity" GridPane.columnIndex="0">
         <padding>
             <Insets topRightBottomLeft="15"/>
         </padding>
@@ -335,7 +335,7 @@
                             </Label>
                         </HBox>
                         <HBox spacing="3">
-                            <JFXCheckBox fx:id="byFileCheckbox" text="By-File metrics" styleClass="text-medium-normal"/>
+                            <JFXCheckBox fx:id="byFileCheckbox" text="By-file metrics" styleClass="text-medium-normal"/>
                             <Label styleClass="label-tooltip">
                                 <tooltip>
                                     <Tooltip text="Generate metrics by file"/>

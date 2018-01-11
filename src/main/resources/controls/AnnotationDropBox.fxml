@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.HBox?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.layout.StackPane?>
+
+<fx:root type="javafx.scene.layout.StackPane"
+         xmlns="http://javafx.com/javafx/8.0.112"
+         xmlns:fx="http://javafx.com/fxml/1" alignment="TOP_CENTER">
+    <Pane fx:id="collapsiblePane" styleClass="draggable" />
+    <VBox fx:id="collapsibleBox" spacing="10" alignment="TOP_CENTER">
+        <StackPane>
+            <HBox spacing="10" alignment="CENTER_RIGHT">
+                <Label fx:id="collapseButton" onMouseClicked="#collapseBox" alignment="CENTER_RIGHT" styleClass="button-lock">
+                    <graphic>
+                        <ImageView fitHeight="12" fitWidth="12" preserveRatio="true" pickOnBounds="true">
+                            <Image url="/img/icons8/back.png"/>
+                        </ImageView>
+                    </graphic>
+                </Label>
+                <Label onMouseClicked="#removeBox" alignment="CENTER_RIGHT" styleClass="button-delete">
+                    <graphic>
+                        <ImageView fitHeight="12" preserveRatio="true" pickOnBounds="true">
+                            <Image url="/img/icons8/delete.png"/>
+                        </ImageView>
+                    </graphic>
+                </Label>
+            </HBox>
+            <HBox fx:id="annotationNameBox" spacing="15" maxWidth="Infinity" pickOnBounds="false">
+                <Label text="Annotation Name (Parent):" styleClass="text-medium-bold" alignment="CENTER_RIGHT" maxHeight="Infinity"/>
+                <JFXTextField fx:id="matchNameTextField" promptText="name" styleClass="text-medium-normal"/>
+            </HBox>
+        </StackPane>
+        <Separator maxWidth="Infinity"/>
+        <HBox fx:id="collapsibleContentBox" spacing="10">
+            <VBox fx:id="systemDropCards" alignment="TOP_CENTER" spacing="10"/>
+            <Separator orientation="VERTICAL" maxHeight="Infinity" maxWidth="Infinity"/>
+            <VBox fx:id="referenceDropCards" alignment="TOP_CENTER" spacing="10"/>
+        </HBox>
+        <padding>
+            <Insets topRightBottomLeft="10"/>
+        </padding>
+    </VBox>
+</fx:root>

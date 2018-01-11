@@ -36,7 +36,6 @@ public class CreateButtonsTask extends Task<List<AnnotationButton>> {
         }
 
         if (taskButtons == null) {
-            logger.error("why is this null....?");
             failed();
             return null;
         } else {
@@ -159,6 +158,7 @@ public class CreateButtonsTask extends Task<List<AnnotationButton>> {
                     for (AnnotationButton sameButton: buttons) {
                         sameButton.sameAnnotationButtons.add(newButton);
                     }
+
                     buttons.add(newButton);
                     newButton.sameAnnotationButtons.addAll(buttons);
                 }

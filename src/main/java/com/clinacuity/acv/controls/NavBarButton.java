@@ -29,10 +29,6 @@ public class NavBarButton extends StackPane {
     private Timeline onExitTimeline = new Timeline();
     private String targetPage = AcvContext.APP_MAIN_PAGE;
 
-    public NavBarButton() {
-        this("");
-    }
-
     public NavBarButton(@NamedArg("text") String text) {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/controls/NavBarButton.fxml"));
         fxmlLoader.setRoot(this);
@@ -80,10 +76,10 @@ public class NavBarButton extends StackPane {
 
         hoverBox.setVisible(true);
         KeyValue boxHeight = new KeyValue(hoverBox.heightProperty(), label.getHeight());
-        KeyFrame leftFrameStartY = new KeyFrame(Duration.millis(ANIMATION_DURATION), boxHeight);
+        KeyFrame frame = new KeyFrame(Duration.millis(ANIMATION_DURATION), boxHeight);
 
         onEnterTimeline.getKeyFrames().clear();
-        onEnterTimeline.getKeyFrames().add(leftFrameStartY);
+        onEnterTimeline.getKeyFrames().add(frame);
         onEnterTimeline.play();
     };
 
@@ -91,11 +87,11 @@ public class NavBarButton extends StackPane {
         onEnterTimeline.stop();
 
         KeyValue boxHeight = new KeyValue(hoverBox.heightProperty(), 0.0d);
-        KeyFrame leftFrameStart = new KeyFrame(Duration.millis(ANIMATION_DURATION), boxHeight);
+        KeyFrame frame = new KeyFrame(Duration.millis(ANIMATION_DURATION), boxHeight);
 
         onExitTimeline.setOnFinished(onTimelineFinished);
         onExitTimeline.getKeyFrames().clear();
-        onExitTimeline.getKeyFrames().add(leftFrameStart);
+        onExitTimeline.getKeyFrames().add(frame);
         onExitTimeline.play();
     };
 }

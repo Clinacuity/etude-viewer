@@ -16,7 +16,7 @@
         <ColumnConstraints percentWidth="100"/>
     </columnConstraints>
 
-    <VBox spacing="50" maxWidth="Infinity">
+    <VBox spacing="25" maxWidth="Infinity">
         <padding>
             <Insets topRightBottomLeft="15"/>
         </padding>

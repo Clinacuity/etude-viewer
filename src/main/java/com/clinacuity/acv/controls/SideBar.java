@@ -74,7 +74,7 @@ public class SideBar extends VBox {
     }
 
     public void getPreviousDocument() {
-        if (selectedBox - 1 <= 0) {
+        if (selectedBox <= 0) {
             logger.debug("Doing nothing -- already on the first document.");
         } else {
             selectedBox--;

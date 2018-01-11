@@ -86,7 +86,7 @@ public class EtudeTask extends Task<Void> {
             createOutputDirectories();
 
             String command = getCommand();
-            logger.error("Running: <{}>", command);
+            logger.warn("Running: <{}>", command);
 
             etudeProcess = Runtime.getRuntime().exec(command);
             etudeProcess.waitFor();
