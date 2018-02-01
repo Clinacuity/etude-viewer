@@ -184,6 +184,22 @@
                 <version>3.0.2</version>
                 <executions>
                     <execution>
+                        <id>copy-for-compile</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${basedir}/target/data</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>data</directory>
+                                    <filtering>false</filtering>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                    <execution>
                         <id>copy-for-deploy</id>
                         <phase>verify</phase>
                         <goals>
