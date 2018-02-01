@@ -12,7 +12,7 @@ import java.nio.file.FileSystemException;
 import java.util.Properties;
 
 public class AcvContext {
-    public static final String APP_CONTAINER = "/pages/AppMain.fxml";
+    static final String APP_CONTAINER = "/pages/AppMain.fxml";
     public static final String APP_MAIN_PAGE = "/pages/MainPage.fxml";
     public static final String NAV_BAR = "/pages/NavBar.fxml";
     public static final String FOOTER = "/pages/Footer.fxml";
@@ -48,10 +48,10 @@ public class AcvContext {
 
     private Window mainWindow;
     public static Window getMainWindow() { return getInstance().mainWindow; }
-    public static void setMainWindow(Window window) { getInstance().mainWindow = window; }
+    static void setMainWindow(Window window) { getInstance().mainWindow = window; }
 
-    private Properties properties;
-    private Properties appProperties;
+    private static Properties properties;
+    private static Properties appProperties;
     private CorpusDictionary corpusDictionary;
     public CorpusDictionary getCorpusDictionary() { return corpusDictionary; }
 
@@ -96,22 +96,22 @@ public class AcvContext {
     }
 
     public static String getAppProperty(String propertyName) {
-        return getInstance().appProperties.getProperty(propertyName);
+        return appProperties.getProperty(propertyName);
     }
 
     public static String getProperty(String propertyName) {
-        return getInstance().properties.getProperty(propertyName);
+        return properties.getProperty(propertyName);
     }
 
     public static String getProperty(String propertyName, Object defaultValue) {
-        return getInstance().properties.getProperty(propertyName, defaultValue.toString());
+        return properties.getProperty(propertyName, defaultValue.toString());
     }
 
     public static void setProperty(String propertyName, Object value) {
-        getInstance().properties.setProperty(propertyName, value.toString());
+        properties.setProperty(propertyName, value.toString());
 
         try {
-            getInstance().properties.store(new FileWriter(USER_PROPERTIES_FILE_NAME), "");
+            properties.store(new FileWriter(USER_PROPERTIES_DIR + USER_PROPERTIES_FILE_NAME), "");
         } catch (IOException e) {
             logger.throwing(e);
         }
