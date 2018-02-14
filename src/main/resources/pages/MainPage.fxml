@@ -21,8 +21,9 @@
         <padding>
             <Insets topRightBottomLeft="15"/>
         </padding>
-        <Label text="Etude Viewer" styleClass="text-header-one, underlined"/>
-        <Label text="Using this tool, you will be able to compare the output of an NLP system against the output&#10;of another NLP system.  The tool then allows you to visually compare the annotated files side by side to look at discrepancies and metrics.">
+        <Label text="ETUDE Viewer" styleClass="text-header-one, underlined"/>
+        <Label text="Using this tool, you will be able to compare the output of an NLP system against the output&#10;of another NLP system.  The tool then allows you to visually compare the annotated files side by side to look at discrepancies and metrics."
+               wrapText="true">
             <padding>
                 <Insets left="30"/>
             </padding>
@@ -35,7 +36,7 @@
                     </StackPane.margin>
                 </Pane>
                 <JFXButton onAction="#loadEtudeConfigurationPage" maxWidth="Infinity"
-                           buttonType="RAISED" styleClass="button-raised, button-gray, no-focus" maxHeight="200">
+                           buttonType="RAISED" styleClass="button-raised, button-gray, no-focus" maxHeight="300">
                     <graphic>
                         <VBox spacing="5" alignment="CENTER">
                             <Label text="Run ETUDE Engines" styleClass="text-large-bold" maxWidth="Infinity" alignment="CENTER" textAlignment="CENTER"/>
@@ -53,7 +54,7 @@
                     </StackPane.margin>
                 </Pane>
                 <JFXButton onAction="#loadConfigurationBuilderPage" maxWidth="Infinity"
-                           buttonType="RAISED" styleClass="button-raised, button-gray, no-focus" maxHeight="200">
+                           buttonType="RAISED" styleClass="button-raised, button-gray, no-focus" maxHeight="300">
                     <graphic>
                         <VBox spacing="5" alignment="CENTER">
                             <Label text="Build Configuration Files" styleClass="text-large-bold" maxWidth="Infinity" alignment="CENTER" textAlignment="CENTER"/>
@@ -71,7 +72,7 @@
                     </StackPane.margin>
                 </Pane>
                 <JFXButton onAction="#loadComparisonViewerPage" maxWidth="Infinity"
-                           buttonType="RAISED" styleClass="button-raised, button-gray, no-focus" maxHeight="200">
+                           buttonType="RAISED" styleClass="button-raised, button-gray, no-focus" maxHeight="300">
                     <graphic>
                         <VBox spacing="5" alignment="CENTER">
                             <Label text="View ETUDE Analysis" styleClass="text-large-bold" maxWidth="Infinity" alignment="CENTER" textAlignment="CENTER"/>
