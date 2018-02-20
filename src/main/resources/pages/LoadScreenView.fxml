@@ -20,14 +20,10 @@
         <padding>
             <Insets topRightBottomLeft="15"/>
         </padding>
-        <VBox spacing="10">
-            <Label styleClass="text-header-one, underlined" text="ETUDE" textAlignment="CENTER"/>
-            <Label styleClass="text-medium-normal"
-                   text="This tool will help you compare files processed by a given system (such as CliniDeid)&#10;against files on a given Gold Standard corpus."/>
-        </VBox>
+        <Label styleClass="text-header-one, underlined" text="Load ETUDE Analysis" textAlignment="CENTER"/>
         <VBox spacing="10" alignment="CENTER" maxWidth="Infinity">
             <HBox spacing="10" alignment="CENTER" maxWidth="Infinity">
-                <Label text="Output Directory:" styleClass="text-medium-normal" alignment="CENTER_RIGHT" textAlignment="RIGHT"/>
+                <Label text="ETUDE Output Directory:" styleClass="text-medium-normal" alignment="CENTER_RIGHT" textAlignment="RIGHT"/>
                 <VBox spacing="3">
                     <JFXTextField fx:id="masterDirectoryTextField" styleClass="text-medium-normal" minWidth="400"/>
                     <padding>

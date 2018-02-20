@@ -19,11 +19,11 @@
         </padding>
     </HBox>
     <HBox alignment="BOTTOM_LEFT">
-        <NavBarButton fx:id="mainPageButton" text="Main Page"/>
-        <NavBarButton fx:id="etudeRunnerButton" text="Run Engines"/>
-        <NavBarButton fx:id="configBuilderButton" text="Configuration&#10;File Builder"/>
-        <NavBarButton fx:id="loadScreenButton" text="Load Analysis"/>
-        <NavBarButton fx:id="compareViewerButton" text="Analysis&#10;Comparison View"/>
+        <NavBarButton fx:id="mainPageButton" text="Introduction"/>
+        <NavBarButton fx:id="configBuilderButton" text="Configure"/>
+        <NavBarButton fx:id="etudeRunnerButton" text="Run"/>
+        <NavBarButton fx:id="loadScreenButton" text="Load"/>
+        <NavBarButton fx:id="compareViewerButton" text="View"/>
         <padding>
             <Insets left="25"/>
         </padding>

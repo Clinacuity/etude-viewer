@@ -23,9 +23,9 @@
     </columnConstraints>
     <VBox spacing="25" maxWidth="Infinity" GridPane.columnIndex="0">
         <padding>
-            <Insets topRightBottomLeft="5"/>
+            <Insets topRightBottomLeft="15"/>
         </padding>
-        <Label text="ETUDE Configuration" styleClass="text-header-one, underlined" alignment="TOP_LEFT"/>
+        <Label text="Run ETUDE" styleClass="text-header-one, underlined" alignment="TOP_LEFT"/>
 
         <ScrollPane fx:id="scrollPane" vbarPolicy="NEVER" hbarPolicy="NEVER" maxWidth="Infinity">
             <VBox spacing="15">
