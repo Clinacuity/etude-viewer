@@ -25,7 +25,7 @@
         <padding>
             <Insets topRightBottomLeft="15"/>
         </padding>
-        <Label text="Run ETUDE" styleClass="text-header-one, underlined" alignment="TOP_LEFT"/>
+        <Label text="Run Analysis" styleClass="text-header-one, underlined" alignment="TOP_LEFT"/>
 
         <ScrollPane fx:id="scrollPane" vbarPolicy="NEVER" hbarPolicy="NEVER" maxWidth="Infinity">
             <VBox spacing="15">

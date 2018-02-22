@@ -27,11 +27,11 @@
             <Insets topRightBottomLeft="15"/>
         </padding>
         <Label text="Configuration Builder" styleClass="text-header-one, underlined"/>
-        <HBox spacing="20" alignment="TOP_CENTER" maxHeight="Infinity">
+        <HBox fx:id="containerBox" spacing="10" alignment="TOP_CENTER" maxHeight="Infinity">
             <VBox spacing="10" alignment="TOP_CENTER">
                 <HBox spacing="10">
                     <JFXTextField fx:id="systemDirectoryTextField" styleClass="text-medium-normal" focusTraversable="false"
-                                  promptText="System Output Directory" minWidth="250" editable="false"/>
+                                  promptText="System Output Directory" maxWidth="Infinity" editable="false"/>
                     <JFXButton text="..." onAction="#pickSystemCorpus" prefWidth="32" buttonType="RAISED"
                                styleClass="button-raised, button-gray, no-focus, text-small-normal"/>
                     <Label styleClass="label-tooltip">
@@ -125,7 +125,7 @@
             <VBox spacing="10" alignment="TOP_CENTER">
                 <HBox spacing="10">
                     <JFXTextField fx:id="referenceDirectoryTextField" styleClass="text-medium-normal" focusTraversable="false"
-                                  promptText="Reference Standard Directory" minWidth="250" editable="false"/>
+                                  promptText="Reference Standard Directory" maxWidth="Infinity" editable="false"/>
                     <JFXButton text="..." onAction="#pickReferenceCorpus" prefWidth="32" buttonType="RAISED"
                                styleClass="button-raised, button-gray, no-focus, text-small-normal"/>
                     <Label styleClass="label-tooltip">

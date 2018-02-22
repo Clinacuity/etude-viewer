@@ -10,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.DirectoryChooser;
@@ -23,8 +24,15 @@ import java.util.*;
 
 public class ConfigurationBuilderController implements Initializable {
     private static final Logger logger = LogManager.getLogger();
+    private static final double SIDE_BOX_MAX_WIDTH = 250.0d;
+    private static final double SIDE_BOX_MULTIPLIER = 0.25d;
+    private static final double MAIN_BOX_MULTIPLIER = 0.5d;
+
     public static CorpusType draggableAnnotationCorpus;
     public static AnnotationTypeDraggable draggedAnnotation = null;
+
+    // Main HBox and VBoxes
+    @FXML private HBox containerBox;
 
     @FXML private ScrollPane annotationScrollPane;
     @FXML private ScrollPane systemDragScrollPane;
@@ -43,6 +51,31 @@ public class ConfigurationBuilderController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        containerBox.widthProperty().addListener((obs, old, newValue) -> {
+            double sideBoxesWidth = newValue.doubleValue() * SIDE_BOX_MULTIPLIER;
+            double mainBoxWidth = newValue.doubleValue() * MAIN_BOX_MULTIPLIER - 100d;
+
+            // Check max size for side boxes; if so, main box fills width
+            if (sideBoxesWidth >= SIDE_BOX_MAX_WIDTH) {
+                sideBoxesWidth = SIDE_BOX_MAX_WIDTH;
+                mainBoxWidth = newValue.doubleValue() - (SIDE_BOX_MAX_WIDTH * 2.0d) - 100.0d;
+            }
+
+            annotationScrollPane.setMinWidth(mainBoxWidth);
+            annotationScrollPane.setMaxWidth(mainBoxWidth);
+
+            systemDragScrollPane.setMinWidth(sideBoxesWidth);
+            systemDragScrollPane.setMaxWidth(sideBoxesWidth);
+            systemDirectoryTextField.setMinWidth(sideBoxesWidth - 80.0d);
+            systemDirectoryTextField.setMaxWidth(sideBoxesWidth - 80.0d);
+            referenceDragScrollPane.setMinWidth(sideBoxesWidth);
+            referenceDragScrollPane.setMaxWidth(sideBoxesWidth);
+            referenceDirectoryTextField.setMinWidth(sideBoxesWidth - 80.0d);
+            referenceDirectoryTextField.setMaxWidth(sideBoxesWidth - 80.0d);
+
+            logger.error("Compare {} vs {} ", annotationScrollPane.getWidth(), annotationDropBox.getWidth());
+        });
+
         FxTimer.runLater(Duration.ofMillis(250), this::addAnnotationDropBox);
     }
 
@@ -64,7 +97,7 @@ public class ConfigurationBuilderController implements Initializable {
             });
             systemDraggableTask.setOnCancelled(event -> systemSpinner.setVisible(false));
             systemDraggableTask.setOnSucceeded(event -> {
-                double width = referenceDragScrollPane.getWidth() - 40.0d;
+                double width = systemDragScrollPane.getWidth() - 40.0d;
                 List<AnnotationTypeDraggable> items = systemDraggableTask.getValue();
                 items.forEach(item -> {
                     item.setMinWidth(width);
