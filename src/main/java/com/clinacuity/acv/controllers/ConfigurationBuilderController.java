@@ -24,16 +24,11 @@ import java.util.*;
 
 public class ConfigurationBuilderController implements Initializable {
     private static final Logger logger = LogManager.getLogger();
-    private static final double SIDE_BOX_MAX_WIDTH = 250.0d;
-    private static final double SIDE_BOX_MULTIPLIER = 0.25d;
-    private static final double MAIN_BOX_MULTIPLIER = 0.5d;
 
     public static CorpusType draggableAnnotationCorpus;
     public static AnnotationTypeDraggable draggedAnnotation = null;
 
     // Main HBox and VBoxes
-    @FXML private HBox containerBox;
-
     @FXML private ScrollPane annotationScrollPane;
     @FXML private ScrollPane systemDragScrollPane;
     @FXML private ScrollPane referenceDragScrollPane;
@@ -45,35 +40,31 @@ public class ConfigurationBuilderController implements Initializable {
     @FXML private JFXTextField systemDirectoryTextField;
     @FXML private JFXTextField referenceDirectoryTextField;
 
+    @FXML private HBox addMatchButtonBox;
+
     private CreateAnnotationDraggableTask systemDraggableTask;
     private CreateAnnotationDraggableTask referenceDraggableTask;
     private SaveConfigurationTask saveTask;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        containerBox.widthProperty().addListener((obs, old, newValue) -> {
-            double sideBoxesWidth = newValue.doubleValue() * SIDE_BOX_MULTIPLIER;
-            double mainBoxWidth = newValue.doubleValue() * MAIN_BOX_MULTIPLIER - 100d;
+        FxTimer.runPeriodically(Duration.ofMillis(1000), () -> {
+            logger.error("WIDTH: {}", systemDragScrollPane.getWidth());
+        });
 
-            // Check max size for side boxes; if so, main box fills width
-            if (sideBoxesWidth >= SIDE_BOX_MAX_WIDTH) {
-                sideBoxesWidth = SIDE_BOX_MAX_WIDTH;
-                mainBoxWidth = newValue.doubleValue() - (SIDE_BOX_MAX_WIDTH * 2.0d) - 100.0d;
+        annotationScrollPane.widthProperty().addListener((obs, old, newValue) -> {
+            // The 40.0d comes from the padding of the <StackPane>
+            double width = newValue.doubleValue() - 40.0d;
+
+            for (Node node: annotationDropBox.getChildren()) {
+                if (node instanceof AnnotationDropBox) {
+                    ((AnnotationDropBox) node).setMinWidth(width);
+                    ((AnnotationDropBox) node).setMinWidth(width);
+                }
             }
 
-            annotationScrollPane.setMinWidth(mainBoxWidth);
-            annotationScrollPane.setMaxWidth(mainBoxWidth);
-
-            systemDragScrollPane.setMinWidth(sideBoxesWidth);
-            systemDragScrollPane.setMaxWidth(sideBoxesWidth);
-            systemDirectoryTextField.setMinWidth(sideBoxesWidth - 80.0d);
-            systemDirectoryTextField.setMaxWidth(sideBoxesWidth - 80.0d);
-            referenceDragScrollPane.setMinWidth(sideBoxesWidth);
-            referenceDragScrollPane.setMaxWidth(sideBoxesWidth);
-            referenceDirectoryTextField.setMinWidth(sideBoxesWidth - 80.0d);
-            referenceDirectoryTextField.setMaxWidth(sideBoxesWidth - 80.0d);
-
-            logger.error("Compare {} vs {} ", annotationScrollPane.getWidth(), annotationDropBox.getWidth());
+            addMatchButtonBox.setMinWidth(width);
+            addMatchButtonBox.setMaxWidth(width);
         });
 
         FxTimer.runLater(Duration.ofMillis(250), this::addAnnotationDropBox);
@@ -208,10 +199,7 @@ public class ConfigurationBuilderController implements Initializable {
         }
 
         saveTask = new SaveConfigurationTask(systemAnnotationMatches, referenceAnnotationMatches, directory);
-        saveTask.setOnSucceeded(event -> {
-            logger.error("succeeded");
-            AcvContext.getInstance().contentLoading.setValue(false);
-        });
+        saveTask.setOnSucceeded(event -> AcvContext.getInstance().contentLoading.setValue(false));
         saveTask.setOnFailed(event -> {
             logger.error("FAILED");
             AcvContext.getInstance().contentLoading.setValue(false);

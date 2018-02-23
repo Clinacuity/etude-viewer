@@ -27,7 +27,7 @@
             <Insets topRightBottomLeft="15"/>
         </padding>
         <Label text="Configuration Builder" styleClass="text-header-one, underlined"/>
-        <HBox fx:id="containerBox" spacing="10" alignment="TOP_CENTER" maxHeight="Infinity">
+        <HBox spacing="10" alignment="TOP_CENTER" maxHeight="Infinity">
             <VBox spacing="10" alignment="TOP_CENTER">
                 <HBox spacing="10">
                     <JFXTextField fx:id="systemDirectoryTextField" styleClass="text-medium-normal" focusTraversable="false"
@@ -49,7 +49,8 @@
                     </padding>
                 </HBox>
                 <StackPane>
-                    <ScrollPane fx:id="systemDragScrollPane" styleClass="card-small" minHeight="300" hbarPolicy="NEVER">
+                    <ScrollPane fx:id="systemDragScrollPane" styleClass="card-small" minHeight="300" hbarPolicy="NEVER"
+                                minWidth="210" maxWidth="210">
                         <StackPane maxWidth="Infinity">
                             <VBox fx:id="systemDraggableBox" spacing="8"/>
                             <padding>
@@ -93,7 +94,7 @@
                         <StackPane>
                             <VBox spacing="15">
                                 <VBox fx:id="annotationDropBox" spacing="8"/>
-                                <HBox alignment="BOTTOM_RIGHT">
+                                <HBox fx:id="addMatchButtonBox" alignment="BOTTOM_RIGHT">
                                     <JFXButton onAction="#addAnnotationDropBox" text="ADD MATCH"
                                                styleClass="button-raised, button-gray, no-focus" buttonType="RAISED">
                                         <graphic>
@@ -143,7 +144,8 @@
                     </padding>
                 </HBox>
                 <StackPane>
-                    <ScrollPane fx:id="referenceDragScrollPane" styleClass="card-small" minHeight="300" hbarPolicy="NEVER">
+                    <ScrollPane fx:id="referenceDragScrollPane" styleClass="card-small" minHeight="300" hbarPolicy="NEVER"
+                                minWidth="210" maxWidth="210">
                         <StackPane maxWidth="Infinity" >
                             <VBox fx:id="referenceDraggableBox" spacing="8"/>
                             <padding>
