@@ -48,21 +48,12 @@ public class ConfigurationBuilderController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        FxTimer.runPeriodically(Duration.ofMillis(1000), () -> {
-            logger.error("WIDTH: {}", systemDragScrollPane.getWidth());
-        });
-
         annotationScrollPane.widthProperty().addListener((obs, old, newValue) -> {
-            // The 40.0d comes from the padding of the <StackPane>
-            double width = newValue.doubleValue() - 40.0d;
+            // The subtraction comes from the padding of the <StackPane> and the width of the scrollbar
+            double width = newValue.doubleValue() - 50.0d;
 
-            for (Node node: annotationDropBox.getChildren()) {
-                if (node instanceof AnnotationDropBox) {
-                    ((AnnotationDropBox) node).setMinWidth(width);
-                    ((AnnotationDropBox) node).setMinWidth(width);
-                }
-            }
-
+            annotationDropBox.setMinWidth(width);
+            annotationDropBox.setMaxWidth(width);
             addMatchButtonBox.setMinWidth(width);
             addMatchButtonBox.setMaxWidth(width);
         });
