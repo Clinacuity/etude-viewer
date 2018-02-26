@@ -5,7 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.reactfx.util.FxTimer;
@@ -14,7 +14,7 @@ import java.time.Duration;
 import java.util.List;
 import java.util.ArrayList;
 
-public class AnnotatedDocumentPane extends GridPane {
+public class AnnotatedDocumentPane extends VBox {
     private static final Logger logger = LogManager.getLogger();
     private static double characterHeight = -1.0d;
     private static double characterWidth = -1.0d;

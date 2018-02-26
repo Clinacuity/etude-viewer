@@ -4,8 +4,6 @@
 <?import com.clinacuity.acv.controls.AnnotatedDocumentPane?>
 <?import com.clinacuity.acv.controls.ViewControls?>
 <?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.control.Label?>
 <?import javafx.geometry.Insets?>
 <?import com.jfoenix.controls.JFXHamburger?>
@@ -16,33 +14,29 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.RowConstraints?>
 
 <GridPane xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="com.clinacuity.acv.controllers.AcvContentController">
-    <JFXDrawer fx:id="drawer">
-        <content>
-            <GridPane>
-                <columnConstraints>
-                    <ColumnConstraints percentWidth="35"/>
-                    <ColumnConstraints percentWidth="35"/>
-                    <ColumnConstraints/>
-                    <ColumnConstraints percentWidth="29"/>
-                </columnConstraints>
-                <rowConstraints>
-                    <RowConstraints/>
-                    <RowConstraints/>
-                    <RowConstraints/>
-                    <RowConstraints minHeight="15" maxHeight="15"/>
-                </rowConstraints>
+    <rowConstraints>
+        <RowConstraints percentHeight="100"/>
+    </rowConstraints>
 
-                <HBox spacing="40" GridPane.columnSpan="4" GridPane.rowIndex="0">
-                    <VBox>
-                        <JFXHamburger maxHeight="Infinity"
-                                      onMouseClicked="#collapsePanel"/>
-                    </VBox>
-                    <VBox spacing="20">
-                        <Label text="View Analysis" styleClass="text-header-one, underlined"/>
+    <JFXDrawer fx:id="drawer" maxHeight="Infinity" GridPane.rowIndex="0">
+        <content>
+            <HBox spacing="5">
+                <padding>
+                    <Insets topRightBottomLeft="15"/>
+                </padding>
+                <VBox spacing="10">
+                    <Label text="View Analysis" styleClass="text-header-one, underlined"/>
+                    <VBox spacing="10">
                         <HBox spacing="10">
+                            <JFXHamburger maxHeight="Infinity" onMouseClicked="#collapsePanel">
+                                <padding>
+                                    <Insets right="10"/>
+                                </padding>
+                            </JFXHamburger>
                             <JFXButton styleClass="text-medium-normal" focusTraversable="false" onAction="#getPreviousDocument">
                                 <graphic>
                                     <HBox spacing="5">
@@ -64,43 +58,29 @@
                                 </graphic>
                             </JFXButton>
                         </HBox>
+                        <HBox spacing="10">
+                            <VBox>
+                                <Label text="System Output:" styleClass="text-medium-bold">
+                                    <padding>
+                                        <Insets left="25"/>
+                                    </padding>
+                                </Label>
+                                <AnnotatedDocumentPane fx:id="targetPane" minWidth="275" maxWidth="275"/>
+                            </VBox>
+                            <VBox>
+                                <Label text="Reference:" styleClass="text-medium-bold">
+                                    <padding>
+                                        <Insets left="25"/>
+                                    </padding>
+                                </Label>
+                                <AnnotatedDocumentPane fx:id="referencePane" minWidth="275" maxWidth="275"/>
+                            </VBox>
+                        </HBox>
                     </VBox>
-                    <padding>
-                        <Insets top="5" bottom="10" left="10"/>
-                    </padding>
-                </HBox>
-
-                <Label text="System Output:" GridPane.columnIndex="0" GridPane.rowIndex="1" styleClass="text-medium-bold">
-                    <padding>
-                        <Insets left="25"/>
-                    </padding>
-                </Label>
-                <AnnotatedDocumentPane fx:id="targetPane" id="target" GridPane.columnIndex="0" GridPane.rowIndex="2">
-                    <padding>
-                        <Insets left="5" right="5"/>
-                    </padding>
-                </AnnotatedDocumentPane>
-
-
-                <Label text="Reference:" GridPane.columnIndex="1" GridPane.rowIndex="1" styleClass="text-medium-bold">
-                    <padding>
-                        <Insets left="25"/>
-                    </padding>
-                </Label>
-
-                <AnnotatedDocumentPane fx:id="referencePane" id="target" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                    <padding>
-                        <Insets right="5"/>
-                    </padding>
-                </AnnotatedDocumentPane>
-
-                <Separator orientation="VERTICAL" GridPane.columnIndex="2" GridPane.rowSpan="3"/>
-                <ViewControls fx:id="viewControls" GridPane.columnIndex="3" GridPane.rowIndex="2">
-                    <padding>
-                        <Insets left="3" right="5"/>
-                    </padding>
-                </ViewControls>
-            </GridPane>
+                </VBox>
+                <Separator orientation="VERTICAL"/>
+                <ViewControls fx:id="viewControls"/>
+            </HBox>
         </content>
         <sidePane>
             <SideBar fx:id="sideBar"/>
