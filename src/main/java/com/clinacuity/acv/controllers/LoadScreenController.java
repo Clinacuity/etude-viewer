@@ -7,12 +7,16 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
 import javafx.stage.DirectoryChooser;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.reactfx.util.FxTimer;
+
 import java.io.File;
 import java.net.URL;
+import java.time.Duration;
 import java.util.ResourceBundle;
 
 public class LoadScreenController implements Initializable {
@@ -24,6 +28,12 @@ public class LoadScreenController implements Initializable {
     @FXML private TextField gsInputTextField;
     @FXML private JFXTextField masterDirectoryTextField;
     @FXML private Label errorLabel;
+
+
+
+
+    @FXML private HBox textBox;
+    @FXML private HBox buttonBox;
 
     private boolean isValidDirectory = false;
     private File corpusFile;
@@ -46,6 +56,10 @@ public class LoadScreenController implements Initializable {
                     errorLabel.setVisible(true);
                 }
             }
+        });
+
+        FxTimer.runPeriodically(Duration.ofMillis(1000), () -> {
+            logger.error("{} vs {}", textBox.getWidth(), buttonBox.getWidth());
         });
     }
 
