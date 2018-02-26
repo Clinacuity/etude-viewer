@@ -1,7 +1,6 @@
 package com.clinacuity.acv.controls;
 
 import com.clinacuity.acv.context.AcvContext;
-import com.clinacuity.acv.controls.AnnotationType;
 import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXRadioButton;
 import javafx.collections.ObservableList;
@@ -48,7 +47,7 @@ public class ViewControls extends VBox {
     }
 
     private void initializeTableColumns() {
-        annotationNameColumn.setCellFactory(param -> new TableCell<AnnotationType, String>() {
+        annotationNameColumn.setCellFactory(param -> new TableCell<>() {
             @Override
             public void updateItem(String item, boolean empty) {
                 super.updateItem(item, empty);
