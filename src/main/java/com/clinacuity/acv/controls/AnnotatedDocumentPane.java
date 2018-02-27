@@ -21,7 +21,7 @@ public class AnnotatedDocumentPane extends VBox {
     private static int maxCharactersPerLabel = -1;
 
     public static final double STANDARD_INSET = 10.0d;
-    public static final double LINE_NUMBER_WIDTH = 30.0d;
+    public static final double LINE_NUMBER_WIDTH = 24.0d;
     public static double getCharacterHeight() { return characterHeight; }
     public static int getMaxCharactersPerLabel() { return maxCharactersPerLabel; }
 
