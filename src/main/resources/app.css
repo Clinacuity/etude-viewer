@@ -297,8 +297,6 @@
 }
 
 .line-number {
-    -fx-min-width: 24px;
-    -fx-max-width: 24px;
     -fx-font-family: "Fira Mono Regular";
     -fx-font-size: 8;
     -fx-text-fill: SlateGray;

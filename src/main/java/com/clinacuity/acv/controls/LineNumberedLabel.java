@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 
+@SuppressWarnings("FieldCanBeLocal")
 public class LineNumberedLabel extends HBox implements Comparable<LineNumberedLabel> {
 
     @FXML private Label textLabel;
@@ -24,6 +25,8 @@ public class LineNumberedLabel extends HBox implements Comparable<LineNumberedLa
 
         lineNumberLabel = new Label(Integer.toString(lineNumberIndex));
         lineNumberLabel.getStyleClass().add("line-number");
+        lineNumberLabel.setMinWidth(AnnotatedDocumentPane.LINE_NUMBER_WIDTH);
+        lineNumberLabel.setMaxWidth(AnnotatedDocumentPane.LINE_NUMBER_WIDTH);
         getChildren().add(lineNumberLabel);
 
         textLabel = new Label(labelText);
