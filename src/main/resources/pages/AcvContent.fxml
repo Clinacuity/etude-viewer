@@ -65,7 +65,7 @@
                                         <Insets left="25"/>
                                     </padding>
                                 </Label>
-                                <AnnotatedDocumentPane fx:id="targetPane" minWidth="275" maxWidth="275"/>
+                                <AnnotatedDocumentPane fx:id="targetPane" minWidth="300" maxWidth="375"/>
                             </VBox>
                             <VBox>
                                 <Label text="Reference:" styleClass="text-medium-bold">
@@ -73,7 +73,7 @@
                                         <Insets left="25"/>
                                     </padding>
                                 </Label>
-                                <AnnotatedDocumentPane fx:id="referencePane" minWidth="275" maxWidth="275"/>
+                                <AnnotatedDocumentPane fx:id="referencePane" minWidth="300" maxWidth="375"/>
                             </VBox>
                         </HBox>
                     </VBox>

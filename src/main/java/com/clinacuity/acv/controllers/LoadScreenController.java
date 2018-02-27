@@ -10,11 +10,8 @@ import javafx.scene.layout.HBox;
 import javafx.stage.DirectoryChooser;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.reactfx.util.FxTimer;
-
 import java.io.File;
 import java.net.URL;
-import java.time.Duration;
 import java.util.ResourceBundle;
 
 public class LoadScreenController implements Initializable {
@@ -54,10 +51,6 @@ public class LoadScreenController implements Initializable {
                     errorLabel.setVisible(true);
                 }
             }
-        });
-
-        FxTimer.runPeriodically(Duration.ofMillis(1000), () -> {
-            logger.error("{} vs {}", textBox.getWidth(), buttonBox.getWidth());
         });
     }
 

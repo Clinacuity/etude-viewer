@@ -5,12 +5,17 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.geometry.Insets?>
 
 <fx:root type="javafx.scene.layout.VBox"
          xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" spacing="10">
 
-    <ScrollPane fx:id="document" fitToHeight="true" hbarPolicy="NEVER" fitToWidth="true" minHeight="225" maxHeight="225">
-        <AnchorPane fx:id="anchor"/>
+    <ScrollPane fx:id="document" fitToHeight="true" hbarPolicy="NEVER" fitToWidth="true" minHeight="225">
+        <AnchorPane fx:id="anchor">
+            <padding>
+                <Insets right="15"/>
+            </padding>
+        </AnchorPane>
     </ScrollPane>
 
     <VBox>
