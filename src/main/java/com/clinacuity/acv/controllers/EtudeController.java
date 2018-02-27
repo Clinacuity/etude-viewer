@@ -8,6 +8,7 @@ import com.jfoenix.controls.JFXTextField;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.stage.DirectoryChooser;
@@ -34,6 +35,7 @@ public class EtudeController implements Initializable{
     private AcvContext context = AcvContext.getInstance();
 
     @FXML private HBox cardHBox;
+    @FXML private ScrollPane scrollPane;
     @FXML private StackPane leftSideCard;
     @FXML private StackPane rightSideCard;
     @FXML private JFXTextField referenceConfigInputField;
@@ -67,13 +69,13 @@ public class EtudeController implements Initializable{
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        cardHBox.widthProperty().addListener((obs, old, newValue) -> {
-            double width = newValue.doubleValue();
-            rightSideCard.setMinWidth(width * 0.45d);
-            rightSideCard.setMaxWidth(width * 0.45d);
-            leftSideCard.setMinWidth(width * 0.45d);
-            leftSideCard.setMaxWidth(width * 0.45d);
-            cardHBox.setSpacing(width * 0.05d);
+        scrollPane.widthProperty().addListener((obs, old, newValue) -> {
+            double width = newValue.doubleValue() - 60.0d;
+            rightSideCard.setMinWidth(width * 0.5d);
+            rightSideCard.setMaxWidth(width * 0.5d);
+            leftSideCard.setMinWidth(width * 0.5d);
+            leftSideCard.setMaxWidth(width * 0.5d);
+            cardHBox.setSpacing(20.0d);
         });
 
         bindElementsToProperties();

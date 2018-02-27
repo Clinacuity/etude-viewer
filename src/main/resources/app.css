@@ -65,42 +65,42 @@
 }
 
 .text-small-normal {
-    -fx-font-size: 10px;
+    -fx-font-size: 9px;
     -fx-font-family: "Open Sans Light";
 }
 
 .text-small-bold {
-    -fx-font-size: 10px;
+    -fx-font-size: 9px;
     -fx-font-family: "Open Sans Bold";
 }
 
 .text-small-italic {
-    -fx-font-size: 10px;
+    -fx-font-size: 9px;
     -fx-font-family: "Open Sans Italic";
 }
 
 .text-medium-normal {
-    -fx-font-size: 14px;
+    -fx-font-size: 12px;
     -fx-font-family: "Open Sans Light";
 }
 
 .text-medium-bold {
-    -fx-font-size: 14px;
+    -fx-font-size: 12px;
     -fx-font-family: "Open Sans Bold";
 }
 
 .text-medium-italic {
-    -fx-font-size: 14px;
+    -fx-font-size: 12px;
     -fx-font-family: "Open Sans Italic";
 }
 
 .text-large-normal {
-    -fx-font-size: 20px;
+    -fx-font-size: 16px;
     -fx-font-family: "Open Sans Light";
 }
 
 .text-large-bold {
-    -fx-font-size: 20px;
+    -fx-font-size: 16px;
     -fx-font-family: "Open Sans Bold";
 }
 
@@ -238,7 +238,7 @@
 
 .tooltip {
     -fx-font-family: "Open Sans Bold Italic";
-    -fx-font-size: 10;
+    -fx-font-size: 9;
 }
 
 .label-tooltip {
@@ -252,19 +252,19 @@
 
 .text-header-one {
     -fx-font-family: "Open Sans Bold Italic";
-    -fx-font-size: 32;
+    -fx-font-size: 24;
     -fx-text-fill: rgb(0, 56, 145);
 }
 
 .text-header-two {
     -fx-font-family: "Open Sans Bold Italic";
-    -fx-font-size: 18;
+    -fx-font-size: 16;
     -fx-text-fill: rgb(0, 120, 220);
 }
 
 .label-annotation-category {
     -fx-font-family: "Open Sans Italic";
-    -fx-font-size: 12px;
+    -fx-font-size: 10px;
     -fx-text-fill: DarkGray;
     -fx-text-alignment: Center;
     -fx-alignment: Top_Center;
@@ -272,7 +272,7 @@
 
 .mono-text {
     -fx-font-family: "Fira Mono Regular";
-    -fx-font-size: 10;
+    -fx-font-size: 9;
     -fx-text-alignment: LEFT;
     -fx-alignment: CENTER_LEFT;
     -fx-border-color: Gainsboro;
@@ -287,20 +287,20 @@
 .false-positives-count {
     -fx-text-fill: DarkOrchid;
     -fx-font-family: "Open Sans Italic";
-    -fx-font-size: 12;
+    -fx-font-size: 10;
 }
 
 .false-negatives-count {
     -fx-text-fill: OrangeRed;
     -fx-font-family: "Open Sans Italic";
-    -fx-font-size: 12;
+    -fx-font-size: 10;
 }
 
 .line-number {
-    -fx-min-width: 30px;
-    -fx-max-width: 30px;
+    -fx-min-width: 24px;
+    -fx-max-width: 24px;
     -fx-font-family: "Fira Mono Regular";
-    -fx-font-size: 10;
+    -fx-font-size: 8;
     -fx-text-fill: SlateGray;
     -fx-text-alignment: RIGHT;
     -fx-alignment: CENTER_RIGHT;
@@ -311,12 +311,12 @@
 
 .table-view text {
     -fx-font-family: "Fira Mono Bold";
-    -fx-font-size: 24px;
+    -fx-font-size: 18px;
 }
 
 .table-cell {
     -fx-font-family: "Open Sans Light";
-    -fx-font-size: 12px;
+    -fx-font-size: 10px;
 }
 
 .column-right-align {

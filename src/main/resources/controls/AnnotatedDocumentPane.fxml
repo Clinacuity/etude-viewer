@@ -4,29 +4,22 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextArea?>
-<?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.geometry.Insets?>
 
-<?import javafx.scene.layout.ColumnConstraints?>
-<fx:root type="javafx.scene.layout.GridPane"
-         xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1">
-    <rowConstraints>
-        <RowConstraints percentHeight="75" />
-        <RowConstraints percentHeight="5" />
-        <RowConstraints percentHeight="20" />
-    </rowConstraints>
+<fx:root type="javafx.scene.layout.VBox"
+         xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" spacing="10">
 
-    <columnConstraints>
-        <ColumnConstraints percentWidth="100" />
-    </columnConstraints>
-
-    <ScrollPane fx:id="document" fitToHeight="true" hbarPolicy="NEVER" fitToWidth="true"
-                GridPane.rowIndex="0" GridPane.columnIndex="0">
-        <AnchorPane fx:id="anchor"/>
+    <ScrollPane fx:id="document" fitToHeight="true" hbarPolicy="NEVER" fitToWidth="true" minHeight="225">
+        <AnchorPane fx:id="anchor">
+            <padding>
+                <Insets right="15"/>
+            </padding>
+        </AnchorPane>
     </ScrollPane>
 
-    <Label alignment="BOTTOM_CENTER" text="&#9;Features/attributes:" styleClass="text-medium-bold" GridPane.rowIndex="1"/>
-
-    <TextArea fx:id="featureTree" minHeight="15" maxHeight="Infinity" styleClass="feature-tree, no-focus, no-mouse"
-              GridPane.rowIndex="2"/>
+    <VBox>
+        <Label alignment="BOTTOM_CENTER" text="&#9;Features/attributes:" styleClass="text-medium-bold"/>
+        <TextArea fx:id="featureTree" minHeight="125" maxHeight="125" styleClass="feature-tree, no-focus, no-mouse"/>
+    </VBox>
 </fx:root>

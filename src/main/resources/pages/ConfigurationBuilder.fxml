@@ -27,11 +27,11 @@
             <Insets topRightBottomLeft="15"/>
         </padding>
         <Label text="Configuration Builder" styleClass="text-header-one, underlined"/>
-        <HBox spacing="20" alignment="TOP_CENTER" maxHeight="Infinity">
+        <HBox spacing="10" alignment="TOP_CENTER" maxHeight="Infinity">
             <VBox spacing="10" alignment="TOP_CENTER">
                 <HBox spacing="10">
                     <JFXTextField fx:id="systemDirectoryTextField" styleClass="text-medium-normal" focusTraversable="false"
-                                  promptText="System Corpus Directory" minWidth="250" editable="false"/>
+                                  promptText="System Output Directory" maxWidth="Infinity" editable="false"/>
                     <JFXButton text="..." onAction="#pickSystemCorpus" prefWidth="32" buttonType="RAISED"
                                styleClass="button-raised, button-gray, no-focus, text-small-normal"/>
                     <Label styleClass="label-tooltip">
@@ -49,7 +49,8 @@
                     </padding>
                 </HBox>
                 <StackPane>
-                    <ScrollPane fx:id="systemDragScrollPane" styleClass="card-small" minHeight="300" hbarPolicy="NEVER">
+                    <ScrollPane fx:id="systemDragScrollPane" styleClass="card-small" minHeight="300" hbarPolicy="NEVER"
+                                minWidth="210" maxWidth="210">
                         <StackPane maxWidth="Infinity">
                             <VBox fx:id="systemDraggableBox" spacing="8"/>
                             <padding>
@@ -90,24 +91,34 @@
                 </HBox>
                 <StackPane>
                     <ScrollPane fx:id="annotationScrollPane" styleClass="card-small" minHeight="300" hbarPolicy="NEVER">
-                        <StackPane>
-                            <VBox spacing="15">
-                                <VBox fx:id="annotationDropBox" spacing="8"/>
-                                <HBox alignment="BOTTOM_RIGHT">
-                                    <JFXButton onAction="#addAnnotationDropBox" text="ADD MATCH"
-                                               styleClass="button-raised, button-gray, no-focus" buttonType="RAISED">
-                                        <graphic>
-                                            <ImageView fitHeight="24" preserveRatio="true" pickOnBounds="true">
-                                                <Image url="/img/icons8/plus.png"/>
-                                            </ImageView>
-                                        </graphic>
-                                    </JFXButton>
-                                </HBox>
+                        <VBox spacing="15">
+                            <VBox fx:id="annotationDropBox" spacing="8">
+                                <padding>
+                                    <Insets right="10"/>
+                                </padding>
                             </VBox>
-                            <padding>
-                                <Insets topRightBottomLeft="20"/>
-                            </padding>
-                        </StackPane>
+                            <HBox fx:id="addMatchButtonBox" alignment="BOTTOM_RIGHT">
+                                <JFXButton onAction="#addAnnotationDropBox" text="ADD MATCH"
+                                           styleClass="button-raised, button-gray, no-focus" buttonType="RAISED">
+                                    <graphic>
+                                        <ImageView fitHeight="24" preserveRatio="true" pickOnBounds="true">
+                                            <Image url="/img/icons8/plus.png"/>
+                                        </ImageView>
+                                    </graphic>
+                                </JFXButton>
+                                <padding>
+                                    <Insets right="25"/>
+                                </padding>
+                            </HBox>
+                        </VBox>
+                        <!--<StackPane>-->
+                            <!--<padding>-->
+                                <!--<Insets topRightBottomLeft="20"/>-->
+                            <!--</padding>-->
+                        <!--</StackPane>-->
+                        <padding>
+                            <Insets topRightBottomLeft="20"/>
+                        </padding>
                     </ScrollPane>
                 </StackPane>
             </VBox>
@@ -125,7 +136,7 @@
             <VBox spacing="10" alignment="TOP_CENTER">
                 <HBox spacing="10">
                     <JFXTextField fx:id="referenceDirectoryTextField" styleClass="text-medium-normal" focusTraversable="false"
-                                  promptText="Reference Corpus Directory" minWidth="250" editable="false"/>
+                                  promptText="Reference Standard Directory" maxWidth="Infinity" editable="false"/>
                     <JFXButton text="..." onAction="#pickReferenceCorpus" prefWidth="32" buttonType="RAISED"
                                styleClass="button-raised, button-gray, no-focus, text-small-normal"/>
                     <Label styleClass="label-tooltip">
@@ -143,7 +154,8 @@
                     </padding>
                 </HBox>
                 <StackPane>
-                    <ScrollPane fx:id="referenceDragScrollPane" styleClass="card-small" minHeight="300" hbarPolicy="NEVER">
+                    <ScrollPane fx:id="referenceDragScrollPane" styleClass="card-small" minHeight="300" hbarPolicy="NEVER"
+                                minWidth="210" maxWidth="210">
                         <StackPane maxWidth="Infinity" >
                             <VBox fx:id="referenceDraggableBox" spacing="8"/>
                             <padding>

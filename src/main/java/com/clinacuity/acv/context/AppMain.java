@@ -42,14 +42,14 @@ public class AppMain extends Application {
                     FXMLLoader loader = new FXMLLoader(getClass().getResource(AcvContext.APP_CONTAINER));
                     Parent root = loader.load();
 
-                    scene = new Scene(root, 1600, 900);
+                    scene = new Scene(root, 900, 600);
                     scene.getStylesheets().clear();
                     prepareCss();
 
                     primaryStage.setTitle("Annotations Comparison Viewer");
                     primaryStage.setScene(scene);
-                    primaryStage.setMinWidth(1000.0d);
-                    primaryStage.setMinHeight(800.0d);
+                    primaryStage.setMinWidth(900.0d);
+                    primaryStage.setMinHeight(600.0d);
                     primaryStage.show();
 
                     AcvContext.setMainWindow(scene.getWindow());

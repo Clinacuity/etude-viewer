@@ -29,7 +29,6 @@ public class AnnotationDropBox extends StackPane {
     private static final double START_ROTATION = 0.0d;
     private static final double END_ROTATION = -90.0d;
 
-
     @FXML private HBox annotationNameBox;
     @FXML private VBox collapsibleBox;
     @FXML private VBox systemDropCards;

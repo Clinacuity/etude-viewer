@@ -8,7 +8,7 @@
          xmlns="http://javafx.com/javafx/8.0.112"
          xmlns:fx="http://javafx.com/fxml/1" alignment="BOTTOM_CENTER">
     <Rectangle fx:id="hoverBox" width="20" height="10" fill="gray" styleClass="header-hover-box" visible="false"/>
-    <Label fx:id="label" styleClass="nav-button" alignment="CENTER" textAlignment="CENTER" maxHeight="Infinity">
+    <Label fx:id="label" styleClass="nav-button" alignment="CENTER" textAlignment="CENTER" maxHeight="Infinity" minWidth="80">
         <padding>
             <Insets bottom="10" left="10" right="10" top="5"/>
         </padding>

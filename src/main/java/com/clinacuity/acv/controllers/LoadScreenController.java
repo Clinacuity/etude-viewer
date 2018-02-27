@@ -1,14 +1,13 @@
 package com.clinacuity.acv.controllers;
 
 import com.clinacuity.acv.context.AcvContext;
-import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
 import javafx.stage.DirectoryChooser;
-import org.apache.commons.io.FilenameUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import java.io.File;
@@ -24,6 +23,12 @@ public class LoadScreenController implements Initializable {
     @FXML private TextField gsInputTextField;
     @FXML private JFXTextField masterDirectoryTextField;
     @FXML private Label errorLabel;
+
+
+
+
+    @FXML private HBox textBox;
+    @FXML private HBox buttonBox;
 
     private boolean isValidDirectory = false;
     private File corpusFile;

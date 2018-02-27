@@ -10,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.DirectoryChooser;
@@ -23,9 +24,11 @@ import java.util.*;
 
 public class ConfigurationBuilderController implements Initializable {
     private static final Logger logger = LogManager.getLogger();
+
     public static CorpusType draggableAnnotationCorpus;
     public static AnnotationTypeDraggable draggedAnnotation = null;
 
+    // Main HBox and VBoxes
     @FXML private ScrollPane annotationScrollPane;
     @FXML private ScrollPane systemDragScrollPane;
     @FXML private ScrollPane referenceDragScrollPane;
@@ -37,12 +40,24 @@ public class ConfigurationBuilderController implements Initializable {
     @FXML private JFXTextField systemDirectoryTextField;
     @FXML private JFXTextField referenceDirectoryTextField;
 
+    @FXML private HBox addMatchButtonBox;
+
     private CreateAnnotationDraggableTask systemDraggableTask;
     private CreateAnnotationDraggableTask referenceDraggableTask;
     private SaveConfigurationTask saveTask;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        annotationScrollPane.widthProperty().addListener((obs, old, newValue) -> {
+            // The subtraction comes from the padding of the <StackPane> and the width of the scrollbar
+            double width = newValue.doubleValue() - 50.0d;
+
+            annotationDropBox.setMinWidth(width);
+            annotationDropBox.setMaxWidth(width);
+            addMatchButtonBox.setMinWidth(width);
+            addMatchButtonBox.setMaxWidth(width);
+        });
+
         FxTimer.runLater(Duration.ofMillis(250), this::addAnnotationDropBox);
     }
 
@@ -64,7 +79,7 @@ public class ConfigurationBuilderController implements Initializable {
             });
             systemDraggableTask.setOnCancelled(event -> systemSpinner.setVisible(false));
             systemDraggableTask.setOnSucceeded(event -> {
-                double width = referenceDragScrollPane.getWidth() - 40.0d;
+                double width = systemDragScrollPane.getWidth() - 40.0d;
                 List<AnnotationTypeDraggable> items = systemDraggableTask.getValue();
                 items.forEach(item -> {
                     item.setMinWidth(width);
@@ -175,10 +190,7 @@ public class ConfigurationBuilderController implements Initializable {
         }
 
         saveTask = new SaveConfigurationTask(systemAnnotationMatches, referenceAnnotationMatches, directory);
-        saveTask.setOnSucceeded(event -> {
-            logger.error("succeeded");
-            AcvContext.getInstance().contentLoading.setValue(false);
-        });
+        saveTask.setOnSucceeded(event -> AcvContext.getInstance().contentLoading.setValue(false));
         saveTask.setOnFailed(event -> {
             logger.error("FAILED");
             AcvContext.getInstance().contentLoading.setValue(false);

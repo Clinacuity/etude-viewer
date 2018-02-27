@@ -9,6 +9,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.ColumnConstraints?>
 
+<?import javafx.scene.layout.StackPane?>
 <GridPane xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="com.clinacuity.acv.controllers.LoadScreenController">
 
@@ -20,31 +21,28 @@
         <padding>
             <Insets topRightBottomLeft="15"/>
         </padding>
-        <VBox spacing="10">
-            <Label styleClass="text-header-one, underlined" text="ETUDE" textAlignment="CENTER"/>
-            <Label styleClass="text-medium-normal"
-                   text="This tool will help you compare files processed by a given system (such as CliniDeid)&#10;against files on a given Gold Standard corpus."/>
-        </VBox>
-        <VBox spacing="10" alignment="CENTER" maxWidth="Infinity">
-            <HBox spacing="10" alignment="CENTER" maxWidth="Infinity">
-                <Label text="Output Directory:" styleClass="text-medium-normal" alignment="CENTER_RIGHT" textAlignment="RIGHT"/>
-                <VBox spacing="3">
-                    <JFXTextField fx:id="masterDirectoryTextField" styleClass="text-medium-normal" minWidth="400"/>
-                    <padding>
-                        <Insets right="20" left="15"/>
-                    </padding>
-                </VBox>
-                <JFXButton text="..." onAction="#pickMasterDirectory" prefWidth="32" maxWidth="Infinity"
-                           styleClass="button-raised, button-gray, no-focus, text-small-normal" buttonType="RAISED"/>
-                <Label fx:id="errorLabel" text="&#x2022; Please choose a valid directory" alignment="BOTTOM_CENTER"
-                       styleClass="text-medium-normal, error-text" visible="false"/>
-            </HBox>
-            <HBox alignment="CENTER_RIGHT">
-                <JFXButton onAction="#runAcv" text="RUN VIEWER" buttonType="RAISED"
-                           styleClass="button-raised, button-gray, text-medium-normal">
-                </JFXButton>
-            </HBox>
-        </VBox>
-
+        <Label styleClass="text-header-one, underlined" text="Load Analysis" textAlignment="CENTER"/>
+        <StackPane>
+            <VBox spacing="20" alignment="CENTER" maxWidth="800">
+                <HBox fx:id="textBox" spacing="10" alignment="CENTER" maxWidth="Infinity">
+                    <Label text="ETUDE Output Directory:" styleClass="text-medium-normal" alignment="CENTER_RIGHT" textAlignment="RIGHT"/>
+                    <VBox spacing="3">
+                        <JFXTextField fx:id="masterDirectoryTextField" styleClass="text-medium-normal" minWidth="400"/>
+                        <padding>
+                            <Insets right="20" left="15"/>
+                        </padding>
+                    </VBox>
+                    <JFXButton text="..." onAction="#pickMasterDirectory" prefWidth="32" maxWidth="Infinity"
+                               styleClass="button-raised, button-gray, no-focus, text-small-normal" buttonType="RAISED"/>
+                    <Label fx:id="errorLabel" text="&#x2022; Please choose a valid directory" alignment="BOTTOM_CENTER"
+                           styleClass="text-medium-normal, error-text" visible="false"/>
+                </HBox>
+                <HBox fx:id="buttonBox" alignment="CENTER_RIGHT" maxWidth="400">
+                    <JFXButton onAction="#runAcv" text="RUN VIEWER" buttonType="RAISED"
+                               styleClass="button-raised, button-gray, text-medium-normal">
+                    </JFXButton>
+                </HBox>
+            </VBox>
+        </StackPane>
     </VBox>
 </GridPane>

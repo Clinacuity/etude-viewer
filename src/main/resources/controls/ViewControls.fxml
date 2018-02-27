@@ -61,32 +61,32 @@
         </HBox>
         <TableView fx:id="annotationTable" fixedCellSize="35">
             <columns>
-                <TableColumn text="Name" fx:id="annotationNameColumn" prefWidth="120" styleClass="column-center-align">
+                <TableColumn text="Name" fx:id="annotationNameColumn" prefWidth="120" styleClass="column-center-align" maxWidth="Infinity">
                     <cellValueFactory>
                         <PropertyValueFactory property="annotationName"/>
                     </cellValueFactory>
                 </TableColumn>
-                <TableColumn text="TP" fx:id="truePosColumn" styleClass="column-center-align">
+                <TableColumn text="TP" fx:id="truePosColumn" styleClass="column-center-align" maxWidth="60">
                     <cellValueFactory>
                         <PropertyValueFactory property="truePositiveCount"/>
                     </cellValueFactory>
                 </TableColumn>
-                <TableColumn text="FP" fx:id="falsePosColumn" styleClass="column-center-align">
+                <TableColumn text="FP" fx:id="falsePosColumn" styleClass="column-center-align" maxWidth="60">
                     <cellValueFactory>
                         <PropertyValueFactory property="falsePositiveCount"/>
                     </cellValueFactory>
                 </TableColumn>
-                <TableColumn text="FN" fx:id="falseNegColumn" styleClass="column-center-align">
+                <TableColumn text="FN" fx:id="falseNegColumn" styleClass="column-center-align" maxWidth="60">
                     <cellValueFactory>
                         <PropertyValueFactory property="falseNegativeCount"/>
                     </cellValueFactory>
                 </TableColumn>
-                <TableColumn text="Recall" styleClass="column-center-align">
+                <TableColumn text="Recall" styleClass="column-center-align" maxWidth="70">
                     <cellValueFactory>
                         <PropertyValueFactory property="recall"/>
                     </cellValueFactory>
                 </TableColumn>
-                <TableColumn text="Precision" styleClass="column-center-align">
+                <TableColumn text="Precision" styleClass="column-center-align" maxWidth="70">
                     <cellValueFactory>
                         <PropertyValueFactory property="precision"/>
                     </cellValueFactory>
