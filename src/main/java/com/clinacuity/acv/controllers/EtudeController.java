@@ -56,6 +56,9 @@ public class EtudeController implements Initializable{
     @FXML private JFXCheckBox metricsRecall;
     @FXML private JFXCheckBox metricsF1;
     @FXML private JFXCheckBox fuzzyMatchingCheckbox;
+    @FXML private JFXCheckBox exactMatching;
+    @FXML private JFXCheckBox partialMatching;
+    @FXML private JFXCheckBox fullyContainedMatching;
     @FXML private JFXCheckBox byFileCheckbox;
     @FXML private JFXCheckBox byFileAndTypeCheckbox;
     @FXML private JFXCheckBox byTypeCheckbox;
@@ -77,8 +80,6 @@ public class EtudeController implements Initializable{
             leftSideCard.setMaxWidth(width * 0.5d);
             cardHBox.setSpacing(20.0d);
         });
-
-        bindElementsToProperties();
 
         referenceConfigInputField.focusedProperty().addListener(
                 (obs, old, newValue) -> focusChanged(newValue, referenceConfigInputField, true));
@@ -102,6 +103,12 @@ public class EtudeController implements Initializable{
                 }
             }
         });
+
+        exactMatching.disableProperty().bind(fuzzyMatchingCheckbox.selectedProperty().not());
+        partialMatching.disableProperty().bind(fuzzyMatchingCheckbox.selectedProperty().not());
+        fullyContainedMatching.disableProperty().bind(fuzzyMatchingCheckbox.selectedProperty().not());
+
+        bindElementsToProperties();
     }
 
     @FXML private void runEtudeButtonAction() throws IOException {
@@ -142,7 +149,6 @@ public class EtudeController implements Initializable{
         etudeTask.setMetricsFN(metricsFN.isSelected());
         etudeTask.setMetricsPrecision(metricsPrecision.isSelected());
         etudeTask.setMetricsRecall(metricsRecall.isSelected());
-
         etudeTask.setMetricsF1(metricsF1.isSelected());
         etudeTask.setByFile(byFileCheckbox.isSelected());
         etudeTask.setByFileAndType(byFileAndTypeCheckbox.isSelected());
@@ -150,6 +156,12 @@ public class EtudeController implements Initializable{
         etudeTask.setByTypeAndFile(byTypeAndFileCheckbox.isSelected());
         etudeTask.setIgnoreWhitespace(ignoreWhitespaceCheckbox.isSelected());
         etudeTask.setIgnorePunctuation(ignorePunctuationCheckbox.isSelected());
+
+        if (fuzzyMatchingCheckbox.isSelected()) {
+            etudeTask.setExactMatch(exactMatching.isSelected());
+            etudeTask.setPartialMatch(partialMatching.isSelected());
+            etudeTask.setFullyContainedMatch(fullyContainedMatching.isSelected());
+        }
 
         if (!scoreKeyTextField.getText().equals("") && scoreKeyTextField.getText() != null) {
             etudeTask.setScoreKey(scoreKeyTextField.getText());
@@ -353,6 +365,15 @@ public class EtudeController implements Initializable{
 
         metricsF1.setSelected(Boolean.parseBoolean(AcvContext.getProperty("f1", metricsF1.isSelected())));
         metricsF1.selectedProperty().addListener((obs, old, newValue) -> AcvContext.setProperty("f1", newValue.toString()));
+
+        exactMatching.setSelected(Boolean.parseBoolean(AcvContext.getProperty("exact_matching", exactMatching.isSelected())));
+        exactMatching.selectedProperty().addListener((obs, old, newValue) -> AcvContext.setProperty("exact_matching", newValue.toString()));
+
+        partialMatching.setSelected(Boolean.parseBoolean(AcvContext.getProperty("partial_matching", partialMatching.isSelected())));
+        partialMatching.selectedProperty().addListener((obs, old, newValue) -> AcvContext.setProperty("partial_matching", newValue.toString()));
+
+        fullyContainedMatching.setSelected(Boolean.parseBoolean(AcvContext.getProperty("fully_contained_matching", fullyContainedMatching.isSelected())));
+        fullyContainedMatching.selectedProperty().addListener((obs, old, newValue) -> AcvContext.setProperty("fully_contained_matching", newValue.toString()));
 
         fuzzyMatchingCheckbox.setSelected(Boolean.parseBoolean(AcvContext.getProperty("fuzzy_matching", fuzzyMatchingCheckbox.isSelected())));
         fuzzyMatchingCheckbox.selectedProperty().addListener((obs, old, newValue) -> AcvContext.setProperty("fuzzy_matching", newValue.toString()));

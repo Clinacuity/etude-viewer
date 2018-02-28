@@ -18,6 +18,9 @@
          xmlns:fx="http://javafx.com/fxml/1">
 
     <VBox GridPane.columnIndex="0" GridPane.rowIndex="1" spacing="10">
+        <padding>
+            <Insets top="30"/>
+        </padding>
         <VBox fx:id="matchingTypeToggles" spacing="10"/>
         <HBox id="AnnotationNavBox" alignment="CENTER_LEFT" spacing="3">
             <JFXButton fx:id="previousButton" styleClass="text-small-normal">
