@@ -33,7 +33,6 @@ public class EtudeTask extends Task<Void> {
     private String scoreValues = null;
     private String filePrefix = null;
     private String fileSuffix = null;
-    private String fuzzyMatchFlags = null;
     private String ignorePunctuationRegex = null;
     private boolean metricsTP = false;
     private boolean metricsFP = false;
@@ -41,6 +40,9 @@ public class EtudeTask extends Task<Void> {
     private boolean metricsPrecision = false;
     private boolean metricsRecall = false;
     private boolean metricsF1 = false;
+    private boolean exactMatch = false;
+    private boolean partialMatch = false;
+    private boolean fullyContainedMatch = false;
     private boolean byFile = false;
     private boolean byFileAndType = false;
     private boolean byType = false;
@@ -64,6 +66,9 @@ public class EtudeTask extends Task<Void> {
     public void setMetricsPrecision(boolean value) { metricsPrecision = value; }
     public void setMetricsRecall(boolean value) { metricsRecall = value; }
     public void setMetricsF1(boolean value) { metricsF1 = value; }
+    public void setExactMatch(boolean value) { exactMatch = value; }
+    public void setPartialMatch(boolean value) { partialMatch = value; }
+    public void setFullyContainedMatch(boolean value) { fullyContainedMatch = value; }
     public void setByFile(boolean value) { byFile = value; }
     public void setByFileAndType(boolean value) { byFileAndType= value; }
     public void setByType(boolean value) { byType = value; }
@@ -134,7 +139,9 @@ public class EtudeTask extends Task<Void> {
         scoreValues = null;
         filePrefix = null;
         fileSuffix = null;
-        fuzzyMatchFlags = null;
+        exactMatch = false;
+        partialMatch = false;
+        fullyContainedMatch = false;
         ignorePunctuationRegex = null;
         byFile = false;
         byFileAndType = false;
@@ -219,10 +226,6 @@ public class EtudeTask extends Task<Void> {
             command += " --file-suffix " + fileSuffix;
         }
 
-        if (fuzzyMatchFlags != null) {
-            command += " --fuzzy-match-flags " + fuzzyMatchFlags;
-        }
-
         if (byFile) {
             command += " --by-file";
         }
@@ -254,6 +257,8 @@ public class EtudeTask extends Task<Void> {
         }
 
         command += getMetricsValues();
+
+        command += getFuzzyMatchFlags();
 
         return command;
     }
@@ -306,6 +311,24 @@ public class EtudeTask extends Task<Void> {
         if (metricsF1) { metrics.add("F1"); }
 
         return " -m " + String.join(" ", metrics);
+    }
+
+    private String getFuzzyMatchFlags() {
+        String matches = "";
+
+        if (exactMatch) {
+            matches += " exact";
+        }
+
+        if (partialMatch) {
+            matches += " partial";
+        }
+
+        if (fullyContainedMatch) {
+            matches += "fully-contained";
+        }
+
+        return matches.length() > 0 ? " --fuzzy-match-flags " + matches : "";
     }
 
     private void setFailing(Exception exception) {

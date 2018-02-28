@@ -212,7 +212,7 @@
                     </StackPane>
                     <StackPane fx:id="rightSideCard" alignment="TOP_RIGHT">
                         <Pane styleClass="card-big"/>
-                        <VBox id="checkboxes" spacing="10">
+                        <VBox id="checkboxes" spacing="12">
                             <padding>
                                 <Insets topRightBottomLeft="25"/>
                             </padding>
@@ -340,6 +340,14 @@
                                     </graphic>
                                 </Label>
                             </HBox>
+                            <VBox spacing="5">
+                                <JFXCheckBox fx:id="exactMatching" text="Exact" styleClass="text-medium-normal"/>
+                                <JFXCheckBox fx:id="partialMatching" text="Partial" styleClass="text-medium-normal"/>
+                                <JFXCheckBox fx:id="fullyContainedMatching" text="Fully-contained" styleClass="text-medium-normal"/>
+                                <padding>
+                                    <Insets left="20" top="-5" bottom="5"/>
+                                </padding>
+                            </VBox>
                             <HBox spacing="3">
                                 <JFXCheckBox fx:id="byFileCheckbox" text="By-file metrics" styleClass="text-medium-normal"/>
                                 <Label styleClass="label-tooltip">
