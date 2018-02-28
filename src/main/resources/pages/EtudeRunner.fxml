@@ -194,12 +194,12 @@
                             </HBox>
 
                             <HBox id="scoreValues" spacing="10">
-                                <Label text="Required&#10;Attributes:" styleClass="text-medium-normal"
+                                <Label text="Score Key&#10;Filters:" styleClass="text-medium-normal"
                                        alignment="BOTTOM_RIGHT" textAlignment="RIGHT" minWidth="60" maxWidth="100" maxHeight="Infinity"/>
                                 <JFXTextField fx:id="scoreValuesTextField" styleClass="text-medium-normal" minWidth="225"/>
                                 <Label styleClass="label-tooltip">
                                     <tooltip>
-                                        <Tooltip text="Additional attributes which must be present with the score key.&#10;Annotations found with the score key which do not contain the attributes will be ignored."/>
+                                        <Tooltip text="Any score key matching these values will be considered when counting matches.&#10;e.g. setting this to 'Location CityStreets' will only consider annotations&#10;whose score key is either 'Location' or 'CityStreet'."/>
                                     </tooltip>
                                     <graphic>
                                         <ImageView fitWidth="12" preserveRatio="true" pickOnBounds="true">
