@@ -2,6 +2,7 @@ package com.clinacuity.acv.controllers;
 
 import com.clinacuity.acv.context.AcvContext;
 import com.clinacuity.acv.modals.ConfirmationModal;
+import com.clinacuity.acv.modals.WarningModal;
 import com.clinacuity.acv.tasks.EtudeTask;
 import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXTextField;
@@ -11,6 +12,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import org.apache.logging.log4j.LogManager;
@@ -34,10 +36,10 @@ public class EtudeController implements Initializable{
     private static EtudeTask etudeTask = null;
     private AcvContext context = AcvContext.getInstance();
 
-    @FXML private HBox cardHBox;
     @FXML private ScrollPane scrollPane;
     @FXML private StackPane leftSideCard;
     @FXML private StackPane rightSideCard;
+    @FXML private VBox textFieldsBox;
     @FXML private JFXTextField referenceConfigInputField;
     @FXML private JFXTextField testConfigInputField;
     @FXML private JFXTextField referenceInputTextField;
@@ -45,7 +47,6 @@ public class EtudeController implements Initializable{
     @FXML private JFXTextField outputDirectoryTextField;
     @FXML private JFXTextField scoreKeyTextField;
     @FXML private JFXTextField punctuationTextField;
-    @FXML private Label scoreKeyError;
     @FXML private JFXTextField scoreValuesTextField;
     @FXML private JFXTextField filePrefixTextField;
     @FXML private JFXTextField fileSuffixTextField;
@@ -73,12 +74,11 @@ public class EtudeController implements Initializable{
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         scrollPane.widthProperty().addListener((obs, old, newValue) -> {
-            double width = newValue.doubleValue() - 60.0d;
+            double width = newValue.doubleValue() - 10.0d;
             rightSideCard.setMinWidth(width * 0.5d);
             rightSideCard.setMaxWidth(width * 0.5d);
-            leftSideCard.setMinWidth(width * 0.5d);
-            leftSideCard.setMaxWidth(width * 0.5d);
-            cardHBox.setSpacing(20.0d);
+            textFieldsBox.setMinWidth(width * 0.5d);
+            textFieldsBox.setMaxWidth(width * 0.5d);
         });
 
         referenceConfigInputField.focusedProperty().addListener(
@@ -91,18 +91,6 @@ public class EtudeController implements Initializable{
                 (obs, old, newValue) -> focusChanged(newValue, testInputTextField, false));
         outputDirectoryTextField.focusedProperty().addListener(
                 (obs, old, newValue) -> focusChanged(newValue, outputDirectoryTextField, false));
-
-        scoreKeyTextField.focusedProperty().addListener((obs, old, isFocused) -> {
-            if (isFocused) {
-                scoreKeyError.setVisible(false);
-            } else {
-                if (scoreKeyTextField.getText().equals("")) {
-                    scoreKeyError.setVisible(true);
-                } else {
-                    scoreKeyError.setVisible(false);
-                }
-            }
-        });
 
         exactMatching.disableProperty().bind(fuzzyMatchingCheckbox.selectedProperty().not());
         partialMatching.disableProperty().bind(fuzzyMatchingCheckbox.selectedProperty().not());
@@ -118,6 +106,9 @@ public class EtudeController implements Initializable{
             } else {
                 confirmEtudeOverwrite();
             }
+        } else {
+            WarningModal.createModal("Invalid fields", "There are some invalid fields; please double-check the input fields");
+            WarningModal.show();
         }
     }
 
@@ -192,13 +183,7 @@ public class EtudeController implements Initializable{
      * @return  Returns true if inputs are valid; false otherwise and etude won't run.
      */
     private boolean checkInputs() {
-        boolean passes = true;
-
-        if (failingFields.size() != 0 || scoreKeyError.isVisible()) {
-            passes = false;
-        }
-        
-        return passes;
+        return failingFields.size() == 0;
     }
 
     /**
@@ -405,6 +390,8 @@ public class EtudeController implements Initializable{
         if (file != null) {
             referenceConfigInputField.setText(file.getAbsolutePath());
         }
+
+        focusChanged(false, referenceConfigInputField, true);
     }
 
     @FXML private void pickTestConfigFile() {
@@ -412,6 +399,8 @@ public class EtudeController implements Initializable{
         if (file != null) {
             testConfigInputField.setText(file.getAbsolutePath());
         }
+
+        focusChanged(false, testConfigInputField, true);
     }
 
     @FXML private void pickReferenceInDirectory() {
@@ -419,6 +408,8 @@ public class EtudeController implements Initializable{
         if (directory != null) {
             referenceInputTextField.setText(directory.getAbsolutePath());
         }
+
+        focusChanged(false, referenceInputTextField, false);
     }
 
     @FXML private void pickTestInDirectory() {
@@ -426,6 +417,8 @@ public class EtudeController implements Initializable{
         if (directory != null) {
             testInputTextField.setText(directory.getAbsolutePath());
         }
+
+        focusChanged(false, testInputTextField, false);
     }
 
     @FXML private void pickMainOutputDirectory() {
@@ -433,6 +426,8 @@ public class EtudeController implements Initializable{
         if (directory != null) {
             outputDirectoryTextField.setText(directory.getAbsolutePath());
         }
+
+        focusChanged(false, outputDirectoryTextField, false);
     }
 
     private File getFile(String title) {
