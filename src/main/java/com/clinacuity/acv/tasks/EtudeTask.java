@@ -328,7 +328,7 @@ public class EtudeTask extends Task<Void> {
             matches += "fully-contained";
         }
 
-        return matches.length() > 0 ? " --fuzzy-match-flags " + matches : "";
+        return matches.length() > 0 ? " --fuzzy-match-flags " + matches : " --fuzzy-match-flags exact";
     }
 
     private void setFailing(Exception exception) {

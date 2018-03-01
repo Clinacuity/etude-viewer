@@ -11,10 +11,10 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import com.jfoenix.controls.JFXCheckBox?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
 
 <GridPane xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="com.clinacuity.acv.controllers.EtudeController">
@@ -27,25 +27,19 @@
         </padding>
         <Label text="Run Analysis" styleClass="text-header-one, underlined" alignment="TOP_LEFT"/>
 
-        <ScrollPane fx:id="scrollPane" vbarPolicy="NEVER" hbarPolicy="NEVER" maxWidth="Infinity">
+        <ScrollPane fx:id="scrollPane" vbarPolicy="NEVER" hbarPolicy="NEVER" maxWidth="Infinity" styleClass="card-small">
+            <padding>
+                <Insets topRightBottomLeft="25"/>
+            </padding>
             <VBox spacing="15">
-                <padding>
-                    <Insets left="20" bottom="20"/>
-                </padding>
-                <HBox fx:id="cardHBox" alignment="CENTER">
+                <HBox alignment="CENTER" spacing="30">
                     <StackPane fx:id="leftSideCard">
-                        <Pane styleClass="card-big"/>
-                        <VBox id="textFields" spacing="10">
-                            <padding>
-
-                                <Insets topRightBottomLeft="25"/>
-                            </padding>
-
+                        <VBox fx:id="textFieldsBox" spacing="10">
                             <Label text="Configuration Files" styleClass="text-large-bold, underlined"/>
-                            <HBox id="testConfig" spacing="10">
-                                <Label text="System:" styleClass="text-medium-normal"
-                                       alignment="BOTTOM_RIGHT" textAlignment="RIGHT" minWidth="60" maxWidth="100" maxHeight="Infinity"/>
-                                <JFXTextField fx:id="testConfigInputField" styleClass="text-medium-normal" minWidth="225"/>
+                            <HBox spacing="10">
+                                <Label text="System: *" styleClass="text-medium-normal"
+                                       alignment="BOTTOM_RIGHT" textAlignment="RIGHT" minWidth="75" maxWidth="100" maxHeight="Infinity"/>
+                                <JFXTextField fx:id="testConfigInputField" styleClass="text-medium-normal" HBox.hgrow="ALWAYS"/>
                                 <JFXButton text="..." onAction="#pickTestConfigFile" prefWidth="32" buttonType="RAISED"
                                            styleClass="button-raised, button-gray, no-focus, text-small-normal"/>
                                 <Label styleClass="label-tooltip">
@@ -59,10 +53,10 @@
                                     </graphic>
                                 </Label>
                             </HBox>
-                            <HBox id="referenceConfig" spacing="10">
-                                <Label text="Reference:" styleClass="text-medium-normal"
-                                       alignment="BOTTOM_RIGHT" textAlignment="RIGHT" minWidth="60" maxWidth="100" maxHeight="Infinity"/>
-                                <JFXTextField fx:id="referenceConfigInputField" styleClass="text-medium-normal" minWidth="225"/>
+                            <HBox spacing="10">
+                                <Label text="Reference: *" styleClass="text-medium-normal"
+                                       alignment="BOTTOM_RIGHT" textAlignment="RIGHT" minWidth="75" maxWidth="100" maxHeight="Infinity"/>
+                                <JFXTextField fx:id="referenceConfigInputField" styleClass="text-medium-normal" HBox.hgrow="ALWAYS"/>
                                 <JFXButton text="..." onAction="#pickReferenceConfigFile" prefWidth="32" buttonType="RAISED"
                                            styleClass="button-raised, button-gray, no-focus, text-small-normal"/>
                                 <Label styleClass="label-tooltip">
@@ -82,10 +76,10 @@
                                     <Insets top="20"/>
                                 </padding>
                             </Label>
-                            <HBox id="testInput" spacing="10">
-                                <Label text="System:" styleClass="text-medium-normal"
-                                       alignment="BOTTOM_RIGHT" textAlignment="RIGHT" minWidth="60" maxWidth="100" maxHeight="Infinity"/>
-                                <JFXTextField fx:id="testInputTextField" styleClass="text-medium-normal" minWidth="225"/>
+                            <HBox spacing="10">
+                                <Label text="System: *" styleClass="text-medium-normal"
+                                       alignment="BOTTOM_RIGHT" textAlignment="RIGHT" minWidth="75" maxWidth="100" maxHeight="Infinity"/>
+                                <JFXTextField fx:id="testInputTextField" styleClass="text-medium-normal" HBox.hgrow="ALWAYS"/>
                                 <JFXButton text="..." onAction="#pickTestInDirectory" prefWidth="32" buttonType="RAISED"
                                            styleClass="button-raised, button-gray, no-focus, text-small-normal"/>
                                 <Label styleClass="label-tooltip">
@@ -99,10 +93,10 @@
                                     </graphic>
                                 </Label>
                             </HBox>
-                            <HBox id="referenceInput" spacing="10">
-                                <Label text="Reference:" styleClass="text-medium-normal"
-                                       alignment="BOTTOM_RIGHT" textAlignment="RIGHT" minWidth="60" maxWidth="100" maxHeight="Infinity"/>
-                                <JFXTextField fx:id="referenceInputTextField" styleClass="text-medium-normal" minWidth="225"/>
+                            <HBox spacing="10">
+                                <Label text="Reference: *" styleClass="text-medium-normal"
+                                       alignment="BOTTOM_RIGHT" textAlignment="RIGHT" minWidth="75" maxWidth="100" maxHeight="Infinity"/>
+                                <JFXTextField fx:id="referenceInputTextField" styleClass="text-medium-normal" HBox.hgrow="ALWAYS"/>
                                 <JFXButton text="..." onAction="#pickReferenceInDirectory" prefWidth="32" buttonType="RAISED"
                                            styleClass="button-raised, button-gray, no-focus, text-small-normal"/>
                                 <Label styleClass="label-tooltip">
@@ -116,10 +110,10 @@
                                     </graphic>
                                 </Label>
                             </HBox>
-                            <HBox id="filePrefixes" spacing="10">
+                            <HBox spacing="10">
                                 <Label text="File Prefix:" styleClass="text-medium-normal"
-                                       alignment="BOTTOM_RIGHT" textAlignment="RIGHT" minWidth="60" maxWidth="100" maxHeight="Infinity"/>
-                                <JFXTextField fx:id="filePrefixTextField" styleClass="text-medium-normal" minWidth="225"/>
+                                       alignment="BOTTOM_RIGHT" textAlignment="RIGHT" minWidth="75" maxWidth="100" maxHeight="Infinity"/>
+                                <JFXTextField fx:id="filePrefixTextField" styleClass="text-medium-normal" HBox.hgrow="ALWAYS"/>
                                 <Label styleClass="label-tooltip">
                                     <tooltip>
                                         <Tooltip text="An optional regular expression to match the file names"/>
@@ -131,10 +125,10 @@
                                     </graphic>
                                 </Label>
                             </HBox>
-                            <HBox id="fileSuffixes" spacing="10">
+                            <HBox spacing="10">
                                 <Label text="File Suffix:" styleClass="text-medium-normal"
-                                       alignment="BOTTOM_RIGHT" textAlignment="RIGHT" minWidth="60" maxWidth="100" maxHeight="Infinity"/>
-                                <JFXTextField fx:id="fileSuffixTextField" styleClass="text-medium-normal" minWidth="225"/>
+                                       alignment="BOTTOM_RIGHT" textAlignment="RIGHT" minWidth="75" maxWidth="100" maxHeight="Infinity"/>
+                                <JFXTextField fx:id="fileSuffixTextField" styleClass="text-medium-normal" HBox.hgrow="ALWAYS"/>
                                 <Label styleClass="label-tooltip">
                                     <tooltip>
                                         <Tooltip text="Optional regular expressions to match the file name endings.&#10;Specifying a single expression will apply to both system and reference directories.&#10;Specifying two space-separated expressions will apply the first to the system directory and the second to the reference directory."/>
@@ -152,10 +146,10 @@
                                     <Insets top="20"/>
                                 </padding>
                             </Label>
-                            <HBox id="outputDirectory" spacing="10">
-                                <Label text="Directory:" styleClass="text-medium-normal"
-                                       alignment="BOTTOM_RIGHT" textAlignment="RIGHT" minWidth="60" maxWidth="100" maxHeight="Infinity"/>
-                                <JFXTextField fx:id="outputDirectoryTextField" styleClass="text-medium-normal" minWidth="225"/>
+                            <HBox spacing="10">
+                                <Label text="Directory: *" styleClass="text-medium-normal"
+                                       alignment="BOTTOM_RIGHT" textAlignment="RIGHT" minWidth="75" maxWidth="100" maxHeight="Infinity"/>
+                                <JFXTextField fx:id="outputDirectoryTextField" styleClass="text-medium-normal" HBox.hgrow="ALWAYS"/>
                                 <JFXButton text="..." onAction="#pickMainOutputDirectory" prefWidth="32" buttonType="RAISED"
                                            styleClass="button-raised, button-gray, no-focus, text-small-normal"/>
                                 <Label styleClass="label-tooltip">
@@ -175,13 +169,13 @@
                                     <Insets top="20"/>
                                 </padding>
                             </Label>
-                            <HBox id="scoreKey" spacing="10">
+                            <HBox spacing="10">
                                 <Label text="Score Key:" styleClass="text-medium-normal"
-                                       alignment="BOTTOM_RIGHT" textAlignment="RIGHT" minWidth="60" maxWidth="100" maxHeight="Infinity"/>
-                                <JFXTextField fx:id="scoreKeyTextField" styleClass="text-medium-normal" minWidth="225"/>
+                                       alignment="BOTTOM_RIGHT" textAlignment="RIGHT" minWidth="75" maxWidth="100" maxHeight="Infinity"/>
+                                <JFXTextField fx:id="scoreKeyTextField" styleClass="text-medium-normal" HBox.hgrow="ALWAYS" promptText="Short Name"/>
                                 <Label styleClass="label-tooltip">
                                     <tooltip>
-                                        <Tooltip text="The key in the configuration files used to calculate metrics"/>
+                                        <Tooltip text="Any score key matching these values will be considered when counting matches.&#10;e.g. setting this to 'Location CityStreets' will only consider annotations&#10;whose score key is either 'Location' or 'CityStreet'."/>
                                     </tooltip>
                                     <graphic>
                                         <ImageView fitWidth="12" preserveRatio="true" pickOnBounds="true">
@@ -189,14 +183,12 @@
                                         </ImageView>
                                     </graphic>
                                 </Label>
-                                <Label fx:id="scoreKeyError" text="&#x2022; Required required" visible="false"
-                                       styleClass="text-medium-normal, error-text" alignment="BOTTOM_LEFT"/>
                             </HBox>
 
-                            <HBox id="scoreValues" spacing="10">
+                            <HBox spacing="10">
                                 <Label text="Score Key&#10;Filters:" styleClass="text-medium-normal"
-                                       alignment="BOTTOM_RIGHT" textAlignment="RIGHT" minWidth="60" maxWidth="100" maxHeight="Infinity"/>
-                                <JFXTextField fx:id="scoreValuesTextField" styleClass="text-medium-normal" minWidth="225"/>
+                                       alignment="BOTTOM_RIGHT" textAlignment="RIGHT" minWidth="75" maxWidth="100" maxHeight="Infinity"/>
+                                <JFXTextField fx:id="scoreValuesTextField" styleClass="text-medium-normal" HBox.hgrow="ALWAYS"/>
                                 <Label styleClass="label-tooltip">
                                     <tooltip>
                                         <Tooltip text="Any score key matching these values will be considered when counting matches.&#10;e.g. setting this to 'Location CityStreets' will only consider annotations&#10;whose score key is either 'Location' or 'CityStreet'."/>
@@ -210,13 +202,9 @@
                             </HBox>
                         </VBox>
                     </StackPane>
+                    <Separator orientation="VERTICAL"/>
                     <StackPane fx:id="rightSideCard" alignment="TOP_RIGHT">
-                        <Pane styleClass="card-big"/>
-                        <VBox id="checkboxes" spacing="12">
-                            <padding>
-                                <Insets topRightBottomLeft="25"/>
-                            </padding>
-
+                        <VBox spacing="12">
                             <Label text="More Settings" styleClass="text-large-bold, underlined" />
                             <HBox spacing="3">
                                 <VBox spacing="10">
@@ -236,7 +224,7 @@
                                             </graphic>
                                         </Label>
                                     </HBox>
-                                    <HBox id="metricsCheckboxes" spacing="25">
+                                    <HBox spacing="25">
                                         <VBox spacing="5">
                                             <HBox spacing="3">
                                                 <JFXCheckBox fx:id="metricsTP" text="True Positives (TP)" styleClass="text-medium-normal"
@@ -328,7 +316,7 @@
                                 </VBox>
                             </HBox>
                             <HBox spacing="3">
-                                <JFXCheckBox fx:id="fuzzyMatchingCheckbox" text="Fuzzy Matching" styleClass="text-medium-normal"/>
+                                <JFXCheckBox fx:id="fuzzyMatchingCheckbox" text="Matching Options" styleClass="text-medium-normal"/>
                                 <Label styleClass="label-tooltip">
                                     <tooltip>
                                         <Tooltip text="Select which types of matching will be used.&#10;Each type will have its own dictionary in the output"/>
@@ -429,7 +417,7 @@
                                 </HBox>
                                 <HBox spacing="3">
                                     <Label text="RegEx:" styleClass="text-medium-normal" alignment="BOTTOM_RIGHT"
-                                           textAlignment="RIGHT" minWidth="60" maxWidth="100" maxHeight="Infinity"/>
+                                           textAlignment="RIGHT" minWidth="75" maxWidth="100" maxHeight="Infinity"/>
                                     <JFXTextField fx:id="punctuationTextField" styleClass="text-medium-normal"
                                                   promptText="By default ignores punctuation" minWidth="200" maxWidth="350"/>
                                     <padding>
@@ -445,6 +433,9 @@
                                buttonType="RAISED" maxWidth="150" minWidth="150"
                                styleClass="button-raised, button-gray, text-medium-normal">
                     </JFXButton>
+                    <padding>
+                        <Insets right="150" bottom="15"/>
+                    </padding>
                 </VBox>
             </VBox>
         </ScrollPane>
