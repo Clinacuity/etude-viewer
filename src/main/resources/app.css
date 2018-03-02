@@ -112,18 +112,10 @@
     -fx-text-fill: DimGray;
 }
 
-.card-small, .draggable {
-    -fx-border-color: SlateGray;
-    -fx-border-radius: 5px;
-    -fx-border-width: 1px;
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 10, 0.65, 0, 0);
-}
-
-.card-big {
-    -fx-border-color: SlateGray;
-    -fx-border-radius: 2px;
-    -fx-border-width: 3px;
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 10, 0.35, 0, 0);
+.card, .draggable {
+    -fx-background-radius: 3px;
+    -fx-background-color: rgb(235, 235, 235);
+    -fx-effect: dropshadow(gaussian, rgba(100, 100, 100, 0.25), 0, 1, 0, 1);
 }
 
 .underlined {
@@ -327,5 +319,9 @@
 
 .column-left-align {
     -fx-alignment: CENTER-LEFT;
+}
+
+.scroll-pane > .viewport {
+   -fx-background-color: transparent;
 }
 /*    END TEXT    */

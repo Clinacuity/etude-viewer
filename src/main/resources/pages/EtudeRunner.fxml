@@ -27,7 +27,7 @@
         </padding>
         <Label text="Run Analysis" styleClass="text-header-one, underlined" alignment="TOP_LEFT"/>
 
-        <ScrollPane fx:id="scrollPane" vbarPolicy="NEVER" hbarPolicy="NEVER" maxWidth="Infinity" styleClass="card-small">
+        <ScrollPane fx:id="scrollPane" vbarPolicy="NEVER" hbarPolicy="NEVER" maxWidth="Infinity" styleClass="card">
             <padding>
                 <Insets topRightBottomLeft="25"/>
             </padding>

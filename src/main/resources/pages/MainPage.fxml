@@ -29,12 +29,7 @@
             </padding>
         </Label>
         <HBox fx:id="buttonBox" alignment="CENTER">
-            <StackPane fx:id="runnerCard">
-                <Pane styleClass="card-small">
-                    <StackPane.margin>
-                        <Insets topRightBottomLeft="-3"/>
-                    </StackPane.margin>
-                </Pane>
+            <StackPane fx:id="runnerCard" styleClass="card">
                 <JFXButton onAction="#loadEtudeConfigurationPage" maxWidth="Infinity"
                            buttonType="RAISED" styleClass="button-raised, button-gray, no-focus" maxHeight="300">
                     <graphic>
@@ -47,12 +42,7 @@
                 </JFXButton>
             </StackPane>
 
-            <StackPane fx:id="builderCard">
-                <Pane styleClass="card-small">
-                    <StackPane.margin>
-                        <Insets topRightBottomLeft="-3"/>
-                    </StackPane.margin>
-                </Pane>
+            <StackPane fx:id="builderCard" styleClass="card">
                 <JFXButton onAction="#loadConfigurationBuilderPage" maxWidth="Infinity"
                            buttonType="RAISED" styleClass="button-raised, button-gray, no-focus" maxHeight="300">
                     <graphic>
@@ -65,12 +55,7 @@
                 </JFXButton>
             </StackPane>
 
-            <StackPane fx:id="viewerCard">
-                <Pane styleClass="card-small">
-                    <StackPane.margin>
-                        <Insets topRightBottomLeft="-3"/>
-                    </StackPane.margin>
-                </Pane>
+            <StackPane fx:id="viewerCard" styleClass="card">
                 <JFXButton onAction="#loadComparisonViewerPage" maxWidth="Infinity"
                            buttonType="RAISED" styleClass="button-raised, button-gray, no-focus" maxHeight="300">
                     <graphic>

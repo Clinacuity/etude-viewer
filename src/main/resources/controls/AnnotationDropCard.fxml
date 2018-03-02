@@ -14,7 +14,7 @@
          xmlns="http://javafx.com/javafx/8.0.112"
          xmlns:fx="http://javafx.com/fxml/1"
          alignment="TOP_CENTER">
-    <Pane fx:id="collapsiblePane" styleClass="card-small"/>
+    <Pane fx:id="collapsiblePane" styleClass="card"/>
     <VBox fx:id="collapsibleBox" spacing="10">
         <StackPane>
             <HBox alignment="TOP_CENTER">

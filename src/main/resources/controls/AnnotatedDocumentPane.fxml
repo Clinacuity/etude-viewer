@@ -10,7 +10,7 @@
 <fx:root type="javafx.scene.layout.VBox"
          xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" spacing="10">
 
-    <ScrollPane fx:id="document" fitToHeight="true" hbarPolicy="NEVER" fitToWidth="true" minHeight="225">
+    <ScrollPane fx:id="document" fitToHeight="true" hbarPolicy="NEVER" fitToWidth="true" minHeight="225" styleClass="card">
         <AnchorPane fx:id="anchor">
             <padding>
                 <Insets right="15"/>
