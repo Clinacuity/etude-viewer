@@ -12,8 +12,8 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.scene.control.Tooltip?>
-<?import com.jfoenix.controls.JFXButton?>
 <?import javafx.scene.control.ProgressIndicator?>
+<?import javafx.scene.control.Button?>
 
 <GridPane alignment="TOP_CENTER"
           xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1"
@@ -32,8 +32,7 @@
                 <HBox spacing="10">
                     <JFXTextField fx:id="systemDirectoryTextField" styleClass="text-medium-normal" focusTraversable="false"
                                   promptText="System Output Directory" maxWidth="Infinity" editable="false"/>
-                    <JFXButton text="..." onAction="#pickSystemCorpus" prefWidth="32" buttonType="RAISED"
-                               styleClass="button-raised, button-gray, no-focus, text-small-normal"/>
+                    <Button text="..." onAction="#pickSystemCorpus" prefWidth="32" styleClass="button-gray, no-focus, text-small-normal"/>
                     <Label styleClass="label-tooltip">
                         <tooltip>
                             <Tooltip text="Select the configuration file used to parse through the system output files."/>
@@ -61,8 +60,7 @@
                     <StackPane fx:id="systemSpinner" styleClass="card" visible="false">
                         <ProgressIndicator maxWidth="100" maxHeight="100"/>
                         <HBox maxHeight="Infinity" alignment="BOTTOM_CENTER">
-                            <JFXButton text="CANCEL" onAction="#cancelSystemTask" buttonType="RAISED"
-                                       styleClass="button-raised, button-red, no-focus, text-medium-normal"/>
+                            <Button text="CANCEL" onAction="#cancelSystemTask" styleClass="button-red, no-focus, text-medium-normal"/>
                             <padding>
                                 <Insets topRightBottomLeft="30"/>
                             </padding>
@@ -98,14 +96,13 @@
                                 </padding>
                             </VBox>
                             <HBox fx:id="addMatchButtonBox" alignment="BOTTOM_RIGHT">
-                                <JFXButton onAction="#addAnnotationDropBox" text="ADD MATCH"
-                                           styleClass="button-raised, button-gray, no-focus" buttonType="RAISED">
+                                <Button onAction="#addAnnotationDropBox" text="ADD MATCH" styleClass="button-gray, no-focus">
                                     <graphic>
                                         <ImageView fitHeight="24" preserveRatio="true" pickOnBounds="true">
                                             <Image url="/img/icons8/plus.png"/>
                                         </ImageView>
                                     </graphic>
-                                </JFXButton>
+                                </Button>
                                 <padding>
                                     <Insets right="25"/>
                                 </padding>
@@ -137,8 +134,7 @@
                 <HBox spacing="10">
                     <JFXTextField fx:id="referenceDirectoryTextField" styleClass="text-medium-normal" focusTraversable="false"
                                   promptText="Reference Standard Directory" maxWidth="Infinity" editable="false"/>
-                    <JFXButton text="..." onAction="#pickReferenceCorpus" prefWidth="32" buttonType="RAISED"
-                               styleClass="button-raised, button-gray, no-focus, text-small-normal"/>
+                    <Button text="..." onAction="#pickReferenceCorpus" prefWidth="32" styleClass="button-gray, no-focus, text-small-normal"/>
                     <Label styleClass="label-tooltip">
                         <tooltip>
                             <Tooltip text="Select the configuration file used to parse through the system output files."/>
@@ -166,8 +162,7 @@
                     <StackPane fx:id="referenceSpinner" styleClass="spinner-pane" visible="false">
                         <ProgressIndicator maxWidth="100" maxHeight="100"/>
                         <HBox maxHeight="Infinity" alignment="BOTTOM_CENTER">
-                            <JFXButton text="CANCEL" onAction="#cancelReferenceTask" buttonType="RAISED"
-                                       styleClass="button-raised, button-red, no-focus, text-medium-normal"/>
+                            <Button text="CANCEL" onAction="#cancelReferenceTask" styleClass="button-red, no-focus, text-medium-normal"/>
                             <padding>
                                 <Insets topRightBottomLeft="30"/>
                             </padding>
@@ -177,8 +172,7 @@
             </VBox>
         </HBox>
         <HBox maxWidth="Infinity" alignment="CENTER">
-            <JFXButton text="SAVE CONFIGURATIONS" onAction="#saveConfigurations" buttonType="RAISED"
-                       styleClass="button-raised, button-gray, no-focus, text-small-medium"/>
+            <Button text="SAVE CONFIGURATIONS" onAction="#saveConfigurations" styleClass="button-gray, no-focus, text-small-medium"/>
         </HBox>
     </VBox>
 </GridPane>

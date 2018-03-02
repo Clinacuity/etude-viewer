@@ -1,8 +1,8 @@
 package com.clinacuity.acv.modals;
 
-import com.jfoenix.controls.JFXButton;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
 import javafx.scene.layout.HBox;
@@ -44,9 +44,8 @@ public class WarningModal {
         buttonBox.maxWidthProperty().bind(box.widthProperty());
         buttonBox.setSpacing(20.0d);
 
-        JFXButton closeButton = new JFXButton(confirmButtonText);
-        closeButton.getStyleClass().addAll("button-raised", "button-blue", "text-medium-normal");
-        closeButton.setButtonType(JFXButton.ButtonType.RAISED);
+        Button closeButton = new Button(confirmButtonText);
+        closeButton.getStyleClass().addAll("button-blue", "text-medium-normal");
         closeButton.setOnAction(event -> closeModal());
 
         buttonBox.getChildren().addAll(closeButton);

@@ -1,10 +1,10 @@
 package com.clinacuity.acv.modals;
 
-import com.jfoenix.controls.JFXButton;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
 import javafx.scene.layout.HBox;
@@ -17,8 +17,8 @@ public class ConfirmationModal {
     private static final Logger logger = LogManager.getLogger();
 
     private static Modal modal = null;
-    private static JFXButton confirmButton = null;
-    private static JFXButton cancelButton = null;
+    private static Button confirmButton = null;
+    private static Button cancelButton = null;
 
     public static void createModal(String title, String message) {
         createModal(title, message, "CONFIRM", "CANCEL");
@@ -47,13 +47,11 @@ public class ConfirmationModal {
         buttonBox.maxWidthProperty().bind(box.widthProperty());
         buttonBox.setSpacing(20.0d);
 
-        confirmButton = new JFXButton(confirmText);
-        confirmButton.getStyleClass().addAll("button-raised", "button-blue", "text-medium-normal");
-        confirmButton.setButtonType(JFXButton.ButtonType.RAISED);
+        confirmButton = new Button(confirmText);
+        confirmButton.getStyleClass().addAll("button-blue", "text-medium-normal");
 
-        cancelButton = new JFXButton(cancelText);
-        cancelButton.getStyleClass().addAll("button-raised", "button-gray", "text-medium-normal");
-        cancelButton.setButtonType(JFXButton.ButtonType.RAISED);
+        cancelButton = new Button(cancelText);
+        cancelButton.getStyleClass().addAll("button-gray", "text-medium-normal");
         cancelButton.maxWidthProperty().bind(confirmButton.widthProperty());
         cancelButton.minWidthProperty().bind(confirmButton.widthProperty());
 

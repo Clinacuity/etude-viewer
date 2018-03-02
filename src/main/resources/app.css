@@ -113,7 +113,7 @@
 }
 
 .card, .draggable {
-    -fx-background-radius: 3px;
+    -fx-background-radius: 4px;
     -fx-background-color: rgb(235, 235, 235);
     -fx-effect: dropshadow(gaussian, rgba(100, 100, 100, 0.25), 0, 1, 0, 1);
 }
@@ -131,11 +131,15 @@
     -fx-font-family: "Open Sans Light";
     -fx-padding: 0.7em 0.57em;
     -fx-text-fill: Black;
+    -fx-background-radius: 2px;
 }
 
-.button-raised {
-    -jfx-button-type: RAISED;
-    -fx-background-color: rgb(77,102,204);
+.button-clear {
+    -fx-background-color: Transparent;
+}
+
+.button-clear:hover {
+    -fx-background-color: Silver;
 }
 
 .button-gray {
@@ -143,16 +147,18 @@
 }
 
 .button-gray:hover {
-    -fx-background-color: DarkGray;
+    -fx-background-color: Silver;
+    -fx-effect: dropshadow(gaussian, DimGray, 0, 1, 1, 1);
 }
 
 .button-blue {
-    -fx-background-color: rgba(50, 105, 255, 1);
+    -fx-background-color: CornflowerBlue;
     -fx-text-fill: Azure;
 }
 
 .button-blue:hover {
     -fx-background-color: rgb(77, 102, 204);
+    -fx-effect: dropshadow(gaussian, DodgerBlue, 0, 1, 1, 1);
 }
 
 .button-red {
@@ -164,8 +170,7 @@
 }
 
 .button-lock:hover {
-    -fx-background-radius: 4px;
-    -fx-background-color: rgb(77, 102, 204);
+    -fx-background-color: CornflowerBlue;
     -fx-background-insets: -3;
 }
 
@@ -174,13 +179,15 @@
     -fx-border-width: 2px;
     -fx-border-insets: -3;
     -fx-border-color: rgb(55, 55, 110);
-    -fx-background-color: rgba(77, 102, 204, 0.5);
-    -fx-background-radius: 5px;
+    -fx-background-color: CornflowerBlue;
     -fx-background-insets: -3;
 }
 
+.button-delete {
+    -fx-background-color: Transparent;
+}
+
 .button-delete:hover {
-    -fx-background-radius: 3px;
     -fx-background-color: LightCoral;
     -fx-background-insets: -3;
 }
@@ -251,7 +258,7 @@
 .text-header-two {
     -fx-font-family: "Open Sans Bold Italic";
     -fx-font-size: 16;
-    -fx-text-fill: rgb(0, 120, 220);
+    -fx-text-fill: CornflowerBlue;
 }
 
 .label-annotation-category {
@@ -322,6 +329,6 @@
 }
 
 .scroll-pane > .viewport {
-   -fx-background-color: transparent;
+   -fx-background-color: Transparent;
 }
 /*    END TEXT    */
