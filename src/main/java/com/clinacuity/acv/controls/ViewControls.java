@@ -47,6 +47,8 @@ public class ViewControls extends VBox {
     }
 
     private void initializeTableColumns() {
+        annotationTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+
         annotationNameColumn.setCellFactory(param -> new TableCell<>() {
             @Override
             public void updateItem(String item, boolean empty) {

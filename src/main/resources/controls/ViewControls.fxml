@@ -64,7 +64,7 @@
         </HBox>
         <TableView fx:id="annotationTable" fixedCellSize="35">
             <columns>
-                <TableColumn text="Name" fx:id="annotationNameColumn" prefWidth="120" styleClass="column-center-align" maxWidth="Infinity">
+                <TableColumn text="Name" fx:id="annotationNameColumn" prefWidth="120" styleClass="column-center-align" maxWidth="200">
                     <cellValueFactory>
                         <PropertyValueFactory property="annotationName"/>
                     </cellValueFactory>

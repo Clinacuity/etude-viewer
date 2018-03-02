@@ -311,24 +311,43 @@
     -fx-font-size: 18px;
 }
 
-.table-cell {
-    -fx-font-family: "Open Sans Light";
-    -fx-font-size: 10px;
+.table-view {
+    -fx-border-width: 1 0 1 0;
+    -fx-border-color: DimGray;
+    -fx-background-color: rgb(235, 235, 235);
+    -fx-table-cell-border-color: Transparent;
 }
 
-.column-right-align {
-    -fx-alignment: CENTER-RIGHT;
+.table-view .column-header {
+    -fx-background-color: Transparent;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: CornflowerBlue;
+}
+
+.table-view .column-header-background .label {
+    -fx-background-color: Transparent;
+    -fx-text-fill: Black;
+}
+
+.table-row-cell{
+    -fx-background-color: -fx-table-cell-border-color, Gainsboro;
+}
+
+.table-row-cell:odd{
+    -fx-background-color: -fx-table-cell-border-color, Silver;
+}
+
+.table-row-cell:selected {
+    -fx-background-color: DimGray;
 }
 
 .column-center-align {
     -fx-alignment: CENTER;
 }
 
-.column-left-align {
-    -fx-alignment: CENTER-LEFT;
-}
-
 .scroll-pane > .viewport {
-   -fx-background-color: Transparent;
+    -fx-background-color: Transparent;
 }
 /*    END TEXT    */
