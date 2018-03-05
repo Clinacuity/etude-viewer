@@ -325,7 +325,7 @@ public class EtudeTask extends Task<Void> {
         }
 
         if (fullyContainedMatch) {
-            matches += "fully-contained";
+            matches += " fully-contained";
         }
 
         return matches.length() > 0 ? " --fuzzy-match-flags " + matches : " --fuzzy-match-flags exact";
