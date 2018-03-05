@@ -84,12 +84,12 @@
                         <PropertyValueFactory property="falseNegativeCount"/>
                     </cellValueFactory>
                 </TableColumn>
-                <TableColumn text="Recall" styleClass="column-center-align" maxWidth="70">
+                <TableColumn text="Recall" fx:id="recallColumn" styleClass="column-center-align" maxWidth="70">
                     <cellValueFactory>
                         <PropertyValueFactory property="recall"/>
                     </cellValueFactory>
                 </TableColumn>
-                <TableColumn text="Precision" styleClass="column-center-align" maxWidth="70">
+                <TableColumn text="Precision" fx:id="precisionColumn" styleClass="column-center-align" maxWidth="70">
                     <cellValueFactory>
                         <PropertyValueFactory property="precision"/>
                     </cellValueFactory>
