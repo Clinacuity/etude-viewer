@@ -8,13 +8,13 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.layout.ColumnConstraints?>
-<?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import com.jfoenix.controls.JFXCheckBox?>
 <?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.Button?>
 
 <GridPane xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="com.clinacuity.acv.controllers.EtudeController">
@@ -27,7 +27,7 @@
         </padding>
         <Label text="Run Analysis" styleClass="text-header-one, underlined" alignment="TOP_LEFT"/>
 
-        <ScrollPane fx:id="scrollPane" vbarPolicy="NEVER" hbarPolicy="NEVER" maxWidth="Infinity" styleClass="card-small">
+        <ScrollPane fx:id="scrollPane" vbarPolicy="NEVER" hbarPolicy="NEVER" maxWidth="Infinity" styleClass="card">
             <padding>
                 <Insets topRightBottomLeft="25"/>
             </padding>
@@ -40,8 +40,7 @@
                                 <Label text="System: *" styleClass="text-medium-normal"
                                        alignment="BOTTOM_RIGHT" textAlignment="RIGHT" minWidth="75" maxWidth="100" maxHeight="Infinity"/>
                                 <JFXTextField fx:id="testConfigInputField" styleClass="text-medium-normal" HBox.hgrow="ALWAYS"/>
-                                <JFXButton text="..." onAction="#pickTestConfigFile" prefWidth="32" buttonType="RAISED"
-                                           styleClass="button-raised, button-gray, no-focus, text-small-normal"/>
+                                <Button text="..." onAction="#pickTestConfigFile" prefWidth="32" styleClass="button-gray, no-focus, text-small-normal"/>
                                 <Label styleClass="label-tooltip">
                                     <tooltip>
                                         <Tooltip text="Select the configuration file used to parse through the system output files."/>
@@ -57,8 +56,7 @@
                                 <Label text="Reference: *" styleClass="text-medium-normal"
                                        alignment="BOTTOM_RIGHT" textAlignment="RIGHT" minWidth="75" maxWidth="100" maxHeight="Infinity"/>
                                 <JFXTextField fx:id="referenceConfigInputField" styleClass="text-medium-normal" HBox.hgrow="ALWAYS"/>
-                                <JFXButton text="..." onAction="#pickReferenceConfigFile" prefWidth="32" buttonType="RAISED"
-                                           styleClass="button-raised, button-gray, no-focus, text-small-normal"/>
+                                <Button text="..." onAction="#pickReferenceConfigFile" prefWidth="32" styleClass="button-gray, no-focus, text-small-normal"/>
                                 <Label styleClass="label-tooltip">
                                     <tooltip>
                                         <Tooltip text="Select the configuration file used to parse through the reference standard files."/>
@@ -80,8 +78,7 @@
                                 <Label text="System: *" styleClass="text-medium-normal"
                                        alignment="BOTTOM_RIGHT" textAlignment="RIGHT" minWidth="75" maxWidth="100" maxHeight="Infinity"/>
                                 <JFXTextField fx:id="testInputTextField" styleClass="text-medium-normal" HBox.hgrow="ALWAYS"/>
-                                <JFXButton text="..." onAction="#pickTestInDirectory" prefWidth="32" buttonType="RAISED"
-                                           styleClass="button-raised, button-gray, no-focus, text-small-normal"/>
+                                <Button text="..." onAction="#pickTestInDirectory" prefWidth="32" styleClass="button-gray, no-focus, text-small-normal"/>
                                 <Label styleClass="label-tooltip">
                                     <tooltip>
                                         <Tooltip text="Select a directory containing the system output files"/>
@@ -97,8 +94,7 @@
                                 <Label text="Reference: *" styleClass="text-medium-normal"
                                        alignment="BOTTOM_RIGHT" textAlignment="RIGHT" minWidth="75" maxWidth="100" maxHeight="Infinity"/>
                                 <JFXTextField fx:id="referenceInputTextField" styleClass="text-medium-normal" HBox.hgrow="ALWAYS"/>
-                                <JFXButton text="..." onAction="#pickReferenceInDirectory" prefWidth="32" buttonType="RAISED"
-                                           styleClass="button-raised, button-gray, no-focus, text-small-normal"/>
+                                <Button text="..." onAction="#pickReferenceInDirectory" prefWidth="32" styleClass="button-gray, no-focus, text-small-normal"/>
                                 <Label styleClass="label-tooltip">
                                     <tooltip>
                                         <Tooltip text="Select a directory containing the reference standard files"/>
@@ -150,8 +146,7 @@
                                 <Label text="Directory: *" styleClass="text-medium-normal"
                                        alignment="BOTTOM_RIGHT" textAlignment="RIGHT" minWidth="75" maxWidth="100" maxHeight="Infinity"/>
                                 <JFXTextField fx:id="outputDirectoryTextField" styleClass="text-medium-normal" HBox.hgrow="ALWAYS"/>
-                                <JFXButton text="..." onAction="#pickMainOutputDirectory" prefWidth="32" buttonType="RAISED"
-                                           styleClass="button-raised, button-gray, no-focus, text-small-normal"/>
+                                <Button text="..." onAction="#pickMainOutputDirectory" prefWidth="32" styleClass="button-gray, no-focus, text-small-normal"/>
                                 <Label styleClass="label-tooltip">
                                     <tooltip>
                                         <Tooltip text="The directory to which ETUDE's output will be saved.  A `corpus.json` file will be generated,&#10;and directories named 'system' and 'reference' will be created."/>
@@ -429,10 +424,9 @@
                     </StackPane>
                 </HBox>
                 <VBox alignment="CENTER_RIGHT">
-                    <JFXButton fx:id="runEtudeButtonAction" text="RUN ETUDE" onAction="#runEtudeButtonAction"
-                               buttonType="RAISED" maxWidth="150" minWidth="150"
-                               styleClass="button-raised, button-gray, text-medium-normal">
-                    </JFXButton>
+                    <Button fx:id="runEtudeButtonAction" text="RUN ETUDE" onAction="#runEtudeButtonAction"
+                               maxWidth="150" minWidth="150" styleClass="button-gray, text-medium-normal">
+                    </Button>
                     <padding>
                         <Insets right="150" bottom="15"/>
                     </padding>

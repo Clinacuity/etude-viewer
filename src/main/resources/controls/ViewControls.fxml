@@ -11,7 +11,7 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.geometry.Insets?>
-<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.Button?>
 
 <fx:root type="javafx.scene.layout.VBox"
          xmlns="http://javafx.com/javafx/8.0.112"
@@ -23,7 +23,7 @@
         </padding>
         <VBox fx:id="matchingTypeToggles" spacing="10"/>
         <HBox id="AnnotationNavBox" alignment="CENTER_LEFT" spacing="3">
-            <JFXButton fx:id="previousButton" styleClass="text-small-normal">
+            <Button fx:id="previousButton" styleClass="text-small-normal, button-clear">
                 <graphic>
                     <HBox spacing="5">
                         <ImageView fitHeight="18" preserveRatio="true">
@@ -32,13 +32,13 @@
                         <Label text="PREV" maxHeight="Infinity"/>
                     </HBox>
                 </graphic>
-            </JFXButton>
-            <JFXButton fx:id="clearButton" styleClass="text-small-normal" maxHeight="Infinity">
+            </Button>
+            <Button fx:id="clearButton" styleClass="text-small-normal, button-clear" maxHeight="Infinity">
                 <graphic>
                     <Label text="CLEAR" maxHeight="Infinity"/>
                 </graphic>
-            </JFXButton>
-            <JFXButton fx:id="nextButton" styleClass="text-small-normal">
+            </Button>
+            <Button fx:id="nextButton" styleClass="text-small-normal, button-clear">
                 <graphic>
                     <HBox spacing="5">
                         <Label  text="NEXT" maxHeight="Infinity"/>
@@ -47,7 +47,7 @@
                         </ImageView>
                     </HBox>
                 </graphic>
-            </JFXButton>
+            </Button>
             <Label styleClass="label-tooltip" maxHeight="Infinity">
                 <tooltip>
                     <Tooltip text="Navigate through the displayed annotations of the selected type.&#013;This will only cycle through annotations on the respective panel."/>
@@ -64,7 +64,7 @@
         </HBox>
         <TableView fx:id="annotationTable" fixedCellSize="35">
             <columns>
-                <TableColumn text="Name" fx:id="annotationNameColumn" prefWidth="120" styleClass="column-center-align" maxWidth="Infinity">
+                <TableColumn text="Name" fx:id="annotationNameColumn" prefWidth="120" styleClass="column-center-align" maxWidth="200">
                     <cellValueFactory>
                         <PropertyValueFactory property="annotationName"/>
                     </cellValueFactory>
@@ -84,12 +84,12 @@
                         <PropertyValueFactory property="falseNegativeCount"/>
                     </cellValueFactory>
                 </TableColumn>
-                <TableColumn text="Recall" styleClass="column-center-align" maxWidth="70">
+                <TableColumn text="Recall" fx:id="recallColumn" styleClass="column-center-align" maxWidth="70">
                     <cellValueFactory>
                         <PropertyValueFactory property="recall"/>
                     </cellValueFactory>
                 </TableColumn>
-                <TableColumn text="Precision" styleClass="column-center-align" maxWidth="70">
+                <TableColumn text="Precision" fx:id="precisionColumn" styleClass="column-center-align" maxWidth="70">
                     <cellValueFactory>
                         <PropertyValueFactory property="precision"/>
                     </cellValueFactory>
@@ -97,8 +97,7 @@
             </columns>
         </TableView>
         <HBox id="clearSelectionBox" spacing="3">
-            <JFXButton text="CLEAR SELECTION" styleClass="text-small-normal" onAction="#clearTableSelection">
-            </JFXButton>
+            <Button text="CLEAR SELECTION" styleClass="text-small-normal, button-clear" onAction="#clearTableSelection"/>
             <Label styleClass="label-tooltip" maxHeight="Infinity">
                 <tooltip>
                     <Tooltip text="Clears the table's selection.  This will also clear the annotations on the right-side panels."/>

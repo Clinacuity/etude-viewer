@@ -5,10 +5,9 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.HBox?>
-<?import com.jfoenix.controls.JFXButton?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.control.Button?>
 
 <GridPane xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="com.clinacuity.acv.controllers.MainPageController">
@@ -29,14 +28,8 @@
             </padding>
         </Label>
         <HBox fx:id="buttonBox" alignment="CENTER">
-            <StackPane fx:id="runnerCard">
-                <Pane styleClass="card-small">
-                    <StackPane.margin>
-                        <Insets topRightBottomLeft="-3"/>
-                    </StackPane.margin>
-                </Pane>
-                <JFXButton onAction="#loadEtudeConfigurationPage" maxWidth="Infinity"
-                           buttonType="RAISED" styleClass="button-raised, button-gray, no-focus" maxHeight="300">
+            <StackPane fx:id="runnerCard" styleClass="card">
+                <Button onAction="#loadEtudeConfigurationPage" maxWidth="Infinity" maxHeight="300" styleClass="button-gray, no-focus">
                     <graphic>
                         <VBox spacing="5" alignment="CENTER">
                             <Label text="Run ETUDE Engines" styleClass="text-large-bold" maxWidth="Infinity" alignment="CENTER" textAlignment="CENTER"/>
@@ -44,17 +37,11 @@
                                    styleClass="text-medium-italic" wrapText="true" textAlignment="JUSTIFY"/>
                         </VBox>
                     </graphic>
-                </JFXButton>
+                </Button>
             </StackPane>
 
-            <StackPane fx:id="builderCard">
-                <Pane styleClass="card-small">
-                    <StackPane.margin>
-                        <Insets topRightBottomLeft="-3"/>
-                    </StackPane.margin>
-                </Pane>
-                <JFXButton onAction="#loadConfigurationBuilderPage" maxWidth="Infinity"
-                           buttonType="RAISED" styleClass="button-raised, button-gray, no-focus" maxHeight="300">
+            <StackPane fx:id="builderCard" styleClass="card">
+                <Button onAction="#loadConfigurationBuilderPage" maxWidth="Infinity" maxHeight="300" styleClass="button-gray, no-focus">
                     <graphic>
                         <VBox spacing="5" alignment="CENTER">
                             <Label text="Build Configuration Files" styleClass="text-large-bold" maxWidth="Infinity" alignment="CENTER" textAlignment="CENTER"/>
@@ -62,17 +49,11 @@
                                    styleClass="text-medium-italic" wrapText="true" textAlignment="JUSTIFY"/>
                         </VBox>
                     </graphic>
-                </JFXButton>
+                </Button>
             </StackPane>
 
-            <StackPane fx:id="viewerCard">
-                <Pane styleClass="card-small">
-                    <StackPane.margin>
-                        <Insets topRightBottomLeft="-3"/>
-                    </StackPane.margin>
-                </Pane>
-                <JFXButton onAction="#loadComparisonViewerPage" maxWidth="Infinity"
-                           buttonType="RAISED" styleClass="button-raised, button-gray, no-focus" maxHeight="300">
+            <StackPane fx:id="viewerCard" styleClass="card">
+                <Button onAction="#loadComparisonViewerPage" maxWidth="Infinity" maxHeight="300" styleClass="button-gray, no-focus">
                     <graphic>
                         <VBox spacing="5" alignment="CENTER">
                             <Label text="View ETUDE Analysis" styleClass="text-large-bold" maxWidth="Infinity" alignment="CENTER" textAlignment="CENTER"/>
@@ -80,7 +61,7 @@
                                    styleClass="text-medium-italic" wrapText="true" textAlignment="JUSTIFY"/>
                         </VBox>
                     </graphic>
-                </JFXButton>
+                </Button>
             </StackPane>
         </HBox>
     </VBox>

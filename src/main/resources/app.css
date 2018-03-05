@@ -112,18 +112,10 @@
     -fx-text-fill: DimGray;
 }
 
-.card-small, .draggable {
-    -fx-border-color: SlateGray;
-    -fx-border-radius: 5px;
-    -fx-border-width: 1px;
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 10, 0.65, 0, 0);
-}
-
-.card-big {
-    -fx-border-color: SlateGray;
-    -fx-border-radius: 2px;
-    -fx-border-width: 3px;
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 10, 0.35, 0, 0);
+.card, .draggable {
+    -fx-background-radius: 4px;
+    -fx-background-color: rgb(235, 235, 235);
+    -fx-effect: dropshadow(gaussian, rgba(100, 100, 100, 0.25), 0, 1, 0, 1);
 }
 
 .underlined {
@@ -139,11 +131,15 @@
     -fx-font-family: "Open Sans Light";
     -fx-padding: 0.7em 0.57em;
     -fx-text-fill: Black;
+    -fx-background-radius: 2px;
 }
 
-.button-raised {
-    -jfx-button-type: RAISED;
-    -fx-background-color: rgb(77,102,204);
+.button-clear {
+    -fx-background-color: Transparent;
+}
+
+.button-clear:hover {
+    -fx-background-color: Silver;
 }
 
 .button-gray {
@@ -151,16 +147,18 @@
 }
 
 .button-gray:hover {
-    -fx-background-color: DarkGray;
+    -fx-background-color: Silver;
+    -fx-effect: dropshadow(gaussian, DimGray, 0, 1, 1, 1);
 }
 
 .button-blue {
-    -fx-background-color: rgba(50, 105, 255, 1);
+    -fx-background-color: CornflowerBlue;
     -fx-text-fill: Azure;
 }
 
 .button-blue:hover {
     -fx-background-color: rgb(77, 102, 204);
+    -fx-effect: dropshadow(gaussian, DodgerBlue, 0, 1, 1, 1);
 }
 
 .button-red {
@@ -172,8 +170,7 @@
 }
 
 .button-lock:hover {
-    -fx-background-radius: 4px;
-    -fx-background-color: rgb(77, 102, 204);
+    -fx-background-color: CornflowerBlue;
     -fx-background-insets: -3;
 }
 
@@ -182,13 +179,15 @@
     -fx-border-width: 2px;
     -fx-border-insets: -3;
     -fx-border-color: rgb(55, 55, 110);
-    -fx-background-color: rgba(77, 102, 204, 0.5);
-    -fx-background-radius: 5px;
+    -fx-background-color: CornflowerBlue;
     -fx-background-insets: -3;
 }
 
+.button-delete {
+    -fx-background-color: Transparent;
+}
+
 .button-delete:hover {
-    -fx-background-radius: 3px;
     -fx-background-color: LightCoral;
     -fx-background-insets: -3;
 }
@@ -259,7 +258,7 @@
 .text-header-two {
     -fx-font-family: "Open Sans Bold Italic";
     -fx-font-size: 16;
-    -fx-text-fill: rgb(0, 120, 220);
+    -fx-text-fill: CornflowerBlue;
 }
 
 .label-annotation-category {
@@ -307,25 +306,52 @@
     -fx-padding: 2 5 2 0;
 }
 
-.table-view text {
-    -fx-font-family: "Fira Mono Bold";
-    -fx-font-size: 18px;
+.table-view {
+    -fx-border-width: 1 0 1 0;
+    -fx-border-color: DimGray;
+    -fx-background-color: rgb(235, 235, 235);
+    -fx-table-cell-border-color: Transparent;
 }
 
-.table-cell {
+.column-header-text {
+    -fx-font-family: "Open Sans Regular";
+    -fx-font-size: 12px;
+}
+
+.table-view .column-header {
+    -fx-background-color: Transparent;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: CornflowerBlue;
+}
+
+.table-view .column-header-background .label {
+    -fx-background-color: Transparent;
+    -fx-text-fill: Black;
+}
+
+.table-row-cell {
+    -fx-background-color: Gainsboro;
     -fx-font-family: "Open Sans Light";
-    -fx-font-size: 10px;
 }
 
-.column-right-align {
-    -fx-alignment: CENTER-RIGHT;
+.table-row-cell:odd {
+    -fx-background-color: Silver;
+    -fx-font-family: "Open Sans Light";
+}
+
+.table-row-cell:selected {
+    -fx-table-cell-border-color: Transparent;
+    -fx-background-color: DimGray;
+    -fx-font-family: "Open Sans Light";
 }
 
 .column-center-align {
     -fx-alignment: CENTER;
 }
 
-.column-left-align {
-    -fx-alignment: CENTER-LEFT;
+.scroll-pane > .viewport {
+    -fx-background-color: Transparent;
 }
 /*    END TEXT    */

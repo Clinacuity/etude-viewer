@@ -29,6 +29,8 @@ public class ViewControls extends VBox {
     @FXML private TableColumn<AnnotationType, String> truePosColumn;
     @FXML private TableColumn<AnnotationType, String> falsePosColumn;
     @FXML private TableColumn<AnnotationType, String> falseNegColumn;
+    @FXML private TableColumn<AnnotationType, String> recallColumn;
+    @FXML private TableColumn<AnnotationType, String> precisionColumn;
 
     public TableView<AnnotationType> getAnnotationTable() { return annotationTable; }
 
@@ -47,6 +49,8 @@ public class ViewControls extends VBox {
     }
 
     private void initializeTableColumns() {
+        annotationTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+
         annotationNameColumn.setCellFactory(param -> new TableCell<>() {
             @Override
             public void updateItem(String item, boolean empty) {
@@ -56,6 +60,9 @@ public class ViewControls extends VBox {
             }
         });
 
+        annotationNameColumn.setGraphic(getHeaderGraphic(ColumnType.Name));
+        annotationNameColumn.setText(null);
+
         truePosColumn.setGraphic(getHeaderGraphic(ColumnType.TP));
         truePosColumn.setText(null);
 
@@ -64,17 +71,29 @@ public class ViewControls extends VBox {
 
         falseNegColumn.setGraphic(getHeaderGraphic(ColumnType.FN));
         falseNegColumn.setText(null);
+
+        recallColumn.setGraphic(getHeaderGraphic(ColumnType.Recall));
+        recallColumn.setText(null);
+
+        precisionColumn.setGraphic(getHeaderGraphic(ColumnType.Precision));
+        precisionColumn.setText(null);
     }
 
     private HBox getHeaderGraphic(ColumnType type) {
         HBox header = new HBox();
-        header.setAlignment(Pos.CENTER_LEFT);
+        header.setAlignment(Pos.CENTER);
         Label headerLabel = new Label(type.toString());
+        headerLabel.getStyleClass().add("text-medium-normal");
         JFXCheckBox checkBox = new JFXCheckBox();
         checkBox.setScaleX(0.8d);
         checkBox.setScaleY(0.8d);
 
         switch(type) {
+            case Name:
+            case Recall:
+            case Precision:
+                header.getChildren().add(headerLabel);
+                return header;
             case TP:
                 checkBox.selectedProperty().bindBidirectional(AcvContext.getInstance().truePositivesProperty);
                 checkBox.setCheckedColor(Paint.valueOf("DodgerBlue"));
@@ -136,6 +155,9 @@ public class ViewControls extends VBox {
     private enum ColumnType {
         TP,
         FP,
-        FN
+        FN,
+        Name,
+        Recall,
+        Precision
     }
 }
