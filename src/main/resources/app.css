@@ -112,6 +112,14 @@
     -fx-text-fill: DimGray;
 }
 
+.text-area {
+    -fx-background-color: Transparent;
+}
+
+.text-area .content {
+    -fx-background-color: Transparent;
+}
+
 .card, .draggable {
     -fx-background-radius: 4px;
     -fx-background-color: rgb(235, 235, 235);
@@ -232,7 +240,6 @@
 
 .feature-tree {
     -fx-font-family: "Fira Mono Bold";
-    -fx-background-color: rgba(220, 220, 220, 1);
 }
 
 .tooltip {
