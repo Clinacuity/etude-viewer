@@ -41,7 +41,6 @@ public class ConfirmationModal {
         messageArea.setWrapText(true);
         messageArea.setMaxHeight(Double.MAX_VALUE);
         messageArea.setFocusTraversable(false);
-        messageArea.setMouseTransparent(true);
         VBox.setVgrow(messageArea, Priority.ALWAYS);
 
         HBox buttonBox = new HBox();
