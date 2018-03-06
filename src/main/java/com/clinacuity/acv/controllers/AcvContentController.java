@@ -415,6 +415,17 @@ public class AcvContentController implements Initializable {
             if (newValue.matchingButtons.size() == 1) {
                 newValue.matchingButtons.forEach(AnnotationButton::fire);
             }
+
+            // update scroll bars
+            double scrollPaneHeight = targetPane.getHeight() * 0.5d / targetPane.getAnchor().getHeight();
+            double currentScroll = targetPane.getScrollPane().getVvalue();
+            double targetScroll = newValue.getLayoutY() / targetPane.getAnchor().getHeight();
+
+            if (targetScroll - currentScroll <= -scrollPaneHeight ||
+                    targetScroll - currentScroll > scrollPaneHeight) {
+                targetPane.getScrollPane().setVvalue(targetScroll);
+                referencePane.getScrollPane().setVvalue(targetScroll);
+            }
         }
     });
 }
