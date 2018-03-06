@@ -4,7 +4,6 @@ import com.clinacuity.acv.controllers.EtudeController;
 import javafx.concurrent.Task;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -76,6 +75,9 @@ public class EtudeTask extends Task<Void> {
     public void setIgnoreWhitespace(boolean value) { ignoreWhitespace = value; }
     public void setIgnorePunctuation(boolean value) { ignorePunctuation = value; }
 
+    private String errorString = "";
+    public String getErrorString() { return errorString; }
+
     public EtudeTask() {
         setOnCancelled(event -> {
             if (etudeProcess != null) {
@@ -86,7 +88,9 @@ public class EtudeTask extends Task<Void> {
     }
 
     @Override
-    public Void call() {
+    protected Void call() {
+        errorString = "";
+
         try {
             createOutputDirectories();
 
@@ -104,9 +108,18 @@ public class EtudeTask extends Task<Void> {
                 logger.warn(line);
             }
 
+            StringBuilder errBuilder = new StringBuilder();
             while ((line = errStream.readLine()) != null) {
-                logger.warn(line);
+                logger.error(line);
+                errBuilder.append(line);
+                errBuilder.append("\n");
             }
+
+            errorString = errBuilder.toString();
+            if (errorString.length() > 0) {
+                throw new EtudeEngineException(errorString);
+            }
+
         } catch (IOException e) {
             logger.throwing(e);
             setException(e);
@@ -168,7 +181,7 @@ public class EtudeTask extends Task<Void> {
     }
 
     private String getCommand() {
-        String command = getEtudeLocation();
+        String command = getEtudeLocation() + " --progressbar-output none";
 
         if (referenceConfigFilePath != null) {
             command += " --reference-config " + referenceConfigFilePath;
@@ -334,13 +347,19 @@ public class EtudeTask extends Task<Void> {
     private void setFailing(Exception exception) {
         logger.throwing(exception);
         setException(exception);
-        failed();
+        throw new RuntimeException(exception);
     }
 
     private class MissingArgumentException extends Exception {
         MissingArgumentException(String missingArgument) {
             String message = "The argument <" + missingArgument + "> is required!";
             updateMessage(message);
+        }
+    }
+
+    private class EtudeEngineException extends RuntimeException {
+        EtudeEngineException(String error) {
+            updateMessage(error);
         }
     }
 }
