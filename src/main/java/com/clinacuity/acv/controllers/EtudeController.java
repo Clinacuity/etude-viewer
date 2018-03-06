@@ -128,6 +128,14 @@ public class EtudeController implements Initializable{
             AcvContext.getInstance().contentLoading.setValue(false);
         });
 
+        etudeTask.setOnFailed(event -> {
+            logger.error("Ok so we're here");
+            WarningModal.createModal("ETUDE Engine Failure",
+                    "The ETUDE Engines ran into the following error:\n\n" + etudeTask.getErrorString());
+            WarningModal.show();
+            AcvContext.getInstance().contentLoading.setValue(false);
+        });
+
         etudeTask.reset();
 
         etudeTask.setReferenceConfigFilePath(referenceConfigInputField.getText());
