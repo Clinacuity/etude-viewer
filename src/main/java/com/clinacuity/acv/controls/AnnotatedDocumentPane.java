@@ -50,7 +50,6 @@ public class AnnotatedDocumentPane extends VBox {
         }
 
         featureTree.setEditable(false);
-        featureTree.setMouseTransparent(true);
         arbitraryLabelsForSizeCalculations();
         FxTimer.runLater(Duration.ofMillis(100), this::getCharacterDimensions);
 
