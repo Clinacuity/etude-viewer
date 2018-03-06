@@ -20,6 +20,6 @@
 
     <VBox>
         <Label alignment="BOTTOM_CENTER" text="&#9;Features/attributes:" styleClass="text-medium-bold"/>
-        <TextArea fx:id="featureTree" minHeight="125" maxHeight="125" styleClass="feature-tree, no-focus, no-mouse"/>
+        <TextArea fx:id="featureTree" minHeight="125" maxHeight="125" styleClass="feature-tree, no-focus, no-mouse, card"/>
     </VBox>
 </fx:root>
