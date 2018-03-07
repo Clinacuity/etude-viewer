@@ -8,9 +8,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 
 public class CorpusDictionary {
     private static final Logger logger = LogManager.getLogger();
@@ -26,7 +26,7 @@ public class CorpusDictionary {
 
     private JsonObject root;
     private JsonObject metrics;
-    private Map<String, String> fileMappings = new HashMap<>();
+    private Map<String, String> fileMappings = new TreeMap<>();
     private JsonObject arguments;
 
     public CorpusDictionary(String path) {
