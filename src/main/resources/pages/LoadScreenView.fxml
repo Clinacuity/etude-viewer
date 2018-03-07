@@ -38,8 +38,7 @@
                            styleClass="text-medium-normal, error-text" visible="false"/>
                 </HBox>
                 <HBox fx:id="buttonBox" alignment="CENTER_RIGHT" maxWidth="400">
-                    <Button onAction="#runAcv" text="RUN VIEWER" styleClass="button-gray, text-medium-normal">
-                    </Button>
+                    <Button onAction="#runAcv" text="RUN VIEWER" styleClass="button-gray, text-medium-normal"/>
                 </HBox>
             </VBox>
         </StackPane>

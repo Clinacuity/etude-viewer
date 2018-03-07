@@ -154,7 +154,7 @@
     -fx-background-color: LightGray;
 }
 
-.button-gray:hover {
+.button-gray:hover, .button-gray:focused {
     -fx-background-color: Silver;
     -fx-effect: dropshadow(gaussian, DimGray, 0, 1, 1, 1);
 }
