@@ -43,10 +43,13 @@ public class CreateSidebarItemsTask extends Task<List<VBox>> {
             fileMetrics.setSpacing(10.0d);
             fileMetrics.setPadding(new Insets(0, 0, 0, 10.0));
 
-            Label falsePos = new Label("FP: [pending]");
+            // TODO: DEV-84
+//            Label falsePos = new Label("FP: [pending]");
+            Label falsePos = new Label("");
             falsePos.getStyleClass().add("false-positives-count");
 
-            Label falseNeg = new Label("FN: [pending]");
+//            Label falseNeg = new Label("FN: [pending]");
+            Label falseNeg = new Label("");
             falseNeg.getStyleClass().add("false-negatives-count");
 
             fileMetrics.getChildren().addAll(falsePos, falseNeg);
