@@ -60,19 +60,35 @@
                         </HBox>
                         <HBox spacing="10">
                             <VBox>
-                                <Label text="System Output:" styleClass="text-medium-bold">
-                                    <padding>
-                                        <Insets left="25"/>
-                                    </padding>
-                                </Label>
+                                <HBox>
+                                    <Label text="System Output:" styleClass="text-medium-bold">
+                                        <padding>
+                                            <Insets left="25"/>
+                                        </padding>
+                                    </Label>
+                                    <Label fx:id="systemFile" styleClass="text-small-italic"
+                                           alignment="BOTTOM_RIGHT" HBox.hgrow="ALWAYS" maxWidth="Infinity">
+                                        <padding>
+                                            <Insets right="15"/>
+                                        </padding>
+                                    </Label>
+                                </HBox>
                                 <AnnotatedDocumentPane fx:id="targetPane" minWidth="300" maxWidth="375"/>
                             </VBox>
                             <VBox>
-                                <Label text="Reference:" styleClass="text-medium-bold">
-                                    <padding>
-                                        <Insets left="25"/>
-                                    </padding>
-                                </Label>
+                                <HBox>
+                                    <Label text="Reference:" styleClass="text-medium-bold">
+                                        <padding>
+                                            <Insets left="25"/>
+                                        </padding>
+                                    </Label>
+                                    <Label fx:id="referenceFile" styleClass="text-small-italic"
+                                           alignment="BOTTOM_RIGHT" HBox.hgrow="ALWAYS" maxWidth="Infinity">
+                                        <padding>
+                                            <Insets right="15"/>
+                                        </padding>
+                                    </Label>
+                                </HBox>
                                 <AnnotatedDocumentPane fx:id="referencePane" minWidth="300" maxWidth="375"/>
                             </VBox>
                         </HBox>

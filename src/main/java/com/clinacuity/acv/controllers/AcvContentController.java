@@ -21,6 +21,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -39,6 +40,8 @@ public class AcvContentController implements Initializable {
     @FXML private ViewControls viewControls;
     @FXML private JFXDrawer drawer;
     @FXML private SideBar sideBar;
+    @FXML private Label systemFile;
+    @FXML private Label referenceFile;
     private Annotations targetAnnotations;
     private Annotations referenceAnnotations;
     private ObjectProperty<AnnotationButton> selectedAnnotationButton = new SimpleObjectProperty<>();
@@ -73,11 +76,15 @@ public class AcvContentController implements Initializable {
         drawer.setDefaultDrawerSize(SideBar.MIN_WIDTH);
 
         sideBar.selectedTargetDocumentProperty().addListener((obs, old, newValue) -> {
+            String[] paths = newValue.split("/");
+            systemFile.setText(paths[paths.length - 1]);
             targetAnnotations = new Annotations(newValue);
             resetPanes();
         });
 
         sideBar.selectedReferenceDocumentProperty().addListener((obs, old, newValue) -> {
+            String[] paths = newValue.split("/");
+            referenceFile.setText(paths[paths.length - 1]);
             referenceAnnotations = new Annotations(newValue);
             resetPanes();
         });
