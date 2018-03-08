@@ -36,12 +36,10 @@ public class CreateButtonsTask extends Task<List<AnnotationButton>> {
         }
 
         if (taskButtons == null) {
-            failed();
-            return null;
-        } else {
-            succeeded();
-            return taskButtons;
+            taskButtons = new ArrayList<>();
         }
+
+        return taskButtons;
     }
 
     private void processAnnotation(JsonObject annotation) {
