@@ -28,6 +28,7 @@ import org.apache.logging.log4j.Logger;
 import org.reactfx.util.FxTimer;
 import java.net.URL;
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -90,7 +91,7 @@ public class AcvContentController implements Initializable {
         });
 
         CreateSidebarItemsTask sidebarTask = new CreateSidebarItemsTask();
-        sidebarTask.setCorpusDictionary(AcvContext.getInstance().getCorpusDictionary());
+        sidebarTask.setCorpusDictionary(context.getCorpusDictionary());
         sidebarTask.setOnSucceeded(event -> {
             List<VBox> results = sidebarTask.getValue();
 
@@ -253,19 +254,25 @@ public class AcvContentController implements Initializable {
 
         targetButtonsTask = new CreateButtonsTask(targetJson, targetPane.getLabelList());
         targetButtonsTask.setOnSucceeded(event -> {
-            if (targetButtonsTask.getValue() != null) {
-                targetPane.addButtons(targetButtonsTask.getValue());
-                setupAnnotationButtons();
-            }
+            targetPane.addButtons(targetButtonsTask.getValue());
+            setupAnnotationButtons();
+        });
+        targetButtonsTask.setOnFailed(event -> {
+            logger.throwing(targetButtonsTask.getException());
+            targetPane.addButtons(new ArrayList<>());
+            setupAnnotationButtons();
         });
         new Thread(targetButtonsTask).start();
 
         referenceButtonsTask = new CreateButtonsTask(referenceJson, referencePane.getLabelList());
         referenceButtonsTask.setOnSucceeded(event -> {
-            if (referenceButtonsTask.getValue() != null) {
-                referencePane.addButtons(referenceButtonsTask.getValue());
-                setupAnnotationButtons();
-            }
+            referencePane.addButtons(referenceButtonsTask.getValue());
+            setupAnnotationButtons();
+        });
+        referenceButtonsTask.setOnFailed(event -> {
+            logger.throwing(referenceButtonsTask.getException());
+            referencePane.addButtons(new ArrayList<>());
+            setupAnnotationButtons();
         });
         new Thread(referenceButtonsTask).start();
     }
@@ -294,7 +301,6 @@ public class AcvContentController implements Initializable {
                 }
 
                 targetButton.parent = targetPane.getAnchor();
-                //targetButton.targetTextArea = targetPane.getFeatureTreeText();
                 targetButton.setOnMouseClicked(event -> selectedAnnotationButton.setValue(targetButton));
             }
 
@@ -397,8 +403,8 @@ public class AcvContentController implements Initializable {
         } else {
             targetPane.clearFeatureTree();
             referencePane.clearFeatureTree();
-            selectedAnnotationButton.setValue(null);
         }
+        selectedAnnotationButton.setValue(null);
     });
 
     private ChangeListener<String> onMatchTypeSelectionChanged = ((observable, oldValue, newValue) -> createTableRows());
