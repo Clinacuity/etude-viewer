@@ -30,9 +30,8 @@ public class Annotations {
     private JsonObject root;
     private JsonObject metrics = null;
     private Map<String, List<JsonObject>> annotationMap = new HashMap<>();
-    public Map<String, List<JsonObject>> getAnnotationMap() { return annotationMap; }
-    public boolean hasOffsetMapping() { return root.has(OFFSETS_KEY); }
-    public boolean hasMetrics() { return root.has(METRICS_KEY); }
+    private boolean hasOffsetMapping() { return root.has(OFFSETS_KEY); }
+    private boolean hasMetrics() { return root.has(METRICS_KEY); }
 
     /**
      * Convenience object for managing a document's Json objects.
@@ -81,7 +80,10 @@ public class Annotations {
     public Set<String> getAnnotationKeySet() { return annotationMap.keySet(); }
 
     public List<JsonObject> getAnnotationsByKey(String key) {
-        return getAnnotationMap().get(key);
+        if (annotationMap.containsKey(key)) {
+            return annotationMap.get(key);
+        }
+        return new ArrayList<>();
     }
 
     public String getRawText() {

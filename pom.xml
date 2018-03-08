@@ -173,7 +173,7 @@
                                 </transformer>
                             </transformers>
                             <outputFile>
-                                ${project.build.directory}/${artifactId}-${version}-jar-with-dependencies.jar
+                                ${project.build.directory}/${project.artifactId}-${project.version}-jar-with-dependencies.jar
                             </outputFile>
                         </configuration>
                     </execution>
