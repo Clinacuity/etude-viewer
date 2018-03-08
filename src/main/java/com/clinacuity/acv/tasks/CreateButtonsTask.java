@@ -6,14 +6,11 @@ import com.clinacuity.acv.controls.LineNumberedLabel;
 import com.google.gson.JsonObject;
 import javafx.concurrent.Task;
 import javafx.scene.layout.AnchorPane;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class CreateButtonsTask extends Task<List<AnnotationButton>> {
-    private static final Logger logger = LogManager.getLogger();
-
     private List<JsonObject> taskAnnotations;
     private List<LineNumberedLabel> taskLabels;
     private List<AnnotationButton> taskButtons = new ArrayList<>();
@@ -57,13 +54,12 @@ public class CreateButtonsTask extends Task<List<AnnotationButton>> {
      * @param end   The end offset relative to the JsonObject's rew text
      * @return      Returns a list of the labels which are spanned by the given annotation's begin/end values
      */
+    @SuppressWarnings("ForLoopReplaceableByForEach")
     private List<LineNumberedLabel> getSpannedLabels(int begin, int end) {
         List<LineNumberedLabel> spannedLabels = new ArrayList<>();
         int currentLineNumber = 1;
 
         boolean beginFound = false;
-//        taskLabels.forEach(label);
-
         for (int i = 0; i < taskLabels.size(); i++) {
             LineNumberedLabel index = taskLabels.get(i);
             int indexTextLength = index.getLineText().length();

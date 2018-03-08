@@ -296,10 +296,9 @@ public class AcvContentController implements Initializable {
                         targetButton.matchingButtons.add(refButton);
                         refButton.matchingButtons.add(targetButton);
                     }
-
-                    targetButton.targetTextArea = targetPane.getFeatureTreeText();
                 }
 
+                targetButton.targetTextArea = targetPane.getFeatureTreeText();
                 targetButton.parent = targetPane.getAnchor();
                 targetButton.setOnMouseClicked(event -> selectedAnnotationButton.setValue(targetButton));
             }

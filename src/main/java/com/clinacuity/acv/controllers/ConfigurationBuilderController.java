@@ -20,7 +20,10 @@ import org.reactfx.util.FxTimer;
 import java.io.File;
 import java.net.URL;
 import java.time.Duration;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.ResourceBundle;
 
 public class ConfigurationBuilderController implements Initializable {
     private static final Logger logger = LogManager.getLogger();
