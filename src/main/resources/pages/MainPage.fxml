@@ -20,9 +20,9 @@
         <padding>
             <Insets topRightBottomLeft="15"/>
         </padding>
-        <Label text="ETUDE Viewer" styleClass="text-header-one, underlined"/>
+        <Label text="ETUDE Viewer" styleClass="text-header-one"/>
         <Label text="Using this tool, you will be able to compare the output of an NLP system against the output of a reference standard or another NLP system.  The tool then allows you to visually compare the annotated files side by side to look at discrepancies and metrics."
-               wrapText="true">
+               wrapText="true" styleClass="text-medium-normal">
             <padding>
                 <Insets left="30"/>
             </padding>

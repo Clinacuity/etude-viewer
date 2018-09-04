@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.clinacuity</groupId>
-    <artifactId>annotations-comparison-viewer</artifactId>
+    <artifactId>clinacuity-etude-viewer</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <developers>
@@ -20,8 +20,8 @@
     </developers>
 
     <properties>
-        <maven.compiler.source>1.9</maven.compiler.source>
-        <maven.compiler.target>1.9</maven.compiler.target>
+        <maven.compiler.source>9</maven.compiler.source>
+        <maven.compiler.target>9</maven.compiler.target>
         <log4j2.version>2.8.2</log4j2.version>
     </properties>
 

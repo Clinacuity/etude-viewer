@@ -43,7 +43,7 @@ public class CreateSidebarItemsTask extends Task<List<VBox>> {
             fileMetrics.setSpacing(10.0d);
             fileMetrics.setPadding(new Insets(0, 0, 0, 10.0));
 
-            // TODO: DEV-84
+            // TODO: DEV-84; load FN & FP values per file
 //            Label falsePos = new Label("FP: [pending]");
             Label falsePos = new Label("");
             falsePos.getStyleClass().add("false-positives-count");

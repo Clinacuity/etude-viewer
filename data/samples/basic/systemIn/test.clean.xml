@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xmi:XMI xmlns:util="http:///org/apache/ctakes/typesystem/type/util.ecore" xmlns:relation="http:///org/apache/ctakes/typesystem/type/relation.ecore" xmlns:type="http:///com/clinacuity/deid/nlp/uima/type.ecore" xmlns:tcas="http:///uima/tcas.ecore" xmlns:xmi="http://www.omg.org/XMI" xmlns:cas="http:///uima/cas.ecore" xmlns:types="http:///phi/types.ecore" xmlns:type7="http:///org/cleartk/timeml/type.ecore" xmlns:type5="http:///org/cleartk/syntax/constituent/type.ecore" xmlns:ne="http:///org/cleartk/type/ne.ecore" xmlns:textsem="http:///org/apache/ctakes/typesystem/type/textsem.ecore" xmlns:type10="http:///org/cleartk/ne/type.ecore" xmlns:type8="http:///org/cleartk/token/type.ecore" xmlns:refsem="http:///org/apache/ctakes/typesystem/type/refsem.ecore" xmlns:structured="http:///org/apache/ctakes/typesystem/type/structured.ecore" xmlns:textspan="http:///org/apache/ctakes/typesystem/type/textspan.ecore" xmlns:type6="http:///org/cleartk/syntax/dependency/type.ecore" xmlns:annotations="http:///com/clinacuity/deid/annotations.ecore" xmlns:type9="http:///org/cleartk/util/type.ecore" xmlns:type2="http:///com/clinacuity/deid/uima/core/type.ecore" xmlns:assertion="http:///org/apache/ctakes/typesystem/type/temporary/assertion.ecore" xmlns:type3="http:///org/cleartk/score/type.ecore" xmlns:syntax="http:///org/apache/ctakes/typesystem/type/syntax.ecore" xmlns:type4="http:///org/cleartk/srl/type.ecore" xmi:version="2.0">
+    <cas:NULL xmi:id="0"/>
+    <annotations:DocumentInformationAnnotation xmi:id="1" sofa="2" begin="0" end="0" documentType="txt" fileName="110-01" filePath="/Users/garyunderwood/CRF-files/2014/testTextBig/110-01.txt" fileSize="1"/>
+    <type2:MachineLearningAnnotation xmi:id="1" sofa="2" begin="0" end="4" derivedPHItype="Sample"/>
+    <type2:MachineLearningAnnotation xmi:id="2" sofa="2" begin="5" end="6" derivedPHItype="Sample"/>
+    <type2:MachineLearningAnnotation xmi:id="3" sofa="2" begin="8" end="11" derivedPHItype="Sample"/>
+    <type2:MachineLearningAnnotation xmi:id="4" sofa="2" begin="16" end="19" derivedPHItype="Sample"/>
+    <type2:MachineLearningAnnotation xmi:id="5" sofa="2" begin="33" end="45" derivedPHItype="Sample"/>
+    <type2:MachineLearningAnnotation xmi:id="6" sofa="2" begin="48" end="54" derivedPHItype="Sample"/>
+    <type2:MachineLearningAnnotation xmi:id="7" sofa="2" begin="60" end="69" derivedPHItype="Sample"/>
+    <type2:MachineLearningAnnotation xmi:id="7" sofa="2" begin="74" end="90" derivedPHItype="Sample"/>
+    <cas:Sofa xmi:id="2" sofaNum="1" sofaID="_InitialView" mimeType="text" sofaString="This is a test&#10;file that has fake annotations.&#10;&#10;Here's some more data for partial matching."/>
+    <cas:View sofa="2" members="1 2 3 4 5 6 7"/>
+</xmi:XMI>

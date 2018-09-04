@@ -8,29 +8,24 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.reactfx.util.FxTimer;
 import java.io.IOException;
-import java.time.Duration;
 import java.util.List;
 import java.util.ArrayList;
 
 public class AnnotatedDocumentPane extends VBox {
     private static final Logger logger = LogManager.getLogger();
-    private static double characterHeight = -1.0d;
-    private static double characterWidth = -1.0d;
-    private static int maxCharactersPerLabel = -1;
+
+    public static final double CHARACTER_HEIGHT = 16.0d;
+    public static final int MAX_CHARACTERS_PER_LABEL = 50;
 
     public static final double STANDARD_INSET = 10.0d;
     public static final double LINE_NUMBER_WIDTH = 24.0d;
-    public static double getCharacterHeight() { return characterHeight; }
-    public static int getMaxCharactersPerLabel() { return maxCharactersPerLabel; }
 
     @FXML private AnchorPane anchor;
     @FXML private ScrollPane document;
     @FXML private TextArea featureTree;
     private List<LineNumberedLabel> labelList = new ArrayList<>();
     private List<AnnotationButton> buttonList = new ArrayList<>();
-    private double documentScrollWidth = -1.0d;
 
     public AnchorPane getAnchor() { return anchor; }
     public ScrollPane getScrollPane() { return document; }
@@ -51,10 +46,6 @@ public class AnnotatedDocumentPane extends VBox {
 
         featureTree.setEditable(false);
         arbitraryLabelsForSizeCalculations();
-        FxTimer.runLater(Duration.ofMillis(100), this::getCharacterDimensions);
-
-        document.widthProperty().addListener(((observable, oldValue, newValue) ->
-                documentScrollWidth = newValue.doubleValue()));
 
         logger.debug("Annotated Document Pane initialized.");
     }
@@ -62,25 +53,6 @@ public class AnnotatedDocumentPane extends VBox {
     private void arbitraryLabelsForSizeCalculations() {
         labelList.add(new LineNumberedLabel("Select a document from the side bar. . .", 1));
         anchor.getChildren().addAll(labelList);
-    }
-
-    private void getCharacterDimensions() {
-        LineNumberedLabel label = labelList.get(0);
-
-        if (characterHeight < 0.0d) {
-            characterHeight = label.getTextLabel().getHeight();
-            logger.debug("Character Height set to {}", characterHeight);
-        }
-
-        if ( characterWidth < 0) {
-            characterWidth = label.getWidth() / label.getLineText().length();
-        }
-
-        // the scroll panes may vary by a handful of pixels; take the smallest
-        int maxChars = (int)(documentScrollWidth / characterWidth);
-        if (maxCharactersPerLabel < maxChars) {
-            maxCharactersPerLabel = maxChars;
-        }
     }
 
     public void addLineNumberedLabels(List<LineNumberedLabel> labels) {

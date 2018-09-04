@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<sample>
+<TEXT><![CDATA[Record date: 2010-04-07
+
+Mr. Lopez is seen today.  He is 48 y/d.  I have not seen
+him since November.  He missed his last appointment on December.
+Ten weeks ago he stopped his medicine on his own because he was
+gaining weight.  He says he has back pain, constipation, and
+chronic headaches.
+
+
+]]></TEXT>
+<TAGS>
+<NAME id="P1" start="29" end="34" text="Lopez" TYPE="NAME" comment="" />
+<AGE id="P2" start="57" end="59" text="48" TYPE="AGE" comment="" />
+<DATE id="P3" start="92" end="100" text="November" TYPE="DATE" comment="" />
+<DATE id="P4" start="137" end="145" text="December" TYPE="DATE" comment="" />
+<PROBLEM id="P5" start="243" end="252" text="back pain" TYPE="PROBLEM" comment="Sample comment" />
+<PROBLEM id="P6" start="254" end="266" text="constipation" TYPE="PROBLEM" comment="Another comment" />
+<PROBLEM id="P7" start="280" end="289" text="headaches" TYPE="PROBLEM" comment="Last comment" />
+</TAGS>
+</sample>

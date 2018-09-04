@@ -5,8 +5,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -38,12 +38,12 @@ public class AppMainController implements Initializable {
     }
 
     private void addHeader() throws IOException {
-        HBox navBar = FXMLLoader.load(getClass().getResource(AcvContext.NAV_BAR), null);
+        Parent navBar = FXMLLoader.load(getClass().getResource(AcvContext.NAV_BAR), null);
         masterGrid.add(navBar, 0, 0);
     }
 
     private void addFooter() throws IOException {
-        HBox navBar = FXMLLoader.load(getClass().getResource(AcvContext.FOOTER), null);
+        Parent navBar = FXMLLoader.load(getClass().getResource(AcvContext.FOOTER), null);
         masterGrid.add(navBar, 0, 2);
     }
 

@@ -25,9 +25,9 @@ public class SideBar extends VBox {
     private JFXDrawer parentDrawer;
     public void setDrawer(JFXDrawer drawer) { parentDrawer = drawer; }
 
-    private  StringProperty targetDocProperty = new SimpleStringProperty("");
+    private  StringProperty systemOutDocProperty = new SimpleStringProperty("");
     private StringProperty referenceDocProperty = new SimpleStringProperty("");
-    public ReadOnlyStringProperty selectedTargetDocumentProperty() { return targetDocProperty; }
+    public ReadOnlyStringProperty selectedSystemOutDocumentProperty() { return systemOutDocProperty; }
     public ReadOnlyStringProperty selectedReferenceDocumentProperty() { return referenceDocProperty; }
 
     @FXML private VBox fileList;
@@ -84,10 +84,10 @@ public class SideBar extends VBox {
 
     private void loadDocument() {
         String id = fileList.getChildren().get(selectedBox).getId();
-        String target = context.targetDirectoryProperty.getValueSafe() + context.getCorpusDictionary().getFileMappings().get(id);
+        String systemOut = context.systemOutDirectoryProperty.getValueSafe() + context.getCorpusDictionary().getFileMappings().get(id);
         String reference = context.referenceDirectoryProperty.getValueSafe() + id;
 
-        targetDocProperty.setValue(target);
+        systemOutDocProperty.setValue(systemOut);
         referenceDocProperty.setValue(reference);
         updateContent();
     }

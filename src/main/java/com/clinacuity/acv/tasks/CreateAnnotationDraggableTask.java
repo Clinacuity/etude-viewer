@@ -24,7 +24,6 @@ public class CreateAnnotationDraggableTask extends Task<List<AnnotationTypeDragg
 
     private ConfigurationBuilderController.CorpusType corpusType;
     private String directoryPath;
-//    private List<XmlParsedAnnotation> annotationMap = new ArrayList<>();
     private List<AnnotationTypeDraggable> annotations = new ArrayList<>();
     private Map<String, XmlParsedAnnotation> annotationMap = new HashMap<>();
 

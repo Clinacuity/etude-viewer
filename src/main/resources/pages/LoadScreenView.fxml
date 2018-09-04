@@ -21,7 +21,7 @@
         <padding>
             <Insets topRightBottomLeft="15"/>
         </padding>
-        <Label styleClass="text-header-one, underlined" text="Load Analysis" textAlignment="CENTER"/>
+        <Label styleClass="text-header-one" text="Load Analysis" textAlignment="CENTER"/>
         <StackPane>
             <VBox spacing="20" alignment="CENTER" maxWidth="800">
                 <HBox fx:id="textBox" spacing="10" alignment="CENTER" maxWidth="Infinity">

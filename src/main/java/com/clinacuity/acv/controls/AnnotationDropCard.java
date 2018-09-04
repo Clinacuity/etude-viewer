@@ -78,7 +78,7 @@ class AnnotationDropCard extends StackPane {
 
         sourceAttributesCopy.forEach(attribute -> targetBox.getChildren().add(getAttributeRow(attribute, "", true)));
 
-        // TODO
+        // TODO: make these absolute values or something...
         if (getCorpusType() == ConfigurationBuilderController.CorpusType.SYSTEM) {
             setStyle("-fx-background-color: rgba(70, 130, 180, 0.2);");
         } else {
