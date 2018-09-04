@@ -121,7 +121,7 @@ public class EtudeController implements Initializable{
 
         etudeTask.setOnSucceeded(event -> {
             context.corpusFilePathProperty.setValue(outputDirectoryTextField.getText() + "/" + CORPUS_FILE);
-            context.targetDirectoryProperty.setValue(outputDirectoryTextField.getText() + "/" + SYSTEM_OUT_SUBDIR);
+            context.systemOutDirectoryProperty.setValue(outputDirectoryTextField.getText() + "/" + SYSTEM_OUT_SUBDIR);
             context.referenceDirectoryProperty.setValue(outputDirectoryTextField.getText() + "/" + REFERENCE_SUBDIR);
 
             AcvContext.loadPage(NavBarController.NavBarPages.COMPARISON_VIEW);
@@ -129,7 +129,6 @@ public class EtudeController implements Initializable{
         });
 
         etudeTask.setOnFailed(event -> {
-            logger.error("Ok so we're here");
             WarningModal.createModal("ETUDE Engine Failure",
                     "The ETUDE Engines ran into the following error:\n\n" + etudeTask.getErrorString());
             WarningModal.show();

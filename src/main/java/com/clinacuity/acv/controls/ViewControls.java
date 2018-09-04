@@ -83,7 +83,7 @@ public class ViewControls extends VBox {
         HBox header = new HBox();
         header.setAlignment(Pos.CENTER);
         Label headerLabel = new Label(type.toString());
-        headerLabel.getStyleClass().add("text-medium-normal");
+        headerLabel.getStyleClass().add("column-header-label");
         JFXCheckBox checkBox = new JFXCheckBox();
         checkBox.setScaleX(0.8d);
         checkBox.setScaleY(0.8d);
@@ -94,6 +94,7 @@ public class ViewControls extends VBox {
             case Precision:
                 header.getChildren().add(headerLabel);
                 return header;
+
             case TP:
                 checkBox.selectedProperty().bindBidirectional(AcvContext.getInstance().truePositivesProperty);
                 checkBox.setCheckedColor(Paint.valueOf("DodgerBlue"));

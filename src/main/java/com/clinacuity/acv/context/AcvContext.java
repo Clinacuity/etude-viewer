@@ -59,7 +59,7 @@ public class AcvContext {
     public StringProperty referenceDirectoryProperty = new SimpleStringProperty("");
 
     /** This property is the string value of the System directory's path containing all the system output files */
-    public StringProperty targetDirectoryProperty = new SimpleStringProperty("");
+    public StringProperty systemOutDirectoryProperty = new SimpleStringProperty("");
 
     /** This property is the string value of the annotation type currently selected in the ViewControl's table */
     public StringProperty selectedAnnotationTypeProperty = new SimpleStringProperty("");

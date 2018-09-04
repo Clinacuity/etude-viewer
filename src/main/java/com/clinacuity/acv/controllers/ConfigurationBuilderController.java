@@ -165,7 +165,6 @@ public class ConfigurationBuilderController implements Initializable {
         for (Node child: annotationDropBox.getChildren()) {
             if (child instanceof AnnotationDropBox) {
                 AnnotationDropBox box = (AnnotationDropBox)child;
-                // TODO: there are no child cards here .. there are child BOXES
                 if (!box.hasValidCards()) {
                     return false;
                 }

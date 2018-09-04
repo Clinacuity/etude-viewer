@@ -5,27 +5,40 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.geometry.Insets?>
 <?import com.clinacuity.acv.controls.NavBarButton?>
+<?import javafx.scene.layout.StackPane?>
 
-<HBox xmlns="http://javafx.com/javafx"
+<StackPane xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
       fx:controller="com.clinacuity.acv.controllers.NavBarController" styleClass="header">
-    <HBox>
-        <ImageView fitHeight="48" preserveRatio="true" pickOnBounds="true"
-                   onMouseEntered="#mouseEnteredLogo" onMouseExited="#mouseExitedLogo" onMouseClicked="#clickedLogo">
-            <Image url="/img/clinacuity/logo.png"/>
-        </ImageView>
-        <padding>
-            <Insets topRightBottomLeft="5"/>
-        </padding>
+    <HBox alignment="TOP_RIGHT">
+        <HBox>
+            <ImageView fitHeight="24" preserveRatio="true" onMouseEntered="#mouseEnteredLogo"
+                       onMouseExited="#mouseExitedLogo" onMouseClicked="#clickedLogo" pickOnBounds="true">
+                <Image url="/img/clinacuity/clinacuity_logo.png"/>
+            </ImageView>
+            <padding>
+                <Insets topRightBottomLeft="5"/>
+            </padding>
+        </HBox>
     </HBox>
-    <HBox alignment="BOTTOM_LEFT">
-        <NavBarButton fx:id="mainPageButton" text="Introduction"/>
-        <NavBarButton fx:id="configBuilderButton" text="Configure"/>
-        <NavBarButton fx:id="etudeRunnerButton" text="Run"/>
-        <NavBarButton fx:id="loadScreenButton" text="Load"/>
-        <NavBarButton fx:id="compareViewerButton" text="View"/>
-        <padding>
-            <Insets left="25"/>
-        </padding>
+    <HBox pickOnBounds="false">
+        <HBox>
+            <ImageView fitHeight="32" preserveRatio="true">
+                <Image url="/img/clinacuity/etude_logo.png"/>
+            </ImageView>
+            <padding>
+                <Insets topRightBottomLeft="10"/>
+            </padding>
+        </HBox>
+        <HBox alignment="BOTTOM_LEFT">
+            <NavBarButton fx:id="mainPageButton" text="Introduction"/>
+            <NavBarButton fx:id="configBuilderButton" text="Configure"/>
+            <NavBarButton fx:id="etudeRunnerButton" text="Run"/>
+            <NavBarButton fx:id="loadScreenButton" text="Load"/>
+            <NavBarButton fx:id="compareViewerButton" text="View"/>
+            <padding>
+                <Insets left="25"/>
+            </padding>
+        </HBox>
     </HBox>
-</HBox>
+</StackPane>

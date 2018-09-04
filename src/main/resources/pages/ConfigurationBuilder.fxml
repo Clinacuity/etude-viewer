@@ -26,12 +26,13 @@
         <padding>
             <Insets topRightBottomLeft="15"/>
         </padding>
-        <Label text="Configuration Builder" styleClass="text-header-one, underlined"/>
+        <Label text="Configuration Builder" styleClass="text-header-one"/>
         <HBox spacing="10" alignment="TOP_CENTER" maxHeight="Infinity">
             <VBox spacing="10" alignment="TOP_CENTER">
+                <Label text="System Output Types" styleClass="text-medium-normal"/>
                 <HBox spacing="10">
                     <JFXTextField fx:id="systemDirectoryTextField" styleClass="text-medium-normal" focusTraversable="false"
-                                  promptText="System Output Directory" maxWidth="Infinity" editable="false"/>
+                                  maxWidth="Infinity" editable="false"/>
                     <Button text="..." onAction="#pickSystemCorpus" prefWidth="32" styleClass="button-gray, no-focus, text-small-normal"/>
                     <Label styleClass="label-tooltip">
                         <tooltip>
@@ -131,9 +132,10 @@
                 </ImageView>
             </VBox>
             <VBox spacing="10" alignment="TOP_CENTER">
+                <Label text="Reference Standard Types" styleClass="text-medium-normal" alignment="TOP_LEFT"/>
                 <HBox spacing="10">
                     <JFXTextField fx:id="referenceDirectoryTextField" styleClass="text-medium-normal" focusTraversable="false"
-                                  promptText="Reference Standard Directory" maxWidth="Infinity" editable="false"/>
+                                  maxWidth="Infinity" editable="false"/>
                     <Button text="..." onAction="#pickReferenceCorpus" prefWidth="32" styleClass="button-gray, no-focus, text-small-normal"/>
                     <Label styleClass="label-tooltip">
                         <tooltip>

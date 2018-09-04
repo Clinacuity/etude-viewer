@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xmi:XMI xmlns:util="http:///org/apache/ctakes/typesystem/type/util.ecore" xmlns:relation="http:///org/apache/ctakes/typesystem/type/relation.ecore" xmlns:type="http:///com/clinacuity/deid/nlp/uima/type.ecore" xmlns:tcas="http:///uima/tcas.ecore" xmlns:xmi="http://www.omg.org/XMI" xmlns:cas="http:///uima/cas.ecore" xmlns:types="http:///phi/types.ecore" xmlns:type7="http:///org/cleartk/timeml/type.ecore" xmlns:type5="http:///org/cleartk/syntax/constituent/type.ecore" xmlns:ne="http:///org/cleartk/type/ne.ecore" xmlns:textsem="http:///org/apache/ctakes/typesystem/type/textsem.ecore" xmlns:type10="http:///org/cleartk/ne/type.ecore" xmlns:type8="http:///org/cleartk/token/type.ecore" xmlns:refsem="http:///org/apache/ctakes/typesystem/type/refsem.ecore" xmlns:structured="http:///org/apache/ctakes/typesystem/type/structured.ecore" xmlns:textspan="http:///org/apache/ctakes/typesystem/type/textspan.ecore" xmlns:type6="http:///org/cleartk/syntax/dependency/type.ecore" xmlns:annotations="http:///com/clinacuity/deid/annotations.ecore" xmlns:type9="http:///org/cleartk/util/type.ecore" xmlns:type2="http:///com/clinacuity/deid/uima/core/type.ecore" xmlns:assertion="http:///org/apache/ctakes/typesystem/type/temporary/assertion.ecore" xmlns:type3="http:///org/cleartk/score/type.ecore" xmlns:syntax="http:///org/apache/ctakes/typesystem/type/syntax.ecore" xmlns:type4="http:///org/cleartk/srl/type.ecore" xmi:version="2.0">
+    <cas:NULL xmi:id="0"/>
+    <annotations:DocumentInformationAnnotation xmi:id="1" sofa="2" begin="0" end="0" documentType="txt" fileName="110-01" filePath="/Users/garyunderwood/CRF-files/2014/testTextBig/110-01.txt" fileSize="1"/>
+    <type2:MachineLearningAnnotation xmi:id="1" sofa="2" begin="18" end="23" derivedPHItype="Date"/>
+    <type2:MachineLearningAnnotation xmi:id="2" sofa="2" begin="25" end="34" derivedPHItype="Name"/>
+    <type2:MachineLearningAnnotation xmi:id="3" sofa="2" begin="57" end="59" derivedPHItype="Age"/>
+    <type2:MachineLearningAnnotation xmi:id="4" sofa="2" begin="92" end="100" derivedPHItype="Date"/>
+    <type2:MachineLearningAnnotation xmi:id="5" sofa="2" begin="137" end="145" derivedPHItype="Date"/>
+    <type2:MachineLearningAnnotation xmi:id="6" sofa="2" begin="254" end="266" derivedPHItype="Problem"/>
+    <type2:MachineLearningAnnotation xmi:id="7" sofa="2" begin="272" end="289" derivedPHItype="Problem"/>
+    <cas:Sofa xmi:id="2" sofaNum="1" sofaID="_InitialView" mimeType="text" sofaString="Record date: 2010-04-07&#10;&#10;Mr. Lopez is seen today.  He is 48 y/d.  I have not seen&#10;him since November.  He missed his last appointment on December.&#10;Ten weeks ago he stopped his medicine on his own because he was&#10;gaining weight.  He says he has back pain, constipation, and&#10;chronic headaches.&#10;&#10;&#10;"/>
+    <cas:View sofa="2" members="1 2 3 4 5 6 7"/>
+</xmi:XMI>

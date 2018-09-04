@@ -69,12 +69,11 @@ public class LoadScreenController implements Initializable {
             AcvContext context = AcvContext.getInstance();
 
             context.corpusFilePathProperty.setValue(corpusFile.getAbsolutePath());
-            context.targetDirectoryProperty.setValue(targetDirectory.getAbsolutePath() + "/");
+            context.systemOutDirectoryProperty.setValue(targetDirectory.getAbsolutePath() + "/");
             context.referenceDirectoryProperty.setValue(referenceDirectory.getAbsolutePath() + "/");
 
             AcvContext.loadPage(NavBarController.NavBarPages.COMPARISON_VIEW);
         } else {
-            // TODO: deactivate the loading spinner
             logger.debug("loading spinner will deactivate on its own if the content is reloaded");
         }
     }
