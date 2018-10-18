@@ -287,12 +287,6 @@ public class CreateButtonsTask extends Task<Map<CorpusType, List<AnnotationButto
             for (int j = i + 1; j < masterList.size(); j++) {
                 AnnotationButton next = masterList.get(j);
 
-
-                if (next.getBegin() == 5 && next.getEnd() == 8) {
-                    logger.error("Prev: {}, {}", previous.getBegin(), previous.getEnd());
-                    logger.error("Next: {}, {}", next.getBegin(), next.getEnd());
-                }
-
                 // Link the buttons if next.begin > prev.being
                 // OR if (next.begin == prev.begin AND next.end > previous.end)
                 if (next.getBegin() > previous.getBegin() ||

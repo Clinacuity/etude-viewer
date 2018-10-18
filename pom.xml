@@ -106,16 +106,6 @@
                 <version>1.6.0</version>
                 <executions>
                     <execution>
-                        <id>cli</id>
-                        <goals>
-                            <goal>java</goal>
-                        </goals>
-                        <configuration>
-                            <mainClass>com.clinacuity.acv.context.AppMain</mainClass>
-                            <cleanupDaemonThreads>false</cleanupDaemonThreads>
-                        </configuration>
-                    </execution>
-                    <execution>
                         <id>javafx</id>
                         <goals>
                             <goal>java</goal>
