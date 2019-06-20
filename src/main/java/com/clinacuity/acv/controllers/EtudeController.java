@@ -17,6 +17,7 @@ import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -25,47 +26,75 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class EtudeController implements Initializable{
-    private static final Logger logger = LogManager.getLogger();
-
+public class EtudeController implements Initializable {
     public static final String REFERENCE_SUBDIR = "reference/";
     public static final String SYSTEM_OUT_SUBDIR = "system/";
     public static final String CORPUS_FILE = "corpus.json";
-
+    private static final Logger logger = LogManager.getLogger();
     private static final String ERROR_ID = "errLabel";
     private static EtudeTask etudeTask = null;
     private AcvContext context = AcvContext.getInstance();
 
-    @FXML private ScrollPane scrollPane;
-    @FXML private StackPane leftSideCard;
-    @FXML private StackPane rightSideCard;
-    @FXML private VBox textFieldsBox;
-    @FXML private JFXTextField referenceConfigInputField;
-    @FXML private JFXTextField testConfigInputField;
-    @FXML private JFXTextField referenceInputTextField;
-    @FXML private JFXTextField testInputTextField;
-    @FXML private JFXTextField outputDirectoryTextField;
-    @FXML private JFXTextField scoreKeyTextField;
-    @FXML private JFXTextField punctuationTextField;
-    @FXML private JFXTextField scoreValuesTextField;
-    @FXML private JFXTextField filePrefixTextField;
-    @FXML private JFXTextField fileSuffixTextField;
-    @FXML private JFXCheckBox metricsTP;
-    @FXML private JFXCheckBox metricsFP;
-    @FXML private JFXCheckBox metricsFN;
-    @FXML private JFXCheckBox metricsPrecision;
-    @FXML private JFXCheckBox metricsRecall;
-    @FXML private JFXCheckBox metricsF1;
-    @FXML private JFXCheckBox fuzzyMatchingCheckbox;
-    @FXML private JFXCheckBox exactMatching;
-    @FXML private JFXCheckBox partialMatching;
-    @FXML private JFXCheckBox fullyContainedMatching;
-    @FXML private JFXCheckBox byFileCheckbox;
-    @FXML private JFXCheckBox byFileAndTypeCheckbox;
-    @FXML private JFXCheckBox byTypeCheckbox;
-    @FXML private JFXCheckBox byTypeAndFileCheckbox;
-    @FXML private JFXCheckBox ignoreWhitespaceCheckbox;
-    @FXML private JFXCheckBox ignorePunctuationCheckbox;
+    @FXML
+    private ScrollPane scrollPane;
+    @FXML
+    private StackPane leftSideCard;
+    @FXML
+    private StackPane rightSideCard;
+    @FXML
+    private VBox textFieldsBox;
+    @FXML
+    private JFXTextField referenceConfigInputField;
+    @FXML
+    private JFXTextField testConfigInputField;
+    @FXML
+    private JFXTextField referenceInputTextField;
+    @FXML
+    private JFXTextField testInputTextField;
+    @FXML
+    private JFXTextField outputDirectoryTextField;
+    @FXML
+    private JFXTextField scoreKeyTextField;
+    @FXML
+    private JFXTextField punctuationTextField;
+    @FXML
+    private JFXTextField scoreValuesTextField;
+    @FXML
+    private JFXTextField filePrefixTextField;
+    @FXML
+    private JFXTextField fileSuffixTextField;
+    @FXML
+    private JFXCheckBox metricsTP;
+    @FXML
+    private JFXCheckBox metricsFP;
+    @FXML
+    private JFXCheckBox metricsFN;
+    @FXML
+    private JFXCheckBox metricsPrecision;
+    @FXML
+    private JFXCheckBox metricsRecall;
+    @FXML
+    private JFXCheckBox metricsF1;
+    @FXML
+    private JFXCheckBox fuzzyMatchingCheckbox;
+    @FXML
+    private JFXCheckBox exactMatching;
+    @FXML
+    private JFXCheckBox partialMatching;
+    @FXML
+    private JFXCheckBox fullyContainedMatching;
+    @FXML
+    private JFXCheckBox byFileCheckbox;
+    @FXML
+    private JFXCheckBox byFileAndTypeCheckbox;
+    @FXML
+    private JFXCheckBox byTypeCheckbox;
+    @FXML
+    private JFXCheckBox byTypeAndFileCheckbox;
+    @FXML
+    private JFXCheckBox ignoreWhitespaceCheckbox;
+    @FXML
+    private JFXCheckBox ignorePunctuationCheckbox;
 
     // This could be refactored -- if the Run button is pressed without ever focusing on a required field,
     // it will "pass" and probably crash
@@ -99,7 +128,8 @@ public class EtudeController implements Initializable{
         bindElementsToProperties();
     }
 
-    @FXML private void runEtudeButtonAction() throws IOException {
+    @FXML
+    private void runEtudeButtonAction() throws IOException {
         if (checkInputs()) {
             if (checkOutputDirectory()) {
                 runEtude();
@@ -187,7 +217,8 @@ public class EtudeController implements Initializable{
 
     /**
      * Validates all inputs; if no fields are failing, it returns true and allows the etudeTask to run.
-     * @return  Returns true if inputs are valid; false otherwise and etude won't run.
+     *
+     * @return Returns true if inputs are valid; false otherwise and etude won't run.
      */
     private boolean checkInputs() {
         return failingFields.size() == 0;
@@ -197,7 +228,8 @@ public class EtudeController implements Initializable{
      * Checks the directory to which etude will save its output.  Specifically, it checks whether
      * "test" and "reference" directories exist.  If either exists and has files, it will return false.
      * It also checks whether a corpus output file already exists; if so, it will also return false.
-     * @return  Returns true if both test and reference directories are clean and no corpus file exists.
+     *
+     * @return Returns true if both test and reference directories are clean and no corpus file exists.
      */
     private boolean checkOutputDirectory() {
         File directory = new File(outputDirectoryTextField.getText());
@@ -246,12 +278,13 @@ public class EtudeController implements Initializable{
         ConfirmationModal.setCancelAction(event -> logger.warn("User cancelled Etude due to conflicting files."));
         ConfirmationModal.show();
     }
+
     private void focusChanged(boolean focusGained, JFXTextField field, boolean checkForFile) {
         focusChanged(focusGained, field, checkForFile, false);
     }
 
     private void focusChanged(boolean focusGained, JFXTextField field, boolean checkForFile, boolean createDirectory) {
-        HBox box = (HBox)field.getParent();
+        HBox box = (HBox) field.getParent();
         Label label;
         String currentId = box.getChildren().get(box.getChildren().size() - 1).getId();
 
@@ -260,7 +293,7 @@ public class EtudeController implements Initializable{
             label.setId(ERROR_ID);
             label.getStyleClass().addAll("text-medium-normal", "error-text");
         } else {
-            label = (Label)box.getChildren().get(box.getChildren().size() - 1);
+            label = (Label) box.getChildren().get(box.getChildren().size() - 1);
         }
 
         boolean isValid = true;
@@ -270,8 +303,8 @@ public class EtudeController implements Initializable{
                 File file = new File(field.getText());
                 if (checkForFile) {
                     if (!file.exists()) {
-                            labelText = "\u2022 File doesn't exist!";
-                            isValid = false;
+                        labelText = "\u2022 File doesn't exist!";
+                        isValid = false;
                     } else {
                         if (!file.isFile()) {
                             labelText = "\u2022 Invalid file!";
@@ -279,7 +312,7 @@ public class EtudeController implements Initializable{
                         }
                     }
                 } else {
-                    if (!file.exists()) {//create folder?
+                    if (!file.exists()) {
                         if (createDirectory) {
                             if (!file.mkdirs()) {
                                 labelText = "\u2022 Directory couldn't be created";
@@ -321,7 +354,7 @@ public class EtudeController implements Initializable{
             }
         }
     }
-    
+
     private void bindElementsToProperties() {
         testConfigInputField.setText(AcvContext.getProperty("test_config", ""));
         testConfigInputField.textProperty().addListener((obs, old, newValue) -> AcvContext.setProperty("test_config", newValue));
@@ -337,10 +370,10 @@ public class EtudeController implements Initializable{
 
         filePrefixTextField.setText(AcvContext.getProperty("file_prefix", ""));
         filePrefixTextField.textProperty().addListener((obs, old, newValue) -> AcvContext.setProperty("file_prefix", newValue));
-        
+
         fileSuffixTextField.setText(AcvContext.getProperty("file_suffix", ""));
         fileSuffixTextField.textProperty().addListener((obs, old, newValue) -> AcvContext.setProperty("file_suffix", newValue));
-        
+
         outputDirectoryTextField.setText(AcvContext.getProperty("output_directory", ""));
         outputDirectoryTextField.textProperty().addListener((obs, old, newValue) -> AcvContext.setProperty("output_directory", newValue));
 
@@ -401,8 +434,9 @@ public class EtudeController implements Initializable{
         punctuationTextField.setText(AcvContext.getProperty("punctuation_regex", ""));
         punctuationTextField.textProperty().addListener((obs, old, newValue) -> AcvContext.setProperty("punctuation_regex", newValue));
     }
-    
-    @FXML private void pickReferenceConfigFile() {
+
+    @FXML
+    private void pickReferenceConfigFile() {
         File file = getFile("Reference Standard Configuration File");
         if (file != null) {
             referenceConfigInputField.setText(file.getAbsolutePath());
@@ -411,7 +445,8 @@ public class EtudeController implements Initializable{
         focusChanged(false, referenceConfigInputField, true);
     }
 
-    @FXML private void pickTestConfigFile() {
+    @FXML
+    private void pickTestConfigFile() {
         File file = getFile("Test Configuration File");
         if (file != null) {
             testConfigInputField.setText(file.getAbsolutePath());
@@ -420,7 +455,8 @@ public class EtudeController implements Initializable{
         focusChanged(false, testConfigInputField, true);
     }
 
-    @FXML private void pickReferenceInDirectory() {
+    @FXML
+    private void pickReferenceInDirectory() {
         File directory = getDirectory("Reference Standard input files");
         if (directory != null) {
             referenceInputTextField.setText(directory.getAbsolutePath());
@@ -429,7 +465,8 @@ public class EtudeController implements Initializable{
         focusChanged(false, referenceInputTextField, false);
     }
 
-    @FXML private void pickTestInDirectory() {
+    @FXML
+    private void pickTestInDirectory() {
         File directory = getDirectory("Test Input Files");
         if (directory != null) {
             testInputTextField.setText(directory.getAbsolutePath());
@@ -438,7 +475,8 @@ public class EtudeController implements Initializable{
         focusChanged(false, testInputTextField, false);
     }
 
-    @FXML private void pickMainOutputDirectory() {
+    @FXML
+    private void pickMainOutputDirectory() {
         File directory = getDirectory("Reference Standard Output Directory");
         if (directory != null) {
             outputDirectoryTextField.setText(directory.getAbsolutePath());
