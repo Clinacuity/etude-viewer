@@ -90,7 +90,7 @@ public class EtudeController implements Initializable{
         testInputTextField.focusedProperty().addListener(
                 (obs, old, newValue) -> focusChanged(newValue, testInputTextField, false));
         outputDirectoryTextField.focusedProperty().addListener(
-                (obs, old, newValue) -> focusChanged(newValue, outputDirectoryTextField, false));
+                (obs, old, newValue) -> focusChanged(newValue, outputDirectoryTextField, false, true));
 
         exactMatching.disableProperty().bind(fuzzyMatchingCheckbox.selectedProperty().not());
         partialMatching.disableProperty().bind(fuzzyMatchingCheckbox.selectedProperty().not());
@@ -246,8 +246,11 @@ public class EtudeController implements Initializable{
         ConfirmationModal.setCancelAction(event -> logger.warn("User cancelled Etude due to conflicting files."));
         ConfirmationModal.show();
     }
-
     private void focusChanged(boolean focusGained, JFXTextField field, boolean checkForFile) {
+        focusChanged(focusGained, field, checkForFile, false);
+    }
+
+    private void focusChanged(boolean focusGained, JFXTextField field, boolean checkForFile, boolean createDirectory) {
         HBox box = (HBox)field.getParent();
         Label label;
         String currentId = box.getChildren().get(box.getChildren().size() - 1).getId();
@@ -267,8 +270,8 @@ public class EtudeController implements Initializable{
                 File file = new File(field.getText());
                 if (checkForFile) {
                     if (!file.exists()) {
-                        labelText = "\u2022 File doesn't exist!";
-                        isValid = false;
+                            labelText = "\u2022 File doesn't exist!";
+                            isValid = false;
                     } else {
                         if (!file.isFile()) {
                             labelText = "\u2022 Invalid file!";
@@ -276,9 +279,16 @@ public class EtudeController implements Initializable{
                         }
                     }
                 } else {
-                    if (!file.exists()) {
-                        labelText = "\u2022 File doesn't exist!";
-                        isValid = false;
+                    if (!file.exists()) {//create folder?
+                        if (createDirectory) {
+                            if (!file.mkdirs()) {
+                                labelText = "\u2022 Directory couldn't be created";
+                                isValid = false;
+                            }
+                        } else {
+                            labelText = "\u2022 File doesn't exist!";
+                            isValid = false;
+                        }
                     } else {
                         if (!file.isDirectory()) {
                             labelText = "\u2022 Invalid directory!";

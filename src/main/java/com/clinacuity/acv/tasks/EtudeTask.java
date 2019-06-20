@@ -1,6 +1,7 @@
 package com.clinacuity.acv.tasks;
 
 import com.clinacuity.acv.controllers.EtudeController;
+import com.clinacuity.acv.modals.WarningModal;
 import javafx.concurrent.Task;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -93,7 +94,9 @@ public class EtudeTask extends Task<Void> {
 
         try {
             createOutputDirectories();
-
+            if (!setPermissions()) {
+                //uh oh
+            }
             String command = getCommand();
             logger.warn("Running: <{}>", command);
 
@@ -170,7 +173,7 @@ public class EtudeTask extends Task<Void> {
         }
 
         if (OS.contains("win")) {
-            return "./data/etude/windows/etude";
+            return "./data/etude/windows/etude.exe";
         }
 
         if (OS.contains("nix") || OS.contains("nux") || OS.contains("aix")) {
@@ -179,6 +182,24 @@ public class EtudeTask extends Task<Void> {
 
         return "";
     }
+
+    private boolean setPermissions() {//not changing target but using it?
+        File etudeFile = new File(getEtudeLocation());
+        try {
+            if (!etudeFile.setExecutable(true) || !etudeFile.setReadable(true)) {
+                WarningModal.createModal("Permission Error", "Error trying to set permissions for evaluator");
+                WarningModal.show();
+                return false;
+            }
+        } catch (SecurityException e) {
+            WarningModal.createModal("Permission Error", "Error trying to set permissions for evaluator");
+            WarningModal.show();
+            return false;
+        }
+        return true;
+    }
+
+
 
     private String getCommand() {
         String command = getEtudeLocation() + " --progressbar-output none";
