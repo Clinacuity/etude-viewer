@@ -1,9 +1,11 @@
 package com.clinacuity.acv.tasks;
 
 import com.clinacuity.acv.controllers.EtudeController;
+import com.clinacuity.acv.modals.WarningModal;
 import javafx.concurrent.Task;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -48,35 +50,7 @@ public class EtudeTask extends Task<Void> {
     private boolean byTypeAndFile = false;
     private boolean ignoreWhitespace = false;
     private boolean ignorePunctuation = false;
-
-    public void setReferenceConfigFilePath(String value) { referenceConfigFilePath = value; }
-    public void setTestConfigFilePath(String value) { testConfigFilePath = value; }
-    public void setReferenceInputDirPath(String value) { referenceInputDirPath = value; }
-    public void setTestInputDirPath(String value) { testInputDirPath = value; }
-    public void setOutputDirectory(String value) { mainOutputDirPath = value; }
-    public void setScoreKey(String value) { scoreKey = value; }
-    public void setScoreValues(String value) { scoreValues = value; }
-    public void setFilePrefix(String value) { filePrefix = value; }
-    public void setFileSuffix(String value) { fileSuffix = value; }
-    public void setIgnorePunctuationRegex(String value) { ignorePunctuationRegex = value; }
-    public void setMetricsTP(boolean value) { metricsTP = value; }
-    public void setMetricsFP(boolean value) { metricsFP = value; }
-    public void setMetricsFN(boolean value) { metricsFN = value; }
-    public void setMetricsPrecision(boolean value) { metricsPrecision = value; }
-    public void setMetricsRecall(boolean value) { metricsRecall = value; }
-    public void setMetricsF1(boolean value) { metricsF1 = value; }
-    public void setExactMatch(boolean value) { exactMatch = value; }
-    public void setPartialMatch(boolean value) { partialMatch = value; }
-    public void setFullyContainedMatch(boolean value) { fullyContainedMatch = value; }
-    public void setByFile(boolean value) { byFile = value; }
-    public void setByFileAndType(boolean value) { byFileAndType= value; }
-    public void setByType(boolean value) { byType = value; }
-    public void setByTypeAndFile(boolean value) { byTypeAndFile = value; }
-    public void setIgnoreWhitespace(boolean value) { ignoreWhitespace = value; }
-    public void setIgnorePunctuation(boolean value) { ignorePunctuation = value; }
-
     private String errorString = "";
-    public String getErrorString() { return errorString; }
 
     public EtudeTask() {
         setOnCancelled(event -> {
@@ -87,13 +61,119 @@ public class EtudeTask extends Task<Void> {
         });
     }
 
+    public void setReferenceConfigFilePath(String value) {
+        referenceConfigFilePath = value;
+    }
+
+    public void setTestConfigFilePath(String value) {
+        testConfigFilePath = value;
+    }
+
+    public void setReferenceInputDirPath(String value) {
+        referenceInputDirPath = value;
+    }
+
+    public void setTestInputDirPath(String value) {
+        testInputDirPath = value;
+    }
+
+    public void setOutputDirectory(String value) {
+        mainOutputDirPath = value;
+    }
+
+    public void setScoreKey(String value) {
+        scoreKey = value;
+    }
+
+    public void setScoreValues(String value) {
+        scoreValues = value;
+    }
+
+    public void setFilePrefix(String value) {
+        filePrefix = value;
+    }
+
+    public void setFileSuffix(String value) {
+        fileSuffix = value;
+    }
+
+    public void setIgnorePunctuationRegex(String value) {
+        ignorePunctuationRegex = value;
+    }
+
+    public void setMetricsTP(boolean value) {
+        metricsTP = value;
+    }
+
+    public void setMetricsFP(boolean value) {
+        metricsFP = value;
+    }
+
+    public void setMetricsFN(boolean value) {
+        metricsFN = value;
+    }
+
+    public void setMetricsPrecision(boolean value) {
+        metricsPrecision = value;
+    }
+
+    public void setMetricsRecall(boolean value) {
+        metricsRecall = value;
+    }
+
+    public void setMetricsF1(boolean value) {
+        metricsF1 = value;
+    }
+
+    public void setExactMatch(boolean value) {
+        exactMatch = value;
+    }
+
+    public void setPartialMatch(boolean value) {
+        partialMatch = value;
+    }
+
+    public void setFullyContainedMatch(boolean value) {
+        fullyContainedMatch = value;
+    }
+
+    public void setByFile(boolean value) {
+        byFile = value;
+    }
+
+    public void setByFileAndType(boolean value) {
+        byFileAndType = value;
+    }
+
+    public void setByType(boolean value) {
+        byType = value;
+    }
+
+    public void setByTypeAndFile(boolean value) {
+        byTypeAndFile = value;
+    }
+
+    public void setIgnoreWhitespace(boolean value) {
+        ignoreWhitespace = value;
+    }
+
+    public void setIgnorePunctuation(boolean value) {
+        ignorePunctuation = value;
+    }
+
+    public String getErrorString() {
+        return errorString;
+    }
+
     @Override
     protected Void call() {
         errorString = "";
 
         try {
             createOutputDirectories();
-
+            if (!setPermissions()) {
+                throw new EtudeEngineException("Can't set permissions on evaluation engine");
+            }
             String command = getCommand();
             logger.warn("Running: <{}>", command);
 
@@ -136,7 +216,7 @@ public class EtudeTask extends Task<Void> {
         succeeded();
         return null;
     }
-    
+
     public void reset() {
         killedByUser = false;
 
@@ -170,7 +250,7 @@ public class EtudeTask extends Task<Void> {
         }
 
         if (OS.contains("win")) {
-            return "./data/etude/windows/etude";
+            return "./data/etude/windows/etude.exe";
         }
 
         if (OS.contains("nix") || OS.contains("nux") || OS.contains("aix")) {
@@ -178,6 +258,24 @@ public class EtudeTask extends Task<Void> {
         }
 
         return "";
+    }
+
+    private boolean setPermissions() {//not changing target but using it?
+        File etudeFile = new File(getEtudeLocation());
+        try {
+            if (!etudeFile.setExecutable(true) || !etudeFile.setReadable(true)) {
+                WarningModal.createModal("Permission Error", "Error trying to set permissions for evaluator");
+                WarningModal.show();
+                logger.error("Unable to set permissions");
+                return false;
+            }
+        } catch (SecurityException e) {
+            WarningModal.createModal("Permission Error", "Error trying to set permissions for evaluator");
+            WarningModal.show();
+            logger.throwing(e);
+            return false;
+        }
+        return true;
     }
 
     private String getCommand() {
@@ -316,12 +414,24 @@ public class EtudeTask extends Task<Void> {
     private String getMetricsValues() {
         List<String> metrics = new ArrayList<>();
 
-        if (metricsTP) { metrics.add("TP"); }
-        if (metricsFP) { metrics.add("FP"); }
-        if (metricsFN) { metrics.add("FN"); }
-        if (metricsPrecision) { metrics.add("Precision"); }
-        if (metricsRecall) { metrics.add("Recall"); }
-        if (metricsF1) { metrics.add("F1"); }
+        if (metricsTP) {
+            metrics.add("TP");
+        }
+        if (metricsFP) {
+            metrics.add("FP");
+        }
+        if (metricsFN) {
+            metrics.add("FN");
+        }
+        if (metricsPrecision) {
+            metrics.add("Precision");
+        }
+        if (metricsRecall) {
+            metrics.add("Recall");
+        }
+        if (metricsF1) {
+            metrics.add("F1");
+        }
 
         return " -m " + String.join(" ", metrics);
     }
